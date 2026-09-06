@@ -1,0 +1,100 @@
+{
+  "id": "labor-minimum-wage",
+  "category": "labor",
+  "status": "published",
+  "featured": false,
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-06",
+  "keywords": [
+    "최저임금", "시급", "시급이 낮", "얼마 받아야", "주휴수당", "수습",
+    "minimum wage", "hourly rate", "how much should I be paid",
+    "最低工资", "时薪",
+    "lương tối thiểu", "lương theo giờ"
+  ],
+  "organizations": ["moel-1350", "klac-132", "danuri-1577-1366"],
+  "related": ["labor-unpaid-wages", "labor-contract", "labor-youth-work-rules"],
+  "sources": [
+    { "title": "최저임금위원회", "url": "https://www.minimumwage.go.kr", "publisher": "최저임금위원회" },
+    { "title": "고용노동부 공식 누리집", "url": "https://www.moel.go.kr", "publisher": "고용노동부" }
+  ],
+  "i18n": {
+    "ko": {
+      "title": "시급을 얼마 받아야 하나요? (최저임금)",
+      "summary": "나라에서 정한 최소한의 시급이 있습니다. 나이가 어려도, 외국 국적이어도 최저임금보다 적게 받을 수는 없습니다.",
+      "situations": [
+        "시급 7,000원을 준다고 하는데 너무 적은 것 같아요.",
+        "\"너는 학생이니까 조금만 줄게\"라는 말을 들었어요.",
+        "\"처음 3개월은 수습이라 적게 준다\"고 해요.",
+        "일한 시간은 많은데 받은 돈이 맞는지 모르겠어요."
+      ],
+      "rights": [
+        {
+          "title": "최저임금은 모두에게 똑같이 적용됩니다",
+          "body": "나이, 국적, 학생인지 여부와 상관없이 최저임금보다 적게 주는 것은 허용되지 않습니다."
+        },
+        {
+          "title": "최저임금 금액은 매년 바뀝니다",
+          "body": "2026년 기준 시간당 최저임금은 10,320원입니다. 금액은 해마다 1월 1일에 달라지므로, 최저임금위원회 누리집(minimumwage.go.kr)에서 올해 금액을 꼭 확인하세요."
+        },
+        {
+          "title": "일정 시간 이상 일하면 주휴수당이 있을 수 있습니다",
+          "body": "일주일에 정해진 시간 이상 빠짐없이 일하면 쉬는 날에 대한 수당을 추가로 받을 수 있습니다. 조건이 있으니 1350에 확인해 보세요."
+        }
+      ],
+      "actions": [
+        {
+          "title": "내 시급을 직접 계산해 보세요",
+          "body": "받은 돈 ÷ 일한 시간 = 실제 시급입니다. 이 값이 올해 최저임금보다 적으면 문제가 있습니다."
+        },
+        {
+          "title": "일한 시간을 매일 기록하세요",
+          "body": "휴대폰 메모장에 날짜와 출퇴근 시간을 적어두면 나중에 가장 강력한 증거가 됩니다."
+        },
+        {
+          "title": "적게 받았다면 1350에 상담하세요",
+          "body": "고용노동부 고객상담센터 1350에 전화해 상황을 말하면, 차액을 받을 수 있는지 안내받을 수 있습니다."
+        }
+      ],
+      "note": "최저임금 금액과 주휴수당 조건은 해마다 바뀝니다. 반드시 최저임금위원회 또는 1350에서 올해 기준을 확인하세요."
+    },
+    "en": {
+      "title": "How much should I be paid per hour? (Minimum wage)",
+      "summary": "Korea sets a legal minimum hourly wage. You cannot be paid less than it because you are young or not a Korean citizen.",
+      "situations": [
+        "I am offered 7,000 won per hour and it seems too low.",
+        "I was told \"you are a student, so you get less\".",
+        "I was told \"the first three months are a trial, so the pay is lower\".",
+        "I worked many hours and I am not sure the amount is right."
+      ],
+      "rights": [
+        {
+          "title": "The minimum wage applies to everyone",
+          "body": "Age, nationality and student status do not allow an employer to pay below the minimum wage."
+        },
+        {
+          "title": "The amount changes every year",
+          "body": "For 2026 the minimum wage is 10,320 won per hour. The figure changes each 1 January, so always check the current amount at minimumwage.go.kr."
+        },
+        {
+          "title": "You may also be owed weekly holiday pay",
+          "body": "If you work above a set number of hours per week without missing days, you may be entitled to extra paid rest. Conditions apply, so check with 1350."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Work out your real hourly rate",
+          "body": "Money received divided by hours worked equals your real hourly rate. If it is below this year's minimum wage, something is wrong."
+        },
+        {
+          "title": "Record your hours every day",
+          "body": "Noting the date and your start and finish times in your phone becomes strong evidence later."
+        },
+        {
+          "title": "Call 1350 if you were underpaid",
+          "body": "Explain your situation to the Ministry of Employment and Labor helpline (1350) and ask whether you can claim the difference."
+        }
+      ],
+      "note": "The minimum wage amount and holiday pay rules change every year. Always confirm this year's figures with the Minimum Wage Commission or 1350."
+    }
+  }
+}

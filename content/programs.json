@@ -1,0 +1,85 @@
+{
+  "_readme": "프로그램·활동 소개 카드입니다. image 는 public/images 폴더에 넣은 파일 이름을 적으면 됩니다. 사진이 없으면 image 를 빈 값(\"\")으로 두세요.",
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-06",
+  "items": [
+    {
+      "id": "rights-education",
+      "image": "",
+      "status": "published",
+      "tag": { "ko": "권리교육", "en": "Rights education", "zh": "权利教育", "vi": "Giáo dục quyền" },
+      "title": {
+        "ko": "내 권리를 배우는 시간",
+        "en": "Learning my rights",
+        "zh": "了解我的权利",
+        "vi": "Học về quyền của tôi"
+      },
+      "body": {
+        "ko": "알바, 학교, 병원, 체류처럼 실제로 마주치는 상황을 놓고, 그때 내가 가진 권리가 무엇인지 함께 이야기하는 워크숍입니다.",
+        "en": "Workshops built around real situations: part-time work, school, hospitals and visas, and what rights you have in each.",
+        "zh": "以打工、学校、医院、居留等真实场景为主题，一起讨论自己拥有哪些权利的工作坊。",
+        "vi": "Hội thảo dựa trên tình huống thực tế: làm thêm, trường học, bệnh viện, cư trú và quyền của bạn trong từng trường hợp."
+      }
+    },
+    {
+      "id": "mentoring",
+      "image": "",
+      "status": "published",
+      "tag": { "ko": "멘토링", "en": "Mentoring", "zh": "导师计划", "vi": "Cố vấn" },
+      "title": {
+        "ko": "대학생 멘토와 함께",
+        "en": "With a university mentor",
+        "zh": "与大学生导师同行",
+        "vi": "Cùng cố vấn sinh viên"
+      },
+      "body": {
+        "ko": "가까운 나이의 대학생 멘토가 공부, 진학, 진로 고민을 함께 나눕니다. 정답을 주기보다 선택지를 함께 찾는 시간입니다.",
+        "en": "Mentors close in age talk through study, admissions and career worries: not giving answers, but finding options together.",
+        "zh": "年龄相近的大学生导师一起探讨学习、升学与前途，重在一起寻找选择，而非给出标准答案。",
+        "vi": "Cố vấn là sinh viên cùng trao đổi về học tập, tuyển sinh và nghề nghiệp: cùng tìm lựa chọn thay vì đưa ra đáp án."
+      }
+    },
+    {
+      "id": "culture",
+      "image": "",
+      "status": "published",
+      "tag": { "ko": "생활·문화", "en": "Culture & life", "zh": "生活·文化", "vi": "Văn hóa & đời sống" },
+      "title": {
+        "ko": "함께 경험하는 한국생활",
+        "en": "Experiencing Korea together",
+        "zh": "一起体验韩国生活",
+        "vi": "Cùng trải nghiệm cuộc sống ở Hàn Quốc"
+      },
+      "body": {
+        "ko": "박물관, 공연, 지역 탐방처럼 함께 움직이는 활동을 통해 한국생활에 필요한 정보와 관계를 자연스럽게 쌓습니다.",
+        "en": "Museums, performances and neighbourhood trips: shared activities that build practical knowledge and friendships.",
+        "zh": "通过博物馆、演出、社区探访等共同活动，自然地积累生活信息与人际关系。",
+        "vi": "Bảo tàng, biểu diễn, khám phá khu phố: hoạt động chung giúp tích lũy kiến thức và kết nối bạn bè."
+      }
+    },
+    {
+      "id": "info-platform",
+      "image": "",
+      "status": "published",
+      "tag": { "ko": "정보 플랫폼", "en": "Information platform", "zh": "信息平台", "vi": "Nền tảng thông tin" },
+      "title": {
+        "ko": "이 웹사이트, LINKRIGHTS",
+        "en": "This website, LINKRIGHTS",
+        "zh": "本网站 LINKRIGHTS",
+        "vi": "Trang web này, LINKRIGHTS"
+      },
+      "body": {
+        "ko": "프로그램에서 나온 질문들을 모아 권리정보로 정리하고, 언제든 다시 찾아볼 수 있도록 이 웹사이트로 만들었습니다.",
+        "en": "Questions raised in our programmes are turned into rights information and published here so anyone can come back to them.",
+        "zh": "把项目中出现的问题整理成权利信息，做成这个随时可以回来查看的网站。",
+        "vi": "Những câu hỏi từ chương trình được biên soạn thành thông tin quyền và đăng tại đây để ai cũng có thể xem lại."
+      }
+    }
+  ],
+  "community_notice": {
+    "ko": "커뮤니티 기능은 준비 중입니다. 지금은 프로그램 활동과 권리정보를 먼저 공개하고 있으며, 안전하게 운영할 수 있는 방법을 마련한 뒤 열 예정입니다.",
+    "en": "Community features are in preparation. For now we publish programme activities and rights information, and will open a community once we can run it safely.",
+    "zh": "社区功能正在筹备中。目前先公开项目活动与权利信息，待能够安全运营后再开放。",
+    "vi": "Tính năng cộng đồng đang được chuẩn bị. Hiện chúng tôi đăng hoạt động chương trình và thông tin quyền, và sẽ mở cộng đồng khi vận hành an toàn."
+  }
+}

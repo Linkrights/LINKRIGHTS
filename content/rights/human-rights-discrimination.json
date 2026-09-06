@@ -1,0 +1,116 @@
+{
+  "id": "human-rights-discrimination",
+  "category": "human-rights",
+  "status": "published",
+  "featured": true,
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-06",
+  "keywords": [
+    "차별", "무시당했", "외국인이라서", "인종차별", "혐오", "받아주지 않", "거절당했",
+    "국적 때문에", "인권침해", "진정", "신고",
+    "discrimination", "racism", "refused because I am foreign", "hate speech", "file a complaint",
+    "歧视", "种族歧视", "因为是外国人", "投诉",
+    "phân biệt đối xử", "kỳ thị", "vì là người nước ngoài", "khiếu nại"
+  ],
+  "organizations": ["nhrck-1331", "klac-132", "danuri-1577-1366", "epeople-110", "rainbowyouth"],
+  "related": ["education-school-discrimination", "human-rights-violence-and-safety", "labor-unpaid-wages"],
+  "sources": [
+    { "title": "국가인권위원회", "url": "https://www.humanrights.go.kr", "publisher": "국가인권위원회" }
+  ],
+  "i18n": {
+    "ko": {
+      "title": "외국인이라는 이유로 차별을 받았어요",
+      "summary": "국적, 피부색, 언어, 종교를 이유로 불리하게 대우받는 것은 차별입니다. 참지 않아도 되고, 진정을 낼 수 있습니다.",
+      "situations": [
+        "가게나 헬스장에서 \"외국인은 안 된다\"며 거절당했어요.",
+        "알바 면접에서 국적 때문에 떨어졌다는 말을 들었어요.",
+        "집을 구하는데 외국인이라서 안 된다고 해요.",
+        "온라인에서 제 나라 사람들을 욕하는 말을 계속 봐요."
+      ],
+      "rights": [
+        {
+          "title": "차별받지 않을 권리가 있습니다",
+          "body": "합리적인 이유 없이 국적, 인종, 피부색, 언어, 종교를 이유로 불리하게 대우하는 것은 차별에 해당할 수 있습니다."
+        },
+        {
+          "title": "외국인도 진정을 낼 수 있습니다",
+          "body": "국가인권위원회에는 국적과 상관없이 진정을 낼 수 있습니다. 비용은 들지 않습니다."
+        },
+        {
+          "title": "진정했다고 불이익을 주면 안 됩니다",
+          "body": "차별을 신고했다는 이유로 다시 불이익을 주는 것도 문제가 될 수 있습니다."
+        },
+        {
+          "title": "혼자 판단하지 않아도 됩니다",
+          "body": "차별인지 아닌지 애매할 때도 상담을 받을 수 있습니다. 상담은 신고가 아니므로 부담 없이 물어볼 수 있습니다."
+        }
+      ],
+      "actions": [
+        {
+          "title": "무슨 일이 있었는지 바로 기록하세요",
+          "body": "날짜, 장소, 상대방, 들은 말을 그대로 적어두세요. 사진, 녹음, 문자, 게시글 캡처가 있다면 함께 보관하세요."
+        },
+        {
+          "title": "국가인권위원회 1331에 상담하세요",
+          "body": "전화로 상황을 설명하면 진정을 낼 수 있는 사안인지, 어떻게 접수하는지 안내받을 수 있습니다."
+        },
+        {
+          "title": "온라인으로도 진정할 수 있습니다",
+          "body": "humanrights.go.kr에서 진정 접수 방법을 확인할 수 있습니다. 작성이 어려우면 지원기관의 도움을 받으세요."
+        },
+        {
+          "title": "언어가 어렵다면 통역을 요청하세요",
+          "body": "다누리콜센터(1577-1366)를 통해 여러 언어로 상담받을 수 있습니다."
+        }
+      ],
+      "note": "어떤 행위가 법적으로 차별에 해당하는지에 대한 판단은 국가인권위원회 등 공식기관이 합니다."
+    },
+    "en": {
+      "title": "I was discriminated against for being a foreigner",
+      "summary": "Being treated worse because of nationality, skin colour, language or religion is discrimination. You do not have to accept it, and you can file a complaint.",
+      "situations": [
+        "A shop or gym refused me saying \"no foreigners\".",
+        "I was told I failed a job interview because of my nationality.",
+        "A landlord refused me because I am a foreigner.",
+        "I keep seeing hateful comments about people from my country online."
+      ],
+      "rights": [
+        {
+          "title": "You have the right not to be discriminated against",
+          "body": "Treating someone worse without reasonable grounds because of nationality, race, skin colour, language or religion may amount to discrimination."
+        },
+        {
+          "title": "Non-citizens can file complaints",
+          "body": "You can file a complaint with the National Human Rights Commission regardless of nationality, and it is free."
+        },
+        {
+          "title": "You must not be punished for complaining",
+          "body": "Retaliating against someone for reporting discrimination can itself be a problem."
+        },
+        {
+          "title": "You do not have to decide alone",
+          "body": "You can ask for advice even when you are unsure. Asking is not the same as filing, so there is no pressure."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Write down what happened straight away",
+          "body": "Record the date, place, who was involved and the exact words used. Keep photos, recordings, messages or screenshots."
+        },
+        {
+          "title": "Call the Human Rights Commission on 1331",
+          "body": "Explain the situation and they will tell you whether it can be filed and how to submit it."
+        },
+        {
+          "title": "You can also file online",
+          "body": "See humanrights.go.kr for how to submit a complaint. Ask a support organisation if the form is difficult."
+        },
+        {
+          "title": "Ask for interpretation if language is a barrier",
+          "body": "The Danuri Call Center (1577-1366) offers advice in several languages."
+        }
+      ],
+      "note": "Whether an act legally counts as discrimination is decided by official bodies such as the National Human Rights Commission."
+    }
+  }
+}

@@ -1,0 +1,415 @@
+[
+  {
+    "id": "police-112",
+    "category": "emergency",
+    "emergency": true,
+    "name": {
+      "ko": "경찰 (112)",
+      "en": "Police (112)",
+      "zh": "警察 (112)",
+      "vi": "Cảnh sát (112)"
+    },
+    "description": {
+      "ko": "폭력, 범죄 피해, 학대 등 지금 당장 위험할 때 전화하는 번호입니다. 통역 연결을 요청할 수 있습니다.",
+      "en": "Call this number when you are in immediate danger: violence, crime, or abuse. You can ask for an interpreter.",
+      "zh": "遭遇暴力、犯罪或虐待等紧急危险时拨打的号码。可以要求接通翻译。",
+      "vi": "Gọi số này khi bạn đang gặp nguy hiểm: bạo lực, tội phạm, ngược đãi. Bạn có thể yêu cầu phiên dịch."
+    },
+    "phone": "112",
+    "website": "https://www.police.go.kr",
+    "languages": ["ko", "en", "zh", "vi", "other"],
+    "region": "전국",
+    "hours": { "ko": "24시간", "en": "24 hours", "zh": "24小时", "vi": "24 giờ" },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-06",
+    "source_url": "https://www.police.go.kr"
+  },
+  {
+    "id": "fire-119",
+    "category": "emergency",
+    "emergency": true,
+    "name": {
+      "ko": "구급·소방 (119)",
+      "en": "Ambulance & Fire (119)",
+      "zh": "急救·消防 (119)",
+      "vi": "Cấp cứu & Cứu hỏa (119)"
+    },
+    "description": {
+      "ko": "많이 다치거나 아플 때, 불이 났을 때 부르는 번호입니다. 구급차를 요청할 수 있습니다.",
+      "en": "Call for an ambulance when someone is badly hurt or very ill, or when there is a fire.",
+      "zh": "受重伤、突发疾病或发生火灾时拨打，可以叫救护车。",
+      "vi": "Gọi khi bị thương nặng, ốm nặng hoặc có hỏa hoạn. Có thể yêu cầu xe cấp cứu."
+    },
+    "phone": "119",
+    "website": "https://www.nfa.go.kr",
+    "languages": ["ko", "en", "zh", "vi", "other"],
+    "region": "전국",
+    "hours": { "ko": "24시간", "en": "24 hours", "zh": "24小时", "vi": "24 giờ" },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-06",
+    "source_url": "https://www.nfa.go.kr"
+  },
+  {
+    "id": "youth-1388",
+    "category": "youth",
+    "emergency": true,
+    "name": {
+      "ko": "청소년전화 1388",
+      "en": "Youth Helpline 1388",
+      "zh": "青少年热线 1388",
+      "vi": "Đường dây thanh thiếu niên 1388"
+    },
+    "description": {
+      "ko": "9~24세 청소년이 고민, 가출, 폭력, 학업, 진로 등 어떤 문제든 상담할 수 있는 전화입니다. 비밀은 지켜집니다.",
+      "en": "A helpline for young people aged 9-24 about any worry: home, violence, school, or the future. Your call is confidential.",
+      "zh": "9~24岁青少年可就烦恼、离家、暴力、学业、前途等任何问题咨询的电话，内容保密。",
+      "vi": "Đường dây cho bạn trẻ 9-24 tuổi về mọi lo lắng: gia đình, bạo lực, học tập, tương lai. Được giữ bí mật."
+    },
+    "phone": "1388",
+    "website": "https://www.kyci.or.kr",
+    "languages": ["ko"],
+    "region": "전국",
+    "hours": { "ko": "24시간", "en": "24 hours", "zh": "24小时", "vi": "24 giờ" },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-06",
+    "source_url": "https://www.kyci.or.kr"
+  },
+  {
+    "id": "cyber1388",
+    "category": "youth",
+    "emergency": false,
+    "name": {
+      "ko": "청소년사이버상담센터",
+      "en": "Youth Cyber Counselling Center",
+      "zh": "青少年网络咨询中心",
+      "vi": "Trung tâm tư vấn trực tuyến cho thanh thiếu niên"
+    },
+    "description": {
+      "ko": "전화가 부담스러울 때 채팅·문자·게시판으로 상담할 수 있는 온라인 창구입니다.",
+      "en": "Online counselling by chat, text or message board if calling feels difficult.",
+      "zh": "不方便打电话时，可通过聊天、短信、留言板进行咨询的线上窗口。",
+      "vi": "Tư vấn trực tuyến qua chat, tin nhắn hoặc diễn đàn nếu bạn ngại gọi điện."
+    },
+    "phone": "1388",
+    "website": "https://www.cyber1388.kr",
+    "languages": ["ko"],
+    "region": "전국",
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-06",
+    "source_url": "https://www.cyber1388.kr"
+  },
+  {
+    "id": "women-1366",
+    "category": "emergency",
+    "emergency": true,
+    "name": {
+      "ko": "여성긴급전화 1366",
+      "en": "Women Emergency Hotline 1366",
+      "zh": "女性紧急电话 1366",
+      "vi": "Đường dây khẩn cấp cho phụ nữ 1366"
+    },
+    "description": {
+      "ko": "가정폭력, 성폭력, 데이트폭력 피해를 겪고 있을 때 24시간 상담하고 보호를 요청할 수 있습니다.",
+      "en": "24-hour support for domestic violence, sexual violence and dating violence, including emergency shelter.",
+      "zh": "遭受家庭暴力、性暴力、恋爱暴力时，可24小时咨询并申请保护。",
+      "vi": "Hỗ trợ 24 giờ cho nạn nhân bạo lực gia đình, bạo lực tình dục, bạo lực hẹn hò."
+    },
+    "phone": "1366",
+    "website": "https://www.women1366.kr",
+    "languages": ["ko"],
+    "region": "전국",
+    "hours": { "ko": "24시간", "en": "24 hours", "zh": "24小时", "vi": "24 giờ" },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-06",
+    "source_url": "https://www.women1366.kr"
+  },
+  {
+    "id": "danuri-1577-1366",
+    "category": "migrant",
+    "emergency": true,
+    "name": {
+      "ko": "다누리콜센터 1577-1366",
+      "en": "Danuri Call Center 1577-1366",
+      "zh": "Danuri 呼叫中心 1577-1366",
+      "vi": "Tổng đài Danuri 1577-1366"
+    },
+    "description": {
+      "ko": "여러 나라 언어로 24시간 상담할 수 있는 이주민 전용 콜센터입니다. 생활 정보부터 폭력 피해 지원까지 안내합니다.",
+      "en": "A 24-hour multilingual call center for migrants, covering daily-life questions and violence support.",
+      "zh": "为移民提供多语种24小时咨询的呼叫中心，涵盖生活信息与暴力受害支援。",
+      "vi": "Tổng đài đa ngôn ngữ 24 giờ dành cho người di trú: thông tin đời sống và hỗ trợ nạn nhân bạo lực."
+    },
+    "phone": "1577-1366",
+    "website": "https://www.liveinkorea.kr",
+    "languages": ["ko", "en", "zh", "vi", "other"],
+    "region": "전국",
+    "hours": { "ko": "24시간", "en": "24 hours", "zh": "24小时", "vi": "24 giờ" },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-06",
+    "source_url": "https://www.liveinkorea.kr"
+  },
+  {
+    "id": "school-violence-117",
+    "category": "emergency",
+    "emergency": true,
+    "name": {
+      "ko": "학교폭력 신고 117",
+      "en": "School Violence Report 117",
+      "zh": "校园暴力举报 117",
+      "vi": "Báo cáo bạo lực học đường 117"
+    },
+    "description": {
+      "ko": "학교에서 폭력이나 괴롭힘을 당했을 때 전화 또는 문자(#117)로 신고하고 상담할 수 있습니다.",
+      "en": "Report bullying or violence at school by phone or text message (#117).",
+      "zh": "在学校遭受暴力或霸凌时，可通过电话或短信(#117)举报并咨询。",
+      "vi": "Báo cáo bạo lực hoặc bắt nạt ở trường qua điện thoại hoặc tin nhắn (#117)."
+    },
+    "phone": "117",
+    "website": "https://www.safe182.go.kr",
+    "languages": ["ko"],
+    "region": "전국",
+    "hours": { "ko": "24시간", "en": "24 hours", "zh": "24小时", "vi": "24 giờ" },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-06",
+    "source_url": "https://www.safe182.go.kr"
+  },
+  {
+    "id": "moel-1350",
+    "category": "public",
+    "emergency": false,
+    "name": {
+      "ko": "고용노동부 고객상담센터 1350",
+      "en": "Ministry of Employment and Labor Helpline 1350",
+      "zh": "雇佣劳动部客户咨询中心 1350",
+      "vi": "Tổng đài Bộ Lao động 1350"
+    },
+    "description": {
+      "ko": "임금을 못 받았을 때, 근로계약이 궁금할 때 상담하는 곳입니다. 임금체불 진정 방법도 안내받을 수 있습니다.",
+      "en": "Advice on unpaid wages, employment contracts and how to file a wage complaint.",
+      "zh": "工资被拖欠、对劳动合同有疑问时的咨询窗口，也可了解欠薪申诉方法。",
+      "vi": "Tư vấn về nợ lương, hợp đồng lao động và cách nộp đơn khiếu nại tiền lương."
+    },
+    "phone": "1350",
+    "website": "https://www.moel.go.kr",
+    "languages": ["ko", "en", "zh", "vi", "other"],
+    "region": "전국",
+    "hours": { "ko": "평일 09:00~18:00", "en": "Weekdays 09:00-18:00", "zh": "工作日 09:00~18:00", "vi": "Ngày thường 09:00-18:00" },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-06",
+    "source_url": "https://www.moel.go.kr"
+  },
+  {
+    "id": "hikorea-1345",
+    "category": "public",
+    "emergency": false,
+    "name": {
+      "ko": "외국인종합안내센터 1345 (하이코리아)",
+      "en": "Immigration Contact Center 1345 (HiKorea)",
+      "zh": "外国人综合咨询中心 1345 (HiKorea)",
+      "vi": "Trung tâm tư vấn cho người nước ngoài 1345 (HiKorea)"
+    },
+    "description": {
+      "ko": "체류자격, 비자 연장, 외국인등록 등 출입국 관련 질문을 여러 언어로 상담할 수 있습니다. 방문 예약도 하이코리아에서 합니다.",
+      "en": "Multilingual advice on visa status, extensions and alien registration. Office visits are booked on HiKorea.",
+      "zh": "可用多种语言咨询居留资格、签证延期、外国人登录等出入境事务，也可在 HiKorea 预约到访。",
+      "vi": "Tư vấn đa ngôn ngữ về tư cách lưu trú, gia hạn visa, đăng ký người nước ngoài. Đặt lịch hẹn trên HiKorea."
+    },
+    "phone": "1345",
+    "website": "https://www.hikorea.go.kr",
+    "languages": ["ko", "en", "zh", "vi", "other"],
+    "region": "전국",
+    "hours": { "ko": "평일 09:00~18:00", "en": "Weekdays 09:00-18:00", "zh": "工作日 09:00~18:00", "vi": "Ngày thường 09:00-18:00" },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-06",
+    "source_url": "https://www.hikorea.go.kr"
+  },
+  {
+    "id": "nhis-1577-1000",
+    "category": "public",
+    "emergency": false,
+    "name": {
+      "ko": "국민건강보험공단 1577-1000",
+      "en": "National Health Insurance Service 1577-1000",
+      "zh": "国民健康保险公团 1577-1000",
+      "vi": "Cơ quan Bảo hiểm Y tế Quốc gia 1577-1000"
+    },
+    "description": {
+      "ko": "건강보험 가입, 보험료, 자격 확인을 담당하는 기관입니다. 외국인 가입 조건도 여기에서 확인할 수 있습니다.",
+      "en": "Handles health insurance enrolment, premiums and eligibility, including rules for foreign residents.",
+      "zh": "负责健康保险的参保、保费与资格确认，外国人参保条件也可在此确认。",
+      "vi": "Phụ trách đăng ký bảo hiểm y tế, phí và điều kiện tham gia, kể cả với người nước ngoài."
+    },
+    "phone": "1577-1000",
+    "website": "https://www.nhis.or.kr",
+    "languages": ["ko", "en", "zh", "vi"],
+    "region": "전국",
+    "hours": { "ko": "평일 09:00~18:00", "en": "Weekdays 09:00-18:00", "zh": "工作日 09:00~18:00", "vi": "Ngày thường 09:00-18:00" },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-06",
+    "source_url": "https://www.nhis.or.kr"
+  },
+  {
+    "id": "nhrck-1331",
+    "category": "public",
+    "emergency": false,
+    "name": {
+      "ko": "국가인권위원회 1331",
+      "en": "National Human Rights Commission of Korea 1331",
+      "zh": "国家人权委员会 1331",
+      "vi": "Ủy ban Nhân quyền Quốc gia 1331"
+    },
+    "description": {
+      "ko": "국적, 피부색, 언어 등을 이유로 차별을 받았을 때 진정(신고)을 낼 수 있는 국가기관입니다. 외국인도 진정할 수 있습니다.",
+      "en": "A national body where you can file a complaint about discrimination based on nationality, skin colour or language. Non-citizens can file too.",
+      "zh": "因国籍、肤色、语言等受到歧视时可提出申诉的国家机关，外国人同样可以申诉。",
+      "vi": "Cơ quan quốc gia tiếp nhận khiếu nại về phân biệt đối xử theo quốc tịch, màu da, ngôn ngữ. Người nước ngoài cũng có thể khiếu nại."
+    },
+    "phone": "1331",
+    "website": "https://www.humanrights.go.kr",
+    "languages": ["ko", "en"],
+    "region": "전국",
+    "hours": { "ko": "평일 09:00~18:00", "en": "Weekdays 09:00-18:00", "zh": "工作日 09:00~18:00", "vi": "Ngày thường 09:00-18:00" },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-06",
+    "source_url": "https://www.humanrights.go.kr"
+  },
+  {
+    "id": "klac-132",
+    "category": "legal",
+    "emergency": false,
+    "name": {
+      "ko": "대한법률구조공단 132",
+      "en": "Korea Legal Aid Corporation 132",
+      "zh": "大韩法律救助公团 132",
+      "vi": "Tổng công ty Trợ giúp Pháp lý Hàn Quốc 132"
+    },
+    "description": {
+      "ko": "법률 문제를 무료로 상담해 주는 공공기관입니다. 조건이 맞으면 소송을 무료로 도와주기도 합니다.",
+      "en": "Free legal advice from a public body, with free litigation support if you meet the criteria.",
+      "zh": "提供免费法律咨询的公共机构，符合条件时还可获得免费诉讼支援。",
+      "vi": "Tư vấn pháp lý miễn phí; hỗ trợ kiện tụng miễn phí nếu đủ điều kiện."
+    },
+    "phone": "132",
+    "website": "https://www.klac.or.kr",
+    "languages": ["ko"],
+    "region": "전국",
+    "hours": { "ko": "평일 09:00~18:00", "en": "Weekdays 09:00-18:00", "zh": "工作日 09:00~18:00", "vi": "Ngày thường 09:00-18:00" },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-06",
+    "source_url": "https://www.klac.or.kr"
+  },
+  {
+    "id": "rainbowyouth",
+    "category": "migrant",
+    "emergency": false,
+    "name": {
+      "ko": "이주배경청소년지원재단 (무지개청소년센터)",
+      "en": "Rainbow Youth Center for Migrant Youth",
+      "zh": "移民背景青少年支援财团（彩虹青少年中心）",
+      "vi": "Trung tâm Rainbow Youth hỗ trợ thanh thiếu niên di trú"
+    },
+    "description": {
+      "ko": "이주배경청소년의 학업, 진로, 한국어, 심리 상담을 지원하는 전문기관입니다. 지역별 프로그램도 안내받을 수 있습니다.",
+      "en": "A specialist centre supporting migrant-background youth with study, careers, Korean language and counselling.",
+      "zh": "专门支援移民背景青少年学业、就业、韩语与心理咨询的机构。",
+      "vi": "Trung tâm chuyên hỗ trợ thanh thiếu niên có nền tảng di trú về học tập, nghề nghiệp, tiếng Hàn và tư vấn tâm lý."
+    },
+    "phone": "02-733-7587",
+    "website": "https://www.rainbowyouth.or.kr",
+    "languages": ["ko"],
+    "region": "전국",
+    "hours": { "ko": "평일 09:00~18:00", "en": "Weekdays 09:00-18:00", "zh": "工作日 09:00~18:00", "vi": "Ngày thường 09:00-18:00" },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-06",
+    "source_url": "https://www.rainbowyouth.or.kr"
+  },
+  {
+    "id": "moe",
+    "category": "public",
+    "emergency": false,
+    "name": {
+      "ko": "교육부",
+      "en": "Ministry of Education",
+      "zh": "教育部",
+      "vi": "Bộ Giáo dục"
+    },
+    "description": {
+      "ko": "학교 입학·편입학, 학력 인정 등 교육 제도의 공식 정보를 확인할 수 있는 정부 부처입니다.",
+      "en": "The government ministry with official information on school admission, transfer and recognition of prior study.",
+      "zh": "可查询入学、插班、学历认定等教育制度官方信息的政府部门。",
+      "vi": "Bộ phụ trách thông tin chính thức về nhập học, chuyển trường và công nhận học lực."
+    },
+    "phone": "",
+    "website": "https://www.moe.go.kr",
+    "languages": ["ko", "en"],
+    "region": "전국",
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-06",
+    "source_url": "https://www.moe.go.kr"
+  },
+  {
+    "id": "epeople-110",
+    "category": "public",
+    "emergency": false,
+    "name": {
+      "ko": "국민신문고·정부민원안내 110",
+      "en": "Government Complaints Hotline 110 (e-People)",
+      "zh": "国民申闻鼓·政府民愿咨询 110",
+      "vi": "Đường dây khiếu nại chính phủ 110 (e-People)"
+    },
+    "description": {
+      "ko": "어느 기관에 물어봐야 할지 모를 때 안내받을 수 있는 정부 통합 창구입니다. 민원 신청도 할 수 있습니다.",
+      "en": "A single government window that tells you which office handles your issue, and lets you file a complaint.",
+      "zh": "不知道该找哪个机关时可获得指引的政府综合窗口，也可提交民愿。",
+      "vi": "Cửa sổ chung của chính phủ chỉ dẫn cơ quan phụ trách và tiếp nhận khiếu nại."
+    },
+    "phone": "110",
+    "website": "https://www.epeople.go.kr",
+    "languages": ["ko", "en"],
+    "region": "전국",
+    "hours": { "ko": "평일 09:00~18:00", "en": "Weekdays 09:00-18:00", "zh": "工作日 09:00~18:00", "vi": "Ngày thường 09:00-18:00" },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-06",
+    "source_url": "https://www.epeople.go.kr"
+  },
+  {
+    "id": "local-family-center",
+    "category": "migrant",
+    "emergency": false,
+    "name": {
+      "ko": "우리 동네 가족센터 (다문화가족지원센터)",
+      "en": "Local Family Center (Multicultural Family Support)",
+      "zh": "本地家庭中心（多文化家庭支援中心）",
+      "vi": "Trung tâm Gia đình địa phương (Hỗ trợ gia đình đa văn hóa)"
+    },
+    "description": {
+      "ko": "한국어 교육, 통·번역, 자녀 학습 지원 등을 제공하는 지역 기관입니다. 우리 지역 센터 위치는 다누리 포털에서 확인하세요.",
+      "en": "Local centres offering Korean lessons, interpretation and study support. Find your nearest one on the Danuri portal.",
+      "zh": "提供韩语教育、口笔译、子女学习支援的地区机构，可在 Danuri 门户查询就近中心。",
+      "vi": "Trung tâm địa phương cung cấp lớp tiếng Hàn, phiên dịch và hỗ trợ học tập. Tìm trung tâm gần bạn trên cổng Danuri."
+    },
+    "phone": "1577-1366",
+    "website": "https://www.liveinkorea.kr",
+    "languages": ["ko", "en", "zh", "vi", "other"],
+    "region": "전국",
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-06",
+    "source_url": "https://www.liveinkorea.kr"
+  }
+]

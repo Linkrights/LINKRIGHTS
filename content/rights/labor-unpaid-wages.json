@@ -1,0 +1,210 @@
+{
+  "id": "labor-unpaid-wages",
+  "category": "labor",
+  "status": "published",
+  "featured": true,
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-06",
+  "keywords": [
+    "임금체불", "월급", "알바비", "돈을 못 받", "돈 안 줘", "월급 안 줘", "급여", "밀린 임금", "사장님이 돈",
+    "unpaid", "wages", "salary", "did not pay", "not paid", "owe me money",
+    "拖欠", "工资", "没给钱", "薪水",
+    "nợ lương", "chưa trả lương", "tiền lương", "không trả tiền"
+  ],
+  "organizations": ["moel-1350", "klac-132", "danuri-1577-1366", "youth-1388"],
+  "related": ["labor-contract", "labor-minimum-wage", "labor-youth-work-rules"],
+  "sources": [
+    { "title": "고용노동부 공식 누리집", "url": "https://www.moel.go.kr", "publisher": "고용노동부" },
+    { "title": "고용노동부 노동포털 (임금체불 진정 접수)", "url": "https://labor.moel.go.kr", "publisher": "고용노동부" }
+  ],
+  "i18n": {
+    "ko": {
+      "title": "알바를 했는데 돈을 못 받았어요",
+      "summary": "일한 만큼의 돈은 받아야 합니다. 나이가 어려도, 외국 국적이어도, 근로계약서를 쓰지 않았어도 마찬가지입니다.",
+      "situations": [
+        "일은 다 했는데 월급날이 지나도 돈이 들어오지 않아요.",
+        "사장님이 \"다음 달에 줄게\"라고만 하고 계속 미뤄요.",
+        "그만둔 뒤에 마지막 월급을 받지 못했어요.",
+        "\"계약서를 안 썼으니까 못 준다\"는 말을 들었어요."
+      ],
+      "rights": [
+        {
+          "title": "일한 대가는 반드시 받아야 합니다",
+          "body": "일을 시킨 사람은 정해진 날짜에 임금을 줘야 합니다. 돈을 주지 않는 것은 법을 어기는 일입니다."
+        },
+        {
+          "title": "계약서를 안 썼어도 받을 수 있습니다",
+          "body": "근로계약서가 없어도 실제로 일했다는 사실을 보여줄 수 있으면 임금을 청구할 수 있습니다. 출퇴근 기록, 메시지, 급여 입금 내역이 증거가 됩니다."
+        },
+        {
+          "title": "국적이나 체류자격과 상관없이 보호받습니다",
+          "body": "한국에서 일한 사람은 국적과 관계없이 임금에 관한 보호를 받습니다. 신고했다고 해서 임금을 못 받게 되는 것은 아닙니다."
+        },
+        {
+          "title": "일을 그만둔 뒤에도 청구할 수 있습니다",
+          "body": "퇴사한 뒤에도 정해진 기간 안에는 밀린 임금을 요구할 수 있습니다. 시간이 오래 지나기 전에 상담받는 것이 좋습니다."
+        }
+      ],
+      "actions": [
+        {
+          "title": "증거부터 모으세요",
+          "body": "일한 날짜와 시간을 적어두고, 사장님과 주고받은 문자·카톡, 근무표 사진, 통장 입금 내역을 저장하세요. 캡처해서 따로 보관하면 좋습니다."
+        },
+        {
+          "title": "1350으로 전화해 상담하세요",
+          "body": "고용노동부 고객상담센터 1350에 전화하면 어떻게 해야 하는지 알려줍니다. 한국어가 어려우면 통역 지원을 요청하거나 다누리콜센터(1577-1366)를 이용하세요."
+        },
+        {
+          "title": "고용노동부에 진정(신고)을 넣으세요",
+          "body": "온라인 노동포털(labor.moel.go.kr) 또는 회사가 있는 지역의 고용노동청에 진정을 넣을 수 있습니다. 만 18세 미만이어도 본인이 직접 신청할 수 있습니다."
+        },
+        {
+          "title": "혼자 하기 어렵다면 도움을 받으세요",
+          "body": "대한법률구조공단(132)에서 무료 법률상담을 받을 수 있고, 청소년전화 1388에서도 상담을 도와줍니다."
+        }
+      ],
+      "note": "금액이나 절차에 대한 정확한 판단은 고용노동부 또는 법률 상담기관에서 확인하세요."
+    },
+    "en": {
+      "title": "I worked but was not paid",
+      "summary": "You must be paid for the work you did. This is true even if you are young, not a Korean citizen, or never signed a contract.",
+      "situations": [
+        "Payday has passed but no money has arrived.",
+        "My boss keeps saying \"next month\" and never pays.",
+        "I quit and never received my last pay.",
+        "I was told \"you did not sign a contract, so I cannot pay you\"."
+      ],
+      "rights": [
+        {
+          "title": "You must be paid for work you did",
+          "body": "An employer must pay wages on the agreed date. Not paying is against the law."
+        },
+        {
+          "title": "You can claim pay even without a written contract",
+          "body": "If you can show that you actually worked, you can claim your wages. Shift photos, messages and bank records all count as evidence."
+        },
+        {
+          "title": "Protection does not depend on your nationality",
+          "body": "Anyone who works in Korea is protected regarding wages, regardless of nationality."
+        },
+        {
+          "title": "You can still claim after you have left the job",
+          "body": "Unpaid wages can be claimed for a limited period after you stop working, so get advice early."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Collect evidence first",
+          "body": "Write down the dates and hours you worked. Save text messages, shift schedules and bank statements. Take screenshots and keep them somewhere safe."
+        },
+        {
+          "title": "Call 1350 for advice",
+          "body": "The Ministry of Employment and Labor helpline (1350) will explain what to do. If Korean is difficult, ask for an interpreter or call the Danuri Call Center (1577-1366)."
+        },
+        {
+          "title": "File a complaint with the labour office",
+          "body": "You can file online at labor.moel.go.kr or at the local labour office where the workplace is. You can do this yourself even if you are under 18."
+        },
+        {
+          "title": "Get help if it feels too hard alone",
+          "body": "Korea Legal Aid Corporation (132) gives free legal advice, and the Youth Helpline (1388) can support you through the process."
+        }
+      ],
+      "note": "For an exact decision about amounts or procedures, check with the Ministry of Employment and Labor or a legal advice service."
+    },
+    "zh": {
+      "title": "打工了却没拿到工资",
+      "summary": "只要你工作了，就应该拿到报酬。即使年龄小、不是韩国国籍、没有签合同，也一样。",
+      "situations": [
+        "已经过了发薪日，钱还没到账。",
+        "老板一直说“下个月给”，却一直拖。",
+        "辞职后没有收到最后一个月的工资。",
+        "被告知“没签合同所以不能给钱”。"
+      ],
+      "rights": [
+        {
+          "title": "工作了就必须拿到报酬",
+          "body": "雇主必须在约定日期支付工资，不支付属于违法行为。"
+        },
+        {
+          "title": "没有合同也可以主张工资",
+          "body": "只要能证明你确实工作过，就可以要求工资。排班表、聊天记录、银行流水都可以作为证据。"
+        },
+        {
+          "title": "与国籍无关，都受保护",
+          "body": "在韩国工作的人，无论国籍如何，在工资方面都受到保护。"
+        },
+        {
+          "title": "离职后仍然可以主张",
+          "body": "离职后在一定期限内仍可以要求拖欠的工资，建议尽早咨询。"
+        }
+      ],
+      "actions": [
+        {
+          "title": "先收集证据",
+          "body": "记录工作的日期和时间，保存与老板的短信、聊天记录、排班表照片和银行入账记录。"
+        },
+        {
+          "title": "拨打 1350 咨询",
+          "body": "雇佣劳动部客户咨询中心 1350 会告诉你该怎么做。韩语有困难时可要求翻译，或拨打 Danuri 呼叫中心 (1577-1366)。"
+        },
+        {
+          "title": "向雇佣劳动部提出申诉",
+          "body": "可通过网上劳动门户 (labor.moel.go.kr) 或公司所在地的雇佣劳动厅提出申诉。未满18岁也可以本人申请。"
+        },
+        {
+          "title": "需要帮助时不要独自承担",
+          "body": "大韩法律救助公团 (132) 提供免费法律咨询，青少年热线 1388 也可以协助你。"
+        }
+      ],
+      "note": "关于金额和具体程序的准确判断，请向雇佣劳动部或法律咨询机构确认。"
+    },
+    "vi": {
+      "title": "Tôi đã làm việc nhưng không được trả lương",
+      "summary": "Bạn phải được trả công cho công việc đã làm, kể cả khi bạn còn nhỏ tuổi, không mang quốc tịch Hàn Quốc hay chưa ký hợp đồng.",
+      "situations": [
+        "Đã qua ngày trả lương nhưng tiền vẫn chưa vào tài khoản.",
+        "Chủ liên tục nói \"tháng sau\" rồi cứ hoãn mãi.",
+        "Tôi đã nghỉ việc nhưng chưa nhận lương tháng cuối.",
+        "Tôi bị nói rằng \"không ký hợp đồng nên không trả được\"."
+      ],
+      "rights": [
+        {
+          "title": "Làm việc thì phải được trả lương",
+          "body": "Người sử dụng lao động phải trả lương đúng ngày đã hẹn. Không trả lương là vi phạm pháp luật."
+        },
+        {
+          "title": "Không có hợp đồng vẫn đòi được lương",
+          "body": "Nếu chứng minh được bạn thực sự đã làm việc, bạn có thể đòi lương. Lịch làm việc, tin nhắn, sao kê ngân hàng đều là bằng chứng."
+        },
+        {
+          "title": "Được bảo vệ bất kể quốc tịch",
+          "body": "Bất kỳ ai làm việc tại Hàn Quốc đều được bảo vệ về tiền lương, không phụ thuộc quốc tịch."
+        },
+        {
+          "title": "Nghỉ việc rồi vẫn có thể đòi",
+          "body": "Sau khi nghỉ việc, trong một thời hạn nhất định bạn vẫn có thể đòi lương còn nợ. Nên xin tư vấn sớm."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Thu thập bằng chứng trước",
+          "body": "Ghi lại ngày giờ đã làm việc; lưu tin nhắn với chủ, ảnh bảng phân ca và sao kê ngân hàng. Nên chụp màn hình và cất riêng."
+        },
+        {
+          "title": "Gọi 1350 để được tư vấn",
+          "body": "Tổng đài Bộ Lao động 1350 sẽ hướng dẫn bạn. Nếu tiếng Hàn khó, hãy xin phiên dịch hoặc gọi Tổng đài Danuri (1577-1366)."
+        },
+        {
+          "title": "Nộp đơn khiếu nại lên Bộ Lao động",
+          "body": "Bạn có thể nộp trực tuyến tại labor.moel.go.kr hoặc tại văn phòng lao động nơi có công ty. Dưới 18 tuổi vẫn tự nộp được."
+        },
+        {
+          "title": "Đừng làm một mình nếu thấy khó",
+          "body": "Tổng công ty Trợ giúp Pháp lý (132) tư vấn miễn phí; Đường dây thanh thiếu niên 1388 cũng có thể hỗ trợ bạn."
+        }
+      ],
+      "note": "Để có kết luận chính xác về số tiền và thủ tục, hãy kiểm tra với Bộ Lao động hoặc dịch vụ tư vấn pháp lý."
+    }
+  }
+}

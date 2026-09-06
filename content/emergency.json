@@ -1,0 +1,81 @@
+{
+  "_readme": "긴급상황 안내 설정 파일입니다. keywords 에 있는 단어가 질문에 들어 있으면 AI 답변보다 먼저 긴급 안내 카드를 보여줍니다. organizations 에는 content/organizations.json 에 등록된 기관 id 만 넣을 수 있습니다.",
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-06",
+  "organizations": [
+    "police-112",
+    "fire-119",
+    "women-1366",
+    "school-violence-117",
+    "youth-1388",
+    "danuri-1577-1366"
+  ],
+  "keywords": {
+    "ko": [
+      "때렸", "때려", "때리", "맞았", "맞고 있", "폭행", "폭력", "학대", "감금", "가뒀",
+      "협박", "성폭력", "성폭행", "성추행", "강간", "몰래 찍", "불법촬영",
+      "죽고 싶", "자살", "자해", "살려주", "무서워", "위험해", "도망", "납치", "쫓아와",
+      "칼", "피가 나", "응급", "구급차", "괴롭힘", "학교폭력", "왕따", "갈 곳이 없"
+    ],
+    "en": [
+      "hit me", "beat me", "beating", "assault", "violence", "abuse", "abusing",
+      "locked me", "threaten", "threatening", "rape", "sexual assault", "molest",
+      "kill myself", "suicide", "self harm", "self-harm", "help me", "in danger",
+      "scared of him", "scared of her", "running away", "kidnap", "emergency",
+      "bleeding", "bullying", "bullied", "nowhere to go"
+    ],
+    "zh": [
+      "打我", "殴打", "暴力", "虐待", "关起来", "威胁", "强奸", "性侵", "猥亵",
+      "想死", "自杀", "自残", "救命", "危险", "逃跑", "绑架", "急救", "流血", "霸凌", "无处可去"
+    ],
+    "vi": [
+      "đánh tôi", "bạo lực", "ngược đãi", "nhốt tôi", "đe dọa", "hiếp dâm",
+      "xâm hại", "quấy rối", "muốn chết", "tự tử", "tự làm hại", "cứu tôi",
+      "nguy hiểm", "bỏ trốn", "bắt cóc", "cấp cứu", "chảy máu", "bắt nạt", "không có chỗ nào để đi"
+    ]
+  },
+  "title": {
+    "ko": "지금 위험한 상황인가요?",
+    "en": "Are you in danger right now?",
+    "zh": "你现在处于危险中吗？",
+    "vi": "Bạn có đang gặp nguy hiểm không?"
+  },
+  "message": {
+    "ko": "지금 위험하다면 아래 번호로 바로 전화하거나, 주변의 믿을 수 있는 어른에게 도움을 요청하세요. 당신의 잘못이 아닙니다.",
+    "en": "If you are in danger right now, call one of the numbers below or ask a trusted adult near you for help. This is not your fault.",
+    "zh": "如果你现在有危险，请立即拨打下面的电话，或向身边可信赖的成年人求助。这不是你的错。",
+    "vi": "Nếu bạn đang gặp nguy hiểm, hãy gọi ngay số bên dưới hoặc nhờ một người lớn đáng tin cậy gần bạn giúp đỡ. Đây không phải lỗi của bạn."
+  },
+  "steps": {
+    "ko": [
+      "지금 안전한 곳으로 이동할 수 있다면 먼저 이동하세요.",
+      "아래 긴급 전화번호로 전화하세요. 한국어가 어렵다면 \"통역이 필요해요\"라고 말하거나 다누리콜센터(1577-1366)로 전화하세요.",
+      "가능하다면 언제, 어디서, 무슨 일이 있었는지 메모나 사진으로 남겨두세요.",
+      "혼자 해결하려 하지 말고, 선생님·상담사·믿을 수 있는 어른에게 알리세요."
+    ],
+    "en": [
+      "If you can move somewhere safe, do that first.",
+      "Call one of the emergency numbers below. If Korean is difficult, say \"I need an interpreter\" or call the Danuri Call Center (1577-1366).",
+      "If you can, write down or photograph what happened, when and where.",
+      "Do not try to handle it alone. Tell a teacher, counsellor or a trusted adult."
+    ],
+    "zh": [
+      "如果可以，请先移动到安全的地方。",
+      "拨打下面的紧急电话。如果韩语有困难，可以说“需要翻译”，或拨打 Danuri 呼叫中心 (1577-1366)。",
+      "如果可能，请记录或拍下事情发生的时间、地点和经过。",
+      "不要独自承受，请告诉老师、咨询师或可信赖的成年人。"
+    ],
+    "vi": [
+      "Nếu có thể, hãy di chuyển đến nơi an toàn trước.",
+      "Gọi một trong các số khẩn cấp bên dưới. Nếu tiếng Hàn khó, hãy nói \"Tôi cần phiên dịch\" hoặc gọi Tổng đài Danuri (1577-1366).",
+      "Nếu có thể, hãy ghi lại hoặc chụp ảnh sự việc: thời gian, địa điểm, diễn biến.",
+      "Đừng tự mình giải quyết. Hãy nói với giáo viên, chuyên viên tư vấn hoặc người lớn đáng tin cậy."
+    ]
+  },
+  "note": {
+    "ko": "LINKRIGHTS는 상담기관이 아니며, 이 화면만으로 상황을 판단하지 않습니다. 실제 도움은 위 공식기관에서 받으세요.",
+    "en": "LINKRIGHTS is not a counselling service and cannot assess your situation. Please get real help from the official organisations above.",
+    "zh": "LINKRIGHTS 不是咨询机构，无法判断你的具体情况。请向上述官方机构寻求实际帮助。",
+    "vi": "LINKRIGHTS không phải là dịch vụ tư vấn và không thể đánh giá tình huống của bạn. Hãy nhận trợ giúp từ các cơ quan chính thức ở trên."
+  }
+}

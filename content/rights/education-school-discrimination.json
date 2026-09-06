@@ -1,0 +1,117 @@
+{
+  "id": "education-school-discrimination",
+  "category": "education",
+  "status": "published",
+  "featured": false,
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-06",
+  "keywords": [
+    "학교에서 차별", "놀림", "따돌림", "왕따", "선생님이 무시", "외국인이라고", "피부색",
+    "발음", "이름 때문에", "학교폭력",
+    "discrimination at school", "bullying", "teased", "made fun of my accent",
+    "在学校被歧视", "被欺负", "霸凌",
+    "bị phân biệt ở trường", "bị bắt nạt"
+  ],
+  "organizations": ["school-violence-117", "nhrck-1331", "youth-1388", "cyber1388", "rainbowyouth"],
+  "related": ["human-rights-discrimination", "education-school-enrollment", "human-rights-violence-and-safety"],
+  "sources": [
+    { "title": "국가인권위원회", "url": "https://www.humanrights.go.kr", "publisher": "국가인권위원회" },
+    { "title": "교육부 공식 누리집", "url": "https://www.moe.go.kr", "publisher": "교육부" }
+  ],
+  "i18n": {
+    "ko": {
+      "title": "학교에서 차별이나 괴롭힘을 당했어요",
+      "summary": "출신 나라, 피부색, 말투 때문에 놀림받거나 불이익을 받는 것은 차별입니다. 참고 넘어가야 하는 일이 아닙니다.",
+      "situations": [
+        "친구들이 제 나라나 발음을 가지고 놀려요.",
+        "\"외국인이니까 어쩔 수 없다\"는 말을 들었어요.",
+        "선생님이 저만 다르게 대하는 것 같아요.",
+        "괴롭힘을 당하는데 어디에 말해야 할지 모르겠어요."
+      ],
+      "rights": [
+        {
+          "title": "차별받지 않을 권리가 있습니다",
+          "body": "국적, 피부색, 언어, 출신 지역을 이유로 불리하게 대우받지 않을 권리가 있습니다. 이는 학교 안에서도 똑같이 적용됩니다."
+        },
+        {
+          "title": "학교는 나를 보호할 책임이 있습니다",
+          "body": "학교는 학생이 괴롭힘을 당하지 않도록 조치할 책임이 있습니다. 담임 선생님이 어렵다면 상담 선생님이나 교감·교장 선생님에게 말할 수 있습니다."
+        },
+        {
+          "title": "국가인권위원회에 진정할 수 있습니다",
+          "body": "차별을 겪었다면 국가인권위원회(1331)에 진정을 낼 수 있습니다. 외국 국적이어도 진정할 수 있습니다."
+        },
+        {
+          "title": "말하는 것은 고자질이 아닙니다",
+          "body": "도움을 요청하는 것은 정당한 권리입니다. 도움을 요청했다는 이유로 불이익을 주는 것도 문제가 됩니다."
+        }
+      ],
+      "actions": [
+        {
+          "title": "무슨 일이 있었는지 기록하세요",
+          "body": "날짜, 장소, 누가, 무슨 말을 했는지 짧게라도 적어두세요. 메시지나 사진이 있다면 저장해 두세요."
+        },
+        {
+          "title": "믿을 수 있는 어른에게 먼저 말하세요",
+          "body": "담임 선생님, 상담 선생님, 부모님, 지역 청소년기관 선생님 중 말하기 편한 사람부터 시작하세요."
+        },
+        {
+          "title": "학교폭력이라면 117에 신고할 수 있습니다",
+          "body": "폭력이나 지속적인 괴롭힘이라면 117로 전화하거나 문자로 신고하고 상담받을 수 있습니다."
+        },
+        {
+          "title": "차별 문제는 1331에 상담하세요",
+          "body": "국가인권위원회 1331에 전화하면 진정 절차를 안내받을 수 있습니다."
+        }
+      ],
+      "note": "구체적인 사안이 차별에 해당하는지에 대한 판단은 국가인권위원회 등 공식기관에서 확인해야 합니다."
+    },
+    "en": {
+      "title": "I faced discrimination or bullying at school",
+      "summary": "Being teased or treated worse because of your country, skin colour or accent is discrimination. You do not have to put up with it.",
+      "situations": [
+        "Classmates make fun of my country or my accent.",
+        "I was told \"that is just how it is for foreigners\".",
+        "A teacher seems to treat only me differently.",
+        "I am being bullied and do not know who to tell."
+      ],
+      "rights": [
+        {
+          "title": "You have the right not to be discriminated against",
+          "body": "You should not be treated worse because of nationality, skin colour, language or where you come from. This applies inside school too."
+        },
+        {
+          "title": "The school has a duty to protect you",
+          "body": "Schools must act to stop bullying. If your class teacher is hard to approach, you can speak to the counsellor or the head teacher."
+        },
+        {
+          "title": "You can file a complaint with the Human Rights Commission",
+          "body": "You can file a discrimination complaint with the National Human Rights Commission (1331), including as a foreign national."
+        },
+        {
+          "title": "Speaking up is not telling tales",
+          "body": "Asking for help is your right, and punishing you for asking for help is itself a problem."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Write down what happened",
+          "body": "Note the date, place, who was involved and what was said. Save any messages or photos."
+        },
+        {
+          "title": "Tell a trusted adult first",
+          "body": "Start with whoever feels easiest: your class teacher, the school counsellor, a parent, or a youth centre worker."
+        },
+        {
+          "title": "Report school violence to 117",
+          "body": "For violence or ongoing bullying you can call or text 117 to report and get advice."
+        },
+        {
+          "title": "Call 1331 about discrimination",
+          "body": "The National Human Rights Commission helpline (1331) will explain how to file a complaint."
+        }
+      ],
+      "note": "Whether a specific incident counts as discrimination must be assessed by an official body such as the National Human Rights Commission."
+    }
+  }
+}

@@ -1,0 +1,128 @@
+[
+  {
+    "id": "labor",
+    "kind": "rights",
+    "icon": "briefcase",
+    "tone": "blue",
+    "name": {
+      "ko": "일·알바 / 근로권",
+      "en": "Work & Part-time Jobs",
+      "zh": "工作·兼职 / 劳动权",
+      "vi": "Việc làm & Làm thêm"
+    },
+    "tagline": {
+      "ko": "근로계약서, 월급, 최저임금, 임금체불",
+      "en": "Contracts, wages, minimum wage, unpaid pay",
+      "zh": "劳动合同、工资、最低工资、拖欠工资",
+      "vi": "Hợp đồng, tiền lương, lương tối thiểu, nợ lương"
+    }
+  },
+  {
+    "id": "education",
+    "kind": "rights",
+    "icon": "book",
+    "tone": "violet",
+    "name": {
+      "ko": "학교·교육 / 교육권",
+      "en": "School & Education",
+      "zh": "学校·教育 / 受教育权",
+      "vi": "Trường học & Giáo dục"
+    },
+    "tagline": {
+      "ko": "학교 입학, 학교생활, 진학, 학교에서의 차별",
+      "en": "Enrolment, school life, further study, discrimination",
+      "zh": "入学、校园生活、升学、校内歧视",
+      "vi": "Nhập học, đời sống học đường, học lên, phân biệt đối xử"
+    }
+  },
+  {
+    "id": "health",
+    "kind": "rights",
+    "icon": "heart",
+    "tone": "rose",
+    "name": {
+      "ko": "병원·건강 / 의료권",
+      "en": "Hospital & Health",
+      "zh": "医院·健康 / 医疗权",
+      "vi": "Bệnh viện & Sức khỏe"
+    },
+    "tagline": {
+      "ko": "병원 이용, 건강보험, 의료비 지원",
+      "en": "Using hospitals, health insurance, medical support",
+      "zh": "就医、健康保险、医疗费支援",
+      "vi": "Khám bệnh, bảo hiểm y tế, hỗ trợ viện phí"
+    }
+  },
+  {
+    "id": "visa",
+    "kind": "rights",
+    "icon": "passport",
+    "tone": "teal",
+    "name": {
+      "ko": "체류·비자",
+      "en": "Visa & Stay",
+      "zh": "居留·签证",
+      "vi": "Cư trú & Thị thực"
+    },
+    "tagline": {
+      "ko": "체류자격, 비자 연장, 외국인등록, 출입국",
+      "en": "Status, extension, registration, immigration",
+      "zh": "居留资格、签证延期、外国人登录、出入境",
+      "vi": "Tư cách lưu trú, gia hạn, đăng ký, xuất nhập cảnh"
+    }
+  },
+  {
+    "id": "life",
+    "kind": "rights",
+    "icon": "home",
+    "tone": "amber",
+    "name": {
+      "ko": "한국생활 / 생활정보",
+      "en": "Daily Life in Korea",
+      "zh": "韩国生活 / 生活信息",
+      "vi": "Cuộc sống ở Hàn Quốc"
+    },
+    "tagline": {
+      "ko": "집, 은행, 휴대폰, 교통, 행정서비스",
+      "en": "Housing, banking, phone, transport, admin services",
+      "zh": "住房、银行、手机、交通、行政服务",
+      "vi": "Nhà ở, ngân hàng, điện thoại, giao thông, hành chính"
+    }
+  },
+  {
+    "id": "human-rights",
+    "kind": "rights",
+    "icon": "shield",
+    "tone": "green",
+    "name": {
+      "ko": "인권·차별",
+      "en": "Human Rights & Discrimination",
+      "zh": "人权·歧视",
+      "vi": "Nhân quyền & Phân biệt đối xử"
+    },
+    "tagline": {
+      "ko": "차별, 폭력, 인권침해, 상담과 신고",
+      "en": "Discrimination, violence, abuse, reporting",
+      "zh": "歧视、暴力、人权侵害、咨询与举报",
+      "vi": "Phân biệt, bạo lực, xâm phạm, tư vấn và tố giác"
+    }
+  },
+  {
+    "id": "organizations",
+    "kind": "directory",
+    "icon": "lifebuoy",
+    "tone": "slate",
+    "name": {
+      "ko": "도움받을 곳",
+      "en": "Where to Get Help",
+      "zh": "求助机构",
+      "vi": "Nơi nhận trợ giúp"
+    },
+    "tagline": {
+      "ko": "공공기관, 청소년기관, 상담기관, 이주민 지원기관",
+      "en": "Public bodies, youth centres, counselling, migrant support",
+      "zh": "公共机关、青少年机构、咨询机构、移民支援机构",
+      "vi": "Cơ quan công, trung tâm thanh thiếu niên, tư vấn, hỗ trợ di trú"
+    }
+  }
+]

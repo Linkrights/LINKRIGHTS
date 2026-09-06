@@ -1,0 +1,50 @@
+{
+  "_readme": "사이트 전체에 쓰이는 기본 정보입니다. 이메일, 운영주체, 대표 문구를 여기서 한 번에 바꿀 수 있습니다.",
+  "siteName": "LINKRIGHTS",
+  "siteNameKo": "링크라이츠",
+  "contactEmail": "hello@linkrights.example.org",
+  "operator": {
+    "ko": "LINKRIGHTS 프로젝트팀",
+    "en": "LINKRIGHTS Project Team",
+    "zh": "LINKRIGHTS 项目团队",
+    "vi": "Nhóm dự án LINKRIGHTS"
+  },
+  "tagline": {
+    "ko": "권리를 알면, 선택할 수 있습니다",
+    "en": "Know your rights, make your choice",
+    "zh": "了解权利，才能选择",
+    "vi": "Biết quyền của mình để tự lựa chọn"
+  },
+  "description": {
+    "ko": "이주배경청소년이 자신의 권리를 알고, 필요한 정보를 찾고, 도움을 받을 수 있는 기관까지 연결되도록 돕는 권리정보 플랫폼입니다.",
+    "en": "A rights information platform helping young people with a migrant background in Korea understand their rights, find information and reach organisations that can help.",
+    "zh": "帮助在韩移民背景青少年了解自身权利、查找所需信息并连接到可提供帮助机构的权利信息平台。",
+    "vi": "Nền tảng thông tin về quyền giúp thanh thiếu niên có nền tảng di trú tại Hàn Quốc hiểu quyền của mình, tìm thông tin và kết nối với các tổ chức hỗ trợ."
+  },
+  "exampleQuestions": {
+    "ko": [
+      "알바를 했는데 사장님이 돈을 안 줘요",
+      "외국인도 건강보험에 가입할 수 있나요?",
+      "비자를 연장하려면 어떻게 해야 하나요?",
+      "학교에서 차별을 받았어요"
+    ],
+    "en": [
+      "I worked part-time but my boss did not pay me",
+      "Can foreign residents join the health insurance?",
+      "How do I extend my visa?",
+      "I was discriminated against at school"
+    ],
+    "zh": [
+      "我打工了但老板不给工资",
+      "外国人也可以参加健康保险吗？",
+      "签证延期需要怎么做？",
+      "我在学校受到了歧视"
+    ],
+    "vi": [
+      "Tôi làm thêm nhưng chủ không trả lương",
+      "Người nước ngoài có tham gia bảo hiểm y tế được không?",
+      "Làm sao để gia hạn visa?",
+      "Tôi bị phân biệt đối xử ở trường"
+    ]
+  }
+}

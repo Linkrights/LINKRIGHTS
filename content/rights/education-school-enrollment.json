@@ -1,0 +1,117 @@
+{
+  "id": "education-school-enrollment",
+  "category": "education",
+  "status": "published",
+  "featured": true,
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-06",
+  "keywords": [
+    "학교 입학", "학교 가고 싶", "편입학", "전학", "중도입국", "학력 인정", "한국어를 못해서 학교",
+    "학교에 못 다", "검정고시", "학교 등록",
+    "school admission", "enroll in school", "transfer school", "go to school in Korea",
+    "入学", "转学", "上学", "学历认定",
+    "nhập học", "chuyển trường", "đi học ở Hàn Quốc"
+  ],
+  "organizations": ["moe", "rainbowyouth", "local-family-center", "danuri-1577-1366", "epeople-110"],
+  "related": ["education-school-discrimination", "life-bank-and-phone"],
+  "sources": [
+    { "title": "교육부 공식 누리집", "url": "https://www.moe.go.kr", "publisher": "교육부" },
+    { "title": "다누리 포털 (다문화가족 지원 정보)", "url": "https://www.liveinkorea.kr", "publisher": "여성가족부" }
+  ],
+  "i18n": {
+    "ko": {
+      "title": "한국 학교에 들어가고 싶어요",
+      "summary": "한국에 사는 청소년은 국적이나 체류자격과 상관없이 학교에 다닐 수 있습니다. 나이와 이전 학력에 따라 들어가는 방법이 다릅니다.",
+      "situations": [
+        "최근에 한국에 왔는데 어떻게 학교에 들어가는지 모르겠어요.",
+        "외국에서 학교를 다니다 왔는데 몇 학년으로 가야 할지 모르겠어요.",
+        "한국어를 잘 못해서 수업을 따라갈 수 있을지 걱정돼요.",
+        "체류자격 때문에 학교에 못 간다는 말을 들었어요."
+      ],
+      "rights": [
+        {
+          "title": "교육받을 권리는 국적과 상관없습니다",
+          "body": "한국에 살고 있는 청소년은 외국 국적이어도 학교에 다닐 수 있습니다. 체류자격이 불안정하더라도 교육을 받을 권리 자체가 사라지지는 않습니다."
+        },
+        {
+          "title": "이전 학력을 인정받는 절차가 있습니다",
+          "body": "외국에서 공부한 기간은 학교의 심의 절차를 거쳐 학년을 정하게 됩니다. 성적표·재학증명서 같은 서류가 있으면 도움이 됩니다."
+        },
+        {
+          "title": "한국어 지원을 받을 수 있습니다",
+          "body": "많은 지역에서 한국어 학급이나 예비학교, 방과후 한국어 수업을 운영합니다. 학교나 지역 교육청에 물어볼 수 있습니다."
+        },
+        {
+          "title": "학교 밖에서도 학력을 얻을 수 있습니다",
+          "body": "정규 학교가 어렵다면 검정고시나 대안교육기관을 통해 학력을 인정받는 길도 있습니다."
+        }
+      ],
+      "actions": [
+        {
+          "title": "서류를 최대한 모으세요",
+          "body": "여권, 외국인등록증, 이전 학교 성적표나 재학·졸업 증명서를 모으세요. 번역이 필요한 경우 가족센터에서 도움을 받을 수 있습니다."
+        },
+        {
+          "title": "살고 있는 지역의 교육지원청에 문의하세요",
+          "body": "어느 학교로 가야 하는지, 어떤 서류가 필요한지는 거주지 관할 교육지원청이 가장 정확하게 알려줍니다."
+        },
+        {
+          "title": "이주배경청소년지원재단에 상담하세요",
+          "body": "무지개청소년센터(02-733-7587)에서 학교 입학, 한국어, 진로 상담을 함께 받을 수 있습니다."
+        },
+        {
+          "title": "통역이 필요하면 다누리콜센터를 이용하세요",
+          "body": "1577-1366으로 전화하면 여러 언어로 안내를 받을 수 있습니다."
+        }
+      ],
+      "note": "학년 배정과 필요한 서류는 지역과 학교마다 다를 수 있습니다. 거주지 교육지원청 또는 교육부에서 최종 확인하세요."
+    },
+    "en": {
+      "title": "I want to enrol in a Korean school",
+      "summary": "Young people living in Korea can attend school regardless of nationality or visa status. How you enrol depends on your age and previous schooling.",
+      "situations": [
+        "I recently arrived in Korea and do not know how to enrol.",
+        "I studied abroad and do not know which grade I belong in.",
+        "My Korean is weak and I worry about following lessons.",
+        "I was told I cannot go to school because of my visa status."
+      ],
+      "rights": [
+        {
+          "title": "The right to education does not depend on nationality",
+          "body": "Young people living in Korea can attend school even if they are foreign nationals. An unstable visa status does not remove the right to education itself."
+        },
+        {
+          "title": "There is a process to recognise previous study",
+          "body": "Study completed abroad is reviewed by the school to decide your grade. Transcripts and enrolment certificates help a lot."
+        },
+        {
+          "title": "Korean language support is available",
+          "body": "Many areas run Korean language classes, preparatory schools or after-school Korean lessons. Ask the school or the district education office."
+        },
+        {
+          "title": "There are routes outside mainstream school",
+          "body": "If regular school is difficult, qualification exams and alternative education institutions can also lead to a recognised certificate."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Gather as many documents as you can",
+          "body": "Passport, alien registration card, and transcripts or certificates from your previous school. A local Family Center can help with translation."
+        },
+        {
+          "title": "Contact the district office of education where you live",
+          "body": "They can tell you most accurately which school to apply to and what documents are needed."
+        },
+        {
+          "title": "Ask the Rainbow Youth Center",
+          "body": "Call 02-733-7587 for combined advice on enrolment, Korean language and future study."
+        },
+        {
+          "title": "Use the Danuri Call Center if you need interpretation",
+          "body": "Call 1577-1366 for guidance in several languages."
+        }
+      ],
+      "note": "Grade placement and required documents vary by region and school. Confirm with your district education office or the Ministry of Education."
+    }
+  }
+}

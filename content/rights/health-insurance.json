@@ -1,0 +1,116 @@
+{
+  "id": "health-insurance",
+  "category": "health",
+  "status": "published",
+  "featured": true,
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-06",
+  "keywords": [
+    "건강보험", "의료보험", "보험 가입", "외국인 건강보험", "보험료", "지역가입자", "직장가입자",
+    "병원비가 비싸", "보험증",
+    "health insurance", "can foreigners get health insurance", "insurance premium",
+    "健康保险", "医疗保险", "参保",
+    "bảo hiểm y tế", "người nước ngoài có bảo hiểm"
+  ],
+  "organizations": ["nhis-1577-1000", "danuri-1577-1366", "local-family-center", "hikorea-1345"],
+  "related": ["health-hospital-visit", "visa-status-basics"],
+  "sources": [
+    { "title": "국민건강보험공단", "url": "https://www.nhis.or.kr", "publisher": "국민건강보험공단" }
+  ],
+  "i18n": {
+    "ko": {
+      "title": "외국인도 건강보험에 가입할 수 있나요?",
+      "summary": "네, 조건을 갖추면 가입할 수 있습니다. 건강보험이 있으면 병원비를 크게 줄일 수 있습니다.",
+      "situations": [
+        "병원에 갔는데 보험이 없어서 돈이 너무 많이 나왔어요.",
+        "부모님은 보험이 있는데 저도 되는지 모르겠어요.",
+        "한국에 온 지 얼마 안 됐는데 가입할 수 있나요?",
+        "보험료가 얼마나 나오는지 걱정돼요."
+      ],
+      "rights": [
+        {
+          "title": "직장에 다니면 직장가입자가 됩니다",
+          "body": "회사에 취업해 일하는 경우에는 국적과 관계없이 직장가입자로 건강보험에 가입하게 됩니다."
+        },
+        {
+          "title": "일정 기간 이상 한국에 살면 지역가입 대상이 됩니다",
+          "body": "국내에 6개월 이상 체류한 외국인은 지역가입자로 건강보험에 가입하게 됩니다. 체류자격에 따라 조건이 다를 수 있으니 공단에 확인하세요."
+        },
+        {
+          "title": "가족과 함께 가입할 수 있는 경우가 있습니다",
+          "body": "부모님이 직장가입자라면 조건에 따라 자녀가 피부양자로 함께 보장을 받을 수 있습니다. 자격 요건은 공단에서 확인해야 합니다."
+        },
+        {
+          "title": "보험이 있으면 병원비가 크게 줄어듭니다",
+          "body": "건강보험이 적용되면 진료비의 상당 부분을 공단이 부담하므로 본인이 내는 금액이 훨씬 적어집니다."
+        }
+      ],
+      "actions": [
+        {
+          "title": "1577-1000으로 내 자격을 확인하세요",
+          "body": "국민건강보험공단에 전화해 외국인등록번호와 체류자격을 말하면 가입 대상인지 알려줍니다."
+        },
+        {
+          "title": "가까운 건강보험공단 지사를 방문하세요",
+          "body": "여권과 외국인등록증을 가지고 가면 가입 절차를 안내받을 수 있습니다."
+        },
+        {
+          "title": "통역이 필요하면 미리 요청하세요",
+          "body": "다누리콜센터(1577-1366)를 이용하거나, 지역 가족센터에 통역 지원을 요청할 수 있습니다."
+        },
+        {
+          "title": "보험료가 부담되면 지원제도를 물어보세요",
+          "body": "지역에 따라 의료비 지원 사업이 있을 수 있습니다. 가족센터나 주민센터에 문의해 보세요."
+        }
+      ],
+      "note": "가입 조건과 보험료는 체류자격·소득에 따라 다릅니다. 반드시 국민건강보험공단(1577-1000)에서 본인 기준을 확인하세요."
+    },
+    "en": {
+      "title": "Can foreign residents join the national health insurance?",
+      "summary": "Yes, if you meet the conditions. Health insurance greatly reduces what you pay at a hospital.",
+      "situations": [
+        "I went to hospital without insurance and the bill was very high.",
+        "My parents have insurance but I do not know if I am covered.",
+        "I arrived recently. Can I join already?",
+        "I am worried about how much the premium will be."
+      ],
+      "rights": [
+        {
+          "title": "Employees join through their workplace",
+          "body": "If you are employed by a company you are enrolled as a workplace subscriber, regardless of nationality."
+        },
+        {
+          "title": "Long-term residents join as local subscribers",
+          "body": "Foreign nationals who have stayed in Korea for six months or more are enrolled as local subscribers. Conditions differ by visa status, so check with the service."
+        },
+        {
+          "title": "Family coverage is possible in some cases",
+          "body": "If a parent is a workplace subscriber, a child may be covered as a dependent, subject to eligibility rules confirmed by the service."
+        },
+        {
+          "title": "Insurance cuts hospital costs sharply",
+          "body": "When insurance applies, the service pays a large part of the treatment cost, so your own payment is far smaller."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Call 1577-1000 to check your eligibility",
+          "body": "Give your alien registration number and visa status and they will tell you whether you can enrol."
+        },
+        {
+          "title": "Visit a local NHIS branch",
+          "body": "Bring your passport and alien registration card and staff will guide you through enrolment."
+        },
+        {
+          "title": "Arrange interpretation in advance",
+          "body": "Use the Danuri Call Center (1577-1366) or ask your local Family Center for interpretation support."
+        },
+        {
+          "title": "Ask about support if premiums are hard to afford",
+          "body": "Some regions run medical cost support schemes. Ask your Family Center or community service centre."
+        }
+      ],
+      "note": "Eligibility and premiums depend on your visa status and income. Always confirm your own case with the National Health Insurance Service (1577-1000)."
+    }
+  }
+}

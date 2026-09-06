@@ -1,0 +1,113 @@
+{
+  "_readme": "소개 페이지의 글을 담는 파일입니다. 따옴표 안의 글자만 바꾸면 소개 페이지가 바뀝니다.",
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-06",
+  "i18n": {
+    "ko": {
+      "hero_title": "권리를 아는 것에서 시작합니다",
+      "hero_body": "LINKRIGHTS는 이주배경청소년이 자신의 권리를 알고, 필요한 정보를 스스로 찾고, 실제로 도움을 받을 수 있는 곳까지 연결되도록 돕는 권리정보 플랫폼입니다.",
+      "why_title": "왜 이 프로젝트를 시작했을까요",
+      "why_body": "한국에서 살아가는 이주배경청소년을 만나면서 같은 말을 반복해서 들었습니다. \"내가 어떤 권리를 가지고 있는지 모르겠어요.\" \"어디에 물어봐야 하는지 모르겠어요.\" 정보가 없는 것이 아니라, 정보가 너무 흩어져 있고 너무 어려웠습니다. LINKRIGHTS는 그 사이를 잇기 위해 시작했습니다.",
+      "problems_title": "우리가 주목한 문제",
+      "problems": [
+        {
+          "title": "정보가 여러 곳에 흩어져 있습니다",
+          "body": "노동, 교육, 의료, 체류 정보가 각각 다른 기관 누리집에 나뉘어 있어 하나씩 찾아다녀야 합니다."
+        },
+        {
+          "title": "어느 기관에 가야 하는지 알기 어렵습니다",
+          "body": "문제는 생겼는데, 그 문제를 다루는 곳이 어디인지 아는 것 자체가 큰 벽입니다."
+        },
+        {
+          "title": "전문용어가 너무 어렵습니다",
+          "body": "\"근로기준법상 사용자는…\" 같은 문장은 성인에게도 어렵습니다. 한국어를 배우는 중이라면 더욱 그렇습니다."
+        },
+        {
+          "title": "내 상황과 권리를 연결하기 어렵습니다",
+          "body": "법과 제도는 존재하지만, 그것이 지금 내 상황에 어떻게 적용되는지는 아무도 설명해 주지 않습니다."
+        }
+      ],
+      "change_title": "우리가 만들고 싶은 변화",
+      "change_body": "이주배경청소년이 \"도움을 받는 대상\"이 아니라 \"자신의 권리를 알고 선택하는 주체\"가 되는 것. LINKRIGHTS의 모든 화면은 이 문장을 기준으로 만들어졌습니다.",
+      "what_title": "LINKRIGHTS가 하는 일",
+      "what_we_do": [
+        { "title": "권리교육", "body": "청소년이 자기 권리를 이해할 수 있도록 쉬운 언어로 설명하는 교육을 진행합니다." },
+        { "title": "대학생 멘토링", "body": "가까운 나이의 대학생 멘토가 학업과 진로에 대한 이야기를 함께 나눕니다." },
+        { "title": "생활·문화 체험", "body": "함께 경험하고 관계를 만들 수 있는 문화·생활 활동을 운영합니다." },
+        { "title": "권리정보 제공", "body": "검토를 거친 권리정보를 쉬운 언어와 단계별 안내로 정리해 제공합니다." },
+        { "title": "AI 정보 안내", "body": "자신의 상황을 자유롭게 적으면 관련 권리정보와 기관을 찾아 안내합니다." },
+        { "title": "기관 연결", "body": "실제로 도움을 받을 수 있는 공식기관의 연락처와 지원 언어를 함께 안내합니다." }
+      ],
+      "sdg_title": "SDGs와 LINKRIGHTS",
+      "sdgs": [
+        {
+          "code": "SDG 4",
+          "name": "양질의 교육",
+          "body": "이주배경청소년이 학교와 학습에서 배제되지 않고, 교육에 관한 권리를 알고 사용할 수 있도록 돕습니다."
+        },
+        {
+          "code": "SDG 10",
+          "name": "불평등 감소",
+          "body": "국적과 언어 때문에 정보에서 소외되지 않도록, 정보 접근의 격차를 줄이는 것을 목표로 합니다."
+        }
+      ],
+      "team_title": "함께 만드는 사람들",
+      "team_body": "LINKRIGHTS는 이주배경청소년, 대학생 멘토, 현장 활동가가 함께 만들어 갑니다. 콘텐츠는 공식 자료를 바탕으로 작성한 뒤 검토를 거쳐 공개하며, 각 정보에는 출처와 검토일을 함께 표시합니다.",
+      "future_title": "앞으로의 방향",
+      "future_body": "프로그램이 끝난 뒤에도 계속 사용할 수 있는 권리정보 플랫폼으로 남는 것이 목표입니다. 지원 언어와 권리정보를 조금씩 늘려가고, 기관 정보는 정기적으로 다시 확인해 최신 상태로 유지합니다."
+    },
+    "en": {
+      "hero_title": "It starts with knowing your rights",
+      "hero_body": "LINKRIGHTS is a rights information platform that helps young people with a migrant background understand their rights, find the information they need, and reach organisations that can actually help.",
+      "why_title": "Why we started",
+      "why_body": "Talking with migrant-background youth in Korea, we kept hearing the same things: \"I do not know what rights I have.\" \"I do not know who to ask.\" The information exists, but it is scattered and hard to read. LINKRIGHTS exists to close that gap.",
+      "problems_title": "The problems we saw",
+      "problems": [
+        {
+          "title": "Information is scattered",
+          "body": "Work, education, health and visa information sit on separate government websites, so you have to hunt for each piece."
+        },
+        {
+          "title": "It is hard to know which office to go to",
+          "body": "Even when the problem is clear, finding out who handles it is a barrier in itself."
+        },
+        {
+          "title": "The language is too technical",
+          "body": "Legal phrasing is hard even for adults, and much harder while you are still learning Korean."
+        },
+        {
+          "title": "It is hard to connect your situation to a right",
+          "body": "The rules exist, but nobody explains how they apply to the situation you are in right now."
+        }
+      ],
+      "change_title": "The change we want",
+      "change_body": "That migrant-background young people are not \"people who receive help\" but \"people who know their rights and make their own choices\". Every screen in LINKRIGHTS is built around that sentence.",
+      "what_title": "What LINKRIGHTS does",
+      "what_we_do": [
+        { "title": "Rights education", "body": "Sessions that explain rights in plain language young people can actually use." },
+        { "title": "University mentoring", "body": "Mentors close in age share their experience of study and career paths." },
+        { "title": "Culture and daily life activities", "body": "Shared experiences that build confidence and relationships." },
+        { "title": "Reviewed rights information", "body": "Checked information written in plain language with step-by-step guidance." },
+        { "title": "AI information guide", "body": "Describe your situation and get pointed to relevant rights information and organisations." },
+        { "title": "Connection to organisations", "body": "Official contacts, with the languages each organisation supports." }
+      ],
+      "sdg_title": "SDGs and LINKRIGHTS",
+      "sdgs": [
+        {
+          "code": "SDG 4",
+          "name": "Quality Education",
+          "body": "Helping migrant-background youth stay included in school and use their rights around education."
+        },
+        {
+          "code": "SDG 10",
+          "name": "Reduced Inequalities",
+          "body": "Narrowing the information gap so that nationality and language do not decide who gets help."
+        }
+      ],
+      "team_title": "Who makes this",
+      "team_body": "LINKRIGHTS is built together by migrant-background youth, university mentors and field practitioners. Content is written from official sources, reviewed before publication, and shown with its source and review date.",
+      "future_title": "Where we are going",
+      "future_body": "Our goal is to remain a usable rights platform after the programme ends. We will keep adding languages and topics, and re-check organisation details regularly to keep them current."
+    }
+  }
+}
