@@ -15,7 +15,7 @@ export function generateStaticParams() {
 }
 
 function siteUrl(): string {
-  return process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://linkrights.example.org';
+  return process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://linkrights.vercel.app';
 }
 
 export async function generateMetadata({
