@@ -27,7 +27,7 @@ export default async function EmergencyPage({ params }: { params: Promise<{ loca
     <>
       <PageHeader title={t.emergency.pageTitle} subtitle={t.emergency.pageSubtitle} />
 
-      <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-10">
+      <div className="lr-container-narrow py-8 sm:py-10">
         <EmergencyCard
           locale={locale}
           title={card.title}
