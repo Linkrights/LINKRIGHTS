@@ -2,6 +2,7 @@
   "nav": {
     "home": "Trang chủ",
     "ask": "Hỏi AI",
+    "askShort": "Đặt câu hỏi",
     "rights": "Thông tin quyền",
     "organizations": "Nơi nhận trợ giúp",
     "about": "Giới thiệu",
@@ -34,10 +35,12 @@
     "staleBody": "Lần rà soát gần nhất đã khá lâu. Vui lòng xác nhận nội dung mới nhất với cơ quan chính thức."
   },
   "home": {
-    "heroTitle": "Tìm quyền và sự trợ giúp phù hợp với hoàn cảnh của bạn",
-    "heroSubtitle": "Bằng lời dễ hiểu, không phải ngôn ngữ pháp lý. Hãy viết ra việc bạn đang gặp, chúng tôi sẽ chỉ ra quyền liên quan và nơi có thể giúp.",
-    "askPlaceholder": "Ví dụ: Tôi làm thêm nhưng chủ không trả lương",
-    "askButton": "Gửi câu hỏi",
+    "heroTitle": "Hiểu quyền của mình,\nkết nối với sự trợ giúp bạn cần.",
+    "heroSubtitle": "Tìm hiểu dễ dàng về quyền của bạn ở trường học, nơi làm việc, sức khỏe, visa và cuộc sống hằng ngày, và tìm nơi có thể giúp bạn.",
+    "ctaAsk": "Hỏi về tình huống của tôi",
+    "ctaRights": "Tìm hiểu quyền",
+    "askPlaceholder": "Ví dụ: Tôi đã làm thêm nhưng vẫn chưa được trả lương.",
+    "askButton": "Tìm hiểu quyền của tôi",
     "exampleLabel": "Bạn có thể hỏi như thế này",
     "browseTitle": "Xem theo chủ đề",
     "browseSubtitle": "Chọn lĩnh vực bạn muốn tìm hiểu.",
@@ -65,7 +68,11 @@
   "ask": {
     "title": "Hỏi hướng dẫn AI",
     "subtitle": "Hãy mô tả hoàn cảnh bằng lời của bạn. Viết bằng ngôn ngữ nào, câu trả lời sẽ bằng ngôn ngữ đó.",
-    "placeholder": "Hãy kể chuyện gì đã xảy ra",
+    "placeholder": "Ví dụ: Tôi đã làm thêm nhưng vẫn chưa được trả lương.",
+    "questionHeading": "Bạn muốn hỏi về tình huống nào?",
+    "questionHint": "Trường học, làm thêm, sức khỏe, visa… Hãy thoải mái viết ra điều bạn đang gặp phải.",
+    "submitFirst": "Tìm hiểu quyền của tôi",
+    "privacyShort": "Đừng nhập thông tin cá nhân như tên, số điện thoại, địa chỉ hay số hộ chiếu.",
     "submit": "Gửi câu hỏi",
     "sending": "Đang tìm thông tin",
     "newQuestion": "Hỏi câu mới",
@@ -81,7 +88,7 @@
     "resultRights": "Quyền bạn nên biết",
     "resultActions": "Việc bạn có thể làm ngay",
     "resultOrgs": "Nếu bạn cần giúp đỡ",
-    "resultSources": "Nguồn",
+    "resultSources": "Thông tin đã kiểm tra",
     "resultLimitations": "Lưu ý",
     "resultFollowUp": "Cho biết thêm điều này sẽ giúp câu trả lời chính xác hơn",
     "evidenceNoneTitle": "Thông tin đã đăng ký chưa đủ để đánh giá chính xác",
@@ -119,7 +126,8 @@
       "migrant": "Hỗ trợ di trú",
       "legal": "Tư vấn pháp lý"
     },
-    "emergencyBadge": "Đường dây khẩn cấp"
+    "emergencyBadge": "Đường dây khẩn cấp",
+    "helpsWith": "Có thể giúp bạn khi"
   },
   "emergency": {
     "navTitle": "Khẩn cấp",

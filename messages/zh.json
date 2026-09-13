@@ -2,6 +2,7 @@
   "nav": {
     "home": "首页",
     "ask": "向 AI 提问",
+    "askShort": "提问",
     "rights": "权利信息",
     "organizations": "求助机构",
     "about": "关于我们",
@@ -34,10 +35,12 @@
     "staleBody": "距离上次审核已有一段时间，请向官方机构确认最新内容。"
   },
   "home": {
-    "heroTitle": "找到适合你处境的权利与帮助",
-    "heroSubtitle": "用简单的话，而不是难懂的法律用语。写下你正在经历的事，我们会告诉你相关权利和可求助的地方。",
-    "askPlaceholder": "例如：我打工了但老板不给工资",
-    "askButton": "提问",
+    "heroTitle": "了解自己的权利，\n连接到需要的帮助。",
+    "heroSubtitle": "用简单的话了解学校、工作、健康、签证和日常生活中的权利，并找到可以获得帮助的信息。",
+    "ctaAsk": "询问我的情况",
+    "ctaRights": "了解权利",
+    "askPlaceholder": "例如：我打工了，但还没拿到工资。",
+    "askButton": "了解我的权利",
     "exampleLabel": "可以这样问",
     "browseTitle": "按主题查看",
     "browseSubtitle": "选择你想了解的领域。",
@@ -65,7 +68,11 @@
   "ask": {
     "title": "向 AI 提问",
     "subtitle": "用自己的话写下你的处境。用任何语言提问，都会用同样的语言回答。",
-    "placeholder": "请写下发生了什么事",
+    "placeholder": "例如：我打工了，但还没拿到工资。",
+    "questionHeading": "你想了解什么情况？",
+    "questionHint": "学校、打工、健康、签证等，请把你正在经历的事情轻松地写下来。",
+    "submitFirst": "了解我的权利",
+    "privacyShort": "请不要输入姓名、电话、住址、护照号等个人信息。",
     "submit": "发送问题",
     "sending": "正在查找",
     "newQuestion": "提新问题",
@@ -81,7 +88,7 @@
     "resultRights": "需要了解的权利",
     "resultActions": "现在可以做的事",
     "resultOrgs": "如果需要帮助",
-    "resultSources": "出处",
+    "resultSources": "已核实的信息",
     "resultLimitations": "请注意",
     "resultFollowUp": "确认这一点会更准确",
     "evidenceNoneTitle": "现有登记资料不足以准确判断",
@@ -119,7 +126,8 @@
       "migrant": "移民支援",
       "legal": "法律咨询"
     },
-    "emergencyBadge": "紧急电话"
+    "emergencyBadge": "紧急电话",
+    "helpsWith": "在这些情况下可以求助"
   },
   "emergency": {
     "navTitle": "紧急求助",

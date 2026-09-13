@@ -2,6 +2,7 @@
   "nav": {
     "home": "Home",
     "ask": "Ask AI",
+    "askShort": "Ask a question",
     "rights": "Rights info",
     "organizations": "Get help",
     "about": "About",
@@ -34,10 +35,12 @@
     "staleBody": "The last review was a while ago. Please confirm the current details with the official organisation."
   },
   "home": {
-    "heroTitle": "Find the rights and the help that fit your situation",
-    "heroSubtitle": "Plain language, not legal language. Describe what is happening and we will show the rights involved and where to get help.",
-    "askPlaceholder": "e.g. I worked part-time but my boss did not pay me",
-    "askButton": "Ask",
+    "heroTitle": "Know your rights,\nand get connected to the help you need.",
+    "heroSubtitle": "Find out about your rights at school, at work, in health, visas and daily life in plain language, and find where you can get help.",
+    "ctaAsk": "Ask about my situation",
+    "ctaRights": "Explore rights",
+    "askPlaceholder": "e.g. I worked part-time but I still haven't been paid.",
+    "askButton": "Find my rights",
     "exampleLabel": "You could ask something like this",
     "browseTitle": "Browse by topic",
     "browseSubtitle": "Pick the area you want to know about.",
@@ -65,7 +68,11 @@
   "ask": {
     "title": "Ask the AI guide",
     "subtitle": "Describe your situation in your own words. Write in any language and the answer comes back in that language.",
-    "placeholder": "Tell us what happened",
+    "placeholder": "e.g. I worked part-time but I still haven't been paid.",
+    "questionHeading": "What would you like to ask about?",
+    "questionHint": "School, part-time work, health, visas and more. Describe what you are going through in your own words.",
+    "submitFirst": "Find my rights",
+    "privacyShort": "Do not enter personal details such as your name, phone number, address or passport number.",
     "submit": "Send question",
     "sending": "Looking this up",
     "newQuestion": "Ask a new question",
@@ -81,7 +88,7 @@
     "resultRights": "Rights to know",
     "resultActions": "What you can do now",
     "resultOrgs": "If you need help",
-    "resultSources": "Sources",
+    "resultSources": "Information checked",
     "resultLimitations": "Please note",
     "resultFollowUp": "Telling us this would make the answer more accurate",
     "evidenceNoneTitle": "Our registered information is not enough to judge this",
@@ -119,7 +126,8 @@
       "migrant": "Migrant support",
       "legal": "Legal advice"
     },
-    "emergencyBadge": "Emergency line"
+    "emergencyBadge": "Emergency line",
+    "helpsWith": "How they can help"
   },
   "emergency": {
     "navTitle": "Emergency",
