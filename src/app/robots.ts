@@ -2,7 +2,7 @@
 import type { MetadataRoute } from 'next';
 
 function base(): string {
-  return process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://linkrights.example.org';
+  return process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://linkrights.vercel.app';
 }
 
 export default function robots(): MetadataRoute.Robots {

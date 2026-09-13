@@ -6,12 +6,13 @@ import { getArticles, getRightsCategories } from '@/lib/content';
 import { LOCALES } from '@/lib/i18n';
 
 function base(): string {
-  return process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://linkrights.example.org';
+  return process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://linkrights.vercel.app';
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const root = base();
-  const staticPaths = ['', 'ask', 'rights', 'organizations', 'emergency', 'about', 'programs', 'faq', 'privacy'];
+  // AI 질문 페이지(ask)는 검색 결과에 나오지 않도록 설정되어 있어 여기에 넣지 않습니다.
+  const staticPaths = ['', 'rights', 'organizations', 'emergency', 'about', 'programs', 'faq', 'privacy'];
   const categories = getRightsCategories();
   const articles = getArticles();
   const entries: MetadataRoute.Sitemap = [];
