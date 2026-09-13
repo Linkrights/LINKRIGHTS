@@ -27,9 +27,13 @@ export default async function OrganizationsPage({ params }: { params: Promise<{ 
 
       {/* 분류 바로가기 */}
       <div className="border-b border-[var(--color-line)] bg-white">
-        <div className="mx-auto flex max-w-6xl flex-wrap gap-2 px-4 py-4 sm:px-6">
+        <div className="lr-container flex flex-wrap gap-2 py-4">
           {ORDER.filter((key) => organizations.some((org) => org.category === key)).map((key) => (
-            <a key={key} href={`#${key}`} className="lr-chip hover:bg-brand-100">
+            <a
+              key={key}
+              href={`#${key}`}
+              className="rounded-full border border-[var(--color-line)] bg-white px-4 py-2 text-[15px] font-semibold text-ink-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
+            >
               {t.organizations.categories[key]}
             </a>
           ))}
