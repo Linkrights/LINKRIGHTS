@@ -21,10 +21,10 @@ export default async function PrivacyPage({ params }: { params: Promise<{ locale
   return (
     <>
       <PageHeader title={t.privacy.title} subtitle={t.privacy.subtitle} />
-      <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14">
+      <div className="lr-container-narrow py-10 sm:py-14">
         <ol className="space-y-4">
           {t.privacy.sections.map((section, index) => (
-            <li key={section.title} className="lr-card p-5">
+            <li key={section.title} className="lr-card p-5 sm:p-6">
               <h2 className="flex gap-3 text-lg font-extrabold text-ink-900">
                 <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-600 text-sm text-white">
                   {index + 1}
