@@ -191,3 +191,17 @@ export interface AskApiError {
 }
 
 export type AskApiResponse = AskApiSuccess | AskApiError;
+
+/** 추가 질문을 할 때 브라우저가 함께 보내는 이전 대화 한 번 (사용자 질문 + 그때 받은 AI 답변) */
+export interface AskHistoryTurn {
+  question: string;
+  answer: Pick<AiAnswer, 'summary' | 'rights' | 'actions' | 'follow_up_question' | 'limitations'>;
+}
+
+/** 브라우저가 /api/ask 로 보내는 내용 */
+export interface AskApiRequest {
+  question: string;
+  locale: Locale;
+  /** 추가 질문일 때만 보냅니다. 최초 질문에는 넣지 않습니다. */
+  history?: AskHistoryTurn[];
+}
