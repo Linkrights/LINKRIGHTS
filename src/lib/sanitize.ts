@@ -2,6 +2,9 @@
 //
 // AI에게 규칙으로 금지했더라도, 만에 하나 지어낼 수 있으므로
 // 화면에 보내기 전에 서버에서 한 번 더 확인합니다.
+//
+// 서버 기록(로그)에는 지운 번호·링크의 "개수"만 남깁니다.
+// 사용자가 적은 연락처가 답변에 섞여 있더라도 그 값이 기록에 남지 않게 하기 위해서입니다.
 
 import type { Organization, RightsArticle } from './types';
 
@@ -63,24 +66,58 @@ export function buildAllowlist(organizations: Organization[], articles: RightsAr
 export function scrub(text: string, allow: Allowlist): string {
   if (!text) return '';
 
+  let removedLinks = 0;
+  let removedPhones = 0;
+
   let result = text.replace(URL_PATTERN, (match) => {
     const host = hostOf(match);
     if (host && allow.hosts.has(host)) return match;
-    console.warn('[linkrights] 등록되지 않은 링크를 답변에서 제거했습니다:', match);
+    removedLinks += 1;
     return '';
   });
 
   result = result.replace(PHONE_PATTERN, (match) => {
-    const digits = digitsOnly(match);
     // 연도(2026)나 금액처럼 보이는 4자리 숫자는 전화번호 패턴에 걸리지 않도록 이미 제한했습니다.
-    if (allow.phones.has(digits)) return match;
-    console.warn('[linkrights] 등록되지 않은 전화번호를 답변에서 제거했습니다:', match);
+    if (allow.phones.has(digitsOnly(match))) return match;
+    removedPhones += 1;
     return '';
   });
+
+  if (removedLinks > 0 || removedPhones > 0) {
+    console.warn(`[linkrights] 답변에서 등록되지 않은 링크 ${removedLinks}개, 전화번호 ${removedPhones}개를 제거했습니다.`);
+  }
 
   return result.replace(/\s{2,}/g, ' ').replace(/\s+([.,!?])/g, '$1').trim();
 }
 
 export function scrubBlocks<T extends { title: string; body: string }>(blocks: T[], allow: Allowlist): T[] {
   return blocks.map((block) => ({ ...block, title: scrub(block.title, allow), body: scrub(block.body, allow) }));
+}
+
+/** 기관의 전화번호를 숫자만 남긴 모양 */
+export function phoneDigits(org: Organization): string {
+  return digitsOnly(org.phone);
+}
+
+/** 답변 속 언급을 찾을 때 쓸 기관 이름 조각 (예: "다누리콜센터 1577-1366" → "다누리콜센터") */
+function nameParts(org: Organization): string[] {
+  return Object.values(org.name)
+    .filter((name): name is string => typeof name === 'string')
+    .flatMap((name) => name.split(/[()]/))
+    .map((part) => part.replace(/[\d\s-]+$/, '').trim())
+    .filter((part) => part.length >= 4);
+}
+
+/**
+ * 글에 이 기관이 언급되어 있는지 확인합니다. (등록된 이름 또는 전화번호)
+ * ignorePhones: 화면에 보여주는 다른 기관과 번호가 같은 경우(예: 1388)에는 번호로 판단하지 않습니다.
+ */
+export function mentionsOrganization(text: string, org: Organization, ignorePhones: Set<string> = new Set()): boolean {
+  if (!text) return false;
+  const phone = digitsOnly(org.phone);
+  if (phone && !ignorePhones.has(phone)) {
+    const found = (text.match(PHONE_PATTERN) ?? []).map(digitsOnly);
+    if (found.includes(phone)) return true;
+  }
+  return nameParts(org).some((part) => text.includes(part));
 }

@@ -2,7 +2,11 @@
   "_readme": "사이트 전체에 쓰이는 기본 정보입니다. 이메일, 운영주체, 대표 문구를 여기서 한 번에 바꿀 수 있습니다.",
   "siteName": "LINKRIGHTS",
   "siteNameKo": "링크라이츠",
-  "contactEmail": "hello@linkrights.example.org",
+  "contactEmail": "linkrights2026@gmail.com",
+  "social": {
+    "instagram": { "url": "https://www.instagram.com/link_rights/", "label": "@link_rights" },
+    "blog": { "url": "https://blog.naver.com/linkrights", "label": "blog.naver.com/linkrights" }
+  },
   "operator": {
     "ko": "LINKRIGHTS 프로젝트팀",
     "en": "LINKRIGHTS Project Team",

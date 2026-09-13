@@ -53,11 +53,15 @@ export function OrgCard({
         )}
       </dl>
 
+      {/* 전화번호와 버튼 글자는 줄바꿈하지 않습니다. 카드가 좁으면 버튼이 통째로 다음 줄로 내려갑니다.
+          "새 창에서 열림" 안내는 화면낭독기용 이름(aria-label)으로만 전달해 글자 추출에 섞이지 않게 합니다. */}
       <div className="mt-auto flex flex-wrap gap-2 pt-2">
         {org.phone && (
-          <a href={`tel:${org.phone.replace(/[^\d+]/g, '')}`} className="lr-btn lr-btn-primary flex-1 text-[15px]">
-            <Icon name="phone" size={18} />
-            {org.phone}
+          <a
+            href={`tel:${org.phone.replace(/[^\d+]/g, '')}`}
+            className="lr-btn lr-btn-primary flex-1 whitespace-nowrap text-[15px]"
+          >
+            <Icon name="phone" size={18} /> {org.phone}
           </a>
         )}
         {org.website && (
@@ -65,11 +69,10 @@ export function OrgCard({
             href={org.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="lr-btn lr-btn-ghost flex-1 text-[15px]"
+            aria-label={`${pick(org.name, locale)} ${t.common.website} (${t.common.openInNew})`}
+            className="lr-btn lr-btn-ghost flex-1 whitespace-nowrap text-[15px]"
           >
-            <Icon name="external" size={18} />
-            {t.common.website}
-            <span className="sr-only">({t.common.openInNew})</span>
+            <Icon name="external" size={18} /> {t.common.website}
           </a>
         )}
       </div>

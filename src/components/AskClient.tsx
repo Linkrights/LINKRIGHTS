@@ -6,9 +6,13 @@
 // 추가 질문: AI 답변 아래의 "추가 질문하기"로 이어서 물어보면
 // 최근 대화(질문 + 답변)를 함께 보내 앞의 내용에 이어서 답하게 합니다.
 // "새 질문"을 누르면 대화를 모두 지우고 처음 상태로 돌아갑니다.
+//
+// 답변 칸 순서: 지금 상황을 보면 → (자료 부족 안내) → 알아두면 좋은 권리 → 지금 해볼 수 있는 것
+//              → 도움이 필요하다면 → 확인하면 더 정확한 부분 → 참고해 주세요 → 출처
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { PENDING_QUESTION_KEY } from './AskBox';
 import { EmergencyCard } from './EmergencyCard';
 import { Icon } from './Icon';
 import { OrgCard } from './OrgCard';
@@ -37,7 +41,16 @@ function toHistory(turns: Turn[]): AskHistoryTurn[] {
   for (const { question, result } of turns) {
     if (result.ok && result.mode === 'ai' && result.answer) {
       const { summary, rights, actions, follow_up_question, limitations } = result.answer;
-      history.push({ question, answer: { summary, rights, actions, follow_up_question, limitations } });
+      history.push({
+        question,
+        answer: {
+          summary,
+          rights: rights.map(({ title, body }) => ({ title, body })),
+          actions,
+          follow_up_question,
+          limitations,
+        },
+      });
     }
   }
   return history.slice(-MAX_HISTORY_TURNS);
@@ -52,7 +65,20 @@ function errorMessageOf(result: AskApiResponse, t: Messages): string | null {
   return t.ask.errorGeneric;
 }
 
-/** 서버가 돌려준 결과 하나(오류 · 긴급 안내 · AI 답변)를 그립니다. 기존 화면과 같은 모양입니다. */
+/**
+ * 번호 동그라미. 화면에는 숫자만 보이고,
+ * 화면낭독기와 글자 복사·추출에서는 "1. 상황을…"처럼 번호와 문장이 떨어져 읽힙니다.
+ */
+function StepNumber({ index }: { index: number }) {
+  return (
+    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-600 text-sm font-bold text-white">
+      {index + 1}
+      <span className="sr-only">.</span>
+    </span>
+  );
+}
+
+/** 서버가 돌려준 결과 하나(오류 · 긴급 안내 · AI 답변)를 그립니다. */
 function ResultView({
   result,
   locale,
@@ -101,22 +127,31 @@ function ResultView({
 
       {result.ok && result.mode === 'ai' && result.answer && (
         <article className="lr-card overflow-hidden">
+          {/* 지금 상황을 보면 */}
           <div className="border-b border-[var(--color-line)] bg-brand-50 px-5 py-4">
             <h2 className="flex items-center gap-2 text-sm font-bold text-brand-800">
-              <Icon name="sparkles" size={16} />
-              {t.ask.resultSituation}
-            </h2>
+              <Icon name="sparkles" size={16} /> {t.ask.resultSituation}
+            </h2>{' '}
             <p className="mt-1.5 text-[15px] leading-relaxed text-ink-900">{result.answer.summary}</p>
           </div>
 
           <div className="space-y-6 p-5">
+            {/* 자료 부족 안내: 등록된 권리정보 중 이 상황에 맞는 자료가 없을 때 */}
+            {result.evidence === 'none' && (
+              <section className="rounded-xl border border-brand-200 bg-brand-50 p-4">
+                <h3 className="text-sm font-bold text-brand-800">{t.ask.evidenceNoneTitle}</h3>{' '}
+                <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{t.ask.evidenceNoneBody}</p>
+              </section>
+            )}
+
+            {/* 알아두면 좋은 권리 (근거 자료가 있을 때만) */}
             {result.answer.rights.length > 0 && (
               <section>
                 <h3 className="text-base font-extrabold text-ink-900">{t.ask.resultRights}</h3>
                 <ul className="mt-3 space-y-3">
                   {result.answer.rights.map((item, index) => (
                     <li key={index} className="rounded-xl bg-surface-soft p-4">
-                      <p className="font-bold text-ink-900">{item.title}</p>
+                      <p className="font-bold text-ink-900">{item.title}</p>{' '}
                       <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{item.body}</p>
                     </li>
                   ))}
@@ -124,17 +159,16 @@ function ResultView({
               </section>
             )}
 
+            {/* 지금 해볼 수 있는 것 */}
             {result.answer.actions.length > 0 && (
               <section>
                 <h3 className="text-base font-extrabold text-ink-900">{t.ask.resultActions}</h3>
                 <ol className="mt-3 space-y-3">
                   {result.answer.actions.map((item, index) => (
                     <li key={index} className="flex gap-3">
-                      <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-600 text-sm font-bold text-white">
-                        {index + 1}
-                      </span>
+                      <StepNumber index={index} />{' '}
                       <span>
-                        <span className="block font-bold text-ink-900">{item.title}</span>
+                        <span className="block font-bold text-ink-900">{item.title}</span>{' '}
                         <span className="mt-0.5 block text-[15px] leading-relaxed text-ink-700">{item.body}</span>
                       </span>
                     </li>
@@ -143,6 +177,7 @@ function ResultView({
               </section>
             )}
 
+            {/* 도움이 필요하다면 (근거 자료와 연결된 기관이 있을 때만) */}
             {result.organizations.length > 0 && (
               <section>
                 <h3 className="text-base font-extrabold text-ink-900">{t.ask.resultOrgs}</h3>
@@ -154,6 +189,23 @@ function ResultView({
               </section>
             )}
 
+            {/* 확인하면 더 정확한 부분 */}
+            {result.answer.follow_up_question && (
+              <section className="rounded-xl bg-surface-soft p-4">
+                <h3 className="text-sm font-bold text-ink-900">{t.ask.resultFollowUp}</h3>{' '}
+                <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{result.answer.follow_up_question}</p>
+              </section>
+            )}
+
+            {/* 참고해 주세요 */}
+            {result.answer.limitations && (
+              <section className="rounded-xl border border-[var(--color-warm-500)] bg-warm-100 p-4">
+                <h3 className="text-sm font-bold text-ink-900">{t.ask.resultLimitations}</h3>{' '}
+                <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{result.answer.limitations}</p>
+              </section>
+            )}
+
+            {/* 출처: 실제로 사용한 등록 자료의 제목, 검토일, 발행기관과 공식 링크 */}
             {result.sources.length > 0 && (
               <section>
                 <h3 className="text-base font-extrabold text-ink-900">{t.ask.resultSources}</h3>
@@ -162,21 +214,22 @@ function ResultView({
                     <li key={source.id} className="rounded-xl border border-[var(--color-line)] p-3">
                       <Link href={source.href} className="lr-link text-sm font-semibold">
                         {source.title}
-                      </Link>
-                      <p className="mt-1 text-xs text-ink-300">
+                      </Link>{' '}
+                      <p className="mt-1 text-xs text-ink-500">
                         {t.common.reviewedAt} {formatDate(source.reviewed_at, locale)}
                       </p>
                       {source.sources.length > 0 && (
-                        <ul className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1">
+                        <ul className="mt-1.5 space-y-1">
                           {source.sources.map((official) => (
-                            <li key={official.url}>
+                            <li key={official.url} className="text-xs leading-relaxed text-ink-500">
+                              {official.publisher && <span>{official.publisher} · </span>}
                               <a
                                 href={official.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-xs text-ink-500 underline underline-offset-2 hover:text-brand-700"
+                                aria-label={`${official.title} (${t.common.openInNew})`}
+                                className="underline underline-offset-2 hover:text-brand-700"
                               >
-                                <Icon name="external" size={12} />
                                 {official.title}
                               </a>
                             </li>
@@ -186,20 +239,6 @@ function ResultView({
                     </li>
                   ))}
                 </ul>
-              </section>
-            )}
-
-            {result.answer.limitations && (
-              <section className="rounded-xl border border-[var(--color-warm-500)] bg-warm-100 p-4">
-                <h3 className="text-sm font-bold text-ink-900">{t.ask.resultLimitations}</h3>
-                <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{result.answer.limitations}</p>
-              </section>
-            )}
-
-            {result.answer.follow_up_question && (
-              <section>
-                <h3 className="text-sm font-bold text-ink-900">{t.ask.resultFollowUp}</h3>
-                <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{result.answer.follow_up_question}</p>
               </section>
             )}
 
@@ -254,7 +293,7 @@ export function AskClient({
 
     const previousTurns = isFollowUp ? turns : [];
     const history = toHistory(previousTurns);
-    // 최초 질문은 기존과 똑같이 질문과 언어만 보냅니다.
+    // 최초 질문은 질문과 언어만 보냅니다.
     const payload: AskApiRequest =
       history.length > 0 ? { question: trimmed, locale, history } : { question: trimmed, locale };
 
@@ -287,11 +326,26 @@ export function AskClient({
     questionRef.current?.focus();
   }
 
-  // 홈에서 질문을 적고 넘어온 경우 자동으로 한 번 물어봅니다.
+  // 홈 입력창에서 넘어온 질문을 자동으로 한 번 물어봅니다.
+  // 질문은 주소(URL) 대신 이 탭의 임시 저장소로 넘어오며, 읽자마자 지웁니다.
+  // 예전 방식의 ?q= 주소로 들어온 경우에도 동작하고, 주소에서는 질문을 지웁니다.
   useEffect(() => {
-    if (initialQuestion && !askedRef.current) {
+    if (askedRef.current) return;
+    let pendingQuestion = '';
+    try {
+      pendingQuestion = window.sessionStorage.getItem(PENDING_QUESTION_KEY) ?? '';
+      window.sessionStorage.removeItem(PENDING_QUESTION_KEY);
+    } catch {
+      // 임시 저장소를 쓸 수 없는 브라우저에서는 주소로 넘어온 질문만 사용합니다.
+    }
+    if (initialQuestion) {
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+    const text = (pendingQuestion || initialQuestion).slice(0, MAX_LENGTH);
+    if (text) {
       askedRef.current = true;
-      void ask(initialQuestion);
+      setQuestion(text);
+      void ask(text);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialQuestion]);
@@ -315,9 +369,8 @@ export function AskClient({
       {/* 개인정보 입력 금지 안내 */}
       <div className="rounded-xl border border-brand-200 bg-brand-50 p-4">
         <p className="flex items-center gap-2 text-sm font-bold text-brand-800">
-          <Icon name="shield" size={16} />
-          {t.ask.privacyTitle}
-        </p>
+          <Icon name="shield" size={16} /> {t.ask.privacyTitle}
+        </p>{' '}
         <p className="mt-1 text-sm leading-relaxed text-ink-700">{t.ask.privacyBody}</p>
       </div>
 
@@ -353,8 +406,7 @@ export function AskClient({
               </>
             ) : (
               <>
-                <Icon name="sparkles" size={18} />
-                {t.ask.submit}
+                <Icon name="sparkles" size={18} /> {t.ask.submit}
               </>
             )}
           </button>
@@ -394,7 +446,7 @@ export function AskClient({
             {/* 추가 질문은 무엇을 물었는지 답변 위에 함께 보여줍니다. (처음 질문은 위 입력창에 있습니다) */}
             {index > 0 && (
               <div className="rounded-xl border border-brand-200 bg-brand-50 p-4">
-                <p className="text-sm font-bold text-brand-800">{t.ask.myQuestion}</p>
+                <p className="text-sm font-bold text-brand-800">{t.ask.myQuestion}</p>{' '}
                 <p className="mt-1 text-[15px] leading-relaxed text-ink-900">{turn.question}</p>
               </div>
             )}
@@ -451,8 +503,7 @@ export function AskClient({
                     </>
                   ) : (
                     <>
-                      <Icon name="sparkles" size={18} />
-                      {t.ask.submit}
+                      <Icon name="sparkles" size={18} /> {t.ask.submit}
                     </>
                   )}
                 </button>

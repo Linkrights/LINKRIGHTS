@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "node scripts/check-content.mjs && next build",
     "start": "next start",
-    "check": "node scripts/check-content.mjs"
+    "check": "node scripts/check-content.mjs",
+    "test:ask": "node scripts/test-ask.mjs"
   },
   "dependencies": {
     "next": "^15.5.0",

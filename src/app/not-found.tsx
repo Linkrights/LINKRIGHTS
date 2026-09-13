@@ -11,7 +11,7 @@ export default function NotFound() {
           display: 'grid',
           placeItems: 'center',
           fontFamily:
-            '-apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif',
+            '-apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Segoe UI", sans-serif',
           background: '#f5f8fd',
           color: '#101828',
           padding: 24,

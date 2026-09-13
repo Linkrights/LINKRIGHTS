@@ -28,7 +28,8 @@ export default async function PrivacyPage({ params }: { params: Promise<{ locale
               <h2 className="flex gap-3 text-lg font-extrabold text-ink-900">
                 <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-600 text-sm text-white">
                   {index + 1}
-                </span>
+                  <span className="sr-only">.</span>
+                </span>{' '}
                 {section.title}
               </h2>
               <p className="mt-2 pl-10 text-[15px] leading-relaxed text-ink-700">{section.body}</p>

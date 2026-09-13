@@ -1,4 +1,4 @@
-// 사이트 아래쪽 영역입니다. 문의 이메일은 content/site.json 에서 바꿉니다.
+// 사이트 아래쪽 영역입니다. 문의 이메일과 인스타그램·블로그 주소는 content/site.json 에서 바꿉니다.
 
 import Link from 'next/link';
 import { Icon } from './Icon';
@@ -20,6 +20,11 @@ export function Footer({ locale }: { locale: Locale }) {
     { href: `/${locale}/privacy`, label: t.footer.privacy },
   ];
 
+  const social = [
+    { key: 'instagram', label: t.footer.instagram, link: site.social?.instagram },
+    { key: 'blog', label: t.footer.blog, link: site.social?.blog },
+  ].filter((item) => item.link?.url);
+
   return (
     <footer className="mt-16 border-t border-[var(--color-line)] bg-white">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3">
@@ -31,12 +36,28 @@ export function Footer({ locale }: { locale: Locale }) {
             <span className="text-lg font-extrabold text-brand-800">LINKRIGHTS</span>
           </div>
           <p className="mt-3 text-sm leading-relaxed text-ink-700">{t.footer.aboutSite}</p>
-          <p className="mt-3 text-sm text-ink-500">
-            {t.footer.contact}:{' '}
-            <a className="lr-link" href={`mailto:${site.contactEmail}`}>
-              {site.contactEmail}
-            </a>
-          </p>
+          <ul className="mt-3 space-y-1.5 text-sm text-ink-500">
+            <li>
+              {t.footer.contact}:{' '}
+              <a className="lr-link break-all" href={`mailto:${site.contactEmail}`}>
+                {site.contactEmail}
+              </a>
+            </li>
+            {social.map((item) => (
+              <li key={item.key}>
+                {item.label}:{' '}
+                <a
+                  className="lr-link break-all"
+                  href={item.link!.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${item.label} ${item.link!.label} (${t.common.openInNew})`}
+                >
+                  {item.link!.label}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <nav aria-labelledby="footer-links">
@@ -59,7 +80,7 @@ export function Footer({ locale }: { locale: Locale }) {
           <ul className="mt-3 space-y-2">
             {emergencyOrgs.map((org) => (
               <li key={org.id} className="text-sm text-ink-700">
-                <a href={`tel:${org.phone}`} className="font-semibold text-brand-700 hover:underline">
+                <a href={`tel:${org.phone}`} className="whitespace-nowrap font-semibold text-brand-700 hover:underline">
                   {org.phone}
                 </a>{' '}
                 <span className="text-ink-500">{pick(org.name, locale)}</span>

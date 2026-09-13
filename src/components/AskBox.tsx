@@ -8,6 +8,9 @@ import { useState } from 'react';
 import { Icon } from './Icon';
 import { getMessages, type Locale } from '@/lib/i18n';
 
+/** 홈에서 쓴 질문을 질문 페이지로 넘길 때 쓰는 이 탭의 임시 저장소 이름 (AskClient 가 읽고 바로 지웁니다) */
+export const PENDING_QUESTION_KEY = 'linkrights:pending-question';
+
 export function AskBox({ locale, examples }: { locale: Locale; examples: string[] }) {
   const t = getMessages(locale);
   const router = useRouter();
@@ -16,7 +19,14 @@ export function AskBox({ locale, examples }: { locale: Locale; examples: string[
   function go(question: string) {
     const trimmed = question.trim();
     if (!trimmed) return;
-    router.push(`/${locale}/ask?q=${encodeURIComponent(trimmed)}`);
+    // 질문 내용이 주소(URL)와 방문 기록에 남지 않도록, 이 탭의 임시 저장소에 담아 질문 페이지로 넘깁니다.
+    try {
+      window.sessionStorage.setItem(PENDING_QUESTION_KEY, trimmed.slice(0, 500));
+      router.push(`/${locale}/ask`);
+    } catch {
+      // 임시 저장소를 쓸 수 없는 브라우저에서만 예전처럼 주소로 넘깁니다. (질문 페이지가 주소에서 바로 지웁니다)
+      router.push(`/${locale}/ask?q=${encodeURIComponent(trimmed)}`);
+    }
   }
 
   return (

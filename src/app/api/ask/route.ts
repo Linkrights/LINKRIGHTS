@@ -5,15 +5,21 @@
 //  1) 질문 길이 확인 (너무 길면 거절 → 비용 보호)
 //  2) 긴급 키워드 확인 (걸리면 AI를 부르지 않고 즉시 긴급 안내)
 //  3) 사용량 제한 확인 (같은 사람의 반복 요청, 하루 총량)
-//  4) 등록된 권리정보 중 관련 있는 것만 골라 AI에게 전달
-//  5) AI 답변에서 등록되지 않은 기관·번호·링크를 걸러내고 화면으로 보냄
+//  4) 근거 자료 고르기: 등록 키워드가 질문에 실제로 들어 있는 권리정보만 (맞는 자료가 없으면 "자료 없음"도 정상 결과)
+//  5) AI 호출: 근거 자료와, 그 자료에 연결된 기관만 전달
+//  6) 답변 검증: 근거 없는 권리, 연결되지 않은 기관, 등록되지 않은 번호·링크를 지우고 화면으로 보냄
+//
+// 개발 원칙
+//  - 자료가 부족하면 답변을 억지로 완성하지 않는다.
+//  - 검색 결과가 있다는 것과 관련성이 높다는 것은 다르다.
+//  - 이전 AI 답변은 사실의 근거가 아니다.
+//  - 기관과 법률정보는 실제 등록자료가 있을 때만 제공한다.
 //
 // 추가 질문: 브라우저가 이전 질문과 답변(history)을 함께 보내면 대화를 이어서 답합니다.
-// history 가 없으면 최초 질문이며, 이때 동작은 추가 질문 기능이 생기기 전과 같습니다.
+// 이전 대화는 상황 이해에만 쓰고, 근거 자료는 매번 새로 검색합니다.
 
 import { NextResponse } from 'next/server';
 import {
-  getArticle,
   getCategories,
   getGroundingArticles,
   getOrganizations,
@@ -22,32 +28,27 @@ import {
 } from '@/lib/content';
 import { buildEmergencyCard, detectEmergency } from '@/lib/emergency';
 import { DEFAULT_LOCALE, isLocale } from '@/lib/i18n';
-import { askOpenAi, buildContext, type ContextArticle } from '@/lib/openai';
+import { askOpenAi, buildContext } from '@/lib/openai';
 import { checkLimits } from '@/lib/rateLimit';
-import { buildAllowlist, scrub, scrubBlocks, type Allowlist } from '@/lib/sanitize';
+import { buildAllowlist, mentionsOrganization, phoneDigits, scrub, scrubBlocks, type Allowlist } from '@/lib/sanitize';
 import { findRelevantArticles, fallbackArticles } from '@/lib/search';
-import type { AiAnswer, AskApiResponse, AskHistoryTurn, Locale, RightsBlock } from '@/lib/types';
+import type { AiAnswer, AiRight, AskApiResponse, AskHistoryTurn, Locale, RightsBlock } from '@/lib/types';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 /** 질문 최대 길이. 길수록 비용이 늘어나므로 제한합니다. */
 const MAX_QUESTION_LENGTH = 500;
-const MAX_CONTEXT_ARTICLES = 4;
-/**
- * 등록 키워드는 맞지 않고 일상 단어만 겹친 글("관련 낮음")을 넘기는 기준입니다.
- * 이런 글을 많이 넘기면 AI가 사용자의 상황을 그 글의 상황(예: 차별, 학교폭력)으로 단정하기 쉬워서
- * 점수가 MIN_WEAK_SCORE 이상인 글만, 최대 MAX_WEAK_ARTICLES 개까지 넘깁니다.
- * (1점은 "학교에서", "말을" 같은 흔한 단어 한두 개만 겹쳐도 나오는 점수라서 1.5점부터 넘깁니다.)
- */
-const MIN_WEAK_SCORE = 1.5;
-const MAX_WEAK_ARTICLES = 2;
-/** 화면에 보여주는 기관 수. 많이 보여주기보다 관련 높은 곳만 보여줍니다. (긴급 안내 기관은 별도) */
-const MAX_ORGANIZATIONS = 2;
+/** AI에게 근거로 넘기는 권리정보 최대 수 */
+const MAX_EVIDENCE_ARTICLES = 3;
 /** 추가 질문 때 AI에게 함께 보내는 이전 대화 수. 많을수록 비용이 늘어나므로 최근 것만 보냅니다. */
 const MAX_HISTORY_TURNS = 3;
 /** 이전 답변의 문장 하나에 허용하는 최대 길이 */
 const MAX_HISTORY_TEXT_LENGTH = 1000;
+/** 화면에 보여주는 최대 개수 (긴급 안내 기관은 별도) */
+const MAX_RIGHTS = 3;
+const MAX_ACTIONS = 3;
+const MAX_ORGANIZATIONS = 2;
 
 function clientIp(request: Request): string {
   const forwarded = request.headers.get('x-forwarded-for');
@@ -97,6 +98,11 @@ function readHistory(value: unknown, allow: Allowlist): AskHistoryTurn[] {
     .filter((turn) => turn.question && turn.answer.summary);
 }
 
+function isBlock(value: unknown): value is RightsBlock {
+  const block = value as Partial<RightsBlock> | null;
+  return typeof block?.title === 'string' && typeof block?.body === 'string';
+}
+
 export async function POST(request: Request) {
   let question = '';
   let locale: Locale = DEFAULT_LOCALE;
@@ -133,32 +139,32 @@ export async function POST(request: Request) {
     return json({ ok: false, error: limit.reason, fallback: fallbackArticles(locale) }, 429);
   }
 
-  // --- 4) 관련 권리정보 고르기 ---
+  // --- 4) 근거 자료 고르기 ---
   const organizations = getOrganizations();
-  const allow = buildAllowlist(organizations, getGroundingArticles());
   // 추가 질문이면 이전 대화를 정리해서 받습니다. 최초 질문이면 빈 목록입니다.
-  const history = readHistory(rawHistory, allow);
-  // "그러면 증거는요?"처럼 짧은 추가 질문도 관련 글을 찾을 수 있도록 이전 질문을 함께 검색합니다.
-  // 최초 질문이면 질문만으로 검색하므로 기존과 같습니다.
+  const history = readHistory(rawHistory, buildAllowlist(organizations, getGroundingArticles()));
+  // "그러면 증거는요?"처럼 짧은 추가 질문도 이어지는 주제를 찾을 수 있도록 이전 질문을 함께 검색합니다.
   const searchText = [question, ...history.map((turn) => turn.question)].join('\n');
-  const matches = findRelevantArticles(searchText, 10);
-  // 등록 키워드가 질문에 들어 있는 글은 "관련 높음", 일상 단어만 겹친 글은 "관련 낮음"으로 나눠
-  // 관련 높은 글을 먼저, 관련 낮은 글은 조금만 넘기고, AI에게도 어느 쪽인지 알려줍니다.
-  const strongMatches = matches.filter((m) => m.keywordHits.length > 0);
-  const weakMatches = matches
-    .filter((m) => m.keywordHits.length === 0 && m.score >= MIN_WEAK_SCORE)
-    .slice(0, MAX_WEAK_ARTICLES);
-  const contextItems: ContextArticle[] = [...strongMatches, ...weakMatches].slice(0, MAX_CONTEXT_ARTICLES).map((m) => ({
-    article: m.article,
-    match: m.keywordHits.length > 0 ? 'strong' : 'weak',
-    matchedKeywords: m.keywordHits,
-  }));
-  const contextArticles = contextItems.map((item) => item.article);
+  // 점수가 있다고 관련 자료인 것은 아닙니다. 등록 키워드가 질문에 실제로 들어 있는 글만 근거로 씁니다.
+  const evidence = findRelevantArticles(searchText, 10)
+    .filter((match) => match.keywordHits.length > 0)
+    .slice(0, MAX_EVIDENCE_ARTICLES);
+  const evidenceArticles = evidence.map((match) => match.article);
+  // AI가 고를 수 있는 기관은 근거 자료에 연결된 기관뿐입니다. 근거 자료가 없으면 기관도 없습니다.
+  // 긴급 전화(112·117·119 등)는 AI에게 고르게 하지 않고, 긴급 판단일 때만 서버가 긴급 안내로 붙입니다.
+  const linkedOrganizations = resolveOrganizations(evidenceArticles.flatMap((article) => article.organizations)).filter(
+    (org) => org.category !== 'emergency',
+  );
   const categoryIds = getCategories()
     .filter((c) => c.kind === 'rights')
     .map((c) => c.id);
 
-  const context = buildContext(contextItems, locale, organizations, categoryIds);
+  const context = buildContext(
+    evidence.map((match) => ({ article: match.article, matchedKeywords: match.keywordHits })),
+    locale,
+    linkedOrganizations,
+    categoryIds,
+  );
 
   // --- 5) AI 호출 ---
   const raw = await askOpenAi({ question, context, history });
@@ -166,58 +172,79 @@ export async function POST(request: Request) {
     return json({ ok: false, error: 'server', fallback: fallbackArticles(locale) }, 502);
   }
 
-  // --- 6) 답변 검증: 등록되지 않은 정보 제거 ---
-  const allowedArticleIds = new Set(contextArticles.map((a) => a.id));
+  // --- 6) 답변 검증 ---
+  const evidenceIds = new Set(evidenceArticles.map((article) => article.id));
+
+  // 권리: 근거 자료 id 가 붙은 것만 남깁니다. 근거 자료가 없으면 권리도 없습니다.
+  const rights = (Array.isArray(raw.rights) ? raw.rights : [])
+    .filter((right): right is AiRight => isBlock(right) && typeof right.source === 'string' && evidenceIds.has(right.source))
+    .slice(0, MAX_RIGHTS);
+
+  // 실제로 사용한 근거 자료 = AI가 출처로 적은 자료 + 권리에 붙은 자료 (보낸 근거 자료 안에서만)
+  const citedIds = [...(Array.isArray(raw.sources) ? raw.sources : []), ...rights.map((right) => right.source)];
+  const usedArticles = evidenceArticles.filter((article) => citedIds.includes(article.id));
+
+  // 기관: 사용한 근거 자료에 연결된 기관만 보여줍니다. 긴급 전화(112·117·119 등)는 긴급 판단일 때만 따로 붙입니다.
+  const candidates = resolveOrganizations(usedArticles.flatMap((article) => article.organizations)).filter(
+    (org) => org.category !== 'emergency',
+  );
+  const aiActions = (Array.isArray(raw.actions) ? raw.actions : []).filter(isBlock);
+  const chosenIds = (Array.isArray(raw.organizations) ? raw.organizations : []).filter((id) =>
+    candidates.some((org) => org.id === id),
+  );
+  // "할 일"에서 이름을 말한 기관이 근거 자료와 연결된 곳이면 기관 카드로도 보여줍니다.
+  const mentionedIds = candidates
+    .filter((org) => aiActions.some((action) => mentionsOrganization(`${action.title} ${action.body}`, org)))
+    .map((org) => org.id);
+  const orgIds = [...new Set([...chosenIds, ...mentionedIds])].slice(0, MAX_ORGANIZATIONS);
+
+  // AI가 위험 신호를 감지했다면 긴급 안내를 함께 보냅니다.
+  const urgent = raw.urgency === 'urgent';
+  const emergency = urgent ? buildEmergencyCard(locale) : null;
+  const shownOrganizations = resolveOrganizations([...(emergency ? emergency.organizationIds : []), ...orgIds]);
+
+  // 이 답변에서 허용하는 번호·링크: 화면에 보여주는 기관과, 사용한 근거 자료의 출처뿐입니다.
+  const allow = buildAllowlist(shownOrganizations, usedArticles);
+  // 화면에 보여주지 않는 기관의 이름이나 번호를 말하는 "할 일"은 뺍니다. (근거 없는 기관 추천 방지)
+  const shownPhones = new Set(shownOrganizations.map((org) => phoneDigits(org)).filter(Boolean));
+  const hiddenOrganizations = organizations.filter((org) => !shownOrganizations.some((shown) => shown.id === org.id));
+  const actions = aiActions
+    .filter(
+      (action) =>
+        !hiddenOrganizations.some((org) => mentionsOrganization(`${action.title} ${action.body}`, org, shownPhones)),
+    )
+    .slice(0, MAX_ACTIONS);
 
   const answer: AiAnswer = {
-    category: raw.category ?? 'other',
-    urgency: raw.urgency === 'urgent' ? 'urgent' : 'normal',
+    category: categoryIds.includes(raw.category) ? raw.category : 'other',
+    urgency: urgent ? 'urgent' : 'normal',
     summary: scrub(raw.summary ?? '', allow),
-    rights: scrubBlocks((raw.rights ?? []).slice(0, 3), allow),
-    actions: scrubBlocks((raw.actions ?? []).slice(0, 4), allow),
-    // 등록된 기관 id 만 통과시킵니다.
-    organizations: (raw.organizations ?? [])
-      .filter((id) => organizations.some((o) => o.id === id))
-      .slice(0, MAX_ORGANIZATIONS),
-    // CONTEXT 로 실제 보낸 글의 id 만 출처로 인정합니다.
-    sources: (raw.sources ?? []).filter((id) => allowedArticleIds.has(id)),
+    rights: scrubBlocks(rights, allow),
+    actions: scrubBlocks(actions, allow),
+    organizations: orgIds,
+    sources: usedArticles.map((article) => article.id),
     follow_up_question: scrub(raw.follow_up_question ?? '', allow),
     limitations: scrub(raw.limitations ?? '', allow),
   };
 
-  // AI가 기관을 고르지 않았을 때는, 질문과 강하게 맞는 글이 있고 AI가 추가 질문을 하지 않은 경우에만
-  // 그 글에 연결된 기관(긴급 전화 제외)을 대신 보여줍니다.
-  // 상황이 불확실해서 AI가 먼저 질문한 경우에는 기관을 억지로 늘어놓지 않습니다.
-  let orgIds = answer.organizations;
-  const topStrong = contextItems.find((item) => item.match === 'strong');
-  if (orgIds.length === 0 && topStrong && !answer.follow_up_question) {
-    orgIds = topStrong.article.organizations
-      .filter((id) => organizations.some((o) => o.id === id && o.category !== 'emergency'))
-      .slice(0, MAX_ORGANIZATIONS);
-  }
-
-  const sources = answer.sources
-    .map((id) => getArticle(id))
-    .filter((a): a is NonNullable<typeof a> => Boolean(a))
-    .map((article) => {
-      const { body } = resolveArticle(article, locale);
-      return {
-        id: article.id,
-        title: body.title,
-        href: `/${locale}/rights/${article.category}/${article.id}`,
-        reviewed_at: article.reviewed_at,
-        sources: article.sources ?? [],
-      };
-    });
-
-  // AI가 위험 신호를 감지했다면 긴급 안내를 함께 보냅니다.
-  const emergency = answer.urgency === 'urgent' ? buildEmergencyCard(locale) : null;
+  // 출처: 실제로 사용한 등록 자료의 제목·검토일·공식 출처(발행기관, 주소)만 보여줍니다.
+  const sources = usedArticles.map((article) => {
+    const { body } = resolveArticle(article, locale);
+    return {
+      id: article.id,
+      title: body.title,
+      href: `/${locale}/rights/${article.category}/${article.id}`,
+      reviewed_at: article.reviewed_at,
+      sources: article.sources ?? [],
+    };
+  });
 
   return json({
     ok: true,
     mode: 'ai',
     answer,
-    organizations: resolveOrganizations(emergency ? [...emergency.organizationIds, ...orgIds] : orgIds),
+    evidence: usedArticles.length > 0 ? 'found' : 'none',
+    organizations: shownOrganizations,
     sources,
     emergency: emergency
       ? { title: emergency.title, message: emergency.message, steps: emergency.steps, note: emergency.note }

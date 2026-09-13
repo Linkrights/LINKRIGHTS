@@ -135,7 +135,8 @@ export default async function ArticlePage({
             <li key={item.title} className="lr-card flex gap-4 p-5">
               <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand-600 text-sm font-bold text-white">
                 {index + 1}
-              </span>
+                <span className="sr-only">.</span>
+              </span>{' '}
               <div>
                 <h3 className="font-bold text-ink-900">{item.title}</h3>
                 <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{item.body}</p>

@@ -127,6 +127,13 @@ export interface SiteConfig {
   tagline: LocalizedText;
   description: LocalizedText;
   exampleQuestions: { ko: string[] } & Partial<Record<Locale, string[]>>;
+  /** 하단에 보여줄 SNS·블로그 링크 (없으면 표시하지 않습니다) */
+  social?: { instagram?: SocialLink; blog?: SocialLink };
+}
+
+export interface SocialLink {
+  url: string;
+  label: string;
 }
 
 export interface AboutBody {
@@ -154,12 +161,17 @@ export interface AboutFile {
   i18n: { ko: AboutBody } & Partial<Record<Locale, AboutBody>>;
 }
 
+/** AI 답변의 권리 한 항목. source 는 근거가 된 권리정보 id 입니다. (근거가 없으면 서버가 지웁니다) */
+export interface AiRight extends RightsBlock {
+  source: string;
+}
+
 /** AI가 돌려주는 구조화된 답변 (서버에서 검증한 뒤 화면으로 보냅니다) */
 export interface AiAnswer {
   category: string;
   urgency: 'normal' | 'urgent';
   summary: string;
-  rights: RightsBlock[];
+  rights: AiRight[];
   actions: RightsBlock[];
   organizations: string[];
   sources: string[];
@@ -171,6 +183,11 @@ export interface AskApiSuccess {
   ok: true;
   mode: 'ai' | 'emergency';
   answer: AiAnswer | null;
+  /**
+   * AI 답변(mode: 'ai')의 근거 자료 상태.
+   * found = 등록 권리정보를 근거로 답함, none = 맞는 등록 자료가 없어 권리·기관 없이 답함
+   */
+  evidence?: 'found' | 'none';
   /** 화면에 그대로 그릴 수 있도록 서버가 채워 넣은 기관 정보 */
   organizations: Organization[];
   /** 근거로 사용한 권리정보 (제목, 링크, 검토일) */
@@ -195,7 +212,13 @@ export type AskApiResponse = AskApiSuccess | AskApiError;
 /** 추가 질문을 할 때 브라우저가 함께 보내는 이전 대화 한 번 (사용자 질문 + 그때 받은 AI 답변) */
 export interface AskHistoryTurn {
   question: string;
-  answer: Pick<AiAnswer, 'summary' | 'rights' | 'actions' | 'follow_up_question' | 'limitations'>;
+  answer: {
+    summary: string;
+    rights: RightsBlock[];
+    actions: RightsBlock[];
+    follow_up_question: string;
+    limitations: string;
+  };
 }
 
 /** 브라우저가 /api/ask 로 보내는 내용 */
