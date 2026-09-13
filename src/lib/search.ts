@@ -39,6 +39,11 @@ function articleText(article: RightsArticle): { title: string; summary: string }
 export interface ScoredArticle {
   article: RightsArticle;
   score: number;
+  /**
+   * 질문 안에 실제로 들어 있던 등록 키워드.
+   * 비어 있으면 일상 단어만 겹친 "관련 낮음" 결과이므로, AI에게도 그렇게 알려줍니다.
+   */
+  keywordHits: string[];
 }
 
 /**
@@ -51,10 +56,14 @@ export function findRelevantArticles(query: string, limit = 4): ScoredArticle[] 
 
   const scored = getGroundingArticles().map((article) => {
     const { title, summary } = articleText(article);
+    const keywordHits = article.keywords.filter((keyword) => {
+      const term = normalize(keyword);
+      return term.length >= 2 && q.includes(term);
+    });
     let score = 0;
 
     // 1) 등록된 키워드가 질문 안에 들어 있는가 (가장 강한 신호)
-    score += countHits(q, article.keywords, 3);
+    score += keywordHits.length * 3;
     // 2) 제목의 단어가 질문 안에 들어 있는가
     score += countHits(q, title.split(' '), 1);
     // 3) 질문의 단어가 요약/상황 설명 안에 들어 있는가
@@ -62,7 +71,7 @@ export function findRelevantArticles(query: string, limit = 4): ScoredArticle[] 
     // 4) 카테고리 이름이 직접 언급되었는가
     if (q.includes(normalize(article.category))) score += 1;
 
-    return { article, score };
+    return { article, score, keywordHits };
   });
 
   return scored

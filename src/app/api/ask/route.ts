@@ -22,7 +22,7 @@ import {
 } from '@/lib/content';
 import { buildEmergencyCard, detectEmergency } from '@/lib/emergency';
 import { DEFAULT_LOCALE, isLocale } from '@/lib/i18n';
-import { askOpenAi, buildContext } from '@/lib/openai';
+import { askOpenAi, buildContext, type ContextArticle } from '@/lib/openai';
 import { checkLimits } from '@/lib/rateLimit';
 import { buildAllowlist, scrub, scrubBlocks, type Allowlist } from '@/lib/sanitize';
 import { findRelevantArticles, fallbackArticles } from '@/lib/search';
@@ -34,6 +34,16 @@ export const dynamic = 'force-dynamic';
 /** 질문 최대 길이. 길수록 비용이 늘어나므로 제한합니다. */
 const MAX_QUESTION_LENGTH = 500;
 const MAX_CONTEXT_ARTICLES = 4;
+/**
+ * 등록 키워드는 맞지 않고 일상 단어만 겹친 글("관련 낮음")을 넘기는 기준입니다.
+ * 이런 글을 많이 넘기면 AI가 사용자의 상황을 그 글의 상황(예: 차별, 학교폭력)으로 단정하기 쉬워서
+ * 점수가 MIN_WEAK_SCORE 이상인 글만, 최대 MAX_WEAK_ARTICLES 개까지 넘깁니다.
+ * (1점은 "학교에서", "말을" 같은 흔한 단어 한두 개만 겹쳐도 나오는 점수라서 1.5점부터 넘깁니다.)
+ */
+const MIN_WEAK_SCORE = 1.5;
+const MAX_WEAK_ARTICLES = 2;
+/** 화면에 보여주는 기관 수. 많이 보여주기보다 관련 높은 곳만 보여줍니다. (긴급 안내 기관은 별도) */
+const MAX_ORGANIZATIONS = 2;
 /** 추가 질문 때 AI에게 함께 보내는 이전 대화 수. 많을수록 비용이 늘어나므로 최근 것만 보냅니다. */
 const MAX_HISTORY_TURNS = 3;
 /** 이전 답변의 문장 하나에 허용하는 최대 길이 */
@@ -131,13 +141,24 @@ export async function POST(request: Request) {
   // "그러면 증거는요?"처럼 짧은 추가 질문도 관련 글을 찾을 수 있도록 이전 질문을 함께 검색합니다.
   // 최초 질문이면 질문만으로 검색하므로 기존과 같습니다.
   const searchText = [question, ...history.map((turn) => turn.question)].join('\n');
-  const matches = findRelevantArticles(searchText, MAX_CONTEXT_ARTICLES);
-  const contextArticles = matches.map((m) => m.article);
+  const matches = findRelevantArticles(searchText, 10);
+  // 등록 키워드가 질문에 들어 있는 글은 "관련 높음", 일상 단어만 겹친 글은 "관련 낮음"으로 나눠
+  // 관련 높은 글을 먼저, 관련 낮은 글은 조금만 넘기고, AI에게도 어느 쪽인지 알려줍니다.
+  const strongMatches = matches.filter((m) => m.keywordHits.length > 0);
+  const weakMatches = matches
+    .filter((m) => m.keywordHits.length === 0 && m.score >= MIN_WEAK_SCORE)
+    .slice(0, MAX_WEAK_ARTICLES);
+  const contextItems: ContextArticle[] = [...strongMatches, ...weakMatches].slice(0, MAX_CONTEXT_ARTICLES).map((m) => ({
+    article: m.article,
+    match: m.keywordHits.length > 0 ? 'strong' : 'weak',
+    matchedKeywords: m.keywordHits,
+  }));
+  const contextArticles = contextItems.map((item) => item.article);
   const categoryIds = getCategories()
     .filter((c) => c.kind === 'rights')
     .map((c) => c.id);
 
-  const context = buildContext(contextArticles, locale, organizations, categoryIds);
+  const context = buildContext(contextItems, locale, organizations, categoryIds);
 
   // --- 5) AI 호출 ---
   const raw = await askOpenAi({ question, context, history });
@@ -155,17 +176,24 @@ export async function POST(request: Request) {
     rights: scrubBlocks((raw.rights ?? []).slice(0, 3), allow),
     actions: scrubBlocks((raw.actions ?? []).slice(0, 4), allow),
     // 등록된 기관 id 만 통과시킵니다.
-    organizations: (raw.organizations ?? []).filter((id) => organizations.some((o) => o.id === id)).slice(0, 4),
+    organizations: (raw.organizations ?? [])
+      .filter((id) => organizations.some((o) => o.id === id))
+      .slice(0, MAX_ORGANIZATIONS),
     // CONTEXT 로 실제 보낸 글의 id 만 출처로 인정합니다.
     sources: (raw.sources ?? []).filter((id) => allowedArticleIds.has(id)),
     follow_up_question: scrub(raw.follow_up_question ?? '', allow),
     limitations: scrub(raw.limitations ?? '', allow),
   };
 
-  // AI가 기관을 하나도 고르지 않았다면, 참고한 글에 연결된 기관을 대신 보여줍니다.
+  // AI가 기관을 고르지 않았을 때는, 질문과 강하게 맞는 글이 있고 AI가 추가 질문을 하지 않은 경우에만
+  // 그 글에 연결된 기관(긴급 전화 제외)을 대신 보여줍니다.
+  // 상황이 불확실해서 AI가 먼저 질문한 경우에는 기관을 억지로 늘어놓지 않습니다.
   let orgIds = answer.organizations;
-  if (orgIds.length === 0) {
-    orgIds = contextArticles.flatMap((a) => a.organizations).slice(0, 4);
+  const topStrong = contextItems.find((item) => item.match === 'strong');
+  if (orgIds.length === 0 && topStrong && !answer.follow_up_question) {
+    orgIds = topStrong.article.organizations
+      .filter((id) => organizations.some((o) => o.id === id && o.category !== 'emergency'))
+      .slice(0, MAX_ORGANIZATIONS);
   }
 
   const sources = answer.sources
