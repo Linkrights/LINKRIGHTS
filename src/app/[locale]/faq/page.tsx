@@ -33,17 +33,17 @@ export default async function FaqPage({ params }: { params: Promise<{ locale: st
     <>
       <PageHeader title={t.faq.title} subtitle={t.faq.subtitle} />
       <Section>
-        <ul className="space-y-2">
+        <ul className="lr-card mx-auto max-w-3xl divide-y divide-[var(--color-line)] overflow-hidden">
           {items.map((item) => (
             <li key={item.id}>
-              <details className="lr-card group p-0">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 p-5 font-bold text-ink-900">
+              <details className="group">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 text-base font-bold text-ink-900 hover:bg-surface-soft sm:px-6">
                   {pick(item.q, locale)}
                   <span className="shrink-0 text-ink-300 transition-transform group-open:rotate-180" aria-hidden="true">
                     ▾
                   </span>
                 </summary>
-                <p className="px-5 pb-5 text-[15px] leading-relaxed text-ink-700">{pick(item.a, locale)}</p>
+                <p className="px-5 pb-5 text-[15px] leading-relaxed text-ink-700 sm:px-6">{pick(item.a, locale)}</p>
               </details>
             </li>
           ))}
