@@ -29,7 +29,8 @@ export default async function ProgramsPage({ params }: { params: Promise<{ local
         <ul className="grid gap-4 sm:grid-cols-2">
           {items.map((item) => (
             <li key={item.id} className="lr-card overflow-hidden">
-              {item.image ? (
+              {/* 사진이 있을 때만 보여줍니다. (사진이 없으면 빈 색 상자를 넣지 않습니다) */}
+              {item.image && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={`/images/${item.image}`}
@@ -37,16 +38,11 @@ export default async function ProgramsPage({ params }: { params: Promise<{ local
                   loading="lazy"
                   className="h-48 w-full object-cover"
                 />
-              ) : (
-                <div
-                  aria-hidden="true"
-                  className="h-32 w-full bg-brand-100"
-                />
               )}
-              <div className="p-5">
-                <span className="lr-chip">{pick(item.tag, locale)}</span>
-                <h2 className="mt-3 text-lg font-extrabold text-ink-900">{pick(item.title, locale)}</h2>
-                <p className="mt-2 text-[15px] leading-relaxed text-ink-700">{pick(item.body, locale)}</p>
+              <div className="border-t-4 border-brand-600 p-5 sm:p-6">
+                <span className="text-sm font-semibold text-brand-700">{pick(item.tag, locale)}</span>{' '}
+                <h2 className="mt-1.5 text-lg font-extrabold leading-snug text-ink-900">{pick(item.title, locale)}</h2>{' '}
+                <p className="lr-body mt-2">{pick(item.body, locale)}</p>
               </div>
             </li>
           ))}
