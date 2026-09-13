@@ -1,0 +1,194 @@
+{
+  "nav": {
+    "home": "홈",
+    "ask": "AI에게 질문하기",
+    "askShort": "질문하기",
+    "rights": "권리정보",
+    "organizations": "도움받을 곳",
+    "about": "소개",
+    "programs": "프로그램",
+    "faq": "자주 묻는 질문",
+    "emergency": "긴급 도움",
+    "menu": "메뉴 열기",
+    "close": "닫기",
+    "language": "언어 선택"
+  },
+  "common": {
+    "skipToContent": "본문으로 바로가기",
+    "viewAll": "전체 보기",
+    "readMore": "자세히 보기",
+    "back": "뒤로",
+    "loading": "불러오는 중",
+    "phone": "전화",
+    "website": "홈페이지",
+    "hours": "운영시간",
+    "languages": "지원 언어",
+    "region": "지역",
+    "reviewedAt": "검토일",
+    "sources": "출처",
+    "call": "전화 걸기",
+    "visit": "홈페이지 열기",
+    "openInNew": "새 창에서 열림",
+    "notTranslatedTitle": "이 내용은 아직 이 언어로 번역되지 않았습니다",
+    "notTranslatedBody": "먼저 한국어 원문을 보여드립니다. 번역이 완료되면 이 언어로도 볼 수 있습니다.",
+    "staleTitle": "검토가 필요한 정보입니다",
+    "staleBody": "마지막 검토일이 오래되었습니다. 공식기관에서 최신 내용을 다시 확인해 주세요."
+  },
+  "home": {
+    "heroTitle": "내 권리를 알고,\n필요한 도움까지 연결받아요.",
+    "heroSubtitle": "학교, 일, 건강, 비자, 일상에서 궁금한 권리를 쉽게 알아보고 필요한 도움을 받을 수 있는 정보를 찾아보세요.",
+    "ctaAsk": "내 상황 질문하기",
+    "ctaRights": "권리 알아보기",
+    "askPlaceholder": "예: 알바를 했는데 아직 돈을 받지 못했어요.",
+    "askButton": "내 권리 알아보기",
+    "exampleLabel": "이렇게 물어봐도 좋아요",
+    "browseTitle": "직접 찾아보기",
+    "browseSubtitle": "궁금한 분야를 골라 권리정보를 확인해 보세요.",
+    "problemTitle": "LINKRIGHTS가 해결하려는 문제",
+    "problemSubtitle": "정보가 없어서가 아니라, 흩어져 있고 어려워서 닿지 못합니다.",
+    "aiTitle": "AI 정보 안내는 이렇게 작동합니다",
+    "aiSubtitle": "AI가 아무 말이나 지어내지 않도록 만들었습니다.",
+    "aiPoints": [
+      { "title": "등록된 자료만 사용합니다", "body": "LINKRIGHTS가 검토해 등록한 권리정보와 기관 자료만 근거로 답합니다." },
+      { "title": "기관 정보는 만들어내지 않습니다", "body": "전화번호와 기관명은 등록된 기관 목록에서만 가져옵니다." },
+      { "title": "모르면 모른다고 말합니다", "body": "근거가 없으면 추측하지 않고, 어디에 물어봐야 하는지 안내합니다." },
+      { "title": "위험한 상황이면 먼저 안내합니다", "body": "긴급 상황으로 보이면 일반 답변보다 긴급 연락처를 먼저 보여줍니다." }
+    ],
+    "featuredTitle": "많이 찾는 권리정보",
+    "featuredSubtitle": "가장 자주 묻는 상황부터 정리했습니다.",
+    "orgTitle": "실제 도움을 받을 수 있는 곳",
+    "orgSubtitle": "전화 한 통으로 시작할 수 있습니다.",
+    "programsTitle": "프로그램 및 활동",
+    "programsSubtitle": "권리는 배우고 함께 경험할 때 내 것이 됩니다.",
+    "sdgTitle": "SDGs와 LINKRIGHTS",
+    "sdgSubtitle": "우리가 어떤 변화에 기여하려는지 밝힙니다.",
+    "faqTitle": "자주 묻는 질문",
+    "emergencyBanner": "지금 위험하다면 112(경찰) 또는 119(구급)로 바로 전화하세요."
+  },
+  "ask": {
+    "title": "AI에게 질문하기",
+    "subtitle": "지금 겪고 있는 상황을 편하게 적어주세요. 어떤 언어로 써도 같은 언어로 답합니다.",
+    "placeholder": "예: 알바를 했는데 아직 돈을 받지 못했어요.",
+    "questionHeading": "어떤 상황이 궁금한가요?",
+    "questionHint": "학교, 알바, 건강, 비자 등 지금 겪고 있는 상황을 편하게 적어주세요.",
+    "submitFirst": "내 권리 알아보기",
+    "privacyShort": "이름, 전화번호, 주소, 여권번호 등 개인정보는 입력하지 마세요.",
+    "submit": "질문 보내기",
+    "sending": "찾아보는 중입니다",
+    "newQuestion": "새로운 질문하기",
+    "newConversation": "새 질문",
+    "followUpTitle": "추가 질문하기",
+    "followUpPlaceholder": "위 답변에 이어서 더 궁금한 점을 적어주세요",
+    "myQuestion": "내 질문",
+    "privacyTitle": "개인정보는 적지 마세요",
+    "privacyBody": "이름, 전화번호, 주소, 여권번호, 외국인등록번호, 비자번호, 병원 기록 같은 개인정보는 입력하지 마세요. 상황만 적어도 충분합니다.",
+    "disclaimer": "AI 답변은 첫 번째 안내입니다. 법률·의료·체류에 관한 최종 판단은 공식기관에서 확인하세요.",
+    "charsLeft": "남은 글자 수",
+    "resultSituation": "지금 상황을 보면",
+    "resultRights": "알아두면 좋은 권리",
+    "resultActions": "지금 해볼 수 있는 것",
+    "resultOrgs": "도움이 필요하다면",
+    "resultSources": "확인한 정보",
+    "resultLimitations": "참고해 주세요",
+    "resultFollowUp": "확인하면 더 정확한 부분",
+    "evidenceNoneTitle": "등록된 자료로는 정확히 판단하기 어려워요",
+    "evidenceNoneBody": "LINKRIGHTS에 등록된 권리정보 중에서 이 상황에 맞는 자료를 찾지 못했어요. 그래서 권리나 기관은 안내하지 않고, 지금 해볼 수 있는 일만 알려드려요.",
+    "relatedPages": "관련 권리정보 페이지",
+    "errorGeneric": "지금은 답변을 만들지 못했습니다. 잠시 후 다시 시도하거나, 아래 권리정보를 직접 찾아보세요.",
+    "errorRateLimit": "질문이 너무 빠르게 이어졌습니다. 잠시 후 다시 시도해 주세요.",
+    "errorDailyLimit": "오늘 사용할 수 있는 AI 질문 수를 모두 사용했습니다. 권리정보 페이지에서 직접 찾아보거나 내일 다시 시도해 주세요.",
+    "errorTooLong": "질문이 너무 깁니다. 조금 짧게 줄여서 다시 보내주세요.",
+    "errorEmpty": "질문을 입력해 주세요.",
+    "fallbackTitle": "대신 이 정보를 확인해 보세요"
+  },
+  "rights": {
+    "title": "권리정보",
+    "subtitle": "상황별로 정리한 권리와 할 수 있는 행동입니다.",
+    "categoryTitle": "이 분야의 권리정보",
+    "empty": "아직 등록된 정보가 없습니다.",
+    "situationHeading": "이런 상황인가요?",
+    "rightsHeading": "알아두어야 할 권리",
+    "actionsHeading": "이렇게 해보세요",
+    "orgsHeading": "도움받을 수 있는 곳",
+    "relatedHeading": "함께 보면 좋은 정보",
+    "noteHeading": "확인해 주세요",
+    "sourcesHeading": "이 정보의 출처",
+    "step": "단계"
+  },
+  "organizations": {
+    "title": "도움받을 곳",
+    "subtitle": "LINKRIGHTS가 확인한 공식기관 목록입니다. 전화번호와 홈페이지는 이 목록에서만 안내합니다.",
+    "filterAll": "전체",
+    "categories": {
+      "emergency": "긴급",
+      "public": "공공기관",
+      "youth": "청소년기관",
+      "migrant": "이주민 지원",
+      "legal": "법률 상담"
+    },
+    "emergencyBadge": "긴급 연락처",
+    "helpsWith": "이럴 때 도움을 받을 수 있어요"
+  },
+  "emergency": {
+    "navTitle": "긴급 도움",
+    "pageTitle": "지금 도움이 필요한가요?",
+    "pageSubtitle": "위험한 상황이라면 이 페이지의 번호로 바로 연락하세요."
+  },
+  "about": {
+    "title": "LINKRIGHTS 소개"
+  },
+  "programs": {
+    "title": "프로그램 및 활동",
+    "subtitle": "권리는 배우고 함께 경험할 때 내 것이 됩니다.",
+    "communityTitle": "커뮤니티"
+  },
+  "faq": {
+    "title": "자주 묻는 질문",
+    "subtitle": "많이 받는 질문을 모았습니다."
+  },
+  "privacy": {
+    "title": "개인정보 처리방침",
+    "subtitle": "LINKRIGHTS가 정보를 어떻게 다루는지 쉬운 말로 설명합니다.",
+    "sections": [
+      {
+        "title": "회원가입이 없습니다",
+        "body": "LINKRIGHTS는 회원가입과 로그인 기능이 없습니다. 따라서 이름, 이메일, 전화번호 같은 개인정보를 모으지 않습니다."
+      },
+      {
+        "title": "AI 질문은 계정과 연결해 저장하지 않습니다",
+        "body": "AI에게 보낸 질문은 답변을 만들기 위해 AI 서비스(OpenAI)로 전달되며, 특정 사용자와 연결해 저장하지 않습니다. 다만 서비스 오류를 확인하기 위한 최소한의 기술 기록(오류 발생 시각, 오류 종류)은 남을 수 있습니다."
+      },
+      {
+        "title": "이런 정보는 입력하지 마세요",
+        "body": "이름, 연락처, 주소, 여권번호, 외국인등록번호, 비자번호, 병원 기록처럼 나를 알아볼 수 있는 정보는 입력하지 마세요. 상황만 적어도 안내를 받을 수 있습니다."
+      },
+      {
+        "title": "쿠키와 광고를 사용하지 않습니다",
+        "body": "이 사이트는 광고를 싣지 않으며, 사용자를 추적하는 목적의 쿠키를 사용하지 않습니다."
+      },
+      {
+        "title": "외부 링크",
+        "body": "안내하는 공식기관 홈페이지는 각 기관이 운영합니다. 해당 사이트의 개인정보 처리는 그 기관의 방침을 따릅니다."
+      },
+      {
+        "title": "문의",
+        "body": "개인정보와 관련해 궁금한 점이 있으면 아래 문의 이메일로 연락해 주세요."
+      }
+    ]
+  },
+  "footer": {
+    "aboutSite": "LINKRIGHTS는 이주배경청소년을 위한 권리정보 플랫폼입니다.",
+    "notAdvice": "이 사이트의 정보는 참고용 안내이며 법률·의료 자문이 아닙니다. 최종 판단은 공식기관에서 확인하세요.",
+    "contact": "문의",
+    "instagram": "인스타그램",
+    "blog": "블로그",
+    "privacy": "개인정보 처리방침",
+    "sitemapTitle": "바로가기",
+    "helpTitle": "긴급 연락처",
+    "updated": "정보 검토일"
+  },
+  "meta": {
+    "homeTitle": "LINKRIGHTS | 이주배경청소년 권리정보 플랫폼",
+    "homeDescription": "이주배경청소년이 자신의 권리를 알고, 필요한 정보를 찾고, 도움받을 수 있는 기관까지 연결되도록 돕습니다. 일·알바, 학교, 병원, 체류·비자, 인권 정보를 쉬운 말로 안내합니다."
+  }
+}
