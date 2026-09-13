@@ -25,32 +25,32 @@ export function EmergencyCard({
   return (
     <section
       role="alert"
-      className="rounded-2xl border-2 border-[var(--color-danger-200)] bg-[var(--color-danger-50)] p-5 sm:p-6"
+      className="rounded-[var(--radius-card)] border border-[var(--color-danger-200)] bg-[var(--color-danger-50)] p-5 sm:p-7"
     >
-      <div className="flex items-start gap-3">
-        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[var(--color-danger-600)] text-white">
+      <div className="flex items-start gap-3.5">
+        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[var(--radius-control)] bg-[var(--color-danger-600)] text-white">
           <Icon name="alert" size={22} />
-        </span>
-        <div>
-          <h2 className="text-xl font-extrabold text-[var(--color-danger-700)] sm:text-2xl">{title}</h2>
-          <p className="mt-1.5 text-[15px] leading-relaxed text-ink-900">{message}</p>
+        </span>{' '}
+        <div className="min-w-0">
+          <h2 className="text-xl font-extrabold leading-snug text-[var(--color-danger-700)] sm:text-2xl">{title}</h2>{' '}
+          <p className="mt-1.5 text-base leading-relaxed text-ink-900">{message}</p>
         </div>
       </div>
 
       {organizations.length > 0 && (
-        <ul className="mt-5 grid gap-2 sm:grid-cols-2">
+        <ul className="mt-5 grid gap-2.5 sm:grid-cols-2">
           {organizations.map((org) => (
             <li key={org.id}>
               <a
                 href={`tel:${org.phone.replace(/[^\d+]/g, '')}`}
-                className="flex items-center gap-3 rounded-xl border border-[var(--color-danger-200)] bg-white px-4 py-3 transition-colors hover:bg-[var(--color-danger-50)]"
+                className="flex items-center gap-3 rounded-[var(--radius-control)] border border-[var(--color-danger-200)] bg-white px-4 py-3 transition-colors hover:border-[var(--color-danger-600)]"
               >
-                <Icon name="phone" size={18} className="text-[var(--color-danger-600)]" />{' '}
-                <span className="flex-1">
+                <Icon name="phone" size={18} className="shrink-0 text-[var(--color-danger-600)]" />{' '}
+                <span className="min-w-0 flex-1">
                   <span className="block whitespace-nowrap text-lg font-extrabold text-[var(--color-danger-700)]">
                     {org.phone}
                   </span>{' '}
-                  <span className="block text-sm text-ink-700">{pick(org.name, locale)}</span>
+                  <span className="block text-sm leading-snug text-ink-700">{pick(org.name, locale)}</span>
                 </span>
               </a>
             </li>
@@ -59,10 +59,10 @@ export function EmergencyCard({
       )}
 
       {steps?.length > 0 && (
-        <ol className="mt-5 space-y-2.5">
+        <ol className="mt-6 space-y-3">
           {steps.map((step, index) => (
-            <li key={index} className="flex gap-3 text-[15px] leading-relaxed text-ink-900">
-              <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[var(--color-danger-600)] text-xs font-bold text-white">
+            <li key={index} className="flex gap-3 text-base leading-relaxed text-ink-900">
+              <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[var(--color-danger-600)] text-xs font-bold text-white">
                 {index + 1}
                 <span className="sr-only">.</span>
               </span>{' '}

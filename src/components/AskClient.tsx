@@ -8,7 +8,7 @@
 // "새 질문"을 누르면 대화를 모두 지우고 처음 상태로 돌아갑니다.
 //
 // 답변 칸 순서: 지금 상황을 보면 → (자료 부족 안내) → 알아두면 좋은 권리 → 지금 해볼 수 있는 것
-//              → 도움이 필요하다면 → 확인하면 더 정확한 부분 → 참고해 주세요 → 출처
+//              → 도움이 필요하다면 → 확인하면 더 정확한 부분 → 참고해 주세요 → 확인한 정보
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
@@ -71,10 +71,25 @@ function errorMessageOf(result: AskApiResponse, t: Messages): string | null {
  */
 function StepNumber({ index }: { index: number }) {
   return (
-    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand-600 text-sm font-bold text-white">
+    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand-600 text-[15px] font-bold text-white">
       {index + 1}
       <span className="sr-only">.</span>
     </span>
+  );
+}
+
+/** 답변 안의 칸 제목. 권리와 할 일은 더 크게 보여줍니다. */
+function SectionTitle({ icon, children, strong = false }: { icon?: 'shield' | 'check'; children: string; strong?: boolean }) {
+  if (!strong) return <h3 className="text-base font-bold text-ink-900">{children}</h3>;
+  return (
+    <h3 className="flex items-center gap-2.5 text-lg font-extrabold text-ink-900 sm:text-xl">
+      {icon && (
+        <span className="lr-icon-badge h-9 w-9">
+          <Icon name={icon} size={18} />
+        </span>
+      )}{' '}
+      {children}
+    </h3>
   );
 }
 
@@ -95,15 +110,15 @@ function ResultView({
   return (
     <>
       {errorMessage && (
-        <div className="lr-card border-[var(--color-warm-500)] bg-warm-100 p-5">
-          <p className="text-[15px] font-semibold text-ink-900">{errorMessage}</p>
+        <div className="lr-card lr-appear border-[var(--color-warm-500)] bg-warm-100 p-5 sm:p-6">
+          <p className="text-base font-semibold text-ink-900">{errorMessage}</p>
           {!result.ok && result.fallback && result.fallback.length > 0 && (
             <>
               <p className="mt-4 text-sm font-bold text-ink-900">{t.ask.fallbackTitle}</p>
               <ul className="mt-2 space-y-1.5">
                 {result.fallback.map((item) => (
                   <li key={item.id}>
-                    <Link href={item.href} className="lr-link text-sm">
+                    <Link href={item.href} className="lr-link text-[15px]">
                       {item.title}
                     </Link>
                   </li>
@@ -126,20 +141,20 @@ function ResultView({
       )}
 
       {result.ok && result.mode === 'ai' && result.answer && (
-        <article className="lr-card overflow-hidden">
+        <article className="lr-card lr-appear overflow-hidden">
           {/* 지금 상황을 보면 */}
-          <div className="border-b border-[var(--color-line)] bg-brand-50 px-5 py-4">
-            <h2 className="flex items-center gap-2 text-sm font-bold text-brand-800">
+          <div className="border-b border-[var(--color-line)] bg-surface-soft px-5 py-5 sm:px-7 sm:py-6">
+            <h2 className="flex items-center gap-2 text-sm font-bold text-brand-700">
               <Icon name="sparkles" size={16} /> {t.ask.resultSituation}
             </h2>{' '}
-            <p className="mt-1.5 text-[15px] leading-relaxed text-ink-900">{result.answer.summary}</p>
+            <p className="mt-2 text-[17px] leading-relaxed text-ink-900">{result.answer.summary}</p>
           </div>
 
-          <div className="space-y-6 p-5">
+          <div className="space-y-9 px-5 py-6 sm:px-7 sm:py-8">
             {/* 자료 부족 안내: 등록된 권리정보 중 이 상황에 맞는 자료가 없을 때 */}
             {result.evidence === 'none' && (
-              <section className="rounded-xl border border-brand-200 bg-brand-50 p-4">
-                <h3 className="text-sm font-bold text-brand-800">{t.ask.evidenceNoneTitle}</h3>{' '}
+              <section className="lr-callout border-l-[var(--color-ink-300)] bg-surface-soft">
+                <h3 className="text-[15px] font-bold text-ink-900">{t.ask.evidenceNoneTitle}</h3>{' '}
                 <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{t.ask.evidenceNoneBody}</p>
               </section>
             )}
@@ -147,11 +162,13 @@ function ResultView({
             {/* 알아두면 좋은 권리 (근거 자료가 있을 때만) */}
             {result.answer.rights.length > 0 && (
               <section>
-                <h3 className="text-base font-extrabold text-ink-900">{t.ask.resultRights}</h3>
-                <ul className="mt-3 space-y-3">
+                <SectionTitle icon="shield" strong>
+                  {t.ask.resultRights}
+                </SectionTitle>
+                <ul className="mt-4 space-y-3">
                   {result.answer.rights.map((item, index) => (
-                    <li key={index} className="rounded-xl bg-surface-soft p-4">
-                      <p className="font-bold text-ink-900">{item.title}</p>{' '}
+                    <li key={index} className="lr-callout">
+                      <p className="text-base font-bold text-ink-900">{item.title}</p>{' '}
                       <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{item.body}</p>
                     </li>
                   ))}
@@ -162,13 +179,15 @@ function ResultView({
             {/* 지금 해볼 수 있는 것 */}
             {result.answer.actions.length > 0 && (
               <section>
-                <h3 className="text-base font-extrabold text-ink-900">{t.ask.resultActions}</h3>
-                <ol className="mt-3 space-y-3">
+                <SectionTitle icon="check" strong>
+                  {t.ask.resultActions}
+                </SectionTitle>
+                <ol className="mt-4 space-y-4">
                   {result.answer.actions.map((item, index) => (
-                    <li key={index} className="flex gap-3">
+                    <li key={index} className="flex gap-3.5">
                       <StepNumber index={index} />{' '}
-                      <span>
-                        <span className="block font-bold text-ink-900">{item.title}</span>{' '}
+                      <span className="min-w-0 pt-0.5">
+                        <span className="block text-base font-bold text-ink-900">{item.title}</span>{' '}
                         <span className="mt-0.5 block text-[15px] leading-relaxed text-ink-700">{item.body}</span>
                       </span>
                     </li>
@@ -180,7 +199,7 @@ function ResultView({
             {/* 도움이 필요하다면 (근거 자료와 연결된 기관이 있을 때만) */}
             {result.organizations.length > 0 && (
               <section>
-                <h3 className="text-base font-extrabold text-ink-900">{t.ask.resultOrgs}</h3>
+                <SectionTitle>{t.ask.resultOrgs}</SectionTitle>
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
                   {result.organizations.map((org) => (
                     <OrgCard key={org.id} org={org} locale={locale} compact />
@@ -191,37 +210,37 @@ function ResultView({
 
             {/* 확인하면 더 정확한 부분 */}
             {result.answer.follow_up_question && (
-              <section className="rounded-xl bg-surface-soft p-4">
-                <h3 className="text-sm font-bold text-ink-900">{t.ask.resultFollowUp}</h3>{' '}
+              <section className="rounded-[var(--radius-control)] border border-[var(--color-line)] p-4">
+                <h3 className="text-[15px] font-bold text-ink-900">{t.ask.resultFollowUp}</h3>{' '}
                 <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{result.answer.follow_up_question}</p>
               </section>
             )}
 
             {/* 참고해 주세요 */}
             {result.answer.limitations && (
-              <section className="rounded-xl border border-[var(--color-warm-500)] bg-warm-100 p-4">
-                <h3 className="text-sm font-bold text-ink-900">{t.ask.resultLimitations}</h3>{' '}
+              <section className="rounded-[var(--radius-control)] border border-[var(--color-warm-500)] bg-warm-100 p-4">
+                <h3 className="text-[15px] font-bold text-ink-900">{t.ask.resultLimitations}</h3>{' '}
                 <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{result.answer.limitations}</p>
               </section>
             )}
 
-            {/* 출처: 실제로 사용한 등록 자료의 제목, 검토일, 발행기관과 공식 링크 */}
+            {/* 확인한 정보: 실제로 사용한 등록 자료의 제목, 검토일, 발행기관과 공식 링크 */}
             {result.sources.length > 0 && (
-              <section>
-                <h3 className="text-base font-extrabold text-ink-900">{t.ask.resultSources}</h3>
-                <ul className="mt-3 space-y-2">
+              <section className="border-t border-[var(--color-line)] pt-6">
+                <SectionTitle>{t.ask.resultSources}</SectionTitle>
+                <ul className="mt-3 space-y-3">
                   {result.sources.map((source) => (
-                    <li key={source.id} className="rounded-xl border border-[var(--color-line)] p-3">
-                      <Link href={source.href} className="lr-link text-sm font-semibold">
+                    <li key={source.id} className="text-[15px]">
+                      <Link href={source.href} className="lr-link font-semibold">
                         {source.title}
                       </Link>{' '}
-                      <p className="mt-1 text-xs text-ink-500">
+                      <p className="mt-0.5 text-[13px] text-ink-500">
                         {t.common.reviewedAt} {formatDate(source.reviewed_at, locale)}
                       </p>
                       {source.sources.length > 0 && (
-                        <ul className="mt-1.5 space-y-1">
+                        <ul className="mt-1 space-y-0.5">
                           {source.sources.map((official) => (
-                            <li key={official.url} className="text-xs leading-relaxed text-ink-500">
+                            <li key={official.url} className="text-[13px] leading-relaxed text-ink-500">
                               {official.publisher && <span>{official.publisher} · </span>}
                               <a
                                 href={official.url}
@@ -242,7 +261,7 @@ function ResultView({
               </section>
             )}
 
-            <p className="border-t border-[var(--color-line)] pt-4 text-xs leading-relaxed text-ink-500">
+            <p className="border-t border-[var(--color-line)] pt-5 text-[13px] leading-relaxed text-ink-500">
               {t.ask.disclaimer}
             </p>
           </div>
@@ -250,8 +269,8 @@ function ResultView({
       )}
 
       {result.ok && result.mode === 'emergency' && (
-        <div className="lr-card p-5">
-          <p className="text-sm leading-relaxed text-ink-700">{t.ask.disclaimer}</p>
+        <div className="lr-card p-5 sm:p-6">
+          <p className="text-[15px] leading-relaxed text-ink-700">{t.ask.disclaimer}</p>
           <button type="button" onClick={onNewQuestion} className="lr-btn lr-btn-ghost mt-3">
             {t.ask.newQuestion}
           </button>
@@ -365,40 +384,40 @@ export function AskClient({
     !(lastResult?.ok && lastResult.mode === 'emergency');
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12">
-      {/* 개인정보 입력 금지 안내 */}
-      <div className="rounded-xl border border-brand-200 bg-brand-50 p-4">
-        <p className="flex items-center gap-2 text-sm font-bold text-brand-800">
-          <Icon name="shield" size={16} /> {t.ask.privacyTitle}
-        </p>{' '}
-        <p className="mt-1 text-sm leading-relaxed text-ink-700">{t.ask.privacyBody}</p>
-      </div>
-
+    <div className="lr-container-narrow py-8 sm:py-12">
+      {/* 내 상황 적기 */}
       <form
         onSubmit={(event) => {
           event.preventDefault();
           void ask(question);
         }}
-        className="mt-5"
+        className="lr-card p-5 sm:p-7"
       >
-        <label htmlFor="question" className="block text-sm font-bold text-ink-900">
-          {t.ask.title}
+        <label htmlFor="question" className="block">
+          <span className="block text-xl font-extrabold tracking-tight text-ink-900 sm:text-2xl">
+            {t.ask.questionHeading}
+          </span>{' '}
+          <span className="mt-1.5 block text-[15px] leading-relaxed text-ink-500">{t.ask.questionHint}</span>
         </label>
         <textarea
           ref={questionRef}
           id="question"
           value={question}
           maxLength={MAX_LENGTH}
-          rows={4}
+          rows={5}
           onChange={(event) => setQuestion(event.target.value)}
           placeholder={t.ask.placeholder}
-          className="mt-2 w-full resize-y rounded-xl border border-[var(--color-line)] bg-white p-4 text-base leading-relaxed text-ink-900 outline-none placeholder:text-ink-300 focus:border-brand-400"
+          className="lr-input mt-4 resize-y"
         />
-        <div className="mt-2 flex items-center justify-between gap-3">
-          <span className="text-xs text-ink-300">
+        {/* 개인정보 입력 금지 안내 */}
+        <p className="mt-2.5 flex items-start gap-2 text-sm leading-relaxed text-ink-500">
+          <Icon name="shield" size={16} className="mt-0.5 shrink-0 text-brand-600" /> <span>{t.ask.privacyShort}</span>
+        </p>
+        <div className="mt-5 flex flex-col-reverse items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <span className="text-center text-sm text-ink-500 sm:text-left">
             {MAX_LENGTH - question.length} {t.ask.charsLeft}
           </span>
-          <button type="submit" disabled={loading || !question.trim()} className="lr-btn lr-btn-primary">
+          <button type="submit" disabled={loading || !question.trim()} className="lr-btn lr-btn-primary lr-btn-lg">
             {pending === 'new' ? (
               <>
                 <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
@@ -406,7 +425,7 @@ export function AskClient({
               </>
             ) : (
               <>
-                <Icon name="sparkles" size={18} /> {t.ask.submit}
+                {t.ask.submitFirst} <Icon name="arrow-right" size={18} />
               </>
             )}
           </button>
@@ -416,7 +435,7 @@ export function AskClient({
       {turns.length === 0 && !loading && examples.length > 0 && (
         <div className="mt-6">
           <p className="text-sm font-semibold text-ink-500">{t.home.exampleLabel}</p>
-          <ul className="mt-2 flex flex-wrap gap-2">
+          <ul className="mt-2.5 flex flex-wrap gap-2">
             {examples.map((example) => (
               <li key={example}>
                 <button
@@ -425,7 +444,7 @@ export function AskClient({
                     setQuestion(example);
                     void ask(example);
                   }}
-                  className="rounded-full border border-[var(--color-line)] bg-white px-3.5 py-2 text-left text-sm text-ink-700 hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
+                  className="rounded-full border border-[var(--color-line)] bg-white px-3.5 py-2 text-left text-[15px] text-ink-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
                 >
                   {example}
                 </button>
@@ -435,19 +454,19 @@ export function AskClient({
         </div>
       )}
 
-      <div aria-live="polite" className="mt-8 space-y-5 outline-none">
+      <div aria-live="polite" className="mt-8 space-y-6 outline-none">
         {turns.map((turn, index) => (
           <div
             key={index}
             ref={index === turns.length - 1 ? latestTurnRef : undefined}
             tabIndex={-1}
-            className="space-y-5 outline-none"
+            className="space-y-6 outline-none"
           >
             {/* 추가 질문은 무엇을 물었는지 답변 위에 함께 보여줍니다. (처음 질문은 위 입력창에 있습니다) */}
             {index > 0 && (
-              <div className="rounded-xl border border-brand-200 bg-brand-50 p-4">
+              <div className="rounded-[var(--radius-card)] border border-brand-200 bg-brand-50 px-5 py-4">
                 <p className="text-sm font-bold text-brand-800">{t.ask.myQuestion}</p>{' '}
-                <p className="mt-1 text-[15px] leading-relaxed text-ink-900">{turn.question}</p>
+                <p className="mt-1 text-base leading-relaxed text-ink-900">{turn.question}</p>
               </div>
             )}
             <ResultView result={turn.result} locale={locale} t={t} onNewQuestion={startNewQuestion} />
@@ -455,7 +474,7 @@ export function AskClient({
         ))}
 
         {loading && (
-          <div className="lr-card p-6 text-center text-sm text-ink-500">
+          <div className="lr-card p-7 text-center text-[15px] text-ink-500">
             <span className="mx-auto mb-3 block h-6 w-6 animate-spin rounded-full border-2 border-brand-200 border-t-brand-600" />
             {t.ask.sending}
           </div>
@@ -467,9 +486,9 @@ export function AskClient({
               event.preventDefault();
               void ask(followUp, true);
             }}
-            className="lr-card p-5"
+            className="lr-card p-5 sm:p-6"
           >
-            <label htmlFor="follow-up-question" className="block text-sm font-bold text-ink-900">
+            <label htmlFor="follow-up-question" className="block text-base font-bold text-ink-900">
               {t.ask.followUpTitle}
             </label>
             <textarea
@@ -479,12 +498,12 @@ export function AskClient({
               rows={3}
               onChange={(event) => setFollowUp(event.target.value)}
               placeholder={t.ask.followUpPlaceholder}
-              className="mt-2 w-full resize-y rounded-xl border border-[var(--color-line)] bg-white p-4 text-base leading-relaxed text-ink-900 outline-none placeholder:text-ink-300 focus:border-brand-400"
+              className="lr-input mt-3 resize-y"
             />
             {/* 휴대폰에서는 글자 수 아래에 버튼 두 개가 나란히, 넓은 화면에서는 한 줄로 보입니다.
                 화면이 아주 좁으면 버튼 글자가 꺾이지 않고 버튼이 다음 줄로 내려갑니다. */}
-            <div className="mt-2 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
-              <span className="text-xs text-ink-300">
+            <div className="mt-3 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+              <span className="text-sm text-ink-500">
                 {MAX_LENGTH - followUp.length} {t.ask.charsLeft}
               </span>
               <div className="flex flex-wrap gap-2">

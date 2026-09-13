@@ -1,7 +1,7 @@
 // 사이트 아래쪽 영역입니다. 문의 이메일과 인스타그램·블로그 주소는 content/site.json 에서 바꿉니다.
 
 import Link from 'next/link';
-import { Icon } from './Icon';
+import { Logo } from './Logo';
 import { getOrganizations, getSite } from '@/lib/content';
 import { getMessages, pick, type Locale } from '@/lib/i18n';
 
@@ -26,26 +26,24 @@ export function Footer({ locale }: { locale: Locale }) {
   ].filter((item) => item.link?.url);
 
   return (
-    <footer className="mt-16 border-t border-[var(--color-line)] bg-white">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-600 text-white">
-              <Icon name="lifebuoy" size={20} />
-            </span>
-            <span className="text-lg font-extrabold text-brand-800">LINKRIGHTS</span>
-          </div>
-          <p className="mt-3 text-sm leading-relaxed text-ink-700">{t.footer.aboutSite}</p>
-          <ul className="mt-3 space-y-1.5 text-sm text-ink-500">
+    <footer className="border-t border-[var(--color-line)] bg-white">
+      <div className="lr-container grid gap-10 py-12 sm:py-14 md:grid-cols-12">
+        {/* 로고 · 소개 · 문의 */}
+        <div className="md:col-span-5">
+          <Link href={`/${locale}`} className="inline-flex" aria-label="LINKRIGHTS">
+            <Logo className="h-12 w-12" />
+          </Link>
+          <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-ink-700">{t.footer.aboutSite}</p>
+          <ul className="mt-5 space-y-2 text-[15px] text-ink-700">
             <li>
-              {t.footer.contact}:{' '}
+              <span className="font-semibold text-ink-900">{t.footer.contact}</span>{' '}
               <a className="lr-link break-all" href={`mailto:${site.contactEmail}`}>
                 {site.contactEmail}
               </a>
             </li>
             {social.map((item) => (
               <li key={item.key}>
-                {item.label}:{' '}
+                <span className="font-semibold text-ink-900">{item.label}</span>{' '}
                 <a
                   className="lr-link break-all"
                   href={item.link!.url}
@@ -60,14 +58,15 @@ export function Footer({ locale }: { locale: Locale }) {
           </ul>
         </div>
 
-        <nav aria-labelledby="footer-links">
+        {/* 바로가기 */}
+        <nav aria-labelledby="footer-links" className="md:col-span-3">
           <h2 id="footer-links" className="text-sm font-bold text-ink-900">
             {t.footer.sitemapTitle}
           </h2>
-          <ul className="mt-3 space-y-2">
+          <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2.5 md:grid-cols-1">
             {links.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="text-sm text-ink-700 hover:text-brand-700 hover:underline">
+                <Link href={link.href} className="text-[15px] text-ink-700 hover:text-brand-700 hover:underline">
                   {link.label}
                 </Link>
               </li>
@@ -75,29 +74,33 @@ export function Footer({ locale }: { locale: Locale }) {
           </ul>
         </nav>
 
-        <div>
+        {/* 긴급 연락처 */}
+        <div className="md:col-span-4">
           <h2 className="text-sm font-bold text-ink-900">{t.footer.helpTitle}</h2>
-          <ul className="mt-3 space-y-2">
+          <ul className="mt-4 space-y-2.5">
             {emergencyOrgs.map((org) => (
-              <li key={org.id} className="text-sm text-ink-700">
-                <a href={`tel:${org.phone}`} className="whitespace-nowrap font-semibold text-brand-700 hover:underline">
+              <li key={org.id} className="flex flex-wrap items-baseline gap-x-2 text-[15px] text-ink-700">
+                <a href={`tel:${org.phone}`} className="whitespace-nowrap font-bold text-brand-700 hover:underline">
                   {org.phone}
                 </a>{' '}
                 <span className="text-ink-500">{pick(org.name, locale)}</span>
               </li>
             ))}
           </ul>
-          <Link href={`/${locale}/emergency`} className="lr-link mt-3 inline-block text-sm font-semibold">
+          <Link href={`/${locale}/emergency`} className="lr-link mt-4 inline-block text-[15px] font-semibold">
             {t.emergency.navTitle}
           </Link>
         </div>
       </div>
 
       <div className="border-t border-[var(--color-line)] bg-surface-soft">
-        <div className="mx-auto max-w-6xl px-4 py-6 text-xs leading-relaxed text-ink-500 sm:px-6">
+        <div className="lr-container flex flex-col gap-2 py-6 text-[13px] leading-relaxed text-ink-500 md:flex-row md:items-center md:justify-between md:gap-8">
           <p>{t.footer.notAdvice}</p>
-          <p className="mt-2">
-            © {new Date().getFullYear()} {pick(site.operator, locale)}
+          <p className="shrink-0">
+            © {new Date().getFullYear()} {pick(site.operator, locale)} ·{' '}
+            <Link href={`/${locale}/privacy`} className="hover:text-brand-700 hover:underline">
+              {t.footer.privacy}
+            </Link>
           </p>
         </div>
       </div>

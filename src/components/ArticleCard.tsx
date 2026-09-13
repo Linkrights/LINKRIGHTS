@@ -12,11 +12,11 @@ export function ArticleCard({ article, locale }: { article: RightsArticle; local
   const stale = isStale(article.reviewed_at);
 
   return (
-    <Link href={articleHref(locale, article)} className="lr-card lr-card-hover flex h-full flex-col gap-2 p-5">
-      {category && <span className="lr-chip w-fit">{pick(category.name, locale)}</span>}
-      <h3 className="text-[17px] font-bold leading-snug text-ink-900">{body.title}</h3>
-      <p className="line-clamp-3 text-sm leading-relaxed text-ink-500">{body.summary}</p>
-      <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-3 text-xs text-ink-300">
+    <Link href={articleHref(locale, article)} className="lr-card lr-card-hover group flex h-full flex-col p-5">
+      {category && <span className="text-sm font-semibold text-brand-700">{pick(category.name, locale)}</span>}{' '}
+      <h3 className="mt-1.5 text-[17px] font-bold leading-snug text-ink-900 group-hover:text-brand-800">{body.title}</h3>{' '}
+      <p className="mt-2 line-clamp-3 text-[15px] leading-relaxed text-ink-500">{body.summary}</p>
+      <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-4 text-[13px] text-ink-500">
         <span>
           {t.common.reviewedAt} {formatDate(article.reviewed_at, locale)}
         </span>

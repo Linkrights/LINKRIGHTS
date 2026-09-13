@@ -1,6 +1,6 @@
 'use client';
 
-// 홈 화면 맨 위에 있는 질문 입력창입니다.
+// 홈 화면의 "내 상황을 말해보는 공간"입니다.
 // 여기서 질문을 쓰면 AI 질문 페이지(/ask)로 이동합니다.
 
 import { useRouter } from 'next/navigation';
@@ -36,36 +36,40 @@ export function AskBox({ locale, examples }: { locale: Locale; examples: string[
           event.preventDefault();
           go(value);
         }}
-        className="flex flex-col gap-2 rounded-2xl border border-[var(--color-line)] bg-white p-2 shadow-sm sm:flex-row sm:items-center"
       >
-        <label htmlFor="hero-question" className="sr-only">
-          {t.ask.title}
+        <label htmlFor="hero-question" className="block">
+          <span className="block text-xl font-extrabold tracking-tight text-ink-900 sm:text-2xl">
+            {t.ask.questionHeading}
+          </span>{' '}
+          <span className="mt-1.5 block text-[15px] leading-relaxed text-ink-500">{t.ask.questionHint}</span>
         </label>
-        <input
+        <textarea
           id="hero-question"
-          type="text"
           value={value}
+          rows={3}
           maxLength={500}
           onChange={(event) => setValue(event.target.value)}
           placeholder={t.home.askPlaceholder}
-          className="min-h-[52px] flex-1 rounded-xl bg-transparent px-4 text-base text-ink-900 outline-none placeholder:text-ink-300"
+          className="lr-input mt-4 resize-none"
         />
-        <button type="submit" className="lr-btn lr-btn-primary shrink-0">
-          <Icon name="sparkles" size={18} />
-          {t.home.askButton}
+        <p className="mt-2.5 flex items-start gap-2 text-sm leading-relaxed text-ink-500">
+          <Icon name="shield" size={16} className="mt-0.5 shrink-0 text-brand-600" /> <span>{t.ask.privacyShort}</span>
+        </p>
+        <button type="submit" disabled={!value.trim()} className="lr-btn lr-btn-primary lr-btn-lg mt-4 w-full">
+          {t.home.askButton} <Icon name="arrow-right" size={18} />
         </button>
       </form>
 
       {examples.length > 0 && (
-        <div className="mt-4">
+        <div className="mt-6 border-t border-[var(--color-line)] pt-5">
           <p className="text-sm font-semibold text-ink-500">{t.home.exampleLabel}</p>
-          <ul className="mt-2 flex flex-wrap gap-2">
+          <ul className="mt-2.5 flex flex-wrap gap-2">
             {examples.map((example) => (
               <li key={example}>
                 <button
                   type="button"
                   onClick={() => go(example)}
-                  className="rounded-full border border-[var(--color-line)] bg-white px-3.5 py-2 text-left text-sm text-ink-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
+                  className="rounded-full border border-[var(--color-line)] bg-surface-soft px-3.5 py-2 text-left text-[15px] text-ink-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
                 >
                   {example}
                 </button>
