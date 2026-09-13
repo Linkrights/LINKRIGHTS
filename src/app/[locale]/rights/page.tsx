@@ -27,7 +27,7 @@ export default async function RightsIndexPage({ params }: { params: Promise<{ lo
       <PageHeader title={t.rights.title} subtitle={t.rights.subtitle} />
 
       <Section>
-        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => (
             <li key={category.id}>
               <CategoryCard category={category} locale={locale} />
