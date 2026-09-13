@@ -414,12 +414,16 @@ async function runDeterministic() {
   {
     const load = (locale) => JSON.parse(fs.readFileSync(path.join(ROOT, 'messages', `${locale}.json`), 'utf8'));
     const ko = load('ko');
+    // 모든 문구 묶음(nav, home, ask, organizations, footer 등)의 항목 이름이 한국어와 같은지 확인합니다.
+    const missingKeys = (base, other, prefix = '') =>
+      Object.entries(base).flatMap(([key, value]) => {
+        const keyPath = prefix ? `${prefix}.${key}` : key;
+        if (!other || typeof other !== 'object' || !(key in other)) return [keyPath];
+        return value && typeof value === 'object' && !Array.isArray(value) ? missingKeys(value, other[key], keyPath) : [];
+      });
     for (const locale of ['en', 'zh', 'vi']) {
       const other = load(locale);
-      const missing = [
-        ...Object.keys(ko.ask).filter((key) => !(key in other.ask)).map((key) => `ask.${key}`),
-        ...Object.keys(ko.footer).filter((key) => !(key in other.footer)).map((key) => `footer.${key}`),
-      ];
+      const missing = missingKeys(ko, other);
       check(`문구: ${locale}.json 에 빠진 항목 없음`, missing.length === 0, missing.join(', '));
     }
   }
