@@ -37,7 +37,7 @@ export default async function AskPage({
 
   return (
     <>
-      <PageHeader title={t.ask.title} subtitle={t.ask.subtitle} kicker="AI" />
+      <PageHeader title={t.ask.title} subtitle={t.ask.subtitle} />
       <AskClient
         locale={locale}
         examples={examples}
