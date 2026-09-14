@@ -215,7 +215,7 @@ export default async function ArticlePage({
         {/* 내 상황 질문하기 */}
         <div className="lr-panel border-brand-100 bg-brand-50 p-6 sm:p-8">
           <p className="text-base font-semibold leading-relaxed text-brand-900">{t.ask.subtitle}</p>
-          <Link href={`/${locale}/ask`} className="lr-btn lr-btn-primary mt-4">
+          <Link href={`/${locale}/ask`} className="lr-btn lr-btn-primary lr-press mt-4">
             {t.home.ctaAsk} <Icon name="arrow-right" size={18} />
           </Link>
         </div>

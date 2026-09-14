@@ -2,6 +2,7 @@
 
 import type { Metadata } from 'next';
 import { OrgCard } from '@/components/OrgCard';
+import { Reveal } from '@/components/Reveal';
 import { PageHeader, Section } from '@/components/Section';
 import { getOrganizations } from '@/lib/content';
 import { getMessages, toLocale } from '@/lib/i18n';
@@ -46,11 +47,18 @@ export default async function OrganizationsPage({ params }: { params: Promise<{ 
         return (
           <Section key={key} id={key} title={t.organizations.categories[key]}>
             <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {group.map((org) => (
-                <li key={org.id}>
-                  <OrgCard org={org} locale={locale} />
-                </li>
-              ))}
+              {group.map((org, index) =>
+                // 긴급 연락처는 움직임 없이 처음부터 바로 보여줍니다.
+                key === 'emergency' ? (
+                  <li key={org.id}>
+                    <OrgCard org={org} locale={locale} />
+                  </li>
+                ) : (
+                  <Reveal key={org.id} index={index}>
+                    <OrgCard org={org} locale={locale} />
+                  </Reveal>
+                ),
+              )}
             </ul>
           </Section>
         );

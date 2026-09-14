@@ -82,7 +82,7 @@ export function Header({ locale }: { locale: Locale }) {
         <div className="ml-auto hidden items-center gap-2 lg:flex">
           <Link
             href={`/${locale}/emergency`}
-            className="inline-flex h-10 items-center gap-1.5 whitespace-nowrap rounded-[var(--radius-control)] px-2.5 text-sm font-bold text-[var(--color-danger-700)] transition-colors hover:bg-[var(--color-danger-50)]"
+            className="lr-press inline-flex h-10 items-center gap-1.5 whitespace-nowrap rounded-[var(--radius-control)] px-2.5 text-sm font-bold text-[var(--color-danger-700)] hover:bg-[var(--color-danger-50)]"
           >
             <Icon name="alert" size={16} />
             <span className="sr-only xl:not-sr-only">{t.nav.emergency}</span>
@@ -98,7 +98,7 @@ export function Header({ locale }: { locale: Locale }) {
           <Link
             href={askHref}
             aria-current={isActive(askHref) ? 'page' : undefined}
-            className="lr-btn lr-btn-primary lr-btn-sm whitespace-nowrap"
+            className="lr-btn lr-btn-primary lr-btn-sm lr-press whitespace-nowrap"
           >
             {t.nav.askShort}
           </Link>
@@ -119,7 +119,7 @@ export function Header({ locale }: { locale: Locale }) {
       {open && (
         <nav id="mobile-menu" aria-label="주요 메뉴" className="border-t border-[var(--color-line)] bg-white lg:hidden">
           <div className="lr-container space-y-4 py-4">
-            <Link href={askHref} className="lr-btn lr-btn-primary w-full">
+            <Link href={askHref} className="lr-btn lr-btn-primary lr-press w-full">
               {t.nav.askShort}
               <Icon name="arrow-right" size={18} />
             </Link>

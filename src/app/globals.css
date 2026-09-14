@@ -283,6 +283,20 @@
     background: var(--color-danger-700);
   }
 
+  /* 주요 버튼(질문하기·권리 알아보기·전체 보기·긴급 도움)의 아주 작은 반응
+     마우스가 있는 기기에서만 올렸을 때 살짝 커지고, 누르는 순간 살짝 작아집니다. 색·포커스 표시는 그대로입니다. */
+  .lr-press {
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.18s ease-out;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .lr-press:hover {
+      transform: scale(1.03);
+    }
+  }
+  .lr-press:active {
+    transform: scale(0.97);
+  }
+
   /* 카드와 영역 */
   .lr-card {
     background: var(--color-surface);
@@ -368,6 +382,43 @@
   .lr-appear {
     animation: lr-appear 0.28s ease-out both;
   }
+
+  /* 옆으로 천천히 흐르는 띠 (Marquee.tsx)
+     같은 내용 4벌을 이어 붙이고, 한 벌 너비(-25%)만큼 옮기기를 반복합니다. 속도를 바꾸려면 40s 를 바꾸세요. */
+  .lr-marquee {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .lr-marquee-viewport {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    /* 양 끝이 뚝 잘리지 않고 부드럽게 사라지게 합니다 */
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+  }
+  .lr-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: lr-marquee 40s linear infinite;
+  }
+  .lr-marquee-group {
+    flex-shrink: 0;
+  }
+  /* 마우스를 올리거나 [멈춤]을 누르면 그 자리에서 멈춥니다 */
+  .lr-marquee:hover .lr-marquee-track,
+  .lr-marquee[data-paused] .lr-marquee-track {
+    animation-play-state: paused;
+  }
+  /* 키보드로 들어오면 처음 위치로 돌아가 멈춰, 선택한 항목이 화면 밖에 가려지지 않게 합니다 */
+  .lr-marquee-viewport:focus-within {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .lr-marquee-viewport:focus-within .lr-marquee-track {
+    animation: none;
+  }
 }
 
 @keyframes lr-appear {
@@ -377,6 +428,50 @@
   }
   to {
     opacity: 1;
+    transform: none;
+  }
+}
+
+/* 스크롤 등장 효과(Reveal)는 자바스크립트로 움직입니다.
+   자바스크립트가 꺼진 환경이나 인쇄할 때도 아직 스크롤하지 않은 카드가 투명한 채로 남지 않고 항상 보이게 합니다. */
+@media (scripting: none), print {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@keyframes lr-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-25%);
+  }
+}
+
+/* 움직임을 줄이도록 설정한 사용자에게는 흐르는 띠를 멈추고, 첫 번째 벌만 여러 줄로 보여줍니다.
+   (아래의 전체 규칙만으로는 무한 반복 애니메이션이 아주 빠르게 반복될 수 있어 따로 끕니다) */
+@media (prefers-reduced-motion: reduce) {
+  .lr-marquee-track {
+    display: block;
+    width: auto;
+    animation: none;
+  }
+  .lr-marquee-group[aria-hidden="true"],
+  .lr-marquee-toggle {
+    display: none;
+  }
+  .lr-marquee-group > ul {
+    flex-wrap: wrap;
+  }
+  .lr-marquee-viewport {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  /* 버튼 크기 변화도 하지 않습니다 */
+  .lr-press:hover,
+  .lr-press:active {
     transform: none;
   }
 }

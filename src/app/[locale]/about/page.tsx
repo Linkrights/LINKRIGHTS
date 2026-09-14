@@ -3,6 +3,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Icon } from '@/components/Icon';
+import { SdgIcon } from '@/components/SdgIcon';
 import { Notice, PageHeader, Section } from '@/components/Section';
 import { getAbout, getPrograms } from '@/lib/content';
 import { getMessages, pick, toLocale } from '@/lib/i18n';
@@ -85,7 +86,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       <Section
         title={t.programs.title}
         action={
-          <Link href={`/${locale}/programs`} className="lr-btn lr-btn-ghost lr-btn-sm">
+          <Link href={`/${locale}/programs`} className="lr-btn lr-btn-ghost lr-btn-sm lr-press">
             {t.common.viewAll} <Icon name="arrow-right" size={16} />
           </Link>
         }
@@ -104,14 +105,9 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       {/* SDGs */}
       <Section tone="soft" title={about.sdg_title}>
         <ul className="grid gap-8 sm:grid-cols-2">
-          {about.sdgs.map((sdg, index) => (
+          {about.sdgs.map((sdg) => (
             <li key={sdg.code} className="flex gap-4">
-              <span
-                className="grid h-12 w-12 shrink-0 place-items-center rounded-[var(--radius-control)] text-base font-extrabold text-white"
-                style={{ background: index === 0 ? 'var(--color-sdg4)' : 'var(--color-sdg10)' }}
-              >
-                {sdg.code.replace('SDG ', '')}
-              </span>{' '}
+              <SdgIcon code={sdg.code} />{' '}
               <div>
                 <h3 className="lr-h3">
                   {sdg.code} · {sdg.name}

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArticleCard } from '@/components/ArticleCard';
 import { CategoryCard } from '@/components/CategoryCard';
 import { Icon } from '@/components/Icon';
+import { Reveal } from '@/components/Reveal';
 import { PageHeader, Section } from '@/components/Section';
 import { getArticlesByCategory, getCategories, getRightsCategories } from '@/lib/content';
 import { getMessages, pick, toLocale } from '@/lib/i18n';
@@ -46,17 +47,17 @@ export default async function RightsIndexPage({ params }: { params: Promise<{ lo
             title={pick(category.name, locale)}
             subtitle={pick(category.tagline, locale)}
             action={
-              <Link href={`/${locale}/rights/${category.id}`} className="lr-btn lr-btn-ghost">
+              <Link href={`/${locale}/rights/${category.id}`} className="lr-btn lr-btn-ghost lr-press">
                 {t.common.viewAll}
                 <Icon name="arrow-right" size={16} />
               </Link>
             }
           >
             <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {articles.slice(0, 3).map((article) => (
-                <li key={article.id}>
+              {articles.slice(0, 3).map((article, index) => (
+                <Reveal key={article.id} index={index}>
                   <ArticleCard article={article} locale={locale} />
-                </li>
+                </Reveal>
               ))}
             </ul>
           </Section>

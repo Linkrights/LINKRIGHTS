@@ -3,6 +3,7 @@
 // content/programs.json 의 "image" 값에 파일 이름(예: "mentoring.jpg")을 적으세요.
 
 import type { Metadata } from 'next';
+import { Reveal } from '@/components/Reveal';
 import { Notice, PageHeader, Section } from '@/components/Section';
 import { getPrograms } from '@/lib/content';
 import { getMessages, pick, toLocale } from '@/lib/i18n';
@@ -27,8 +28,8 @@ export default async function ProgramsPage({ params }: { params: Promise<{ local
 
       <Section>
         <ul className="grid gap-4 sm:grid-cols-2">
-          {items.map((item) => (
-            <li key={item.id} className="lr-card overflow-hidden">
+          {items.map((item, index) => (
+            <Reveal key={item.id} index={index} className="lr-card overflow-hidden">
               {/* 사진이 있을 때만 보여줍니다. (사진이 없으면 빈 색 상자를 넣지 않습니다) */}
               {item.image && (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -44,7 +45,7 @@ export default async function ProgramsPage({ params }: { params: Promise<{ local
                 <h2 className="mt-1.5 text-lg font-extrabold leading-snug text-ink-900">{pick(item.title, locale)}</h2>{' '}
                 <p className="lr-body mt-2">{pick(item.body, locale)}</p>
               </div>
-            </li>
+            </Reveal>
           ))}
         </ul>
       </Section>

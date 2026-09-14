@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { ArticleCard } from '@/components/ArticleCard';
 import { OrgCard } from '@/components/OrgCard';
+import { Reveal } from '@/components/Reveal';
 import { PageHeader, Section } from '@/components/Section';
 import { getArticlesByCategory, getCategory, getOrganizations, getRightsCategories } from '@/lib/content';
 import { LOCALES, getMessages, pick, toLocale } from '@/lib/i18n';
@@ -60,10 +61,10 @@ export default async function CategoryPage({
           <p className="lr-card p-6 text-center text-ink-500">{t.rights.empty}</p>
         ) : (
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {articles.map((article) => (
-              <li key={article.id}>
+            {articles.map((article, index) => (
+              <Reveal key={article.id} index={index}>
                 <ArticleCard article={article} locale={locale} />
-              </li>
+              </Reveal>
             ))}
           </ul>
         )}
@@ -72,10 +73,10 @@ export default async function CategoryPage({
       {orgs.length > 0 && (
         <Section tone="soft" title={t.rights.orgsHeading}>
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {orgs.map((org) => (
-              <li key={org.id}>
+            {orgs.map((org, index) => (
+              <Reveal key={org.id} index={index}>
                 <OrgCard org={org} locale={locale} />
-              </li>
+              </Reveal>
             ))}
           </ul>
         </Section>

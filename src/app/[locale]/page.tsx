@@ -6,11 +6,16 @@ import Link from 'next/link';
 import { ArticleCard } from '@/components/ArticleCard';
 import { AskBox } from '@/components/AskBox';
 import { CategoryCard } from '@/components/CategoryCard';
-import { Icon } from '@/components/Icon';
+import { CountUp } from '@/components/CountUp';
+import { Icon, type IconName } from '@/components/Icon';
+import { Marquee } from '@/components/Marquee';
 import { OrgCard } from '@/components/OrgCard';
+import { Reveal } from '@/components/Reveal';
+import { SdgIcon } from '@/components/SdgIcon';
 import { Section } from '@/components/Section';
 import {
   getAbout,
+  getArticles,
   getCategories,
   getFaq,
   getFeaturedArticles,
@@ -18,7 +23,8 @@ import {
   getPrograms,
   getSite,
 } from '@/lib/content';
-import { getMessages, pick, toLocale } from '@/lib/i18n';
+import { LOCALES, formatDate, getMessages, pick, toLocale } from '@/lib/i18n';
+import impact from '../../../content/impact.json';
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale: rawLocale } = await params;
@@ -33,8 +39,16 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const faq = getFaq().items.slice(0, 4);
   const examples = site.exampleQuestions[locale] ?? site.exampleQuestions.ko;
 
+  // 숫자로 보는 LINKRIGHTS: 함께하는 청소년 수는 content/impact.json 의 실제 숫자, 나머지는 등록된 자료를 그대로 셉니다.
+  const stats = [
+    { key: 'participants', label: t.home.impactParticipants, unit: t.home.impactParticipantsUnit, value: impact.participants.count },
+    { key: 'articles', label: t.home.impactArticles, unit: t.home.impactArticlesUnit, value: getArticles().length },
+    { key: 'organizations', label: t.home.impactOrganizations, unit: t.home.impactOrganizationsUnit, value: getOrganizations().length },
+    { key: 'languages', label: t.home.impactLanguages, unit: t.home.impactLanguagesUnit, value: LOCALES.length },
+  ];
+
   const viewAll = (href: string) => (
-    <Link href={href} className="lr-btn lr-btn-ghost lr-btn-sm">
+    <Link href={href} className="lr-btn lr-btn-ghost lr-btn-sm lr-press">
       {t.common.viewAll} <Icon name="arrow-right" size={16} />
     </Link>
   );
@@ -61,10 +75,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <h1 className="lr-display mt-4 whitespace-pre-line">{t.home.heroTitle}</h1>
             <p className="lr-lead mt-5 max-w-xl">{t.home.heroSubtitle}</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <Link href={`/${locale}/ask`} className="lr-btn lr-btn-primary lr-btn-lg">
+              <Link href={`/${locale}/ask`} className="lr-btn lr-btn-primary lr-btn-lg lr-press">
                 {t.home.ctaAsk} <Icon name="arrow-right" size={18} />
               </Link>
-              <Link href={`/${locale}/rights`} className="lr-btn lr-btn-ghost lr-btn-lg">
+              <Link href={`/${locale}/rights`} className="lr-btn lr-btn-ghost lr-btn-lg lr-press">
                 {t.home.ctaRights}
               </Link>
             </div>
@@ -77,6 +91,27 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </div>
         </div>
       </section>
+
+      {/* 1-1. 분야 이름이 천천히 흐르는 띠: 아래 분야 카드와 같은 곳으로 연결됩니다 */}
+      <nav aria-label={t.home.browseTitle} className="border-b border-[var(--color-line)] bg-white">
+        <div className="lr-container py-3">
+          <Marquee pauseLabel={t.common.pauseMotion} playLabel={t.common.playMotion}>
+            <ul className="flex gap-2.5 pr-2.5">
+              {categories.map((category) => (
+                <li key={category.id}>
+                  <Link
+                    href={category.kind === 'directory' ? `/${locale}/organizations` : `/${locale}/rights/${category.id}`}
+                    className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-[var(--color-line)] bg-white px-4 py-2 text-[15px] font-semibold text-ink-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
+                  >
+                    <Icon name={category.icon as IconName} size={16} className="shrink-0 text-brand-600" />
+                    {pick(category.name, locale)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Marquee>
+        </div>
+      </nav>
 
       {/* 2. 분야별로 찾아보기 --------------------------------------- */}
       <Section title={t.home.browseTitle} subtitle={t.home.browseSubtitle}>
@@ -112,7 +147,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         title={t.home.aiTitle}
         subtitle={t.home.aiSubtitle}
         action={
-          <Link href={`/${locale}/ask`} className="lr-btn lr-btn-primary">
+          <Link href={`/${locale}/ask`} className="lr-btn lr-btn-primary lr-press">
             {t.home.ctaAsk} <Icon name="arrow-right" size={18} />
           </Link>
         }
@@ -132,6 +167,31 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </ul>
       </Section>
 
+      {/* 4-1. 숫자로 보는 LINKRIGHTS: 화면에 들어오면 숫자가 0부터 한 번만 올라갑니다 */}
+      <section aria-labelledby="impact-title" className="border-y border-[var(--color-line)] bg-brand-50">
+        <div className="lr-container py-12 sm:py-14">
+          <h2 id="impact-title" className="lr-h2">
+            {t.home.impactTitle}
+          </h2>
+          <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4">
+            {stats.map((stat) => (
+              <div key={stat.key} className="flex flex-col-reverse border-l-2 border-brand-600 pl-4">
+                <dt className="mt-1 text-[15px] font-semibold leading-snug text-ink-700">{stat.label}</dt>
+                <dd className="flex items-baseline gap-1 text-brand-700">
+                  <span className="text-4xl font-extrabold tracking-tight sm:text-5xl">
+                    <CountUp value={stat.value} />
+                  </span>
+                  {stat.unit && <span className="text-lg font-bold">{stat.unit}</span>}
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <p className="mt-8 text-[13px] leading-relaxed text-ink-500">
+            {t.home.impactNote.replace('{date}', formatDate(impact.participants.as_of, locale))}
+          </p>
+        </div>
+      </section>
+
       {/* 5. 많이 찾는 권리정보 -------------------------------------- */}
       <Section
         tone="soft"
@@ -140,10 +200,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         action={viewAll(`/${locale}/rights`)}
       >
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((article) => (
-            <li key={article.id}>
+          {featured.map((article, index) => (
+            <Reveal key={article.id} index={index}>
               <ArticleCard article={article} locale={locale} />
-            </li>
+            </Reveal>
           ))}
         </ul>
       </Section>
@@ -151,10 +211,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       {/* 6. 도움받을 수 있는 기관 ---------------------------------- */}
       <Section title={t.home.orgTitle} subtitle={t.home.orgSubtitle} action={viewAll(`/${locale}/organizations`)}>
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {orgs.map((org) => (
-            <li key={org.id}>
+          {orgs.map((org, index) => (
+            <Reveal key={org.id} index={index}>
               <OrgCard org={org} locale={locale} />
-            </li>
+            </Reveal>
           ))}
         </ul>
       </Section>
@@ -167,12 +227,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         action={viewAll(`/${locale}/programs`)}
       >
         <ul className="grid gap-8 sm:grid-cols-3">
-          {programs.map((program) => (
-            <li key={program.id} className="border-t-2 border-brand-600 pt-5">
+          {programs.map((program, index) => (
+            <Reveal key={program.id} index={index} className="border-t-2 border-brand-600 pt-5">
               <span className="text-sm font-semibold text-brand-700">{pick(program.tag, locale)}</span>{' '}
               <h3 className="lr-h3 mt-1.5">{pick(program.title, locale)}</h3>{' '}
               <p className="mt-2 text-[15px] leading-relaxed text-ink-500">{pick(program.body, locale)}</p>
-            </li>
+            </Reveal>
           ))}
         </ul>
       </Section>
@@ -180,14 +240,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       {/* 8. SDGs ---------------------------------------------------- */}
       <Section title={t.home.sdgTitle} subtitle={t.home.sdgSubtitle}>
         <ul className="grid gap-8 sm:grid-cols-2">
-          {about.sdgs.map((sdg, index) => (
+          {about.sdgs.map((sdg) => (
             <li key={sdg.code} className="flex gap-4">
-              <span
-                className="grid h-12 w-12 shrink-0 place-items-center rounded-[var(--radius-control)] text-base font-extrabold text-white"
-                style={{ background: index === 0 ? 'var(--color-sdg4)' : 'var(--color-sdg10)' }}
-              >
-                {sdg.code.replace('SDG ', '')}
-              </span>{' '}
+              <SdgIcon code={sdg.code} />{' '}
               <div>
                 <h3 className="lr-h3">
                   {sdg.code} · {sdg.name}
