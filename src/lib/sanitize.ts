@@ -87,7 +87,12 @@ export function scrub(text: string, allow: Allowlist): string {
     console.warn(`[linkrights] 답변에서 등록되지 않은 링크 ${removedLinks}개, 전화번호 ${removedPhones}개를 제거했습니다.`);
   }
 
-  return result.replace(/\s{2,}/g, ' ').replace(/\s+([.,!?])/g, '$1').trim();
+  // 번호·링크를 지운 자리에 남은 빈 괄호 "()"도 함께 지웁니다. (예: "국가인권위원회(1331)" → "국가인권위원회")
+  return result
+    .replace(/[(（]\s*[)）]/g, '')
+    .replace(/\s{2,}/g, ' ')
+    .replace(/\s+([.,!?])/g, '$1')
+    .trim();
 }
 
 export function scrubBlocks<T extends { title: string; body: string }>(blocks: T[], allow: Allowlist): T[] {
@@ -120,4 +125,28 @@ export function mentionsOrganization(text: string, org: Organization, ignorePhon
     if (found.includes(phone)) return true;
   }
   return nameParts(org).some((part) => text.includes(part));
+}
+
+/**
+ * 조건을 붙여 쓴 문장인지 확인합니다. (예: "같은 일이 반복된다면", "~인 경우", "If ...")
+ * possible 자료(사용자가 말하지 않은 조건이 맞을 때만 관련된 자료)의 권리는 조건부 문장일 때만 보여줍니다.
+ */
+const CONDITIONAL_PATTERN =
+  /(라면|다면|이면|으면|[가-힣]면[\s,]|경우|때는|때에는|수도 있|\bif\b|\bwhen\b|\bin case\b|\bmay\b|\bmight\b|如果|若是|的话|可能|nếu|trường hợp|\bkhi\b)/i;
+
+export function isConditional(text: string): boolean {
+  return CONDITIONAL_PATTERN.test(text);
+}
+
+/**
+ * 화면에 보여주지 않는 기관(이름 또는 번호)을 말하는 문장만 뺍니다. 나머지 문장은 그대로 둡니다.
+ * 근거 자료와 연결되지 않은 기관을 권리·요약·참고 문장에서 슬쩍 안내하지 않도록 하기 위한 안전장치입니다.
+ */
+export function dropSentencesMentioning(text: string, hidden: Organization[], ignorePhones: Set<string> = new Set()): string {
+  if (!text) return '';
+  return text
+    .split(/(?<=[.!?。！？])\s+|\n+/)
+    .filter((sentence) => sentence.trim() && !hidden.some((org) => mentionsOrganization(sentence, org, ignorePhones)))
+    .join(' ')
+    .trim();
 }

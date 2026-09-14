@@ -33,7 +33,16 @@ import { buildEmergencyCard, detectEmergency } from '@/lib/emergency';
 import { DEFAULT_LOCALE, isLocale } from '@/lib/i18n';
 import { askOpenAi, buildContext, type ContextSituation } from '@/lib/openai';
 import { checkLimits } from '@/lib/rateLimit';
-import { buildAllowlist, mentionsOrganization, phoneDigits, scrub, scrubBlocks, type Allowlist } from '@/lib/sanitize';
+import {
+  buildAllowlist,
+  dropSentencesMentioning,
+  isConditional,
+  mentionsOrganization,
+  phoneDigits,
+  scrub,
+  scrubBlocks,
+  type Allowlist,
+} from '@/lib/sanitize';
 import { findEvidence, fallbackArticles } from '@/lib/search';
 import type {
   AiAnswer,
@@ -65,6 +74,8 @@ const MAX_ACTIONS = 4;
 const MAX_ORGANIZATIONS = 2;
 /** possible 자료에만 연결된 기관은 AI가 직접 고른 경우에만, 최대 1곳까지 보여줍니다. */
 const MAX_POSSIBLE_ORGANIZATIONS = 1;
+/** possible 자료에서 온 권리는 조건을 붙여 쓴 것만, 최대 2개까지 보여줍니다. (짧은 설명만으로 권리를 단정하지 않도록) */
+const MAX_POSSIBLE_RIGHTS = 2;
 /** 답변에 쓰지 않았지만 함께 볼 수 있는 등록 권리정보 링크 수 */
 const MAX_RELATED = 3;
 /**
@@ -239,9 +250,10 @@ export async function POST(request: Request) {
   const evidenceIds = new Set(evidenceArticles.map((article) => article.id));
 
   // 권리: 근거 자료 id 가 붙은 것만 남깁니다. 근거 자료가 없으면 권리도 없습니다.
+  // possible 자료에서 온 권리는 조건을 붙여 쓴 것만 남깁니다. (개수 제한과 기관 문장 정리는 아래에서)
   const rights = (Array.isArray(raw.rights) ? raw.rights : [])
     .filter((right): right is AiRight => isBlock(right) && typeof right.source === 'string' && evidenceIds.has(right.source))
-    .slice(0, MAX_RIGHTS);
+    .filter((right) => directIds.has(right.source) || isConditional(`${right.title} ${right.body}`));
 
   // 실제로 사용한 근거 자료 = AI가 출처로 적은 자료 + 권리에 붙은 자료 (보낸 근거 자료 안에서만)
   const citedIds = [...(Array.isArray(raw.sources) ? raw.sources : []), ...rights.map((right) => right.source)];
@@ -260,7 +272,7 @@ export async function POST(request: Request) {
   const requestedIds = Array.isArray(raw.organizations) ? raw.organizations : [];
   const chosenDirectIds = requestedIds.filter((id) => directCandidates.some((org) => org.id === id));
   const mentionedDirectIds = directCandidates
-    .filter((org) => aiActions.some((action) => mentionsOrganization(`${action.title} ${action.body}`, org)))
+    .filter((org) => [...aiActions, ...rights].some((block) => mentionsOrganization(`${block.title} ${block.body}`, org)))
     .map((org) => org.id);
   const chosenPossibleIds = requestedIds
     .filter((id) => possibleCandidates.some((org) => org.id === id))
@@ -284,16 +296,31 @@ export async function POST(request: Request) {
     )
     .slice(0, MAX_ACTIONS);
 
+  // 권리·요약·참고·추가 질문에서도 보여주지 않는 기관(이름·번호)을 말하는 문장은 뺍니다. 나머지 안내 문장은 남깁니다.
+  const withoutHidden = (text: string) => dropSentencesMentioning(text, hiddenOrganizations, shownPhones);
+  let possibleRights = 0;
+  const visibleRights = rights
+    .filter((right) => !hiddenOrganizations.some((org) => mentionsOrganization(right.title, org, shownPhones)))
+    .map((right) => ({ ...right, body: withoutHidden(right.body) }))
+    .filter((right) => {
+      if (!right.body) return false;
+      if (directIds.has(right.source)) return true;
+      possibleRights += 1;
+      return possibleRights <= MAX_POSSIBLE_RIGHTS;
+    })
+    .slice(0, MAX_RIGHTS);
+  const followUp = firstQuestion(typeof raw.follow_up_question === 'string' ? raw.follow_up_question : '');
+
   const answer: AiAnswer = {
     category: categoryIds.includes(raw.category) ? raw.category : 'other',
     urgency: urgent ? 'urgent' : 'normal',
-    summary: scrub(raw.summary ?? '', allow),
-    rights: scrubBlocks(rights, allow),
+    summary: scrub(withoutHidden(typeof raw.summary === 'string' ? raw.summary : ''), allow),
+    rights: scrubBlocks(visibleRights, allow),
     actions: scrubBlocks(actions, allow),
     organizations: orgIds,
     sources: usedArticles.map((article) => article.id),
-    follow_up_question: scrub(firstQuestion(typeof raw.follow_up_question === 'string' ? raw.follow_up_question : ''), allow),
-    limitations: scrub(raw.limitations ?? '', allow),
+    follow_up_question: scrub(withoutHidden(followUp), allow),
+    limitations: scrub(withoutHidden(typeof raw.limitations === 'string' ? raw.limitations : ''), allow),
   };
 
   // 출처: 실제로 사용한 등록 자료의 제목·검토일·공식 출처(발행기관, 주소)만 보여줍니다.

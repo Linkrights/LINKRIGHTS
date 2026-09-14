@@ -347,6 +347,19 @@ function verifyAnswer(label, res) {
     a.actions.every((x) => !hidden.some((o) => sanitize.mentionsOrganization(`${x.title} ${x.body}`, o, shownPhones))),
     a.actions.map((x) => x.title).join(' / '),
   );
+  const otherTexts = [a.summary, a.limitations, a.follow_up_question, ...a.rights.flatMap((r) => [r.title, r.body])];
+  check(
+    `${label}: 보여주지 않는 기관을 말하는 권리·요약·참고·추가 질문 문장이 없음`,
+    otherTexts.every((text) => !hidden.some((o) => sanitize.mentionsOrganization(text, o, shownPhones))),
+    otherTexts.join(' | ').slice(0, 200),
+  );
+  const possibleRights = a.rights.filter((r) => tiers.get(r.source) === 'possible');
+  check(
+    `${label}: possible 자료의 권리는 조건부 문장만, 최대 2개`,
+    possibleRights.length <= 2 && possibleRights.every((r) => sanitize.isConditional(`${r.title} ${r.body}`)),
+    possibleRights.map((r) => r.title).join(' / '),
+  );
+  check(`${label}: 빈 괄호 "()"가 남지 않음`, !/[(（]\s*[)）]/.test([...otherTexts, ...a.actions.flatMap((x) => [x.title, x.body])].join(' ')));
   check(`${label}: 할 일은 최대 4개`, a.actions.length <= 4);
   check(`${label}: 권리는 최대 3개`, a.rights.length <= 3);
   check(
@@ -422,6 +435,42 @@ async function runDeterministic() {
     }));
     const r4 = await mentionOnly.ask({ question: '친구들이 놀려요', locale: 'ko' });
     check('possible 자료: 할 일에서 이름만 말한 기관은 카드로 붙이지 않음', r4.body.organizations.length === 0, r4.body.organizations.map((o) => o.id).join(', '));
+
+    // 운영 사이트 확인(2026-09-14)에서 발견한 답변 모양을 그대로 재현: 조건 없는 권리 단정, 보여주지 않는 기관(인권위) 언급, 번호를 지운 빈 괄호
+    const labeled = makeApi(() => ({
+      category: 'education', urgency: 'normal',
+      summary: '학교에 가기 싫다고 했어요. 국가인권위원회에 진정하면 돼요.',
+      rights: [
+        { title: '차별받지 않을 권리가 있습니다', body: '국적이나 언어를 이유로 불리하게 대우받지 않을 권리가 있습니다.', source: 'education-school-discrimination' },
+        { title: '진정할 수 있어요', body: '차별을 겪었다면 국가인권위원회(1331)에 진정할 수 있습니다.', source: 'education-school-discrimination' },
+        { title: '반복된다면 도움을 요청할 수 있어요', body: '같은 일이 계속된다면 혼자 참지 않아도 돼요. 믿을 수 있는 선생님에게 말할 수 있어요.', source: 'education-school-discrimination' },
+        { title: '친구 문제라면', body: '친구의 행동이 반복되는 경우 학교에 도움을 요청할 수 있어요.', source: 'education-school-discrimination' },
+        { title: '괴롭힘이 계속된다면', body: '괴롭힘이 계속된다면 상담을 받을 수 있어요.', source: 'education-school-discrimination' },
+      ],
+      actions: [{ title: '기록하기', body: '있었던 일을 적어 두세요.' }, { title: '말하기', body: '믿을 수 있는 어른에게 말하세요.' }],
+      organizations: ['youth-1388'], sources: ['education-school-discrimination'],
+      follow_up_question: '국가인권위원회에 연락해 봤나요?',
+      limitations: '차별인지 판단은 국가인권위원회 등 공식기관에서 확인해야 해요. 상황에 따라 달라질 수 있어요.',
+    }));
+    const r5 = await labeled.ask({ question: '학교 가기 싫어요', locale: 'ko' });
+    const a5 = r5.body.answer;
+    const all5 = [a5.summary, a5.limitations, a5.follow_up_question, ...a5.rights.flatMap((x) => [x.title, x.body])].join(' ');
+    check('possible 자료: 조건 없이 단정한 권리는 지워짐', !a5.rights.some((x) => x.title.includes('차별받지 않을 권리')), a5.rights.map((x) => x.title).join(' / '));
+    check('possible 자료: 조건부 권리는 최대 2개', a5.rights.length === 2, a5.rights.map((x) => x.title).join(' / '));
+    check('보여주지 않는 기관(인권위)을 말하는 문장이 권리·요약·참고·추가 질문에서 지워짐', !all5.includes('국가인권위원회'), all5);
+    check('기관을 말하지 않는 나머지 안내 문장은 유지됨', a5.summary.includes('학교에 가기 싫다고') && a5.limitations.includes('상황에 따라'), `${a5.summary} | ${a5.limitations}`);
+    check('보여주는 기관(1388) 카드는 유지됨', JSON.stringify(r5.body.organizations.map((o) => o.id)) === JSON.stringify(['youth-1388']));
+
+    // direct 자료의 권리는 조건 표현이 없어도 유지되고, 권리에서 이름을 말한 연결 기관은 카드로 보여줌
+    const direct = makeApi(() => ({
+      category: 'labor', urgency: 'normal', summary: '월급을 받지 못했다고 했어요.',
+      rights: [{ title: '일한 만큼 임금을 받을 수 있어요', body: '1350에 전화해 상담하고 임금을 달라고 요구할 수 있어요.', source: 'labor-unpaid-wages' }],
+      actions: [{ title: '기록 모으기', body: '일한 날짜와 시간을 적어 두세요.' }], organizations: [], sources: ['labor-unpaid-wages'],
+      follow_up_question: '', limitations: '',
+    }));
+    const r6 = await direct.ask({ question: '월급 안 줘요', locale: 'ko' });
+    check('direct 자료: 조건 표현이 없는 권리도 유지', r6.body.answer.rights.length === 1, r6.body.answer.rights.map((x) => x.title).join(' / '));
+    check('direct 자료: 권리에서 번호를 말한 연결 기관(고용노동부 1350)은 카드로 보여줌', r6.body.organizations.some((o) => o.id === 'moel-1350'), r6.body.organizations.map((o) => o.id).join(', '));
   }
 
   // 2-1) 추가 질문은 하나만
@@ -450,6 +499,9 @@ async function runDeterministic() {
     check('프롬프트: 추가 질문은 하나만, 사용자가 아는 사실만', system.includes('Ask at most ONE question') && system.includes('Never ask the user to name a law'));
     check('프롬프트: possible 자료는 조건부로만', system.includes('relevance="possible"') && system.includes('Mention it only conditionally'));
     check('프롬프트: 상황 힌트는 근거가 아니라는 규칙', system.includes('It is never evidence'));
+    check('프롬프트: possible 권리는 조건부·2개까지, 조건 없으면 서버가 지운다는 규칙', system.includes('The server removes rights from possible documents'));
+    check('프롬프트: 카드로 보여주지 않는 기관 이름을 쓰지 않는 규칙', system.includes('Do not name any organisation in "summary"'));
+    check('프롬프트: 위법 단정 금지 규칙', system.includes('Never say that someone broke the law'));
     check('입력: 상황 힌트와 자료의 관련 단계·찾은 이유가 태그로 들어감', user.includes('<query_understanding') && /<document id="labor-unpaid-wages" relevance="direct">/.test(user) && user.includes('<why_retrieved>'));
 
     const article = {
@@ -533,6 +585,21 @@ async function runDeterministic() {
     sanitize.scrub('제 번호는 010-9876-5432 이고 https://private.example.com 입니다', { phones: new Set(), hosts: new Set() });
     console.warn = original;
     check('로그: 지운 번호·링크의 값은 남기지 않고 개수만 기록', logs.length === 1 && !logs[0].includes('9876') && !logs[0].includes('private.example'), logs.join(' | '));
+
+    console.warn = () => {};
+    const cleaned = sanitize.scrub('상담센터(1234-5678)에 문의하세요', { phones: new Set(), hosts: new Set() });
+    console.warn = original;
+    check('번호를 지운 자리에 빈 괄호가 남지 않음', cleaned === '상담센터에 문의하세요', cleaned);
+    const orgNhrck = organizations.find((o) => o.id === 'nhrck-1331');
+    check(
+      '문장 정리: 숨긴 기관을 말하는 문장만 빠짐',
+      sanitize.dropSentencesMentioning('기록해 두세요. 국가인권위원회에 진정하세요. 상황에 따라 달라요.', [orgNhrck]) === '기록해 두세요. 상황에 따라 달라요.',
+    );
+    check(
+      '조건부 문장 판별: 한·영·중·베 조건 표현은 조건부, 단정 문장은 아님',
+      ['반복된다면 도움을 요청할 수 있어요', '이런 경우 상담받을 수 있어요', 'If it keeps happening, you can ask for help', '如果一直这样，可以求助', 'Nếu việc này lặp lại, bạn có thể nhờ giúp đỡ'].every((t) => sanitize.isConditional(t)) &&
+        !['차별받지 않을 권리가 있습니다', '학교는 나를 보호할 책임이 있습니다', 'You have the right not to be discriminated against'].some((t) => sanitize.isConditional(t)),
+    );
   }
 
   // 6-1) 질문 입력창의 개인정보 확인 (브라우저에서만 쓰는 간단한 확인)
@@ -645,6 +712,7 @@ async function runLive() {
     if (body.evidence === 'possible' && a.rights.some((r) => !/(라면|다면|이면|경우|수 있|if |may |如果|nếu)/i.test(r.body))) warn.push('조건부 자료인데 조건 없이 쓴 권리 의심');
     if (body.evidence === 'possible' && body.organizations.some((o) => o.category !== 'youth' && o.category !== 'emergency')) warn.push('조건부 자료인데 전문기관이 보임');
     if (!a.actions.length) warn.push('할 일이 없음 (먼저 돕기 원칙)');
+    if (/법을 어기|위법입니다|불법입니다|불법이에요|범죄입니다/.test(all)) warn.push('위법 단정 표현 의심');
     if (/(자세히|구체적으로|더 설명|다시 적어)/.test(a.summary)) warn.push('설명을 더 요구하는 답변 의심');
     flags += warn.length;
     console.log(`자료 상태: ${body.evidence}   함께 볼 정보: ${(body.related ?? []).map((r) => r.id).join(', ') || '없음'}`);
