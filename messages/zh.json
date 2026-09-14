@@ -136,6 +136,15 @@
     "errorEmpty": "请输入问题。",
     "fallbackTitle": "可以先看看这些信息"
   },
+  "homeBrand": {
+    "eyebrow": "移民背景青少年权利信息平台",
+    "step1": "用简单的话告诉你，在学校、打工、健康、居留方面你拥有哪些权利。",
+    "step2": "按顺序整理你现在可以做的事。",
+    "step3": "为你连接经过确认的官方机构和咨询服务。",
+    "situationTitle": "你现在遇到了什么情况？",
+    "askTitle": "说说你的情况",
+    "scrollDown": "查看下方内容"
+  },
   "heroVideo": {
     "label": "LINKRIGHTS 介绍视频",
     "caption": "我们正在打造一个平台：写下自己的情况，就能一起看到相关权利和可以求助的地方。",

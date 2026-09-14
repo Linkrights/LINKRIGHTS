@@ -4,11 +4,14 @@
 export function Logo({
   className = 'h-11 w-11',
   withName = true,
+  nameClassName = 'text-ink-900',
 }: {
   /** 로고 크기 (예: "h-11 w-11 sm:h-12 sm:w-12") */
   className?: string;
   /** 로고 옆에 LINKRIGHTS 글자를 함께 보여줄지 */
   withName?: boolean;
+  /** LINKRIGHTS 글자 색 (어두운 배경 위에서는 흰색) */
+  nameClassName?: string;
 }) {
   return (
     <span className="inline-flex items-center gap-2.5">
@@ -20,7 +23,7 @@ export function Logo({
         height={96}
         className={`shrink-0 object-contain ${className}`}
       />
-      {withName && <span className="text-[19px] font-extrabold tracking-tight text-ink-900">LINKRIGHTS</span>}
+      {withName && <span className={`text-[19px] font-extrabold tracking-tight transition-colors ${nameClassName}`}>LINKRIGHTS</span>}
     </span>
   );
 }

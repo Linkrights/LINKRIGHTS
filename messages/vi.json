@@ -136,6 +136,15 @@
     "errorEmpty": "Vui lòng nhập câu hỏi.",
     "fallbackTitle": "Bạn có thể xem thông tin này trước"
   },
+  "homeBrand": {
+    "eyebrow": "Nền tảng thông tin quyền cho thanh thiếu niên gốc di cư",
+    "step1": "Giải thích bằng lời dễ hiểu bạn có những quyền gì ở trường học, nơi làm việc, về sức khỏe và cư trú.",
+    "step2": "Sắp xếp theo thứ tự những việc bạn có thể làm ngay.",
+    "step3": "Kết nối bạn với các cơ quan chính thức và nơi tư vấn đã được kiểm tra.",
+    "situationTitle": "Bạn đang ở trong tình huống nào?",
+    "askTitle": "Hãy kể về tình huống của bạn",
+    "scrollDown": "Xem nội dung bên dưới"
+  },
   "heroVideo": {
     "label": "Video giới thiệu LINKRIGHTS",
     "caption": "Chúng tôi đang xây dựng nền tảng: mô tả tình huống là thấy ngay các quyền liên quan và nơi có thể giúp bạn.",

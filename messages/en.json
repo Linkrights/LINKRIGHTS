@@ -136,6 +136,15 @@
     "errorEmpty": "Please type a question.",
     "fallbackTitle": "Try this information instead"
   },
+  "homeBrand": {
+    "eyebrow": "Rights information platform for migrant-background youth",
+    "step1": "Find out, in plain words, what rights you have at school, at work, in health care and with your stay in Korea.",
+    "step2": "See what you can do now, step by step.",
+    "step3": "Get connected to checked official organisations and counselling services.",
+    "situationTitle": "What situation are you in?",
+    "askTitle": "Tell us about your situation",
+    "scrollDown": "See more below"
+  },
   "heroVideo": {
     "label": "LINKRIGHTS introduction video",
     "caption": "We're building a platform that shows related rights and where to get help when you describe your situation.",

@@ -1,17 +1,17 @@
 // 홈(첫 화면)입니다.
-// 첫 화면에서는 LINKRIGHTS의 핵심 메시지와 "내 상황 질문하기"를 가장 먼저 보여주고,
-// 아래로 내려가며 분야, 우리가 주목한 문제, AI 안내 원칙, 권리정보, 기관, 활동, SDGs, 자주 묻는 질문을 보여줍니다.
+// 첫 화면은 LINKRIGHTS 소개 영상을 배경으로 한 hero(HomeHero)로 브랜드와 핵심 메시지를 먼저 보여주고,
+// 아래로 내려가며 브랜드 소개 → 어떤 상황인가요(분야) → 내 상황 말하기(AI) → 숫자 → 권리정보 → 기관 → 프로그램
+// → 우리에게 도움을 주는 곳 → 나는 누구인가요 → SDGs → 자주 묻는 질문 순서로 이어집니다.
+// 카드는 꼭 필요한 곳에만 쓰고, 소개·분야는 큰 글씨와 가는 선으로 구분합니다.
 
 import fs from 'node:fs';
 import path from 'node:path';
 import Link from 'next/link';
 import { ArticleCard } from '@/components/ArticleCard';
 import { AskBox } from '@/components/AskBox';
-import { HeroVideoPanel } from '@/components/HeroVideoPanel';
-import { CategoryCard } from '@/components/CategoryCard';
 import { CountUp } from '@/components/CountUp';
+import { HomeHero } from '@/components/HomeHero';
 import { Icon, type IconName } from '@/components/Icon';
-import { Marquee } from '@/components/Marquee';
 import { OrgCard } from '@/components/OrgCard';
 import { PartnerList } from '@/components/PartnerList';
 import { Reveal } from '@/components/Reveal';
@@ -27,6 +27,7 @@ import {
   getPartners,
   getPrograms,
   getSite,
+  resolveOrganizations,
 } from '@/lib/content';
 import { LOCALES, formatDate, getMessages, pick, toLocale } from '@/lib/i18n';
 import impact from '../../../content/impact.json';
@@ -45,6 +46,27 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const faq = getFaq().items.filter((item) => item.featured).slice(0, 4);
   const examples = site.exampleQuestions[locale] ?? site.exampleQuestions.ko;
 
+  // 소개 영상: public 폴더에 파일이 있을 때만 씁니다. (없으면 대표 이미지 또는 네이비 배경만)
+  const publicFile = (file: string) => fs.existsSync(path.join(process.cwd(), 'public', file));
+  const heroVideo = {
+    loop: '/videos/linkrights-hero-loop.mp4',
+    full: '/videos/linkrights-promo.mp4',
+    poster: '/images/hero-poster.jpg',
+  };
+  // 첫 화면 긴급 연락처는 등록된 기관(content/organizations.json)의 번호만 씁니다.
+  const heroContacts = resolveOrganizations(['police-112', 'fire-119']).map((org) => ({
+    id: org.id,
+    name: pick(org.name, locale),
+    phone: org.phone,
+  }));
+
+  // 브랜드 소개: LINKRIGHTS가 함께 알려주는 세 가지
+  const introSteps = [
+    { title: t.ask.resultRights, body: t.homeBrand.step1 },
+    { title: t.ask.resultActions, body: t.homeBrand.step2 },
+    { title: t.ask.resultOrgs, body: t.homeBrand.step3 },
+  ];
+
   // 숫자로 보는 LINKRIGHTS: 함께하는 청소년 수는 content/impact.json 의 실제 숫자, 나머지는 등록된 자료를 그대로 셉니다.
   const stats = [
     { key: 'participants', label: t.home.impactParticipants, unit: t.home.impactParticipantsUnit, value: impact.participants.count },
@@ -52,15 +74,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     { key: 'organizations', label: t.home.impactOrganizations, unit: t.home.impactOrganizationsUnit, value: getOrganizations().length },
     { key: 'languages', label: t.home.impactLanguages, unit: t.home.impactLanguagesUnit, value: LOCALES.length },
   ];
-
-  // 소개 영상: public/videos 에 파일이 있을 때만 보여줍니다. (전체 영상이 없으면 "전체 영상 보기" 버튼만 숨깁니다)
-  const publicFile = (file: string) => fs.existsSync(path.join(process.cwd(), 'public', file));
-  const heroVideo = {
-    loop: '/videos/linkrights-promo-loop.mp4',
-    full: '/videos/linkrights-promo.mp4',
-    poster: '/images/hero-poster.jpg',
-  };
-  const hasHeroVideo = publicFile(heroVideo.loop) && publicFile(heroVideo.poster);
 
   const viewAll = (href: string) => (
     <Link href={href} className="lr-btn lr-btn-ghost lr-btn-sm lr-press">
@@ -70,78 +83,208 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <>
-      {/* 긴급 안내: 가장 위에 얇게 */}
-      <div className="border-b border-[var(--color-danger-200)] bg-[var(--color-danger-50)]">
-        <div className="lr-container py-2.5">
-          <Link
-            href={`/${locale}/emergency`}
-            className="inline-flex items-start gap-2 text-sm font-semibold leading-snug text-[var(--color-danger-700)] hover:underline"
-          >
-            <Icon name="alert" size={16} className="mt-0.5 shrink-0" /> <span>{t.home.emergencyBanner}</span>
-          </Link>
-        </div>
-      </div>
+      {/* 1. 첫 화면: 소개 영상 + 핵심 메시지 ---------------------------- */}
+      <HomeHero
+        rightsHref={`/${locale}/rights`}
+        askHref={`/${locale}/ask`}
+        emergencyHref={`/${locale}/emergency`}
+        contacts={heroContacts}
+        loopSrc={publicFile(heroVideo.loop) ? heroVideo.loop : undefined}
+        fullSrc={publicFile(heroVideo.full) ? heroVideo.full : undefined}
+        poster={publicFile(heroVideo.poster) ? heroVideo.poster : undefined}
+        labels={{
+          eyebrow: t.homeBrand.eyebrow,
+          title: t.home.heroTitle,
+          subtitle: t.home.heroSubtitle,
+          ctaRights: t.home.ctaRights,
+          ctaAsk: t.home.ctaAsk,
+          emergency: t.home.emergencyBanner,
+          call: t.nav.emergencyCall,
+          scrollDown: t.homeBrand.scrollDown,
+          video: {
+            label: t.heroVideo.label,
+            play: t.heroVideo.play,
+            pause: t.heroVideo.pause,
+            playFull: t.heroVideo.playFull,
+            duration: t.heroVideo.duration,
+            close: t.heroVideo.close,
+            note: t.heroVideo.note,
+          },
+        }}
+      />
 
-      {/* 1. 첫 화면: 핵심 메시지 + 내 상황을 말해보는 공간 ------------ */}
-      <section className="border-b border-[var(--color-line)] bg-white">
-        {/* 넓은 화면: 왼쪽 위 핵심 메시지, 왼쪽 아래 소개 영상, 오른쪽 질문 공간 / 휴대폰: 메시지 → 질문 공간 → 영상 */}
-        <div className="lr-container grid gap-10 py-12 sm:py-16 lg:grid-cols-12 lg:gap-x-14 lg:gap-y-10 lg:py-20">
-          <div className={`lg:col-span-6 lg:row-start-1 ${hasHeroVideo ? 'lg:self-end' : 'lg:self-center'}`}>
-            <p className="lr-eyebrow">LINKRIGHTS</p>
-            <h1 className="lr-display mt-4 whitespace-pre-line">{t.home.heroTitle}</h1>
-            <p className="lr-lead mt-5 max-w-xl">{t.home.heroSubtitle}</p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <Link href={`/${locale}/ask`} className="lr-btn lr-btn-primary lr-btn-lg lr-press">
-                {t.home.ctaAsk} <Icon name="arrow-right" size={18} />
+      {/* 2. 브랜드 소개: 권리를 아는 것에서 시작합니다 ------------------ */}
+      <section id="home-intro" className="scroll-mt-20 border-b border-[var(--color-line)] bg-white">
+        <div className="lr-container py-20 sm:py-28">
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-5">
+              <p className="lr-eyebrow">LINKRIGHTS</p>
+              <h2 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-ink-900 sm:text-[2.5rem]">
+                {about.hero_title}
+              </h2>
+              <p className="mt-6 text-lg leading-relaxed text-ink-700">{about.change_body}</p>
+              <Link
+                href={`/${locale}/about`}
+                className="lr-link mt-7 inline-flex items-center gap-1.5 text-[15px] font-semibold"
+              >
+                {t.nav.about} <Icon name="arrow-right" size={16} />
               </Link>
-              <Link href={`/${locale}/rights`} className="lr-btn lr-btn-ghost lr-btn-lg lr-press">
-                {t.home.ctaRights}
-              </Link>
             </div>
+            <ol className="border-t-2 border-ink-900 lg:col-span-7">
+              {introSteps.map((step, index) => (
+                <Reveal
+                  key={step.title}
+                  index={index}
+                  className="grid grid-cols-[3.5rem_1fr] gap-4 border-b border-[var(--color-line)] py-7 sm:grid-cols-[5.5rem_1fr] sm:py-9"
+                >
+                  <span className="text-3xl font-extrabold tabular-nums text-brand-600 sm:text-[2.5rem]">
+                    {String(index + 1).padStart(2, '0')}
+                    <span className="sr-only">.</span>
+                  </span>{' '}
+                  <div>
+                    <h3 className="text-xl font-bold text-ink-900 sm:text-2xl">{step.title}</h3>{' '}
+                    <p className="mt-2 text-[17px] leading-relaxed text-ink-500">{step.body}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </ol>
           </div>
-
-          <div className="lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1 lg:self-center">
-            <div className="lr-panel bg-white p-5 shadow-[var(--shadow-raised)] sm:p-7">
-              <AskBox locale={locale} examples={examples} />
-            </div>
-          </div>
-
-          {hasHeroVideo && (
-            <div className="lg:col-span-6 lg:col-start-1 lg:row-start-2 lg:self-start">
-              <HeroVideoPanel
-                loopSrc={heroVideo.loop}
-                fullSrc={publicFile(heroVideo.full) ? heroVideo.full : undefined}
-                poster={heroVideo.poster}
-                labels={t.heroVideo}
-              />
-            </div>
-          )}
         </div>
       </section>
 
-      {/* 1-1. 분야 이름이 천천히 흐르는 띠: 아래 분야 카드와 같은 곳으로 연결됩니다 */}
-      <nav aria-label={t.home.browseTitle} className="border-b border-[var(--color-line)] bg-white">
-        <div className="lr-container py-3">
-          <Marquee pauseLabel={t.common.pauseMotion} playLabel={t.common.playMotion}>
-            <ul className="flex gap-2.5 pr-2.5">
-              {categories.map((category) => (
-                <li key={category.id}>
-                  <Link
-                    href={category.kind === 'directory' ? `/${locale}/organizations` : `/${locale}/rights/${category.id}`}
-                    className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-[var(--color-line)] bg-white px-4 py-2 text-[15px] font-semibold text-ink-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
-                  >
-                    <Icon name={category.icon as IconName} size={16} className="shrink-0 text-brand-600" />
+      {/* 3. 어떤 상황에 있나요?: 분야를 큰 글씨 목록으로 ----------------- */}
+      <Section title={t.homeBrand.situationTitle} subtitle={t.home.browseSubtitle}>
+        <ul className="grid border-t border-[var(--color-line)] sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-3">
+          {categories.map((category) => (
+            <li key={category.id} className="border-b border-[var(--color-line)]">
+              <Link
+                href={category.kind === 'directory' ? `/${locale}/organizations` : `/${locale}/rights/${category.id}`}
+                className="group flex items-center gap-4 py-5"
+              >
+                <Icon name={category.icon as IconName} size={24} className="shrink-0 text-brand-600" />
+                <span className="min-w-0 flex-1">
+                  <span className="block text-lg font-bold text-ink-900 group-hover:text-brand-700">
                     {pick(category.name, locale)}
-                  </Link>
+                  </span>{' '}
+                  <span className="mt-0.5 block text-[15px] leading-snug text-ink-500">{pick(category.tagline, locale)}</span>
+                </span>
+                <Icon
+                  name="arrow-right"
+                  size={18}
+                  className="shrink-0 text-ink-300 transition-transform group-hover:translate-x-1 group-hover:text-brand-600"
+                />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* 4. 내 상황을 말해 보세요: AI는 권리를 알아가는 도구 --------------- */}
+      <Section tone="soft" title={t.homeBrand.askTitle} subtitle={t.ask.subtitle}>
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-7">
+            <div className="rounded-[var(--radius-card)] border border-[var(--color-line)] bg-surface-soft p-5 sm:p-7">
+              <AskBox locale={locale} examples={examples} />
+            </div>
+          </div>
+          <div className="lg:col-span-5">
+            <h3 className="text-lg font-bold text-ink-900">{t.home.aiTitle}</h3>
+            <p className="mt-1 text-[15px] leading-relaxed text-ink-500">{t.home.aiSubtitle}</p>
+            <ul className="mt-5 border-t border-[var(--color-line)]">
+              {t.home.aiPoints.slice(0, 3).map((point) => (
+                <li key={point.title} className="border-b border-[var(--color-line)] py-4">
+                  <p className="font-bold text-ink-900">{point.title}</p>{' '}
+                  <p className="mt-1 text-[15px] leading-relaxed text-ink-500">{point.body}</p>
                 </li>
               ))}
             </ul>
-          </Marquee>
+          </div>
         </div>
-      </nav>
+      </Section>
 
-      {/* 1-2. 나는 누구인가요?: 청소년 · 대학생 멘토 · 학교/기관 ----------- */}
-      <Section tone="soft" title={t.involved.whoTitle} subtitle={t.involved.whoSubtitle}>
+      {/* 5. 숫자로 보는 LINKRIGHTS: 짙은 네이비 띠 ------------------------ */}
+      <section aria-labelledby="impact-title" className="bg-[#0b1730] text-white">
+        <div className="lr-container py-14 sm:py-16">
+          <h2 id="impact-title" className="text-2xl font-extrabold tracking-tight sm:text-3xl">
+            {t.home.impactTitle}
+          </h2>
+          <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
+            {stats.map((stat) => (
+              <div key={stat.key} className="flex flex-col-reverse border-l-2 border-brand-400 pl-4">
+                <dt className="mt-1 text-[15px] font-semibold leading-snug text-white/75">{stat.label}</dt>
+                <dd className="flex items-baseline gap-1 text-white">
+                  <span className="text-4xl font-extrabold tracking-tight sm:text-5xl">
+                    <CountUp value={stat.value} />
+                  </span>
+                  {stat.unit && <span className="text-lg font-bold text-white/85">{stat.unit}</span>}
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <p className="mt-10 text-[13px] leading-relaxed text-white/60">
+            {t.home.impactNote.replace('{date}', formatDate(impact.participants.as_of, locale))}
+          </p>
+        </div>
+      </section>
+
+      {/* 6. 많이 찾는 권리정보 -------------------------------------- */}
+      <Section title={t.home.featuredTitle} subtitle={t.home.featuredSubtitle} action={viewAll(`/${locale}/rights`)}>
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {featured.map((article, index) => (
+            <Reveal key={article.id} index={index}>
+              <ArticleCard article={article} locale={locale} />
+            </Reveal>
+          ))}
+        </ul>
+      </Section>
+
+      {/* 7. 실제 도움을 받을 수 있는 곳 ----------------------------- */}
+      <Section
+        tone="soft"
+        title={t.home.orgTitle}
+        subtitle={t.home.orgSubtitle}
+        action={viewAll(`/${locale}/organizations`)}
+      >
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {orgs.map((org, index) => (
+            <Reveal key={org.id} index={index}>
+              <OrgCard org={org} locale={locale} />
+            </Reveal>
+          ))}
+        </ul>
+      </Section>
+
+      {/* 8. 프로그램 및 활동: 선으로 나눈 목록 ---------------------- */}
+      <Section title={t.home.programsTitle} subtitle={t.home.programsSubtitle} action={viewAll(`/${locale}/programs`)}>
+        <ul className="grid gap-8 sm:grid-cols-3">
+          {programs.map((program, index) => (
+            <Reveal key={program.id} index={index} className="border-t-2 border-brand-600 pt-5">
+              <span className="text-sm font-semibold text-brand-700">{pick(program.tag, locale)}</span>{' '}
+              <h3 className="lr-h3 mt-1.5">{pick(program.title, locale)}</h3>{' '}
+              <p className="mt-2 text-[15px] leading-relaxed text-ink-500">{pick(program.body, locale)}</p>
+            </Reveal>
+          ))}
+        </ul>
+      </Section>
+
+      {/* 9. 우리에게 도움을 주는 곳 (content/partners.json 에 등록된 기관만) ------ */}
+      {getPartners().length > 0 && (
+        <Section
+          tone="soft"
+          title={t.involved.partnersTitle}
+          subtitle={t.involved.partnersSubtitle}
+          action={
+            <Link href={`/${locale}/get-involved`} className="lr-btn lr-btn-ghost lr-btn-sm lr-press">
+              {t.nav.getInvolved} <Icon name="arrow-right" size={16} />
+            </Link>
+          }
+        >
+          <PartnerList locale={locale} />
+        </Section>
+      )}
+
+      {/* 10. 나는 누구인가요?: 청소년 · 대학생 멘토 · 학교/기관 ----------- */}
+      <Section title={t.involved.whoTitle} subtitle={t.involved.whoSubtitle}>
         <ul className="grid gap-3 md:grid-cols-3">
           {(
             [
@@ -177,7 +320,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               },
             ] as { key: string; icon: IconName; title: string; body: string; cta: string; href: string; secondary: string; secondaryHref: string }[]
           ).map((item, index) => (
-            <Reveal key={item.key} index={index} className="lr-card flex flex-col p-6">
+            <Reveal key={item.key} index={index} className="flex flex-col border-t-2 border-ink-900 pt-6">
               <span className="lr-icon-badge h-11 w-11">
                 <Icon name={item.icon} size={22} />
               </span>{' '}
@@ -185,11 +328,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <p className="mt-2 flex-1 text-[15px] leading-relaxed text-ink-500">{item.body}</p>
               <div className="mt-5 flex flex-col items-start gap-3">
                 {item.href.startsWith('mailto:') ? (
-                  <a href={item.href} className="lr-btn lr-btn-primary lr-press w-full">
+                  <a href={item.href} className="lr-btn lr-btn-ghost lr-press">
                     {item.cta} <Icon name="arrow-right" size={18} />
                   </a>
                 ) : (
-                  <Link href={item.href} className="lr-btn lr-btn-primary lr-press w-full">
+                  <Link href={item.href} className="lr-btn lr-btn-ghost lr-press">
                     {item.cta} <Icon name="arrow-right" size={18} />
                   </Link>
                 )}
@@ -202,147 +345,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </ul>
       </Section>
 
-      {/* 2. 분야별로 찾아보기 --------------------------------------- */}
-      <Section title={t.home.browseTitle} subtitle={t.home.browseSubtitle}>
-        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {categories.map((category) => (
-            <li key={category.id}>
-              <CategoryCard category={category} locale={locale} />
-            </li>
-          ))}
-        </ul>
-      </Section>
-
-      {/* 3. 우리가 주목한 문제: 카드 대신 번호 목록 ------------------ */}
-      <Section tone="soft" title={t.home.problemTitle} subtitle={t.home.problemSubtitle}>
-        <ol className="grid gap-x-12 gap-y-8 sm:grid-cols-2">
-          {about.problems.map((problem, index) => (
-            <li key={problem.title} className="flex gap-4">
-              <span className="w-8 shrink-0 pt-0.5 text-[15px] font-extrabold tabular-nums text-brand-600">
-                {String(index + 1).padStart(2, '0')}
-                <span className="sr-only">.</span>
-              </span>{' '}
-              <div>
-                <h3 className="lr-h3">{problem.title}</h3>{' '}
-                <p className="lr-body mt-1.5">{problem.body}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </Section>
-
-      {/* 4. AI 정보 안내의 원칙 ----------------------------------- */}
-      <Section
-        title={t.home.aiTitle}
-        subtitle={t.home.aiSubtitle}
-        action={
-          <Link href={`/${locale}/ask`} className="lr-btn lr-btn-primary lr-press">
-            {t.home.ctaAsk} <Icon name="arrow-right" size={18} />
-          </Link>
-        }
-      >
-        <ul className="grid gap-x-10 gap-y-6 sm:grid-cols-2">
-          {t.home.aiPoints.map((point) => (
-            <li key={point.title} className="flex gap-3.5">
-              <span className="lr-icon-badge h-10 w-10">
-                <Icon name="check" size={20} />
-              </span>{' '}
-              <div>
-                <h3 className="lr-h3">{point.title}</h3>{' '}
-                <p className="mt-1 text-[15px] leading-relaxed text-ink-500">{point.body}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </Section>
-
-      {/* 4-1. 숫자로 보는 LINKRIGHTS: 화면에 들어오면 숫자가 0부터 한 번만 올라갑니다 */}
-      <section aria-labelledby="impact-title" className="border-y border-[var(--color-line)] bg-brand-50">
-        <div className="lr-container py-12 sm:py-14">
-          <h2 id="impact-title" className="lr-h2">
-            {t.home.impactTitle}
-          </h2>
-          <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4">
-            {stats.map((stat) => (
-              <div key={stat.key} className="flex flex-col-reverse border-l-2 border-brand-600 pl-4">
-                <dt className="mt-1 text-[15px] font-semibold leading-snug text-ink-700">{stat.label}</dt>
-                <dd className="flex items-baseline gap-1 text-brand-700">
-                  <span className="text-4xl font-extrabold tracking-tight sm:text-5xl">
-                    <CountUp value={stat.value} />
-                  </span>
-                  {stat.unit && <span className="text-lg font-bold">{stat.unit}</span>}
-                </dd>
-              </div>
-            ))}
-          </dl>
-          <p className="mt-8 text-[13px] leading-relaxed text-ink-500">
-            {t.home.impactNote.replace('{date}', formatDate(impact.participants.as_of, locale))}
-          </p>
-        </div>
-      </section>
-
-      {/* 5. 많이 찾는 권리정보 -------------------------------------- */}
-      <Section
-        tone="soft"
-        title={t.home.featuredTitle}
-        subtitle={t.home.featuredSubtitle}
-        action={viewAll(`/${locale}/rights`)}
-      >
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((article, index) => (
-            <Reveal key={article.id} index={index}>
-              <ArticleCard article={article} locale={locale} />
-            </Reveal>
-          ))}
-        </ul>
-      </Section>
-
-      {/* 6. 도움받을 수 있는 기관 ---------------------------------- */}
-      <Section title={t.home.orgTitle} subtitle={t.home.orgSubtitle} action={viewAll(`/${locale}/organizations`)}>
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {orgs.map((org, index) => (
-            <Reveal key={org.id} index={index}>
-              <OrgCard org={org} locale={locale} />
-            </Reveal>
-          ))}
-        </ul>
-      </Section>
-
-      {/* 7. 프로그램 및 활동: 선으로 나눈 목록 ---------------------- */}
-      <Section
-        tone="soft"
-        title={t.home.programsTitle}
-        subtitle={t.home.programsSubtitle}
-        action={viewAll(`/${locale}/programs`)}
-      >
-        <ul className="grid gap-8 sm:grid-cols-3">
-          {programs.map((program, index) => (
-            <Reveal key={program.id} index={index} className="border-t-2 border-brand-600 pt-5">
-              <span className="text-sm font-semibold text-brand-700">{pick(program.tag, locale)}</span>{' '}
-              <h3 className="lr-h3 mt-1.5">{pick(program.title, locale)}</h3>{' '}
-              <p className="mt-2 text-[15px] leading-relaxed text-ink-500">{pick(program.body, locale)}</p>
-            </Reveal>
-          ))}
-        </ul>
-      </Section>
-
-      {/* 7-1. 우리에게 도움을 주는 곳 (content/partners.json 에 등록된 기관만) ------ */}
-      {getPartners().length > 0 && (
-        <Section
-          title={t.involved.partnersTitle}
-          subtitle={t.involved.partnersSubtitle}
-          action={
-            <Link href={`/${locale}/get-involved`} className="lr-btn lr-btn-ghost lr-btn-sm lr-press">
-              {t.nav.getInvolved} <Icon name="arrow-right" size={16} />
-            </Link>
-          }
-        >
-          <PartnerList locale={locale} />
-        </Section>
-      )}
-
-      {/* 8. SDGs ---------------------------------------------------- */}
-      <Section title={t.home.sdgTitle} subtitle={t.home.sdgSubtitle}>
+      {/* 11. SDGs ---------------------------------------------------- */}
+      <Section tone="soft" title={t.home.sdgTitle} subtitle={t.home.sdgSubtitle}>
         <ul className="grid gap-8 sm:grid-cols-2">
           {about.sdgs.map((sdg) => (
             <li key={sdg.code} className="flex gap-4">
@@ -358,8 +362,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </ul>
       </Section>
 
-      {/* 9. 자주 묻는 질문: 하나의 카드 안에서 선으로 구분 ----------- */}
-      <Section tone="soft" title={t.home.faqTitle} action={viewAll(`/${locale}/faq`)}>
+      {/* 12. 자주 묻는 질문: 하나의 카드 안에서 선으로 구분 ----------- */}
+      <Section title={t.home.faqTitle} action={viewAll(`/${locale}/faq`)}>
         <ul className="lr-card divide-y divide-[var(--color-line)] overflow-hidden">
           {faq.map((item) => (
             <li key={item.id}>

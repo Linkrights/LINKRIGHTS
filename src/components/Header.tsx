@@ -2,6 +2,9 @@
 
 // 사이트 위쪽 메뉴입니다. 넓은 화면에서는 메뉴가 모두 보이고, 좁은 화면에서는 메뉴 버튼으로 열립니다.
 // 모든 페이지에서 "긴급 112·119" 버튼으로 경찰·구급 번호에 바로 전화할 수 있습니다. (휴대폰에서는 메뉴 버튼 옆)
+//
+// 홈에서는 소개 영상(hero) 위에 투명하게 올라가고 흰 글자로 보이며,
+// 스크롤하거나 메뉴·긴급 창을 열면 짙은 네이비 배경으로 바뀝니다. 다른 페이지는 흰 헤더 그대로입니다.
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -23,13 +26,27 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [sosOpen, setSosOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+
+  // 홈에서만 영상 위 어두운 헤더를 씁니다.
+  const dark = pathname === `/${locale}`;
+  const transparent = dark && !scrolled && !open && !sosOpen;
 
   // 페이지를 이동하면 모바일 메뉴와 긴급 연락처 창을 닫습니다.
   useEffect(() => {
     setOpen(false);
     setSosOpen(false);
   }, [pathname]);
+
+  // 홈에서 조금이라도 스크롤하면 헤더 배경을 채웁니다.
+  useEffect(() => {
+    if (!dark) return;
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [dark]);
 
   // 긴급 연락처 창: Esc 키나 메뉴 바깥을 누르면 닫습니다.
   useEffect(() => {
@@ -67,14 +84,22 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
-  const languageSelect = (id: string) => (
+  const languageSelect = (id: string, onDark: boolean) => (
     <span className="relative flex w-full items-center">
-      <Icon name="globe" size={16} className="pointer-events-none absolute left-3 text-ink-500" />
+      <Icon
+        name="globe"
+        size={16}
+        className={`pointer-events-none absolute left-3 ${onDark ? 'text-white/70' : 'text-ink-500'}`}
+      />
       <select
         id={id}
         value={locale}
         onChange={(event) => changeLocale(event.target.value)}
-        className="h-10 w-full cursor-pointer appearance-none rounded-[var(--radius-control)] border border-[var(--color-line)] bg-white py-0 pl-9 pr-8 text-sm font-semibold text-ink-700 transition-colors hover:border-brand-300"
+        className={`h-10 w-full cursor-pointer appearance-none rounded-[var(--radius-control)] border py-0 pl-9 pr-8 text-sm font-semibold transition-colors [&>option]:text-ink-900 ${
+          onDark
+            ? 'border-white/30 bg-white/5 text-white hover:border-white/60'
+            : 'border-[var(--color-line)] bg-white text-ink-700 hover:border-brand-300'
+        }`}
       >
         {LOCALES.map((code) => (
           <option key={code} value={code}>
@@ -82,7 +107,10 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
           </option>
         ))}
       </select>
-      <span className="pointer-events-none absolute right-3 text-xs text-ink-500" aria-hidden="true">
+      <span
+        className={`pointer-events-none absolute right-3 text-xs ${onDark ? 'text-white/70' : 'text-ink-500'}`}
+        aria-hidden="true"
+      >
         ▾
       </span>
     </span>
@@ -91,30 +119,44 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
   // 긴급 버튼 (넓은 화면과 휴대폰에서 모양만 다르고 같은 창을 엽니다)
   // 넓은 메뉴(1024~1279px)는 글자가 긴 언어에서 공간이 부족해 아이콘만 보이고, 1280px 이상에서 "112·119"를 함께 보여줍니다.
   // 휴대폰에서는 메뉴 버튼 옆에 항상 "112·119"가 보입니다. 화면낭독기는 어느 화면에서나 "긴급 112·119"로 읽습니다.
-  const sosButton = (className: string, variant: 'desktop' | 'mobile') => (
-    <button
-      type="button"
-      onClick={() => {
-        setSosOpen((value) => !value);
-        setOpen(false);
-      }}
-      aria-expanded={sosOpen}
-      aria-controls="emergency-quick"
-      aria-label={t.nav.emergencyQuick}
-      className={`lr-press inline-flex items-center gap-1.5 whitespace-nowrap rounded-[var(--radius-control)] font-bold text-[var(--color-danger-700)] hover:bg-[var(--color-danger-50)] ${
-        sosOpen ? 'bg-[var(--color-danger-50)]' : ''
-      } ${className}`}
-    >
-      <Icon name="alert" size={16} />
-      <span className={variant === 'mobile' ? '' : 'hidden xl:inline'}>112·119</span>
-    </button>
-  );
+  const sosButton = (className: string, variant: 'desktop' | 'mobile') => {
+    const onDark = dark && variant === 'desktop';
+    return (
+      <button
+        type="button"
+        onClick={() => {
+          setSosOpen((value) => !value);
+          setOpen(false);
+        }}
+        aria-expanded={sosOpen}
+        aria-controls="emergency-quick"
+        aria-label={t.nav.emergencyQuick}
+        className={`lr-press inline-flex items-center gap-1.5 whitespace-nowrap rounded-[var(--radius-control)] font-bold ${
+          onDark
+            ? `text-[#ffb4ab] hover:bg-white/10 ${sosOpen ? 'bg-white/10' : ''}`
+            : `text-[var(--color-danger-700)] hover:bg-[var(--color-danger-50)] ${sosOpen ? 'bg-[var(--color-danger-50)]' : ''}`
+        } ${className}`}
+      >
+        <Icon name="alert" size={16} />
+        <span className={variant === 'mobile' ? '' : 'hidden xl:inline'}>112·119</span>
+      </button>
+    );
+  };
 
   return (
-    <header ref={headerRef} className="sticky top-0 z-40 border-b border-[var(--color-line)] bg-white/95 backdrop-blur">
+    <header
+      ref={headerRef}
+      className={`sticky top-0 z-40 border-b transition-colors duration-300 ${
+        dark
+          ? transparent
+            ? 'border-transparent bg-transparent'
+            : 'border-white/10 bg-[#0b1730]'
+          : 'border-[var(--color-line)] bg-white/95 backdrop-blur'
+      }`}
+    >
       <div className="lr-container relative flex h-16 items-center gap-3 sm:h-[72px]">
         <Link href={`/${locale}`} className="shrink-0 rounded-[var(--radius-control)]">
-          <Logo className="h-11 w-11 sm:h-12 sm:w-12" />
+          <Logo className="h-11 w-11 sm:h-12 sm:w-12" nameClassName={dark ? 'text-white' : 'text-ink-900'} />
         </Link>
 
         <nav aria-label="주요 메뉴" className="ml-4 hidden flex-1 items-center gap-0.5 lg:flex xl:ml-8 xl:gap-1">
@@ -124,7 +166,11 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
               href={link.href}
               aria-current={isActive(link.href) ? 'page' : undefined}
               className={`whitespace-nowrap rounded-[var(--radius-control)] px-2.5 py-2 text-sm font-semibold transition-colors xl:px-3 xl:text-[15px] ${
-                isActive(link.href) ? 'bg-brand-50 text-brand-700' : 'text-ink-700 hover:bg-surface-soft hover:text-brand-700'
+                dark
+                  ? 'text-white/85 hover:bg-white/10 hover:text-white'
+                  : isActive(link.href)
+                    ? 'bg-brand-50 text-brand-700'
+                    : 'text-ink-700 hover:bg-surface-soft hover:text-brand-700'
               }`}
             >
               {link.label}
@@ -139,13 +185,17 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
             <label htmlFor="header-language" className="sr-only">
               {t.nav.language}
             </label>
-            {languageSelect('header-language')}
+            {languageSelect('header-language', dark)}
           </div>
 
           <Link
             href={askHref}
             aria-current={isActive(askHref) ? 'page' : undefined}
-            className="lr-btn lr-btn-primary lr-btn-sm lr-press whitespace-nowrap"
+            className={
+              dark
+                ? 'lr-btn lr-btn-sm lr-press whitespace-nowrap border border-white/50 bg-transparent text-white hover:bg-white/10'
+                : 'lr-btn lr-btn-primary lr-btn-sm lr-press whitespace-nowrap'
+            }
           >
             {t.nav.askShort}
           </Link>
@@ -235,7 +285,7 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
               <label htmlFor="mobile-language" className="block text-sm font-semibold text-ink-700">
                 {t.nav.language}
               </label>
-              {languageSelect('mobile-language')}
+              {languageSelect('mobile-language', false)}
             </div>
           </div>
         </nav>
