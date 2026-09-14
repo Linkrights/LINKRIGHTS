@@ -251,7 +251,35 @@
   },
   "faq": {
     "title": "Câu hỏi thường gặp",
-    "subtitle": "Những câu hỏi chúng tôi nhận được nhiều nhất."
+    "subtitle": "Xem những điều bạn thắc mắc khi dùng LINKRIGHTS.",
+    "intro": "Bạn có thắc mắc gì không?",
+    "searchPlaceholder": "Tìm điều bạn muốn biết",
+    "searchHint": "Tìm trong các câu hỏi thường gặp.",
+    "rightsSearchNote": "Nếu bạn đang tìm thông tin quyền về việc làm, trường học, visa:",
+    "rightsSearch": "Đi đến tìm thông tin quyền",
+    "categoriesLabel": "Loại câu hỏi",
+    "filterAll": "Tất cả",
+    "categories": {
+      "usage": "Cách dùng",
+      "ai": "Hỏi AI",
+      "privacy": "Thông tin cá nhân & bảo mật",
+      "rights": "Thông tin quyền",
+      "programs": "Chương trình & cơ quan",
+      "emergency": "Khủng hoảng & khẩn cấp"
+    },
+    "categoryTitles": {
+      "usage": "Cách sử dụng",
+      "ai": "Hỏi AI",
+      "privacy": "Thông tin cá nhân và bảo mật",
+      "rights": "Nội dung thông tin quyền",
+      "programs": "Chương trình và kết nối cơ quan",
+      "emergency": "Tình huống khủng hoảng và khẩn cấp"
+    },
+    "resultCount": "{n} câu hỏi",
+    "noResultsTitle": "Không tìm thấy câu hỏi phù hợp",
+    "noResultsBody": "Hãy thử từ khác. Nếu muốn biết về tình huống của mình, bạn có thể hỏi AI.",
+    "clearSearch": "Xóa tìm kiếm",
+    "askCta": "Hỏi AI"
   },
   "privacy": {
     "title": "Chính sách quyền riêng tư",

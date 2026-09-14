@@ -251,7 +251,35 @@
   },
   "faq": {
     "title": "Frequently asked questions",
-    "subtitle": "The questions we hear most often."
+    "subtitle": "Find answers to common questions about using LINKRIGHTS.",
+    "intro": "Have a question?",
+    "searchPlaceholder": "Search for what you want to know",
+    "searchHint": "We search within these frequently asked questions.",
+    "rightsSearchNote": "Looking for rights information about work, school or visas?",
+    "rightsSearch": "Go to rights search",
+    "categoriesLabel": "Question types",
+    "filterAll": "All",
+    "categories": {
+      "usage": "How to use",
+      "ai": "Asking the AI",
+      "privacy": "Privacy & security",
+      "rights": "Rights info",
+      "programs": "Programmes & organisations",
+      "emergency": "Crisis & emergency"
+    },
+    "categoryTitles": {
+      "usage": "How to use LINKRIGHTS",
+      "ai": "Asking the AI",
+      "privacy": "Privacy and security",
+      "rights": "Rights information",
+      "programs": "Programmes and connecting to organisations",
+      "emergency": "Crisis and emergency situations"
+    },
+    "resultCount": "{n} questions",
+    "noResultsTitle": "No matching questions",
+    "noResultsBody": "Try another word. If you want to know about your own situation, you can ask the AI.",
+    "clearSearch": "Clear search",
+    "askCta": "Ask the AI"
   },
   "privacy": {
     "title": "Privacy notice",

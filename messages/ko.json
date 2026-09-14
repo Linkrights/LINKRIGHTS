@@ -251,7 +251,35 @@
   },
   "faq": {
     "title": "자주 묻는 질문",
-    "subtitle": "많이 받는 질문을 모았습니다."
+    "subtitle": "링크라이츠를 이용하면서 궁금한 점을 확인해보세요.",
+    "intro": "궁금한 점이 있나요?",
+    "searchPlaceholder": "궁금한 내용을 검색해보세요",
+    "searchHint": "자주 묻는 질문 안에서 바로 찾아 드려요.",
+    "rightsSearchNote": "일, 학교, 비자 같은 권리정보를 찾고 있다면",
+    "rightsSearch": "권리정보 검색으로 가기",
+    "categoriesLabel": "질문 종류",
+    "filterAll": "전체",
+    "categories": {
+      "usage": "이용 방법",
+      "ai": "AI에게 질문하기",
+      "privacy": "개인정보와 보안",
+      "rights": "권리정보",
+      "programs": "프로그램·기관",
+      "emergency": "위기·긴급"
+    },
+    "categoryTitles": {
+      "usage": "이용 방법",
+      "ai": "AI에게 질문하기",
+      "privacy": "개인정보와 보안",
+      "rights": "권리정보 콘텐츠",
+      "programs": "프로그램·기관 연결",
+      "emergency": "위기·긴급 상황"
+    },
+    "resultCount": "질문 {n}개",
+    "noResultsTitle": "찾는 질문이 없어요",
+    "noResultsBody": "다른 낱말로 검색해 보세요. 내 상황이 궁금하다면 AI에게 물어볼 수 있어요.",
+    "clearSearch": "검색 지우기",
+    "askCta": "AI에게 질문하기"
   },
   "privacy": {
     "title": "개인정보 처리방침",

@@ -1,111 +1,220 @@
 {
-  "_readme": "자주 묻는 질문입니다. 질문(q)과 답(a)을 언어별로 적습니다.",
+  "_readme": "자주 묻는 질문입니다. 질문(q)과 답(a)을 언어별로 적습니다. category 는 usage(이용 방법), ai(AI에게 질문하기), privacy(개인정보와 보안), rights(권리정보 콘텐츠), programs(프로그램·기관 연결), emergency(위기·긴급 상황) 중 하나입니다. 질문이 하나도 없는 카테고리는 화면에 보이지 않습니다. featured 가 true 인 질문(최대 4개)은 홈에도 보입니다. organizations 에 등록된 기관 id 를 적으면 답 아래에 그 기관의 전화 버튼을 보여줍니다. 답은 실제 사이트 기능과 맞는지 확인한 뒤 적습니다.",
   "owner": "운영팀",
-  "reviewed_at": "2026-09-06",
+  "reviewed_at": "2026-09-15",
   "items": [
     {
-      "id": "who-can-use",
+      "id": "usage-signup",
+      "category": "usage",
+      "featured": true,
       "q": {
-        "ko": "누가 사용할 수 있나요?",
-        "en": "Who can use this site?",
-        "zh": "谁可以使用这个网站？",
-        "vi": "Ai có thể dùng trang này?"
+        "ko": "회원가입이나 로그인이 필요한가요?",
+        "en": "Do I need to sign up or log in?",
+        "zh": "需要注册或登录吗？",
+        "vi": "Tôi có cần đăng ký hoặc đăng nhập không?"
       },
       "a": {
-        "ko": "누구나 사용할 수 있습니다. 회원가입이나 로그인은 필요하지 않습니다. 한국에 사는 이주배경청소년을 가장 먼저 생각하며 만들었습니다.",
-        "en": "Anyone. No sign-up or login is needed. The site is designed first for young people with a migrant background living in Korea.",
-        "zh": "任何人都可以使用，无需注册或登录。本网站首先为在韩国生活的移民背景青少年设计。",
-        "vi": "Bất kỳ ai. Không cần đăng ký hay đăng nhập. Trang được thiết kế trước hết cho thanh thiếu niên có nền tảng di trú tại Hàn Quốc."
+        "ko": "아니요. 링크라이츠는 회원가입 없이 누구나 바로 이용할 수 있어요. 개인정보를 남기지 않아도 돼요.",
+        "en": "No. Anyone can use LINKRIGHTS right away without signing up. You don't need to give any personal information.",
+        "zh": "不需要。任何人都可以直接使用 LINKRIGHTS，不用注册，也不用留下个人信息。",
+        "vi": "Không. Ai cũng có thể dùng LINKRIGHTS ngay mà không cần đăng ký. Bạn không cần để lại thông tin cá nhân."
       }
     },
     {
-      "id": "is-it-free",
+      "id": "usage-free",
+      "category": "usage",
       "q": {
-        "ko": "돈이 드나요?",
-        "en": "Does it cost money?",
+        "ko": "이용료가 있나요?",
+        "en": "Does it cost anything?",
         "zh": "需要付费吗？",
         "vi": "Có mất phí không?"
       },
       "a": {
-        "ko": "무료입니다. 안내하는 공식기관 상담도 대부분 무료입니다.",
-        "en": "It is free. Most of the official helplines we list are free as well.",
-        "zh": "免费。我们介绍的官方咨询机构大多也是免费的。",
-        "vi": "Miễn phí. Hầu hết các tổng đài chính thức được giới thiệu cũng miễn phí."
+        "ko": "아니요, 모든 기능은 무료예요.",
+        "en": "No, every feature is free.",
+        "zh": "不需要，所有功能都是免费的。",
+        "vi": "Không, tất cả tính năng đều miễn phí."
       }
     },
     {
-      "id": "ai-reliable",
+      "id": "usage-language",
+      "category": "usage",
       "q": {
-        "ko": "AI 답변을 그대로 믿어도 되나요?",
-        "en": "Can I fully trust the AI answer?",
-        "zh": "可以完全相信 AI 的回答吗？",
-        "vi": "Tôi có thể tin hoàn toàn câu trả lời của AI không?"
+        "ko": "한국어가 서툰데 이용할 수 있나요?",
+        "en": "My Korean isn't very good. Can I still use it?",
+        "zh": "我韩语不太好，也能用吗？",
+        "vi": "Tôi chưa giỏi tiếng Hàn, có dùng được không?"
       },
       "a": {
-        "ko": "AI 답변은 첫 번째 안내일 뿐입니다. LINKRIGHTS에 등록된 권리정보와 기관 자료만 근거로 답하며, 근거가 없으면 모른다고 답합니다. 법률·의료·체류에 대한 최종 판단은 반드시 공식기관에서 확인하세요.",
-        "en": "The AI answer is only a first guide. It answers only from rights information and organisations registered on LINKRIGHTS, and says so when it does not know. Always confirm legal, medical and visa decisions with an official body.",
-        "zh": "AI 的回答只是第一步指引。它只根据 LINKRIGHTS 已登记的权利信息与机构资料作答，没有依据时会明确说明。法律、医疗、居留的最终判断请务必向官方机构确认。",
-        "vi": "Câu trả lời của AI chỉ là hướng dẫn ban đầu. AI chỉ dựa trên thông tin quyền và tổ chức đã đăng ký trên LINKRIGHTS, và sẽ nói rõ khi không biết. Quyết định pháp lý, y tế, cư trú phải được xác nhận với cơ quan chính thức."
+        "ko": "네. 한국어, 영어, 중국어, 베트남어를 지원하고 있어요. 화면 상단에서 언어를 바꿀 수 있어요.",
+        "en": "Yes. We support Korean, English, Chinese and Vietnamese. You can change the language at the top of the screen.",
+        "zh": "可以。我们支持韩语、英语、中文和越南语。你可以在页面顶部切换语言。",
+        "vi": "Được. Trang hỗ trợ tiếng Hàn, tiếng Anh, tiếng Trung và tiếng Việt. Bạn có thể đổi ngôn ngữ ở phía trên màn hình."
       }
     },
     {
-      "id": "privacy",
+      "id": "usage-more-languages",
+      "category": "usage",
       "q": {
-        "ko": "제가 쓴 질문은 저장되나요?",
-        "en": "Is my question saved?",
-        "zh": "我输入的问题会被保存吗？",
-        "vi": "Câu hỏi của tôi có được lưu không?"
+        "ko": "지원하는 언어가 더 늘어날 수 있나요?",
+        "en": "Will more languages be added?",
+        "zh": "以后会支持更多语言吗？",
+        "vi": "Sau này có thêm ngôn ngữ khác không?"
       },
       "a": {
-        "ko": "질문을 계정이나 개인과 연결해 저장하지 않습니다. 회원가입 자체가 없기 때문입니다. 다만 이름, 연락처, 여권번호, 외국인등록번호 같은 개인정보는 입력하지 마세요.",
-        "en": "Questions are not stored linked to any account or person, because there are no accounts. Even so, please do not type personal details such as your name, phone number, passport or registration number.",
-        "zh": "我们不会把问题与账号或个人关联保存，因为本站没有账号系统。但请不要输入姓名、联系方式、护照号、外国人登录号等个人信息。",
-        "vi": "Câu hỏi không được lưu gắn với tài khoản hay cá nhân nào, vì trang không có tài khoản. Dù vậy, đừng nhập thông tin cá nhân như tên, số điện thoại, số hộ chiếu hay số đăng ký."
+        "ko": "네, 이용자분들의 요청과 필요를 참고해서 언어를 계속 늘려갈 계획이에요.",
+        "en": "Yes. We plan to keep adding languages based on what users ask for and need.",
+        "zh": "会的。我们会参考大家的意见和需要，继续增加语言。",
+        "vi": "Có. Chúng tôi dự định tiếp tục thêm ngôn ngữ dựa trên yêu cầu và nhu cầu của người dùng."
       }
     },
     {
-      "id": "languages",
+      "id": "usage-mobile",
+      "category": "usage",
       "q": {
-        "ko": "제 언어로 볼 수 있나요?",
-        "en": "Can I read this in my language?",
-        "zh": "可以用我的语言阅读吗？",
-        "vi": "Tôi có thể đọc bằng ngôn ngữ của mình không?"
+        "ko": "컴퓨터가 없어도 이용할 수 있나요?",
+        "en": "Can I use it without a computer?",
+        "zh": "没有电脑也能用吗？",
+        "vi": "Không có máy tính thì có dùng được không?"
       },
       "a": {
-        "ko": "화면은 한국어, English, 中文, Tiếng Việt로 볼 수 있습니다. 아직 번역이 끝나지 않은 권리정보는 한국어 원문을 보여주고 그 사실을 표시합니다. AI에게는 어떤 언어로든 질문할 수 있고, 같은 언어로 답합니다.",
-        "en": "The interface is available in Korean, English, Chinese and Vietnamese. Where an article is not translated yet we show the Korean original and say so. You can ask the AI in any language and it replies in that language.",
-        "zh": "界面提供韩语、English、中文、Tiếng Việt。尚未翻译的内容会显示韩语原文并加以说明。你可以用任何语言向 AI 提问，AI 会用同样的语言回答。",
-        "vi": "Giao diện có tiếng Hàn, English, 中文, Tiếng Việt. Bài chưa dịch sẽ hiển thị bản gốc tiếng Hàn kèm ghi chú. Bạn có thể hỏi AI bằng bất kỳ ngôn ngữ nào và sẽ được trả lời bằng ngôn ngữ đó."
+        "ko": "네, 휴대폰으로도 똑같이 이용할 수 있도록 만들어졌어요.",
+        "en": "Yes. It is made so you can use it the same way on your phone.",
+        "zh": "可以。用手机也能一样使用。",
+        "vi": "Được. Trang được làm để bạn dùng trên điện thoại giống như trên máy tính."
       }
     },
     {
-      "id": "emergency",
+      "id": "ai-trust",
+      "category": "ai",
+      "featured": true,
       "q": {
-        "ko": "지금 당장 위험하면 어떻게 하나요?",
-        "en": "What if I am in danger right now?",
-        "zh": "如果我现在有危险怎么办？",
-        "vi": "Nếu tôi đang gặp nguy hiểm thì sao?"
+        "ko": "AI 답변을 믿어도 되나요?",
+        "en": "Can I trust the AI's answers?",
+        "zh": "AI 的回答可以相信吗？",
+        "vi": "Tôi có thể tin câu trả lời của AI không?"
       },
       "a": {
-        "ko": "이 사이트를 계속 읽지 말고 바로 112(경찰) 또는 119(구급)에 전화하세요. 상담이 필요하면 청소년전화 1388, 여성긴급전화 1366, 다누리콜센터 1577-1366을 이용할 수 있습니다.",
-        "en": "Do not keep reading. Call 112 (police) or 119 (ambulance) now. For counselling you can call the Youth Helpline 1388, Women's Hotline 1366, or the Danuri Call Center 1577-1366.",
-        "zh": "请不要继续阅读，立即拨打 112（警察）或 119（急救）。需要咨询可拨打青少年热线 1388、女性紧急电话 1366 或 Danuri 呼叫中心 1577-1366。",
-        "vi": "Đừng đọc tiếp. Hãy gọi ngay 112 (cảnh sát) hoặc 119 (cấp cứu). Cần tư vấn, hãy gọi 1388, 1366 hoặc Tổng đài Danuri 1577-1366."
+        "ko": "링크라이츠 AI는 미리 확인하고 등록해 둔 권리정보 문서를 근거로만 답변해요. 근거가 없는 내용은 추측해서 답하지 않고 \"확인할 수 없다\"고 솔직하게 알려드려요.",
+        "en": "The LINKRIGHTS AI answers only based on rights information that we checked and registered in advance. If there is no basis, it does not guess. It honestly tells you that it cannot confirm.",
+        "zh": "LINKRIGHTS 的 AI 只根据我们事先确认并登记的权利信息来回答。没有依据的内容，它不会猜测，而是坦白地告诉你“无法确认”。",
+        "vi": "AI của LINKRIGHTS chỉ trả lời dựa trên thông tin quyền đã được kiểm tra và đăng ký trước. Khi không có căn cứ, AI không đoán mà sẽ nói thật là “không thể xác nhận”."
       }
     },
     {
-      "id": "wrong-info",
+      "id": "ai-length",
+      "category": "ai",
       "q": {
-        "ko": "정보가 틀린 것 같아요. 어떻게 알리나요?",
-        "en": "I think some information is wrong. How do I report it?",
-        "zh": "我觉得信息有误，怎么反馈？",
-        "vi": "Tôi thấy thông tin sai, báo ở đâu?"
+        "ko": "질문에 글자 수 제한이 있나요?",
+        "en": "Is there a limit on how long my question can be?",
+        "zh": "提问有字数限制吗？",
+        "vi": "Câu hỏi có giới hạn số ký tự không?"
       },
       "a": {
-        "ko": "각 권리정보 아래에 검토일과 출처가 적혀 있습니다. 잘못된 내용을 발견하면 아래 문의 이메일로 알려주세요. 확인 후 수정하고 검토일을 새로 표시합니다.",
-        "en": "Each article shows its review date and sources. If you find something wrong, email us using the address in the footer. We check it, correct it and update the review date.",
-        "zh": "每条权利信息下方都标有审核日期与出处。发现错误请通过页脚的邮箱告诉我们，我们会核实、修改并更新审核日期。",
-        "vi": "Mỗi bài đều ghi ngày rà soát và nguồn. Nếu thấy sai, hãy email cho chúng tôi theo địa chỉ ở chân trang. Chúng tôi sẽ kiểm tra, sửa và cập nhật ngày rà soát."
+        "ko": "네, 한 번에 최대 500자까지 입력할 수 있어요. 너무 길면 나눠서 질문해주세요.",
+        "en": "Yes. You can type up to 500 characters at a time. If it's longer, please split it into several questions.",
+        "zh": "有，每次最多可以输入 500 个字。内容太长的话，请分几次提问。",
+        "vi": "Có. Mỗi lần bạn có thể nhập tối đa 500 ký tự. Nếu dài quá, hãy chia thành nhiều câu hỏi."
+      }
+    },
+    {
+      "id": "ai-no-id-numbers",
+      "category": "ai",
+      "featured": true,
+      "q": {
+        "ko": "여권번호나 외국인등록번호 같은 걸 입력해도 되나요?",
+        "en": "Can I type my passport number or alien registration number?",
+        "zh": "可以输入护照号码或外国人登录证号码吗？",
+        "vi": "Tôi có được nhập số hộ chiếu hoặc số đăng ký người nước ngoài không?"
+      },
+      "a": {
+        "ko": "아니요, 절대 입력하지 마세요. 답변에 꼭 필요한 정보가 아니며, 개인정보 보호를 위해 입력하지 않는 걸 권장해요.",
+        "en": "No, please never type them. They are not needed for an answer, and we recommend leaving them out to protect your personal information.",
+        "zh": "不可以，请千万不要输入。回答并不需要这些信息，为了保护个人信息，建议不要输入。",
+        "vi": "Không, tuyệt đối đừng nhập. Câu trả lời không cần những thông tin này, và để bảo vệ thông tin cá nhân, bạn không nên nhập."
+      }
+    },
+    {
+      "id": "ai-other-language",
+      "category": "ai",
+      "q": {
+        "ko": "같은 질문을 다른 언어로 물어봐도 되나요?",
+        "en": "Can I ask the same question in a different language?",
+        "zh": "可以用其他语言问同样的问题吗？",
+        "vi": "Tôi có thể hỏi cùng một câu bằng ngôn ngữ khác không?"
+      },
+      "a": {
+        "ko": "네, 입력한 언어에 맞춰 AI가 같은 언어로 답변해드려요.",
+        "en": "Yes. The AI answers in the same language you type in.",
+        "zh": "可以。你用什么语言提问，AI 就用同样的语言回答。",
+        "vi": "Được. AI sẽ trả lời bằng đúng ngôn ngữ bạn đã nhập."
+      }
+    },
+    {
+      "id": "ai-law-changes",
+      "category": "ai",
+      "q": {
+        "ko": "AI 답변이 실제 법이나 제도와 다를 수도 있나요?",
+        "en": "Could the AI's answer be different from the actual law or system?",
+        "zh": "AI 的回答会和实际的法律或制度不一样吗？",
+        "vi": "Câu trả lời của AI có thể khác với luật hoặc chế độ thực tế không?"
+      },
+      "a": {
+        "ko": "법과 제도는 계속 바뀔 수 있어요. 중요한 결정을 앞두고 있다면 답변과 함께 안내되는 관련 기관에 다시 한번 확인하는 것을 권장해요.",
+        "en": "Laws and systems can change. If you have an important decision to make, we recommend checking again with the related organisations shown with the answer.",
+        "zh": "法律和制度可能会变化。如果你要做重要的决定，建议再向回答中介绍的相关机构确认一次。",
+        "vi": "Luật và chế độ có thể thay đổi. Nếu bạn sắp đưa ra quyết định quan trọng, hãy hỏi lại các cơ quan liên quan được giới thiệu cùng câu trả lời."
+      }
+    },
+    {
+      "id": "programs-direct-support",
+      "category": "programs",
+      "q": {
+        "ko": "링크라이츠가 직접 상담이나 지원을 해주나요?",
+        "en": "Does LINKRIGHTS give counselling or support directly?",
+        "zh": "LINKRIGHTS 会直接提供咨询或帮助吗？",
+        "vi": "LINKRIGHTS có trực tiếp tư vấn hoặc hỗ trợ không?"
+      },
+      "a": {
+        "ko": "링크라이츠는 정보를 모아서 안내하는 역할을 해요. 실제 상담과 지원은 연결된 전문기관을 통해 받을 수 있어요.",
+        "en": "LINKRIGHTS collects information and guides you to it. You can get actual counselling and support from the specialist organisations we connect you to.",
+        "zh": "LINKRIGHTS 的作用是收集并介绍信息。实际的咨询和帮助，可以通过我们介绍的专业机构获得。",
+        "vi": "LINKRIGHTS thu thập và hướng dẫn thông tin. Bạn có thể nhận tư vấn và hỗ trợ thực tế từ các cơ quan chuyên môn được kết nối."
+      }
+    },
+    {
+      "id": "emergency-now",
+      "category": "emergency",
+      "featured": true,
+      "organizations": ["police-112", "fire-119"],
+      "q": {
+        "ko": "지금 당장 위험한 상황이면 어떻게 해야 하나요?",
+        "en": "What should I do if I'm in danger right now?",
+        "zh": "如果现在就很危险，该怎么办？",
+        "vi": "Nếu tôi đang gặp nguy hiểm ngay lúc này thì phải làm gì?"
+      },
+      "a": {
+        "ko": "즉시 112(범죄) 또는 119(응급)로 전화하세요. 링크라이츠보다 먼저 이 번호로 연락하는 것이 가장 빠르고 안전해요.",
+        "en": "Call 112 (crime) or 119 (emergency) right away. Contacting these numbers before using LINKRIGHTS is the fastest and safest way.",
+        "zh": "请立即拨打 112（犯罪）或 119（急救）。比起使用 LINKRIGHTS，先拨打这些号码最快、也最安全。",
+        "vi": "Hãy gọi ngay 112 (tội phạm) hoặc 119 (cấp cứu). Liên hệ các số này trước khi dùng LINKRIGHTS là cách nhanh và an toàn nhất."
+      }
+    },
+    {
+      "id": "emergency-counselling",
+      "category": "emergency",
+      "organizations": ["youth-1388", "danuri-1577-1366"],
+      "q": {
+        "ko": "긴급하진 않지만 상담이 필요하면 어디로 연락하나요?",
+        "en": "It's not an emergency, but I need to talk to someone. Who can I contact?",
+        "zh": "虽然不紧急，但需要咨询，可以联系哪里？",
+        "vi": "Không khẩn cấp nhưng tôi cần tư vấn thì liên hệ ở đâu?"
+      },
+      "a": {
+        "ko": "청소년상담 1388, 다누리콜센터 1577-1366처럼 24시간 운영되는 상담 전화를 이용할 수 있어요.",
+        "en": "You can use 24-hour counselling lines such as the Youth Helpline 1388 and the Danuri Call Center 1577-1366.",
+        "zh": "可以拨打 24 小时服务的咨询电话，例如青少年热线 1388、Danuri 呼叫中心 1577-1366。",
+        "vi": "Bạn có thể gọi các đường dây tư vấn hoạt động 24 giờ như Đường dây thanh thiếu niên 1388 và Tổng đài Danuri 1577-1366."
       }
     }
   ]

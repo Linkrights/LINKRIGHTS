@@ -39,7 +39,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const orgs = getOrganizations().filter((o) => !o.emergency).slice(0, 3);
   const about = getAbout().i18n[locale] ?? getAbout().i18n.ko;
   const programs = getPrograms().items.filter((p) => p.status === 'published').slice(0, 3);
-  const faq = getFaq().items.slice(0, 4);
+  // 홈에는 content/faq.json 에서 featured 로 표시한 핵심 질문(최대 4개)만 보여주고, 나머지는 FAQ 페이지에서 봅니다.
+  const faq = getFaq().items.filter((item) => item.featured).slice(0, 4);
   const examples = site.exampleQuestions[locale] ?? site.exampleQuestions.ko;
 
   // 숫자로 보는 LINKRIGHTS: 함께하는 청소년 수는 content/impact.json 의 실제 숫자, 나머지는 등록된 자료를 그대로 셉니다.

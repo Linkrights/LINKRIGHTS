@@ -252,6 +252,31 @@ if (fs.existsSync(partnersPath)) {
   }
 }
 
+// ---------- 4-3. 자주 묻는 질문(faq.json) ----------
+// 카테고리는 정해진 6개 중 하나여야 하고, 전화 버튼으로 보여줄 기관은 등록된 기관이어야 합니다.
+const FAQ_CATEGORIES = ['usage', 'ai', 'privacy', 'rights', 'programs', 'emergency'];
+const faqFile = readJson(path.join(CONTENT, 'faq.json'), 'content/faq.json');
+if (faqFile) {
+  const faqItems = Array.isArray(faqFile.items) ? faqFile.items : [];
+  if (!Array.isArray(faqFile.items)) fail('content/faq.json', '"items" 는 대괄호 [ ] 로 된 목록이어야 합니다.');
+  const faqIds = new Set();
+  for (const item of faqItems) {
+    const label = `content/faq.json > ${item.id ?? '(id 없음)'}`;
+    if (!item.id) fail(label, '"id" 가 반드시 필요합니다.');
+    else if (faqIds.has(item.id)) fail(label, `질문 id 가 중복됩니다: ${item.id}`);
+    else faqIds.add(item.id);
+    if (!FAQ_CATEGORIES.includes(item.category)) {
+      fail(label, `"category" 는 ${FAQ_CATEGORIES.join(', ')} 중 하나여야 합니다. (현재: ${item.category})`);
+    }
+    if (!item.q?.ko || !item.a?.ko) fail(label, '질문(q)과 답(a)에 한국어(ko)가 필요합니다.');
+    for (const id of item.organizations ?? []) {
+      if (!orgIds.has(id)) fail(label, `"organizations" 에 등록되지 않은 기관 id 가 있습니다: ${id}`);
+    }
+  }
+  const featuredCount = faqItems.filter((item) => item.featured).length;
+  if (featuredCount > 4) warn('content/faq.json', `홈에는 4개까지만 보입니다. featured 가 ${featuredCount}개입니다.`);
+}
+
 // ---------- 5. 나머지 파일 ----------
 for (const name of ['site.json', 'about.json', 'programs.json', 'faq.json']) {
   const data = readJson(path.join(CONTENT, name), `content/${name}`);

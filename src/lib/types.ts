@@ -107,10 +107,19 @@ export interface ProgramsFile {
   community_notice: LocalizedText;
 }
 
+/** 자주 묻는 질문의 카테고리 (화면에 보이는 순서) */
+export const FAQ_CATEGORIES = ['usage', 'ai', 'privacy', 'rights', 'programs', 'emergency'] as const;
+export type FaqCategoryId = (typeof FAQ_CATEGORIES)[number];
+
 export interface FaqItem {
   id: string;
+  category: FaqCategoryId;
   q: LocalizedText;
   a: LocalizedText;
+  /** 홈에도 보여줄 질문 (최대 4개) */
+  featured?: boolean;
+  /** 답 아래에 전화 버튼으로 보여줄 등록 기관 id (content/organizations.json) */
+  organizations?: string[];
 }
 
 export interface FaqFile {
