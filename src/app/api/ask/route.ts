@@ -35,8 +35,10 @@ import { askOpenAi, buildContext, type ContextSituation } from '@/lib/openai';
 import { checkLimits } from '@/lib/rateLimit';
 import {
   buildAllowlist,
+  dropLegalLabelSentences,
   dropSentencesMentioning,
   isConditional,
+  isLegalLabel,
   mentionsOrganization,
   phoneDigits,
   scrub,
@@ -294,13 +296,21 @@ export async function POST(request: Request) {
       (action) =>
         !hiddenOrganizations.some((org) => mentionsOrganization(`${action.title} ${action.body}`, org, shownPhones)),
     )
+    // "법을 어기는 일입니다"처럼 위법·범죄를 단정하는 문장은 뺍니다.
+    .map((action) => ({ ...action, body: dropLegalLabelSentences(action.body) }))
+    .filter((action) => action.body && !isLegalLabel(action.title))
     .slice(0, MAX_ACTIONS);
 
   // 권리·요약·참고·추가 질문에서도 보여주지 않는 기관(이름·번호)을 말하는 문장은 뺍니다. 나머지 안내 문장은 남깁니다.
-  const withoutHidden = (text: string) => dropSentencesMentioning(text, hiddenOrganizations, shownPhones);
+  // 위법·범죄를 단정하는 문장("법을 어기는 일입니다" 등)도 뺍니다. 등록 자료에 있는 문장이라도 짧은 질문에 그대로 붙이지 않습니다.
+  const withoutHidden = (text: string) =>
+    dropLegalLabelSentences(dropSentencesMentioning(text, hiddenOrganizations, shownPhones));
   let possibleRights = 0;
   const visibleRights = rights
-    .filter((right) => !hiddenOrganizations.some((org) => mentionsOrganization(right.title, org, shownPhones)))
+    .filter(
+      (right) =>
+        !hiddenOrganizations.some((org) => mentionsOrganization(right.title, org, shownPhones)) && !isLegalLabel(right.title),
+    )
     .map((right) => ({ ...right, body: withoutHidden(right.body) }))
     .filter((right) => {
       if (!right.body) return false;

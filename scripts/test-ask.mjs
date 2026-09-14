@@ -155,7 +155,7 @@ function rulebreakingAnswer(body) {
   return {
     category: 'not-a-category',
     urgency: 'normal',
-    summary: '친구들의 행동은 학교폭력입니다. https://evil.example.com 을 보세요. 010-1234-5678',
+    summary: '친구들의 행동은 학교폭력입니다. https://evil.example.com 을 보세요. 010-1234-5678 돈을 안 주는 것은 법을 어기는 일입니다.',
     rights: [
       { title: '근거 없는 권리', body: '자료에 없는 권리입니다.', source: 'not-a-document' },
       { title: '출처가 빈 권리', body: '출처 칸이 비었습니다.', source: '' },
@@ -360,6 +360,10 @@ function verifyAnswer(label, res) {
     possibleRights.map((r) => r.title).join(' / '),
   );
   check(`${label}: 빈 괄호 "()"가 남지 않음`, !/[(（]\s*[)）]/.test([...otherTexts, ...a.actions.flatMap((x) => [x.title, x.body])].join(' ')));
+  check(
+    `${label}: 위법·범죄를 단정하는 문장이 없음`,
+    ![...otherTexts, ...a.actions.flatMap((x) => [x.title, x.body])].some((text) => sanitize.isLegalLabel(text)),
+  );
   check(`${label}: 할 일은 최대 4개`, a.actions.length <= 4);
   check(`${label}: 권리는 최대 3개`, a.rights.length <= 3);
   check(
@@ -463,13 +467,21 @@ async function runDeterministic() {
 
     // direct 자료의 권리는 조건 표현이 없어도 유지되고, 권리에서 이름을 말한 연결 기관은 카드로 보여줌
     const direct = makeApi(() => ({
-      category: 'labor', urgency: 'normal', summary: '월급을 받지 못했다고 했어요.',
-      rights: [{ title: '일한 만큼 임금을 받을 수 있어요', body: '1350에 전화해 상담하고 임금을 달라고 요구할 수 있어요.', source: 'labor-unpaid-wages' }],
+      category: 'labor', urgency: 'normal', summary: '월급을 받지 못했다고 했어요. 사장님의 행동은 불법입니다.',
+      // 두 번째 문장은 등록 권리정보(labor-unpaid-wages) 원문 그대로입니다. (운영 사이트 확인에서 AI가 그대로 옮긴 문장)
+      rights: [{ title: '일한 만큼 임금을 받을 수 있어요', body: '1350에 전화해 상담하고 임금을 달라고 요구할 수 있어요. 돈을 주지 않는 것은 법을 어기는 일입니다.', source: 'labor-unpaid-wages' }],
       actions: [{ title: '기록 모으기', body: '일한 날짜와 시간을 적어 두세요.' }], organizations: [], sources: ['labor-unpaid-wages'],
       follow_up_question: '', limitations: '',
     }));
     const r6 = await direct.ask({ question: '월급 안 줘요', locale: 'ko' });
     check('direct 자료: 조건 표현이 없는 권리도 유지', r6.body.answer.rights.length === 1, r6.body.answer.rights.map((x) => x.title).join(' / '));
+    check(
+      '위법 단정 문장("법을 어기는 일입니다", "불법입니다")만 빠지고 나머지 안내는 유지',
+      r6.body.answer.rights[0]?.body === '1350에 전화해 상담하고 임금을 달라고 요구할 수 있어요.' && r6.body.answer.summary === '월급을 받지 못했다고 했어요.',
+      `${r6.body.answer.rights[0]?.body} | ${r6.body.answer.summary}`,
+    );
+    const contentUnchanged = JSON.stringify(articleById.get('labor-unpaid-wages')).includes('법을 어기는 일입니다');
+    check('권리정보 페이지 원문(labor-unpaid-wages)은 바뀌지 않음', contentUnchanged);
     check('direct 자료: 권리에서 번호를 말한 연결 기관(고용노동부 1350)은 카드로 보여줌', r6.body.organizations.some((o) => o.id === 'moel-1350'), r6.body.organizations.map((o) => o.id).join(', '));
   }
 
@@ -599,6 +611,15 @@ async function runDeterministic() {
       '조건부 문장 판별: 한·영·중·베 조건 표현은 조건부, 단정 문장은 아님',
       ['반복된다면 도움을 요청할 수 있어요', '이런 경우 상담받을 수 있어요', 'If it keeps happening, you can ask for help', '如果一直这样，可以求助', 'Nếu việc này lặp lại, bạn có thể nhờ giúp đỡ'].every((t) => sanitize.isConditional(t)) &&
         !['차별받지 않을 권리가 있습니다', '학교는 나를 보호할 책임이 있습니다', 'You have the right not to be discriminated against'].some((t) => sanitize.isConditional(t)),
+    );
+    check(
+      '위법 단정 문장만 빠짐 (등록 원문 문장 재현)',
+      sanitize.dropLegalLabelSentences('일을 시킨 사람은 정해진 날짜에 임금을 줘야 합니다. 돈을 주지 않는 것은 법을 어기는 일입니다.') === '일을 시킨 사람은 정해진 날짜에 임금을 줘야 합니다.',
+    );
+    check(
+      '위법 단정 판별: 한·영·중·베 단정 문장은 걸러내고, 조건부 경고·일반 안내는 유지',
+      ['Not paying wages is illegal.', '不给工资是违法的。', 'Không trả lương là vi phạm pháp luật.', '사장님의 행동은 불법입니다.'].every((t) => sanitize.isLegalLabel(t)) &&
+        !['다른 사람에게 통장을 빌려주면 범죄에 이용될 수 있고, 그 책임이 나에게 돌아올 수 있습니다.', '이런 경우라면 법에 어긋날 수 있어요.', '임금을 달라고 요구할 수 있어요.'].some((t) => sanitize.isLegalLabel(t)),
     );
   }
 

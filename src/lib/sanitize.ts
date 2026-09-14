@@ -150,3 +150,28 @@ export function dropSentencesMentioning(text: string, hidden: Organization[], ig
     .join(' ')
     .trim();
 }
+
+/**
+ * 위법·범죄라고 단정하는 문장인지 확인합니다. (예: "돈을 주지 않는 것은 법을 어기는 일입니다", "This is illegal")
+ * "~라면 법에 어긋날 수 있어요", "범죄에 이용될 수 있어요"처럼 조건이나 가능성으로 말한 문장은 해당하지 않습니다.
+ */
+const LEGAL_LABEL_PATTERN =
+  /(법을\s?어기는\s?(일|것|행위)|법을\s?어긴\s?(일|것)|(불법|위법|법\s?위반|범죄)(입니다|이에요|예요|이다|에 해당합니다|에 해당해요)|\b(is|are)\s+(illegal|unlawful|against the law|a crime)\b|\bbreaks?\s+the\s+law\b|是违法的|属于违法|是犯罪|là bất hợp pháp|là vi phạm pháp luật|là phạm tội)/i;
+
+export function isLegalLabel(text: string): boolean {
+  return LEGAL_LABEL_PATTERN.test(text);
+}
+
+/**
+ * AI 답변에서 위법·범죄를 단정하는 문장만 뺍니다. 나머지 문장은 그대로 둡니다.
+ * 등록 권리정보에 있는 일반 설명이라도, 짧은 질문만으로 사용자의 상황에 그대로 붙이면 법적 판단을 확정하는 것처럼 읽히기 때문입니다.
+ * (권리정보 페이지의 원문은 바꾸지 않습니다)
+ */
+export function dropLegalLabelSentences(text: string): string {
+  if (!text) return '';
+  return text
+    .split(/(?<=[.!?。！？])\s+|\n+/)
+    .filter((sentence) => sentence.trim() && !isLegalLabel(sentence))
+    .join(' ')
+    .trim();
+}
