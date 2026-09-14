@@ -208,10 +208,10 @@
         "vi": "Thông tin của tôi có bị lưu lại ở đâu không?"
       },
       "a": {
-        "ko": "로그인이 없고 질문 내용도 저장하지 않아요. 다만 질문이 한꺼번에 너무 많이 오는 것을 막기 위해 접속 정보(IP 주소)를 서버에서 5분 동안만 확인해요.",
-        "en": "There is no login, and we don't store your questions. However, to stop too many questions arriving at once, the server checks your connection information (IP address) for only 5 minutes.",
-        "zh": "本站没有登录功能，也不保存问题内容。不过，为了防止一下子收到太多提问，服务器会查看你的连接信息（IP 地址），只保留 5 分钟。",
-        "vi": "Trang không có đăng nhập và không lưu câu hỏi. Tuy nhiên, để tránh có quá nhiều câu hỏi cùng lúc, máy chủ chỉ kiểm tra thông tin kết nối (địa chỉ IP) của bạn trong 5 phút."
+        "ko": "링크라이츠는 로그인 없이 이용할 수 있고, 질문 내용을 링크라이츠가 별도로 저장하지 않아요. 다만 답변을 만들기 위해 질문이 AI 서비스(OpenAI)로 전달될 수 있고, 서비스 이용량을 제한하기 위해 접속 정보(IP 주소)를 최대 5분 동안 확인할 수 있어요. 개인정보 보호를 위해 이름, 연락처, 여권번호, 외국인등록번호 등 개인정보는 입력하지 마세요. 자세한 내용은 개인정보처리방침에서 확인할 수 있어요.",
+        "en": "You can use LINKRIGHTS without logging in, and LINKRIGHTS does not separately store what you ask. However, your question may be sent to an AI service (OpenAI) to create an answer, and your connection information (IP address) may be checked for up to 5 minutes to limit service use. To protect your privacy, please do not type personal information such as your name, phone number, passport number or alien registration number. You can find more details in the Privacy notice.",
+        "zh": "LINKRIGHTS 无需登录即可使用，LINKRIGHTS 也不会另外保存你的提问内容。不过，为了生成回答，你的问题可能会被发送给 AI 服务（OpenAI）；为了限制服务使用量，最多会在 5 分钟内查看你的连接信息（IP 地址）。为了保护个人信息，请不要输入姓名、联系方式、护照号码、外国人登录证号码等个人信息。详细内容可以在隐私政策中查看。",
+        "vi": "Bạn có thể dùng LINKRIGHTS mà không cần đăng nhập, và LINKRIGHTS không lưu riêng nội dung câu hỏi của bạn. Tuy nhiên, để tạo câu trả lời, câu hỏi có thể được gửi đến dịch vụ AI (OpenAI), và để giới hạn lượng sử dụng dịch vụ, thông tin kết nối (địa chỉ IP) có thể được kiểm tra tối đa 5 phút. Để bảo vệ thông tin cá nhân, đừng nhập thông tin cá nhân như tên, số điện thoại, số hộ chiếu hay số đăng ký người nước ngoài. Bạn có thể xem chi tiết trong Chính sách quyền riêng tư."
       }
     },
     {
