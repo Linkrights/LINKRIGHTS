@@ -13,6 +13,7 @@ import { CountUp } from '@/components/CountUp';
 import { Icon, type IconName } from '@/components/Icon';
 import { Marquee } from '@/components/Marquee';
 import { OrgCard } from '@/components/OrgCard';
+import { PartnerList } from '@/components/PartnerList';
 import { Reveal } from '@/components/Reveal';
 import { SdgIcon } from '@/components/SdgIcon';
 import { Section } from '@/components/Section';
@@ -23,6 +24,7 @@ import {
   getFaq,
   getFeaturedArticles,
   getOrganizations,
+  getPartners,
   getPrograms,
   getSite,
 } from '@/lib/content';
@@ -323,6 +325,21 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           ))}
         </ul>
       </Section>
+
+      {/* 7-1. 우리에게 도움을 주는 곳 (content/partners.json 에 등록된 기관만) ------ */}
+      {getPartners().length > 0 && (
+        <Section
+          title={t.involved.partnersTitle}
+          subtitle={t.involved.partnersSubtitle}
+          action={
+            <Link href={`/${locale}/get-involved`} className="lr-btn lr-btn-ghost lr-btn-sm lr-press">
+              {t.nav.getInvolved} <Icon name="arrow-right" size={16} />
+            </Link>
+          }
+        >
+          <PartnerList locale={locale} />
+        </Section>
+      )}
 
       {/* 8. SDGs ---------------------------------------------------- */}
       <Section title={t.home.sdgTitle} subtitle={t.home.sdgSubtitle}>
