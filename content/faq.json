@@ -102,6 +102,22 @@
       }
     },
     {
+      "id": "ai-no-answer",
+      "category": "ai",
+      "q": {
+        "ko": "AI가 대답을 못 하면 어떻게 하나요?",
+        "en": "What happens if the AI can't answer?",
+        "zh": "AI 回答不了怎么办？",
+        "vi": "Nếu AI không trả lời được thì sao?"
+      },
+      "a": {
+        "ko": "등록된 정보로 확인할 수 없으면 솔직하게 알려드려요. 이때는 지금 해볼 수 있는 일과 권리정보 찾아보기를 안내해요. 확인되지 않은 기관은 추천하지 않아요.",
+        "en": "If our registered information can't confirm it, the AI tells you honestly. Then it shows things you can do now and how to look up rights information. It does not recommend organisations that haven't been checked.",
+        "zh": "如果用已登记的信息无法确认，AI 会坦白告诉你。这时会介绍你现在可以做的事，以及查找权利信息的方法。不会推荐没有确认过的机构。",
+        "vi": "Nếu không thể xác nhận bằng thông tin đã đăng ký, AI sẽ nói thật với bạn. Khi đó AI hướng dẫn những việc bạn có thể làm ngay và cách tìm thông tin quyền. AI không giới thiệu cơ quan chưa được kiểm tra."
+      }
+    },
+    {
       "id": "ai-length",
       "category": "ai",
       "q": {
@@ -115,6 +131,22 @@
         "en": "Yes. You can type up to 500 characters at a time. If it's longer, please split it into several questions.",
         "zh": "有，每次最多可以输入 500 个字。内容太长的话，请分几次提问。",
         "vi": "Có. Mỗi lần bạn có thể nhập tối đa 500 ký tự. Nếu dài quá, hãy chia thành nhiều câu hỏi."
+      }
+    },
+    {
+      "id": "ai-saved",
+      "category": "ai",
+      "q": {
+        "ko": "질문한 내용이 저장되나요?",
+        "en": "Is what I ask saved?",
+        "zh": "我提的问题会被保存吗？",
+        "vi": "Câu hỏi của tôi có được lưu lại không?"
+      },
+      "a": {
+        "ko": "링크라이츠는 질문 내용을 따로 저장하지 않아요. 다만 답변을 만들기 위해 질문이 AI 서비스(OpenAI)로 전달돼요. 그래서 이름이나 연락처 같은 개인정보는 적지 마세요.",
+        "en": "LINKRIGHTS does not store your questions. However, to make an answer, your question is sent to an AI service (OpenAI). So please don't write personal information such as your name or phone number.",
+        "zh": "LINKRIGHTS 不会另外保存你的问题。不过，为了生成回答，问题会发送给 AI 服务（OpenAI）。所以请不要写姓名、联系方式等个人信息。",
+        "vi": "LINKRIGHTS không lưu câu hỏi của bạn. Tuy nhiên, để tạo câu trả lời, câu hỏi sẽ được gửi đến dịch vụ AI (OpenAI). Vì vậy, đừng viết thông tin cá nhân như tên hay số điện thoại."
       }
     },
     {
@@ -164,6 +196,118 @@
         "en": "Laws and systems can change. If you have an important decision to make, we recommend checking again with the related organisations shown with the answer.",
         "zh": "法律和制度可能会变化。如果你要做重要的决定，建议再向回答中介绍的相关机构确认一次。",
         "vi": "Luật và chế độ có thể thay đổi. Nếu bạn sắp đưa ra quyết định quan trọng, hãy hỏi lại các cơ quan liên quan được giới thiệu cùng câu trả lời."
+      }
+    },
+    {
+      "id": "privacy-what-remains",
+      "category": "privacy",
+      "q": {
+        "ko": "제 정보가 어딘가에 남나요?",
+        "en": "Does my information stay anywhere?",
+        "zh": "我的信息会留在什么地方吗？",
+        "vi": "Thông tin của tôi có bị lưu lại ở đâu không?"
+      },
+      "a": {
+        "ko": "로그인이 없고 질문 내용도 저장하지 않아요. 다만 질문이 한꺼번에 너무 많이 오는 것을 막기 위해 접속 정보(IP 주소)를 서버에서 5분 동안만 확인해요.",
+        "en": "There is no login, and we don't store your questions. However, to stop too many questions arriving at once, the server checks your connection information (IP address) for only 5 minutes.",
+        "zh": "本站没有登录功能，也不保存问题内容。不过，为了防止一下子收到太多提问，服务器会查看你的连接信息（IP 地址），只保留 5 分钟。",
+        "vi": "Trang không có đăng nhập và không lưu câu hỏi. Tuy nhiên, để tránh có quá nhiều câu hỏi cùng lúc, máy chủ chỉ kiểm tra thông tin kết nối (địa chỉ IP) của bạn trong 5 phút."
+      }
+    },
+    {
+      "id": "privacy-shared",
+      "category": "privacy",
+      "q": {
+        "ko": "학교나 선생님, 가족에게 제가 뭘 물어봤는지 알려지나요?",
+        "en": "Will my school, teachers or family find out what I asked?",
+        "zh": "学校、老师或家人会知道我问了什么吗？",
+        "vi": "Trường học, thầy cô hay gia đình có biết tôi đã hỏi gì không?"
+      },
+      "a": {
+        "ko": "아니요. 링크라이츠는 질문 내용을 학교, 선생님, 가족에게 알리지 않아요. 답변을 만들 때만 AI 서비스(OpenAI)로 전달돼요. 휴대폰을 함께 쓴다면 다 쓴 뒤 화면을 닫아 주세요.",
+        "en": "No. LINKRIGHTS does not tell your school, teachers or family what you asked. Your question is only sent to an AI service (OpenAI) to make an answer. If you share a phone, close the screen when you're done.",
+        "zh": "不会。LINKRIGHTS 不会把你的问题告诉学校、老师或家人。问题只会在生成回答时发送给 AI 服务（OpenAI）。如果和别人共用手机，用完后请关闭页面。",
+        "vi": "Không. LINKRIGHTS không cho trường học, thầy cô hay gia đình biết bạn đã hỏi gì. Câu hỏi chỉ được gửi đến dịch vụ AI (OpenAI) để tạo câu trả lời. Nếu dùng chung điện thoại, hãy đóng màn hình sau khi dùng xong."
+      }
+    },
+    {
+      "id": "rights-review-date",
+      "category": "rights",
+      "q": {
+        "ko": "권리정보는 얼마나 최신인가요?",
+        "en": "How up to date is the rights information?",
+        "zh": "权利信息有多新？",
+        "vi": "Thông tin quyền được cập nhật đến khi nào?"
+      },
+      "a": {
+        "ko": "각 정보 페이지의 제목 아래에 \"검토일\"이 있어요. 이 날짜를 기준으로 확인한 정보예요.",
+        "en": "Each information page shows a review date under the title. The information was checked as of that date.",
+        "zh": "每个信息页面的标题下方都有审核日期。信息是以这个日期为准确认的。",
+        "vi": "Mỗi trang thông tin có ngày rà soát ở dưới tiêu đề. Thông tin được kiểm tra tính đến ngày đó."
+      }
+    },
+    {
+      "id": "rights-wrong-info",
+      "category": "rights",
+      "q": {
+        "ko": "정보가 틀린 것 같으면 어떻게 하나요?",
+        "en": "What if some information seems wrong?",
+        "zh": "觉得信息有误怎么办？",
+        "vi": "Nếu thấy thông tin có vẻ sai thì làm sao?"
+      },
+      "a": {
+        "ko": "화면 맨 아래 \"문의\" 이메일로 알려주세요. 확인한 뒤 고칠게요. 잘못된 정보를 알려주시는 것도 큰 도움이 돼요.",
+        "en": "Please tell us using the contact email at the bottom of the page. We'll check and fix it. Telling us about wrong information is a big help.",
+        "zh": "请通过页面最下方的联系邮箱告诉我们，我们确认后会修改。告诉我们错误的信息，也是很大的帮助。",
+        "vi": "Hãy báo cho chúng tôi qua email liên hệ ở cuối trang. Chúng tôi sẽ kiểm tra rồi sửa. Việc bạn báo thông tin sai cũng giúp ích rất nhiều."
+      }
+    },
+    {
+      "id": "rights-missing-topic",
+      "category": "rights",
+      "q": {
+        "ko": "궁금한 주제가 목록에 없어요.",
+        "en": "The topic I want isn't on the list.",
+        "zh": "列表里没有我想了解的主题。",
+        "vi": "Chủ đề tôi muốn biết không có trong danh sách."
+      },
+      "a": {
+        "ko": "AI에게 질문하기를 이용하거나, 화면 맨 아래 \"문의\" 이메일로 필요한 정보를 알려주세요. 앞으로 추가할 정보에 참고할게요.",
+        "en": "Try asking the AI, or tell us what information you need using the contact email at the bottom of the page. We'll use it when adding new information.",
+        "zh": "可以试试向 AI 提问，或通过页面最下方的联系邮箱告诉我们你需要什么信息。我们会在添加新信息时参考。",
+        "vi": "Hãy thử hỏi AI, hoặc cho chúng tôi biết bạn cần thông tin gì qua email liên hệ ở cuối trang. Chúng tôi sẽ tham khảo khi bổ sung thông tin mới."
+      }
+    },
+    {
+      "id": "programs-apply",
+      "category": "programs",
+      "q": {
+        "ko": "소개된 프로그램에 어떻게 신청하나요?",
+        "en": "How do I apply for a programme?",
+        "zh": "怎样报名参加介绍的项目？",
+        "vi": "Làm sao để đăng ký chương trình được giới thiệu?"
+      },
+      "a": {
+        "ko": "프로그램 페이지에서 활동 내용을 볼 수 있어요. 참여 방법은 화면 맨 아래 \"문의\" 이메일로 물어봐 주세요.",
+        "en": "You can see what each activity is about on the programmes page. To ask how to take part, please use the contact email at the bottom of the page.",
+        "zh": "在项目页面可以看到活动内容。想知道怎么参加，请通过页面最下方的联系邮箱询问。",
+        "vi": "Bạn có thể xem nội dung hoạt động ở trang chương trình. Muốn biết cách tham gia, hãy hỏi qua email liên hệ ở cuối trang."
+      }
+    },
+    {
+      "id": "programs-local",
+      "category": "programs",
+      "q": {
+        "ko": "우리 동네에도 관련 기관이 있는지 어떻게 알 수 있나요?",
+        "en": "How can I find out if there's a related organisation near me?",
+        "zh": "怎么知道我家附近有没有相关机构？",
+        "vi": "Làm sao biết gần nhà tôi có cơ quan liên quan không?"
+      },
+      "a": {
+        "ko": "\"도움받을 곳\" 페이지에 전국에서 이용할 수 있는 기관을 모아 두었어요. 우리 동네 가족센터는 거기 안내된 다누리 누리집에서 찾을 수 있어요.",
+        "en": "Our organisations page lists places you can use anywhere in Korea. You can find your local family centre on the Danuri website introduced there.",
+        "zh": "机构页面整理了全国都能使用的机构。你家附近的家庭中心，可以在那里介绍的 Danuri 网站上查找。",
+        "vi": "Trang cơ quan hỗ trợ tổng hợp những nơi bạn có thể dùng trên cả nước. Trung tâm gia đình gần nhà, bạn có thể tìm trên trang web Danuri được giới thiệu ở đó."
       }
     },
     {
