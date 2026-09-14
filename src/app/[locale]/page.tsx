@@ -2,9 +2,12 @@
 // 첫 화면에서는 LINKRIGHTS의 핵심 메시지와 "내 상황 질문하기"를 가장 먼저 보여주고,
 // 아래로 내려가며 분야, 우리가 주목한 문제, AI 안내 원칙, 권리정보, 기관, 활동, SDGs, 자주 묻는 질문을 보여줍니다.
 
+import fs from 'node:fs';
+import path from 'node:path';
 import Link from 'next/link';
 import { ArticleCard } from '@/components/ArticleCard';
 import { AskBox } from '@/components/AskBox';
+import { HeroVideoPanel } from '@/components/HeroVideoPanel';
 import { CategoryCard } from '@/components/CategoryCard';
 import { CountUp } from '@/components/CountUp';
 import { Icon, type IconName } from '@/components/Icon';
@@ -47,6 +50,15 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     { key: 'languages', label: t.home.impactLanguages, unit: t.home.impactLanguagesUnit, value: LOCALES.length },
   ];
 
+  // 소개 영상: public/videos 에 파일이 있을 때만 보여줍니다. (전체 영상이 없으면 "전체 영상 보기" 버튼만 숨깁니다)
+  const publicFile = (file: string) => fs.existsSync(path.join(process.cwd(), 'public', file));
+  const heroVideo = {
+    loop: '/videos/linkrights-promo-loop.mp4',
+    full: '/videos/linkrights-promo.mp4',
+    poster: '/images/hero-poster.jpg',
+  };
+  const hasHeroVideo = publicFile(heroVideo.loop) && publicFile(heroVideo.poster);
+
   const viewAll = (href: string) => (
     <Link href={href} className="lr-btn lr-btn-ghost lr-btn-sm lr-press">
       {t.common.viewAll} <Icon name="arrow-right" size={16} />
@@ -69,8 +81,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* 1. 첫 화면: 핵심 메시지 + 내 상황을 말해보는 공간 ------------ */}
       <section className="border-b border-[var(--color-line)] bg-white">
-        <div className="lr-container grid gap-10 py-12 sm:py-16 lg:grid-cols-12 lg:items-center lg:gap-14 lg:py-20">
-          <div className="lg:col-span-6">
+        {/* 넓은 화면: 왼쪽 위 핵심 메시지, 왼쪽 아래 소개 영상, 오른쪽 질문 공간 / 휴대폰: 메시지 → 질문 공간 → 영상 */}
+        <div className="lr-container grid gap-10 py-12 sm:py-16 lg:grid-cols-12 lg:gap-x-14 lg:gap-y-10 lg:py-20">
+          <div className={`lg:col-span-6 lg:row-start-1 ${hasHeroVideo ? 'lg:self-end' : 'lg:self-center'}`}>
             <p className="lr-eyebrow">LINKRIGHTS</p>
             <h1 className="lr-display mt-4 whitespace-pre-line">{t.home.heroTitle}</h1>
             <p className="lr-lead mt-5 max-w-xl">{t.home.heroSubtitle}</p>
@@ -84,11 +97,22 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </div>
           </div>
 
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1 lg:self-center">
             <div className="lr-panel bg-white p-5 shadow-[var(--shadow-raised)] sm:p-7">
               <AskBox locale={locale} examples={examples} />
             </div>
           </div>
+
+          {hasHeroVideo && (
+            <div className="lg:col-span-6 lg:col-start-1 lg:row-start-2 lg:self-start">
+              <HeroVideoPanel
+                loopSrc={heroVideo.loop}
+                fullSrc={publicFile(heroVideo.full) ? heroVideo.full : undefined}
+                poster={heroVideo.poster}
+                labels={t.heroVideo}
+              />
+            </div>
+          )}
         </div>
       </section>
 
@@ -112,6 +136,68 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </Marquee>
         </div>
       </nav>
+
+      {/* 1-2. 나는 누구인가요?: 청소년 · 대학생 멘토 · 학교/기관 ----------- */}
+      <Section tone="soft" title={t.involved.whoTitle} subtitle={t.involved.whoSubtitle}>
+        <ul className="grid gap-3 md:grid-cols-3">
+          {(
+            [
+              {
+                key: 'youth',
+                icon: 'sparkles',
+                title: t.involved.youthTitle,
+                body: t.involved.youthBody,
+                cta: t.involved.youthCta,
+                href: `/${locale}/ask`,
+                secondary: t.involved.youthSecondary,
+                secondaryHref: `/${locale}/rights`,
+              },
+              {
+                key: 'mentor',
+                icon: 'book',
+                title: t.involved.mentorTitle,
+                body: t.involved.mentorBody,
+                cta: t.involved.mentorCta,
+                href: `mailto:${site.contactEmail}?subject=${encodeURIComponent(t.involved.mentorSubject)}`,
+                secondary: t.involved.mentorSecondary,
+                secondaryHref: `/${locale}/programs#mentoring`,
+              },
+              {
+                key: 'partner',
+                icon: 'briefcase',
+                title: t.involved.partnerTitle,
+                body: t.involved.partnerBody,
+                cta: t.involved.partnerCta,
+                href: `mailto:${site.contactEmail}?subject=${encodeURIComponent(t.involved.partnerSubject)}`,
+                secondary: t.involved.partnerSecondary,
+                secondaryHref: `/${locale}/get-involved`,
+              },
+            ] as { key: string; icon: IconName; title: string; body: string; cta: string; href: string; secondary: string; secondaryHref: string }[]
+          ).map((item, index) => (
+            <Reveal key={item.key} index={index} className="lr-card flex flex-col p-6">
+              <span className="lr-icon-badge h-11 w-11">
+                <Icon name={item.icon} size={22} />
+              </span>{' '}
+              <h3 className="lr-h3 mt-4">{item.title}</h3>{' '}
+              <p className="mt-2 flex-1 text-[15px] leading-relaxed text-ink-500">{item.body}</p>
+              <div className="mt-5 flex flex-col items-start gap-3">
+                {item.href.startsWith('mailto:') ? (
+                  <a href={item.href} className="lr-btn lr-btn-primary lr-press w-full">
+                    {item.cta} <Icon name="arrow-right" size={18} />
+                  </a>
+                ) : (
+                  <Link href={item.href} className="lr-btn lr-btn-primary lr-press w-full">
+                    {item.cta} <Icon name="arrow-right" size={18} />
+                  </Link>
+                )}
+                <Link href={item.secondaryHref} className="lr-link text-[15px] font-semibold">
+                  {item.secondary}
+                </Link>
+              </div>
+            </Reveal>
+          ))}
+        </ul>
+      </Section>
 
       {/* 2. 분야별로 찾아보기 --------------------------------------- */}
       <Section title={t.home.browseTitle} subtitle={t.home.browseSubtitle}>

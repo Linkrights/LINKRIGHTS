@@ -193,6 +193,65 @@ if (emergency) {
   }
 }
 
+// ---------- 4-1. 상황 사전(search-intents.json) ----------
+// 짧은 질문을 등록 권리정보와 연결하는 사전입니다. 등록되지 않은 글을 가리키면 안 됩니다.
+const intentsPath = path.join(CONTENT, 'search-intents.json');
+if (fs.existsSync(intentsPath)) {
+  const intentsFile = readJson(intentsPath, 'content/search-intents.json');
+  const intents = intentsFile?.intents;
+  if (intentsFile && !Array.isArray(intents)) fail('content/search-intents.json', '"intents" 는 대괄호 [ ] 로 된 목록이어야 합니다.');
+  const intentIds = new Set();
+  for (const intent of Array.isArray(intents) ? intents : []) {
+    const label = `content/search-intents.json > ${intent.id ?? '(id 없음)'}`;
+    if (!intent.id) fail(label, '"id" 가 반드시 필요합니다.');
+    else if (intentIds.has(intent.id)) fail(label, `상황 id 가 중복됩니다: ${intent.id}`);
+    else intentIds.add(intent.id);
+    if (!intent.label) fail(label, '"label"(상황 이름)이 필요합니다.');
+    if (!Array.isArray(intent.articles) || intent.articles.length === 0) {
+      fail(label, '"articles" 에 연결할 권리정보가 하나 이상 있어야 합니다.');
+    }
+    for (const ref of intent.articles ?? []) {
+      if (!articleIds.has(ref.id)) fail(label, `"articles" 에 등록되지 않은 권리정보 id 가 있습니다: ${ref.id}`);
+      if (!['direct', 'possible'].includes(ref.match)) {
+        fail(label, `"match" 는 direct 또는 possible 이어야 합니다. (현재: ${ref.match})`);
+      }
+    }
+    const triggers = Object.values(intent.triggers ?? {}).flat();
+    if (triggers.length === 0) fail(label, '"triggers"(사용자 표현)가 하나 이상 있어야 합니다.');
+    for (const trigger of triggers) {
+      if (typeof trigger !== 'string' || trigger.replace(/\s/g, '').length < 2) {
+        fail(label, `표현은 띄어쓰기를 빼고 두 글자 이상이어야 합니다: ${trigger}`);
+      }
+    }
+    if (typeof intent.clarify === 'string' && (intent.clarify.match(/[?？]/g) ?? []).length > 1) {
+      fail(label, '"clarify" 에는 질문을 하나만 쓸 수 있습니다.');
+    }
+  }
+}
+
+// ---------- 4-2. 협력기관(partners.json) ----------
+// 실제로 협력하는 기관만 등록합니다. 로고 파일이 실제로 있는지, 주소가 https 인지 확인합니다.
+const partnersPath = path.join(CONTENT, 'partners.json');
+if (fs.existsSync(partnersPath)) {
+  const partnersFile = readJson(partnersPath, 'content/partners.json');
+  const partners = partnersFile?.partners;
+  if (partnersFile && !Array.isArray(partners)) fail('content/partners.json', '"partners" 는 대괄호 [ ] 로 된 목록이어야 합니다.');
+  const partnerIds = new Set();
+  for (const partner of Array.isArray(partners) ? partners : []) {
+    const label = `content/partners.json > ${partner.id ?? '(id 없음)'}`;
+    if (!partner.id) fail(label, '"id" 가 반드시 필요합니다.');
+    else if (partnerIds.has(partner.id)) fail(label, `협력기관 id 가 중복됩니다: ${partner.id}`);
+    else partnerIds.add(partner.id);
+    if (!['published', 'draft'].includes(partner.status)) fail(label, '"status" 는 published 또는 draft 이어야 합니다.');
+    if (!partner.name?.ko) fail(label, '"name" 에 한국어 이름(ko)이 필요합니다.');
+    if (!partner.relation?.ko) fail(label, '"relation"(예: 협력기관)에 한국어(ko)가 필요합니다.');
+    if (partner.logo && !fs.existsSync(path.join(CONTENT, '..', 'public', partner.logo))) {
+      fail(label, `로고 파일이 없습니다: public${partner.logo}`);
+    }
+    if (partner.url && !/^https:\/\//.test(partner.url)) fail(label, `"url" 은 https:// 로 시작하는 공식 주소여야 합니다: ${partner.url}`);
+  }
+}
+
 // ---------- 5. 나머지 파일 ----------
 for (const name of ['site.json', 'about.json', 'programs.json', 'faq.json']) {
   const data = readJson(path.join(CONTENT, name), `content/${name}`);

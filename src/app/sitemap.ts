@@ -12,7 +12,7 @@ function base(): string {
 export default function sitemap(): MetadataRoute.Sitemap {
   const root = base();
   // AI 질문 페이지(ask)는 검색 결과에 나오지 않도록 설정되어 있어 여기에 넣지 않습니다.
-  const staticPaths = ['', 'rights', 'organizations', 'emergency', 'about', 'programs', 'faq', 'privacy'];
+  const staticPaths = ['', 'rights', 'organizations', 'emergency', 'about', 'programs', 'get-involved', 'faq', 'privacy'];
   const categories = getRightsCategories();
   const articles = getArticles();
   const entries: MetadataRoute.Sitemap = [];

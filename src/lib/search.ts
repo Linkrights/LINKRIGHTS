@@ -5,8 +5,8 @@
 // 중요: 점수가 있다는 것과 관련 자료라는 것은 다릅니다.
 // AI의 근거 자료로는 "등록된 키워드가 질문에 실제로 들어 있는 글"(keywordHits 가 있는 글)만 씁니다. (route.ts 참고)
 
-import { getGroundingArticles, resolveArticle } from './content';
-import { LOCALES, type Locale, type RightsArticle } from './types';
+import { getGroundingArticles, getSearchIntents, resolveArticle } from './content';
+import { LOCALES, type EvidenceTier, type Locale, type RightsArticle, type SearchIntent } from './types';
 
 function normalize(text: string): string {
   return text
@@ -204,6 +204,167 @@ export function findRelevantArticles(query: string, limit = 4): ScoredArticle[] 
     .filter((s) => s.score > 0)
     .sort((a, b) => b.score - a.score || a.article.id.localeCompare(b.article.id))
     .slice(0, limit);
+}
+
+// ---------------------------------------------------------------------------
+// 짧은 질문을 위한 단계별 근거 찾기 (AI 질문 /api/ask 에서 사용)
+//
+// 이주배경청소년은 "월급 안 줘요", "친구들이 놀려요"처럼 짧거나 문법이 완전하지 않은 한 문장만 쓰는 경우가 많습니다.
+// 그래서 등록 키워드 일치(위의 기존 방식)에 더해, content/search-intents.json 의 "상황 사전"으로
+// 구어체·짧은 표현·띄어쓰기 없는 표현을 이미 등록된 권리정보와 연결합니다.
+//  - direct   : 등록 키워드가 질문에 있거나, 사전에서 "말만으로 상황이 분명함"으로 정한 표현이 있음
+//  - possible : 사용자가 말하지 않은 조건이 맞을 때만 관련될 수 있음
+//               (AI는 조건부로만 안내하고, 서버는 이 자료에 연결된 기관을 더 엄격하게 거릅니다. route.ts 참고)
+// 사전은 등록된 글을 가리키기만 하므로 새 권리·기관·전화번호를 만들지 않습니다.
+// ---------------------------------------------------------------------------
+
+function compact(text: string): string {
+  return text.replace(/\s+/g, '');
+}
+
+/**
+ * 표현의 한 낱말이 질문의 낱말과 맞는지: 같거나, 조사·어미만 다르거나, 그 낱말로 시작합니다. ("끝나" ↔ "끝나요")
+ * 한 글자 낱말("안", "싫")은 "안전", "안내"처럼 다른 말로 이어지지 않도록 짧은 활용("싫어요", "줘요")까지만 맞춥니다.
+ */
+function partMatches(token: string, part: string): boolean {
+  if (token === part || sameWord(token, part)) return true;
+  if (!token.startsWith(part)) return false;
+  return part.length >= 2 || token.length <= part.length + 2;
+}
+
+/** 한글·영문·베트남어처럼 띄어쓰기로 낱말을 나누는 표현인지 (중국어는 띄어쓰기가 없어 낱말 경계를 보지 않습니다) */
+function needsWordStart(term: string): boolean {
+  return /^[\p{Script=Hangul}\p{Script=Latin}0-9]/u.test(term);
+}
+
+/** text 안에서 term 이 낱말의 시작 위치에 나오는지. ("용돈을 안 줘"의 "돈을 안 줘"는 낱말 중간이라 맞지 않습니다) */
+function includesAtWordStart(text: string, term: string, wordStarts?: boolean[]): boolean {
+  if (!needsWordStart(term)) return text.includes(term);
+  for (let index = text.indexOf(term); index !== -1; index = text.indexOf(term, index + 1)) {
+    const atStart = wordStarts ? wordStarts[index] : index === 0 || text[index - 1] === ' ';
+    if (atStart) return true;
+  }
+  return false;
+}
+
+/** 상황 사전의 표현 하나가 질문에 들어 있는지 확인합니다. */
+function triggerMatches(trigger: string, q: string, tokens: string[], compactQuery: string, wordStarts: boolean[]): boolean {
+  const term = normalize(trigger);
+  if (compact(term).length < 2) return false;
+  // 1) 표현이 글자 그대로 들어 있음 (띄어쓰기가 없는 중국어도 이 방법으로 찾습니다)
+  if (includesAtWordStart(q, term)) return true;
+  // 2) "돈안줘요 사장님"처럼 띄어쓰기를 하지 않은 경우
+  const compactTerm = compact(term);
+  if (compactTerm.length >= 3 && includesAtWordStart(compactQuery, compactTerm, wordStarts)) return true;
+  // 3) 여러 낱말 표현은 조사·어미가 달라도 순서대로 모두 나오면 맞은 것으로 봅니다. ("월급 안 줘" ↔ "월급을 아직 안 줘요")
+  const parts = term.split(' ').filter(Boolean);
+  if (parts.length < 2) return false;
+  let from = 0;
+  for (const part of parts) {
+    const index = tokens.findIndex((token, i) => i >= from && partMatches(token, part));
+    if (index === -1) return false;
+    from = index + 1;
+  }
+  return true;
+}
+
+export interface MatchedIntent {
+  intent: SearchIntent;
+  /** 질문에서 실제로 찾은 표현 */
+  trigger: string;
+}
+
+/** 질문에서 상황 사전의 상황을 찾습니다. (여러 개일 수 있습니다) */
+export function matchIntents(query: string): MatchedIntent[] {
+  const q = normalize(query);
+  if (!q) return [];
+  const tokens = q.split(' ').filter(Boolean);
+  const compactQuery = compact(q);
+  // 띄어쓰기를 뺀 질문의 글자마다, 원래 질문에서 낱말의 첫 글자였는지 기록합니다.
+  const wordStarts: boolean[] = [];
+  for (let i = 0; i < q.length; i += 1) {
+    if (q[i] !== ' ') wordStarts.push(i === 0 || q[i - 1] === ' ');
+  }
+  const matched: MatchedIntent[] = [];
+  for (const intent of getSearchIntents()) {
+    const triggers = LOCALES.flatMap((locale) => intent.triggers[locale] ?? []);
+    const trigger = triggers.find((candidate) => triggerMatches(candidate, q, tokens, compactQuery, wordStarts));
+    if (trigger) matched.push({ intent, trigger });
+  }
+  return matched;
+}
+
+export interface EvidenceMatch {
+  article: RightsArticle;
+  tier: EvidenceTier;
+  score: number;
+  /** 질문 안에 실제로 들어 있던 등록 키워드 (상황 사전으로만 찾은 글은 비어 있습니다) */
+  keywordHits: string[];
+  /** 이 글을 찾은 이유. AI에게 "왜 이 자료가 왔는지" 알려주고, 테스트에서도 확인합니다. */
+  reasons: string[];
+}
+
+export interface EvidenceResult {
+  matches: EvidenceMatch[];
+  intents: MatchedIntent[];
+}
+
+/**
+ * AI의 근거 후보를 단계별로 찾습니다.
+ * direct 를 먼저, possible 을 그다음으로 담으며, 개수 제한은 limits 로 정합니다.
+ * 기존 findRelevantArticles 는 그대로 두고 그 결과(등록 키워드 일치)를 direct 의 출발점으로 씁니다.
+ */
+export function findEvidence(query: string, limits = { direct: 3, possible: 2, total: 4 }): EvidenceResult {
+  const byId = new Map<string, EvidenceMatch>();
+  const grounding = new Map(getGroundingArticles().map((article) => [article.id, article]));
+
+  // 1) 기존 방식: 등록 키워드가 질문에 실제로 들어 있는 글
+  for (const match of findRelevantArticles(query, 20)) {
+    if (match.keywordHits.length === 0) continue;
+    byId.set(match.article.id, {
+      article: match.article,
+      tier: 'direct',
+      score: match.score,
+      keywordHits: match.keywordHits,
+      reasons: [`등록 키워드: ${match.keywordHits.join(', ')}`],
+    });
+  }
+
+  // 2) 상황 사전: 짧은 표현·구어체를 등록된 글과 연결
+  const intents = matchIntents(query);
+  for (const { intent, trigger } of intents) {
+    for (const ref of intent.articles) {
+      const article = grounding.get(ref.id);
+      if (!article) continue;
+      const reason =
+        ref.match === 'direct'
+          ? `표현 "${trigger}" → 상황 "${intent.label}"`
+          : `표현 "${trigger}" → 상황 "${intent.label}" (사용자가 말하지 않은 조건이 맞을 때만 관련)`;
+      const existing = byId.get(article.id);
+      if (existing) {
+        existing.reasons.push(reason);
+        if (ref.match === 'direct') {
+          existing.tier = 'direct';
+          existing.score += 3;
+        } else {
+          existing.score += 1;
+        }
+      } else {
+        byId.set(article.id, {
+          article,
+          tier: ref.match,
+          score: ref.match === 'direct' ? 3 : 1.5,
+          keywordHits: [],
+          reasons: [reason],
+        });
+      }
+    }
+  }
+
+  const sorted = [...byId.values()].sort((a, b) => b.score - a.score || a.article.id.localeCompare(b.article.id));
+  const direct = sorted.filter((match) => match.tier === 'direct').slice(0, limits.direct);
+  const possible = sorted.filter((match) => match.tier === 'possible').slice(0, limits.possible);
+  return { matches: [...direct, ...possible].slice(0, limits.total), intents };
 }
 
 /** 관련 글을 하나도 못 찾았을 때 보여줄 기본 목록 */

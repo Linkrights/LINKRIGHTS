@@ -7,15 +7,18 @@
 // 최근 대화(질문 + 답변)를 함께 보내 앞의 내용에 이어서 답하게 합니다.
 // "새 질문"을 누르면 대화를 모두 지우고 처음 상태로 돌아갑니다.
 //
-// 답변 칸 순서: 지금 상황을 보면 → (자료 부족 안내) → 알아두면 좋은 권리 → 지금 해볼 수 있는 것
-//              → 도움이 필요하다면 → 확인하면 더 정확한 부분 → 참고해 주세요 → 확인한 정보
+// 답변 칸 순서 (먼저 돕고, 질문은 마지막에 하나만):
+//   지금 상황을 보면 → 내가 알아야 할 권리 → 지금 할 수 있는 일 → 도움받을 곳
+//   → (자료 상태 안내) → 함께 볼 수 있는 권리정보 → 더 정확히 알고 싶다면 → 참고해 주세요 → 확인한 정보
 
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { PENDING_QUESTION_KEY } from './AskBox';
 import { EmergencyCard } from './EmergencyCard';
 import { Icon } from './Icon';
 import { OrgCard } from './OrgCard';
+import { PrivacyNotice } from './PrivacyNotice';
+import { findPersonalInfo, removePersonalInfo } from './privacy-detect';
 import { formatDate, getMessages, type Locale, type Messages } from '@/lib/i18n';
 import type { AskApiRequest, AskApiResponse, AskHistoryTurn } from '@/lib/types';
 
@@ -99,11 +102,14 @@ function ResultView({
   locale,
   t,
   onNewQuestion,
+  onAnswerFollowUp,
 }: {
   result: AskApiResponse;
   locale: Locale;
   t: Messages;
   onNewQuestion: () => void;
+  /** 가장 최근 답변에만 넘깁니다. AI의 확인 질문에 바로 답할 수 있게 추가 질문 입력창으로 이동합니다. */
+  onAnswerFollowUp?: () => void;
 }) {
   const errorMessage = errorMessageOf(result, t);
 
@@ -151,15 +157,7 @@ function ResultView({
           </div>
 
           <div className="space-y-9 px-5 py-6 sm:px-7 sm:py-8">
-            {/* 자료 부족 안내: 등록된 권리정보 중 이 상황에 맞는 자료가 없을 때 */}
-            {result.evidence === 'none' && (
-              <section className="lr-callout border-l-[var(--color-ink-300)] bg-surface-soft">
-                <h3 className="text-[15px] font-bold text-ink-900">{t.ask.evidenceNoneTitle}</h3>{' '}
-                <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{t.ask.evidenceNoneBody}</p>
-              </section>
-            )}
-
-            {/* 알아두면 좋은 권리 (근거 자료가 있을 때만) */}
+            {/* 내가 알아야 할 권리 (근거 자료가 있을 때만) */}
             {result.answer.rights.length > 0 && (
               <section>
                 <SectionTitle icon="shield" strong>
@@ -176,7 +174,7 @@ function ResultView({
               </section>
             )}
 
-            {/* 지금 해볼 수 있는 것 */}
+            {/* 지금 할 수 있는 일 */}
             {result.answer.actions.length > 0 && (
               <section>
                 <SectionTitle icon="check" strong>
@@ -196,7 +194,7 @@ function ResultView({
               </section>
             )}
 
-            {/* 도움이 필요하다면 (근거 자료와 연결된 기관이 있을 때만) */}
+            {/* 도움받을 곳 (근거 자료와 연결된 기관이 있을 때만) */}
             {result.organizations.length > 0 && (
               <section>
                 <SectionTitle>{t.ask.resultOrgs}</SectionTitle>
@@ -208,11 +206,51 @@ function ResultView({
               </section>
             )}
 
-            {/* 확인하면 더 정확한 부분 */}
+            {/* 자료 상태 안내
+                - none: 등록된 권리정보 중 이 상황에 맞는 자료가 없을 때 (권리·기관 없이 할 수 있는 일만)
+                - possible: 짧은 설명만으로는 확실하지 않아, 조건이 맞을 때만 해당되는 자료로 안내했을 때 */}
+            {result.evidence === 'none' && (
+              <section className="lr-callout border-l-[var(--color-ink-300)] bg-surface-soft">
+                <h3 className="text-[15px] font-bold text-ink-900">{t.ask.evidenceNoneTitle}</h3>{' '}
+                <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{t.ask.evidenceNoneBody}</p>{' '}
+                <Link href={`/${locale}/rights`} className="lr-link mt-2 inline-flex items-center gap-1 text-[15px] font-semibold">
+                  {t.ask.searchRightsCta} <Icon name="arrow-right" size={16} />
+                </Link>
+              </section>
+            )}
+            {result.evidence === 'possible' && (
+              <p className="flex items-start gap-2 text-sm leading-relaxed text-ink-500">
+                <Icon name="shield" size={16} className="mt-0.5 shrink-0 text-brand-600" />{' '}
+                <span>{t.ask.evidencePossibleNote}</span>
+              </p>
+            )}
+
+            {/* 상황에 따라 함께 볼 수 있는 권리정보 (등록 페이지 링크만) */}
+            {result.related && result.related.length > 0 && (
+              <section>
+                <SectionTitle>{t.ask.relatedTitle}</SectionTitle>
+                <ul className="mt-3 space-y-2">
+                  {result.related.map((item) => (
+                    <li key={item.id}>
+                      <Link href={item.href} className="lr-link inline-flex items-center gap-1.5 text-[15px] font-semibold">
+                        {item.title} <Icon name="arrow-right" size={16} />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* 더 정확히 알고 싶다면: 안내를 모두 한 뒤, 정말 필요할 때만 질문 하나 */}
             {result.answer.follow_up_question && (
-              <section className="rounded-[var(--radius-control)] border border-[var(--color-line)] p-4">
+              <section className="rounded-[var(--radius-control)] border border-brand-200 bg-brand-50 p-4">
                 <h3 className="text-[15px] font-bold text-ink-900">{t.ask.resultFollowUp}</h3>{' '}
                 <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{result.answer.follow_up_question}</p>
+                {onAnswerFollowUp && (
+                  <button type="button" onClick={onAnswerFollowUp} className="lr-btn lr-btn-ghost lr-btn-sm mt-3">
+                    {t.ask.answerFollowUp} <Icon name="arrow-right" size={16} />
+                  </button>
+                )}
               </section>
             )}
 
@@ -298,6 +336,13 @@ export function AskClient({
   const [pending, setPending] = useState<'new' | 'followUp' | null>(null);
   const [turns, setTurns] = useState<Turn[]>([]);
   const questionRef = useRef<HTMLTextAreaElement>(null);
+  const followUpRef = useRef<HTMLTextAreaElement>(null);
+  /** 개인정보로 보이는 내용 확인 (보내기 전에 한 번 멈추는 간단한 확인) */
+  const questionMatches = useMemo(() => findPersonalInfo(question), [question]);
+  const followUpMatches = useMemo(() => findPersonalInfo(followUp), [followUp]);
+  const [blockedField, setBlockedField] = useState<'question' | 'followUp' | null>(null);
+  const questionNoticeRef = useRef<HTMLDivElement>(null);
+  const followUpNoticeRef = useRef<HTMLDivElement>(null);
   const latestTurnRef = useRef<HTMLDivElement>(null);
   const askedRef = useRef(false);
   const loading = pending !== null;
@@ -345,6 +390,37 @@ export function AskClient({
     questionRef.current?.focus();
   }
 
+  /** AI의 확인 질문에 답할 수 있도록 추가 질문 입력창으로 이동합니다. */
+  function focusFollowUp() {
+    followUpRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    followUpRef.current?.focus({ preventScroll: true });
+  }
+
+  /** 보내기 전에 개인정보로 보이는 내용이 있으면 멈추고 안내합니다. 없으면 바로 보냅니다. */
+  function submitChecked(isFollowUp: boolean) {
+    const text = isFollowUp ? followUp : question;
+    if (findPersonalInfo(text).length > 0) {
+      setBlockedField(isFollowUp ? 'followUp' : 'question');
+      return;
+    }
+    void ask(text, isFollowUp);
+  }
+
+  /** 개인정보로 보이는 부분을 지우고, send 가 true 면 바로 보냅니다. */
+  function removePrivate(isFollowUp: boolean, send: boolean) {
+    const cleaned = removePersonalInfo(isFollowUp ? followUp : question);
+    if (isFollowUp) setFollowUp(cleaned);
+    else setQuestion(cleaned);
+    setBlockedField(null);
+    if (send && cleaned) void ask(cleaned, isFollowUp);
+    else (isFollowUp ? followUpRef : questionRef).current?.focus();
+  }
+
+  useEffect(() => {
+    if (blockedField === 'question') questionNoticeRef.current?.focus();
+    if (blockedField === 'followUp') followUpNoticeRef.current?.focus();
+  }, [blockedField]);
+
   // 홈 입력창에서 넘어온 질문을 자동으로 한 번 물어봅니다.
   // 질문은 주소(URL) 대신 이 탭의 임시 저장소로 넘어오며, 읽자마자 지웁니다.
   // 예전 방식의 ?q= 주소로 들어온 경우에도 동작하고, 주소에서는 질문을 지웁니다.
@@ -389,7 +465,7 @@ export function AskClient({
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          void ask(question);
+          submitChecked(false);
         }}
         className="lr-card p-5 sm:p-7"
       >
@@ -405,9 +481,24 @@ export function AskClient({
           value={question}
           maxLength={MAX_LENGTH}
           rows={5}
-          onChange={(event) => setQuestion(event.target.value)}
+          onChange={(event) => {
+            setQuestion(event.target.value);
+            if (blockedField === 'question') setBlockedField(null);
+          }}
           placeholder={t.ask.placeholder}
           className="lr-input mt-4 resize-y"
+        />
+        <PrivacyNotice
+          t={t}
+          matches={questionMatches}
+          blocked={blockedField === 'question'}
+          noticeRef={questionNoticeRef}
+          onRemove={() => removePrivate(false, false)}
+          onRemoveAndSend={() => removePrivate(false, true)}
+          onEdit={() => {
+            setBlockedField(null);
+            questionRef.current?.focus();
+          }}
         />
         {/* 개인정보 입력 금지 안내 */}
         <p className="mt-2.5 flex items-start gap-2 text-sm leading-relaxed text-ink-500">
@@ -469,7 +560,13 @@ export function AskClient({
                 <p className="mt-1 text-base leading-relaxed text-ink-900">{turn.question}</p>
               </div>
             )}
-            <ResultView result={turn.result} locale={locale} t={t} onNewQuestion={startNewQuestion} />
+            <ResultView
+              result={turn.result}
+              locale={locale}
+              t={t}
+              onNewQuestion={startNewQuestion}
+              onAnswerFollowUp={index === turns.length - 1 && canFollowUp && !loading ? focusFollowUp : undefined}
+            />
           </div>
         ))}
 
@@ -484,7 +581,7 @@ export function AskClient({
           <form
             onSubmit={(event) => {
               event.preventDefault();
-              void ask(followUp, true);
+              submitChecked(true);
             }}
             className="lr-card p-5 sm:p-6"
           >
@@ -492,13 +589,29 @@ export function AskClient({
               {t.ask.followUpTitle}
             </label>
             <textarea
+              ref={followUpRef}
               id="follow-up-question"
               value={followUp}
               maxLength={MAX_LENGTH}
               rows={3}
-              onChange={(event) => setFollowUp(event.target.value)}
+              onChange={(event) => {
+                setFollowUp(event.target.value);
+                if (blockedField === 'followUp') setBlockedField(null);
+              }}
               placeholder={t.ask.followUpPlaceholder}
               className="lr-input mt-3 resize-y"
+            />
+            <PrivacyNotice
+              t={t}
+              matches={followUpMatches}
+              blocked={blockedField === 'followUp'}
+              noticeRef={followUpNoticeRef}
+              onRemove={() => removePrivate(true, false)}
+              onRemoveAndSend={() => removePrivate(true, true)}
+              onEdit={() => {
+                setBlockedField(null);
+                followUpRef.current?.focus();
+              }}
             />
             {/* 휴대폰에서는 글자 수 아래에 버튼 두 개가 나란히, 넓은 화면에서는 한 줄로 보입니다.
                 화면이 아주 좁으면 버튼 글자가 꺾이지 않고 버튼이 다음 줄로 내려갑니다. */}

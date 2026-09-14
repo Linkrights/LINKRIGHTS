@@ -11,9 +11,13 @@ import type {
   FaqFile,
   Locale,
   Organization,
+  Partner,
+  PartnersFile,
   ProgramsFile,
   ResolvedArticle,
   RightsArticle,
+  SearchIntent,
+  SearchIntentsFile,
   SiteConfig,
 } from './types';
 
@@ -134,6 +138,18 @@ export const getPrograms = cache((): ProgramsFile => readJson<ProgramsFile>('pro
 export const getFaq = cache((): FaqFile => readJson<FaqFile>('faq.json'));
 
 export const getAbout = cache((): AboutFile => readJson<AboutFile>('about.json'));
+
+/** 짧은 질문·구어체를 등록 권리정보와 연결하는 상황 사전. 파일이 없으면 빈 목록입니다. (search.ts 참고) */
+export const getSearchIntents = cache((): SearchIntent[] => {
+  if (!fs.existsSync(path.join(CONTENT_DIR, 'search-intents.json'))) return [];
+  return readJson<SearchIntentsFile>('search-intents.json').intents ?? [];
+});
+
+/** 화면에 보여줄 협력기관 (content/partners.json 의 published 만). 파일이 없으면 빈 목록입니다. */
+export const getPartners = cache((): Partner[] => {
+  if (!fs.existsSync(path.join(CONTENT_DIR, 'partners.json'))) return [];
+  return (readJson<PartnersFile>('partners.json').partners ?? []).filter((partner) => partner.status === 'published');
+});
 
 /** 권리정보 상세 페이지 주소 */
 export function articleHref(locale: Locale, article: RightsArticle): string {

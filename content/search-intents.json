@@ -1,0 +1,227 @@
+{
+  "_readme": "짧은 질문·구어체·문법이 틀린 문장에서도 관련 권리정보를 찾기 위한 '상황 사전'입니다. triggers 에는 사용자가 실제로 쓸 법한 표현을 적습니다(띄어쓰기·조사·어미 차이는 자동으로 맞춥니다). articles 의 id 는 content/rights 에 등록된 글이어야 하며 빌드할 때 자동으로 확인합니다. match 는 direct(말만으로 이 글의 상황이 분명함) 또는 possible(사용자가 말하지 않은 조건이 맞을 때만 관련될 수 있음, AI는 조건부로만 안내)입니다. 이 파일은 이미 등록된 글을 찾는 데만 쓰이며, 새 권리·기관·전화번호를 만들지 않습니다. unknowns 와 clarify 는 AI가 상황을 이해하도록 돕는 힌트이며 근거 자료가 아닙니다.",
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-14",
+  "intents": [
+    {
+      "id": "unpaid-wages",
+      "label": "일한 돈(월급·알바비)을 받지 못한 상황",
+      "articles": [{ "id": "labor-unpaid-wages", "match": "direct" }],
+      "triggers": {
+        "ko": [
+          "돈 안 줘", "돈을 안 줘", "돈 안 주", "돈을 안 주", "돈 못 받", "돈을 못 받", "돈이 안 들어", "돈 안 들어", "일한 돈", "돈 떼먹",
+          "월급 안 줘", "월급을 안 줘", "월급 안 들어", "월급이 안 들어", "월급 안 나와", "월급이 안 나와", "월급 못 받", "월급을 못 받", "월급이 밀", "월급 밀려",
+          "급여 안 줘", "급여를 안 줘", "급여가 안 들어", "급여 못 받", "급여를 못 받", "급여 미뤄", "급여를 미뤄", "급여가 밀",
+          "알바비 안 줘", "알바비를 안 줘", "알바비 못 받", "알바비를 못 받", "알바비가 안 들어",
+          "임금 안 줘", "임금을 안 줘", "임금 못 받", "임금을 못 받", "일당 안 줘", "일당을 못 받", "페이 안 줘"
+        ],
+        "en": ["not paid", "didn't pay", "did not pay", "haven't been paid", "hasn't paid", "not getting paid", "unpaid wage", "owes me money", "owe me money"],
+        "zh": ["不给工资", "没给工资", "拖欠工资", "工资没发", "没发工资", "不给钱", "没拿到工资", "工资还没给"],
+        "vi": ["không trả lương", "chưa trả lương", "không trả tiền", "nợ lương", "chưa nhận lương", "không được trả lương", "chưa được trả lương"]
+      },
+      "unknowns": ["돈을 받기로 한 날짜가 이미 지났는지", "지금도 그곳에서 일하고 있는지"],
+      "clarify": "돈을 받기로 한 날짜가 이미 지났나요?"
+    },
+    {
+      "id": "no-contract",
+      "label": "근로계약서를 쓰지 않았거나 받지 못한 상황",
+      "articles": [{ "id": "labor-contract", "match": "direct" }],
+      "triggers": {
+        "ko": ["계약서 안 썼", "계약서를 안 썼", "계약서 안 써", "계약서를 안 써", "계약서 없", "계약서가 없", "계약서를 못 받", "계약서 안 줘", "계약서를 안 줘", "계약서 쓰지 않", "근로계약서 안", "근로계약서를 안"],
+        "en": ["no contract", "didn't sign a contract", "did not sign a contract", "without a contract", "no written contract", "never signed"],
+        "zh": ["没签合同", "没有合同", "没签劳动合同", "不给合同"],
+        "vi": ["không có hợp đồng", "chưa ký hợp đồng", "không ký hợp đồng"]
+      },
+      "unknowns": ["지금도 그곳에서 일하고 있는지", "급여를 정해진 대로 받고 있는지"],
+      "clarify": "지금도 그곳에서 일하고 있나요?"
+    },
+    {
+      "id": "low-pay",
+      "label": "받는 돈(시급)이 너무 적은 것 같은 상황",
+      "articles": [{ "id": "labor-minimum-wage", "match": "direct" }],
+      "triggers": {
+        "ko": ["시급이 너무 적", "시급 너무 적", "시급이 낮", "시급 낮", "돈을 너무 적게", "돈이 너무 적", "최저시급", "시급이 얼마", "시급 얼마", "주휴수당 안", "주휴수당을 안"],
+        "en": ["minimum wage", "paid too little", "hourly wage", "hourly pay"],
+        "zh": ["最低工资", "时薪太低", "时薪多少", "工资太低"],
+        "vi": ["lương tối thiểu", "lương giờ", "lương quá thấp"]
+      },
+      "unknowns": ["실제로 받는 시급", "수습 기간인지"],
+      "clarify": ""
+    },
+    {
+      "id": "teen-work",
+      "label": "청소년이 일(알바)을 해도 되는지, 어떤 조건이 있는지 궁금한 상황",
+      "articles": [{ "id": "labor-youth-work-rules", "match": "direct" }],
+      "triggers": {
+        "ko": ["알바 해도 돼", "알바해도 돼", "알바 할 수 있", "알바할 수 있", "알바 가능한 나이", "몇 살부터 알바", "몇 살부터 일", "밤에 알바", "밤늦게 일", "새벽에 일", "학생인데 알바"],
+        "en": ["can i work part-time", "how old to work", "working at night", "part-time job at my age"],
+        "zh": ["可以打工吗", "几岁可以打工", "晚上打工"],
+        "vi": ["có được làm thêm không", "bao nhiêu tuổi được làm thêm", "làm thêm ban đêm"]
+      },
+      "unknowns": ["만 나이", "일하는 시간대"],
+      "clarify": "지금 만 나이가 몇 살인가요?"
+    },
+    {
+      "id": "peer-teasing",
+      "label": "친구들의 말이나 행동 때문에 힘든 상황",
+      "articles": [{ "id": "education-school-discrimination", "match": "possible" }],
+      "triggers": {
+        "ko": ["놀려요", "놀려서", "놀렸", "놀리", "놀려대", "비웃", "이상하게 봐", "이상하게 쳐다", "나만 빼", "끼워주지 않", "안 끼워", "나를 싫어", "날 싫어", "나 싫어해", "친구 나 싫어", "욕해요", "욕했", "무시해요", "무시했"],
+        "en": ["tease me", "teasing me", "make fun of me", "laugh at me", "left me out", "they ignore me"],
+        "zh": ["嘲笑我", "取笑我", "排挤我", "不理我", "笑话我"],
+        "vi": ["trêu chọc", "chế giễu", "cô lập tôi", "không chơi với tôi", "cười nhạo"]
+      },
+      "unknowns": ["한 번 있었던 일인지, 계속 반복되는지", "국적·말투·외모 같은 이유와 관련이 있는지", "지금 안전하다고 느끼는지"],
+      "clarify": "이런 일이 한 번 있었나요, 아니면 계속 반복되고 있나요?"
+    },
+    {
+      "id": "school-reluctance",
+      "label": "학교에 가기 싫을 만큼 학교생활이 힘든 상황",
+      "articles": [{ "id": "education-school-discrimination", "match": "possible" }],
+      "triggers": {
+        "ko": ["학교 가기 싫", "학교에 가기 싫", "학교 안 가고 싶", "학교에 안 가고 싶", "학교가 싫", "학교 싫어", "학교 다니기 싫", "학교 그만두고 싶", "학교를 그만두고 싶", "학교 힘들", "학교생활이 힘들", "학교생활 힘들", "학교 적응"],
+        "en": ["don't want to go to school", "do not want to go to school", "hate school", "school is too hard"],
+        "zh": ["不想上学", "不想去学校", "讨厌学校", "在学校很难受"],
+        "vi": ["không muốn đi học", "ghét đi học", "ghét trường"]
+      },
+      "unknowns": ["학교에 가기 싫어진 이유(친구·선생님과의 일, 공부나 한국어, 건강 등)", "지금 안전하다고 느끼는지"],
+      "clarify": "학교에 가기 싫어진 이유가 친구나 선생님과의 일 때문인가요, 아니면 공부나 한국어가 어려워서인가요?"
+    },
+    {
+      "id": "teacher-unfair",
+      "label": "선생님이 나를 다르게 대하는 것 같은 상황",
+      "articles": [{ "id": "education-school-discrimination", "match": "possible" }],
+      "triggers": {
+        "ko": ["선생님이 나를 무시", "선생님이 날 무시", "선생님이 차별", "선생님이 나만", "선생님이 저만", "선생님이 나를 싫어"],
+        "en": ["teacher treats me differently", "teacher ignores me", "teacher is unfair"],
+        "zh": ["老师歧视我", "老师不理我", "老师对我不公平"],
+        "vi": ["giáo viên đối xử khác", "giáo viên phân biệt"]
+      },
+      "unknowns": ["여러 번 반복된 일인지", "국적·말투 같은 이유와 관련이 있는지"],
+      "clarify": "선생님이 그렇게 대한 일이 여러 번 있었나요?"
+    },
+    {
+      "id": "discrimination",
+      "label": "차별을 받은 것 같다고 느끼는 상황",
+      "articles": [{ "id": "human-rights-discrimination", "match": "direct" }],
+      "triggers": {
+        "ko": ["차별받", "차별 받", "차별당", "차별을 당", "외국인이라고 무시", "외국인이라서 안 된", "피부색 때문", "말투 때문에 무시", "발음 때문에 무시", "국적 때문"],
+        "en": ["discriminated", "treated unfairly because i am foreign", "because of my skin color"],
+        "zh": ["被歧视", "因为我是外国人"],
+        "vi": ["bị phân biệt đối xử", "bị kỳ thị"]
+      },
+      "unknowns": ["어디에서 있었던 일인지(학교·일하는 곳·가게 등)", "한 번인지 반복되는지"],
+      "clarify": "어디에서 있었던 일인가요? 학교, 일하는 곳, 가게처럼 장소만 알려줘도 돼요."
+    },
+    {
+      "id": "visa-expiring",
+      "label": "비자(체류기간)가 곧 끝나거나 이미 끝난 상황",
+      "articles": [{ "id": "visa-extension", "match": "direct" }],
+      "triggers": {
+        "ko": ["비자 끝나", "비자가 끝나", "비자 끝났", "비자가 끝났", "비자 기간 끝", "비자 기간이 끝", "비자 만료", "비자가 만료", "비자 기한", "비자 날짜", "체류기간 끝", "체류 기간 끝", "체류기간이 끝", "체류기간 만료", "비자 곧", "비자 연장"],
+        "en": ["visa expir", "visa ends", "visa is ending", "extend my visa", "visa extension", "stay expires"],
+        "zh": ["签证到期", "签证快到期", "签证过期", "延长签证", "签证延期", "签证快过期"],
+        "vi": ["visa hết hạn", "hết hạn visa", "gia hạn visa", "sắp hết hạn visa", "hết hạn cư trú"]
+      },
+      "unknowns": ["체류기간 만료일이 이미 지났는지, 아직 남았는지"],
+      "clarify": "체류기간이 끝나는 날짜가 아직 지나지 않았나요?"
+    },
+    {
+      "id": "visa-worry",
+      "label": "비자(체류) 문제로 걱정되는 상황",
+      "articles": [
+        { "id": "visa-status-basics", "match": "possible" },
+        { "id": "visa-extension", "match": "possible" }
+      ],
+      "triggers": {
+        "ko": ["비자 걱정", "비자가 걱정", "비자 문제", "비자가 문제", "비자 때문에", "비자 어떡", "비자 어떻게", "체류 걱정", "체류자격 걱정", "비자가 없", "비자 없어", "비자 잘 모르", "비자 뭔지"],
+        "en": ["worried about my visa", "visa problem", "visa issue", "visa status"],
+        "zh": ["签证问题", "担心签证", "签证怎么办"],
+        "vi": ["lo lắng về visa", "vấn đề visa", "visa của tôi"]
+      },
+      "unknowns": ["기간이 끝나는 것이 걱정인지, 이 비자로 할 수 있는 일(알바·학교 등)이 궁금한지"],
+      "clarify": "비자 기간이 곧 끝나서 걱정인가요, 아니면 이 비자로 할 수 있는 일이 궁금한가요?"
+    },
+    {
+      "id": "medical-cost",
+      "label": "병원비나 건강보험이 걱정되는 상황",
+      "articles": [
+        { "id": "health-insurance", "match": "direct" },
+        { "id": "health-hospital-visit", "match": "possible" }
+      ],
+      "triggers": {
+        "ko": ["병원비", "병원 돈", "치료비", "진료비", "약값", "보험이 없", "보험 없어", "건강보험 없", "보험 가입 안"],
+        "en": ["hospital bill", "medical bill", "medical cost", "no insurance", "no health insurance"],
+        "zh": ["医药费", "看病太贵", "没有保险", "医疗费"],
+        "vi": ["viện phí", "tiền viện phí", "không có bảo hiểm", "chi phí khám bệnh"]
+      },
+      "unknowns": ["건강보험에 가입되어 있는지"],
+      "clarify": ""
+    },
+    {
+      "id": "sick",
+      "label": "몸이 아프거나 병원에 가고 싶은 상황",
+      "articles": [{ "id": "health-hospital-visit", "match": "direct" }],
+      "triggers": {
+        "ko": ["몸이 아파", "몸이 아프", "배가 아파", "머리가 아파", "이가 아파", "다쳤", "병원 가고 싶", "병원에 가고 싶", "병원 어디", "병원 가야", "몸이 안 좋", "열이 나", "진료 받고 싶", "약 사고 싶"],
+        "en": ["i am sick", "i feel sick", "i'm sick", "need a doctor", "go to the hospital", "see a doctor"],
+        "zh": ["生病了", "身体不舒服", "想去医院", "看医生", "发烧"],
+        "vi": ["bị ốm", "bị bệnh", "muốn đi bệnh viện", "đi khám bệnh", "bị sốt"]
+      },
+      "unknowns": ["지금 급하게 치료가 필요한 상태인지"],
+      "clarify": ""
+    },
+    {
+      "id": "hurt-unclear",
+      "label": "아프다고만 말해서 몸이 아픈지 마음이 힘든지 아직 모르는 상황",
+      "articles": [{ "id": "health-hospital-visit", "match": "possible" }],
+      "triggers": {
+        "ko": ["아파요", "아파서", "아픈데", "아프다", "아팠어요", "아프고", "너무 아파"],
+        "en": ["it hurts", "i am hurting", "in pain"],
+        "zh": ["很疼", "好痛", "很痛"],
+        "vi": ["bị đau", "đau quá"]
+      },
+      "unknowns": ["몸이 아픈 것인지, 마음이 힘든 것인지"],
+      "clarify": "몸이 아픈 건가요, 아니면 마음이 많이 힘든 건가요?"
+    },
+    {
+      "id": "housing",
+      "label": "집 구하기, 월세·보증금 같은 집 문제 상황",
+      "articles": [{ "id": "life-housing", "match": "direct" }],
+      "triggers": {
+        "ko": ["집 계약", "월세 계약", "전세 계약", "보증금 못 받", "보증금을 못 받", "보증금 안 돌려", "집주인이 안 돌려", "방 구하", "살 집", "집을 구하"],
+        "en": ["rental contract", "get my deposit back", "find a room", "find a place to live"],
+        "zh": ["押金不退", "租房合同", "找房子"],
+        "vi": ["không trả tiền cọc", "hợp đồng thuê nhà", "tìm nhà"]
+      },
+      "unknowns": ["집 계약서를 썼는지"],
+      "clarify": ""
+    },
+    {
+      "id": "bank-phone",
+      "label": "통장·휴대폰을 만들기 어려운 상황",
+      "articles": [{ "id": "life-bank-and-phone", "match": "direct" }],
+      "triggers": {
+        "ko": ["통장 못 만들", "통장을 못 만들", "통장 만들고 싶", "계좌 못 만들", "계좌를 못 만들", "핸드폰 못 만들", "휴대폰 개통 안", "핸드폰 개통 안", "폰 개통", "유심 사"],
+        "en": ["open a bank account", "get a phone number", "sim card"],
+        "zh": ["开银行账户", "办手机卡", "开户"],
+        "vi": ["mở tài khoản ngân hàng", "làm sim điện thoại", "mở tài khoản"]
+      },
+      "unknowns": ["외국인등록증이 있는지"],
+      "clarify": ""
+    },
+    {
+      "id": "school-entry",
+      "label": "한국에서 학교에 다니고 싶거나 입학·전학이 필요한 상황",
+      "articles": [{ "id": "education-school-enrollment", "match": "direct" }],
+      "triggers": {
+        "ko": ["학교 다니고 싶", "학교에 다니고 싶", "학교 들어가고 싶", "학교에 들어가고 싶", "한국 학교 가고 싶", "입학하고 싶", "학교 못 다니", "학교에 못 다니", "학교 안 받아", "전학 가고 싶"],
+        "en": ["want to go to school in korea", "enroll in school", "school admission", "transfer school"],
+        "zh": ["想在韩国上学", "入学", "转学"],
+        "vi": ["muốn đi học ở hàn", "nhập học", "chuyển trường"]
+      },
+      "unknowns": ["지금 학교에 다니고 있는지", "나이"],
+      "clarify": ""
+    }
+  ]
+}

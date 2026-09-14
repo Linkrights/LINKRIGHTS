@@ -1,11 +1,16 @@
 // LINKRIGHTS 소개 페이지입니다. 글 내용은 content/about.json 에서 바꿉니다.
+//
+// 이야기 순서: 왜 시작했는가 → 우리가 주목한 문제 → 하는 일 → 만들고 싶은 변화
+//            → 만들고 싶은 선순환(5단계, messages 의 cycle) → 프로그램 → 협력기관 → SDGs → 팀과 앞으로의 방향
+// 선순환은 이미 이룬 성과가 아니라 만들어 가고 있는 목표로 표현합니다.
 
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Icon } from '@/components/Icon';
+import { PartnerList } from '@/components/PartnerList';
 import { SdgIcon } from '@/components/SdgIcon';
 import { Notice, PageHeader, Section } from '@/components/Section';
-import { getAbout, getPrograms } from '@/lib/content';
+import { getAbout, getPartners, getPrograms } from '@/lib/content';
 import { getMessages, pick, toLocale } from '@/lib/i18n';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -23,6 +28,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const about = file.i18n[locale] ?? file.i18n.ko;
   const fallback = locale !== 'ko' && !file.i18n[locale];
   const programs = getPrograms().items.filter((p) => p.status === 'published');
+  const hasPartners = getPartners().length > 0;
 
   return (
     <>
@@ -34,12 +40,12 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </div>
       )}
 
-      {/* 왜 시작했는가 */}
+      {/* 1. 왜 시작했는가 */}
       <Section title={about.why_title}>
         <p className="lr-lead max-w-3xl">{about.why_body}</p>
       </Section>
 
-      {/* 우리가 주목한 문제 */}
+      {/* 2. 우리가 주목한 문제 */}
       <Section tone="soft" title={about.problems_title}>
         <ol className="grid gap-x-12 gap-y-8 sm:grid-cols-2">
           {about.problems.map((problem, index) => (
@@ -57,16 +63,8 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </ol>
       </Section>
 
-      {/* 만들고 싶은 변화 */}
-      <Section>
-        <div className="rounded-[var(--radius-panel)] bg-brand-600 px-6 py-10 text-white sm:px-10 sm:py-14">
-          <h2 className="text-2xl font-extrabold leading-snug sm:text-3xl">{about.change_title}</h2>
-          <p className="mt-4 max-w-3xl text-base leading-relaxed text-brand-50 sm:text-lg">{about.change_body}</p>
-        </div>
-      </Section>
-
-      {/* 하는 일 */}
-      <Section tone="soft" title={about.what_title}>
+      {/* 3. 하는 일: 문제에 대한 우리의 방법 */}
+      <Section title={about.what_title}>
         <ul className="grid gap-x-10 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
           {about.what_we_do.map((item) => (
             <li key={item.title} className="flex gap-3.5">
@@ -82,8 +80,36 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </ul>
       </Section>
 
-      {/* 프로그램 */}
+      {/* 4. 만들고 싶은 변화 */}
+      <Section tone="soft">
+        <div className="rounded-[var(--radius-panel)] bg-brand-600 px-6 py-10 text-white sm:px-10 sm:py-14">
+          <h2 className="text-2xl font-extrabold leading-snug sm:text-3xl">{about.change_title}</h2>
+          <p className="mt-4 max-w-3xl text-base leading-relaxed text-brand-50 sm:text-lg">{about.change_body}</p>
+        </div>
+      </Section>
+
+      {/* 5. 만들고 싶은 선순환: 권리를 알고 → 도움을 찾고 → 선택하고 → 나누고 → 다음 사람에게 더 잘 닿기 */}
+      <Section title={t.cycle.title} subtitle={t.cycle.subtitle}>
+        <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          {t.cycle.steps.map((step, index) => (
+            <li key={step.title} className="lr-card flex flex-col p-5">
+              <span className="grid h-9 w-9 place-items-center rounded-full bg-brand-600 text-[15px] font-bold text-white">
+                {index + 1}
+                <span className="sr-only">.</span>
+              </span>{' '}
+              <h3 className="lr-h3 mt-3">{step.title}</h3>{' '}
+              <p className="mt-1.5 text-[15px] leading-relaxed text-ink-500">{step.body}</p>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-5 flex items-start gap-2 text-[15px] font-semibold leading-relaxed text-brand-700">
+          <Icon name="arrow-right" size={16} className="mt-1 shrink-0" /> <span>{t.cycle.loopNote}</span>
+        </p>
+      </Section>
+
+      {/* 6. 프로그램 */}
       <Section
+        tone="soft"
         title={t.programs.title}
         action={
           <Link href={`/${locale}/programs`} className="lr-btn lr-btn-ghost lr-btn-sm lr-press">
@@ -102,8 +128,23 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </ul>
       </Section>
 
-      {/* SDGs */}
-      <Section tone="soft" title={about.sdg_title}>
+      {/* 7. 협력기관 (content/partners.json 에 등록된 기관만) */}
+      {hasPartners && (
+        <Section
+          title={t.involved.partnersTitle}
+          subtitle={t.involved.partnersSubtitle}
+          action={
+            <Link href={`/${locale}/get-involved`} className="lr-btn lr-btn-ghost lr-btn-sm lr-press">
+              {t.nav.getInvolved} <Icon name="arrow-right" size={16} />
+            </Link>
+          }
+        >
+          <PartnerList locale={locale} />
+        </Section>
+      )}
+
+      {/* 8. SDGs */}
+      <Section tone={hasPartners ? 'soft' : 'default'} title={about.sdg_title}>
         <ul className="grid gap-8 sm:grid-cols-2">
           {about.sdgs.map((sdg) => (
             <li key={sdg.code} className="flex gap-4">
@@ -119,8 +160,8 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </ul>
       </Section>
 
-      {/* 팀 + 앞으로의 방향 */}
-      <Section>
+      {/* 9. 팀 + 앞으로의 방향 */}
+      <Section tone={hasPartners ? 'default' : 'soft'}>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="lr-card p-6 sm:p-7">
             <h2 className="text-xl font-extrabold text-ink-900">{about.team_title}</h2>

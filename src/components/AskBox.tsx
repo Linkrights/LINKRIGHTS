@@ -2,10 +2,13 @@
 
 // 홈 화면의 "내 상황을 말해보는 공간"입니다.
 // 여기서 질문을 쓰면 AI 질문 페이지(/ask)로 이동합니다.
+// 개인정보로 보이는 내용이 있으면 이동하기 전에 확인합니다. (PrivacyNotice 참고)
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Icon } from './Icon';
+import { PrivacyNotice } from './PrivacyNotice';
+import { findPersonalInfo, removePersonalInfo } from './privacy-detect';
 import { getMessages, type Locale } from '@/lib/i18n';
 
 /** 홈에서 쓴 질문을 질문 페이지로 넘길 때 쓰는 이 탭의 임시 저장소 이름 (AskClient 가 읽고 바로 지웁니다) */
@@ -15,6 +18,15 @@ export function AskBox({ locale, examples }: { locale: Locale; examples: string[
   const t = getMessages(locale);
   const router = useRouter();
   const [value, setValue] = useState('');
+  const [blocked, setBlocked] = useState(false);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const noticeRef = useRef<HTMLDivElement>(null);
+  const matches = useMemo(() => findPersonalInfo(value), [value]);
+
+  // 보내기를 멈췄으면 안내로 초점을 옮겨 무엇을 골라야 하는지 바로 알 수 있게 합니다.
+  useEffect(() => {
+    if (blocked) noticeRef.current?.focus();
+  }, [blocked]);
 
   function go(question: string) {
     const trimmed = question.trim();
@@ -29,12 +41,21 @@ export function AskBox({ locale, examples }: { locale: Locale; examples: string[
     }
   }
 
+  function removeAndSend() {
+    const cleaned = removePersonalInfo(value, matches);
+    setValue(cleaned);
+    setBlocked(false);
+    if (cleaned) go(cleaned);
+    else inputRef.current?.focus();
+  }
+
   return (
     <div>
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          go(value);
+          if (matches.length > 0) setBlocked(true);
+          else go(value);
         }}
       >
         <label htmlFor="hero-question" className="block">
@@ -44,13 +65,32 @@ export function AskBox({ locale, examples }: { locale: Locale; examples: string[
           <span className="mt-1.5 block text-[15px] leading-relaxed text-ink-500">{t.ask.questionHint}</span>
         </label>
         <textarea
+          ref={inputRef}
           id="hero-question"
           value={value}
           rows={3}
           maxLength={500}
-          onChange={(event) => setValue(event.target.value)}
+          onChange={(event) => {
+            setValue(event.target.value);
+            setBlocked(false);
+          }}
           placeholder={t.home.askPlaceholder}
           className="lr-input mt-4 resize-none"
+        />
+        <PrivacyNotice
+          t={t}
+          matches={matches}
+          blocked={blocked}
+          noticeRef={noticeRef}
+          onRemove={() => {
+            setValue(removePersonalInfo(value, matches));
+            inputRef.current?.focus();
+          }}
+          onRemoveAndSend={removeAndSend}
+          onEdit={() => {
+            setBlocked(false);
+            inputRef.current?.focus();
+          }}
         />
         <p className="mt-2.5 flex items-start gap-2 text-sm leading-relaxed text-ink-500">
           <Icon name="shield" size={16} className="mt-0.5 shrink-0 text-brand-600" /> <span>{t.ask.privacyShort}</span>

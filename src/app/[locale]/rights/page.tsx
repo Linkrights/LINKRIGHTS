@@ -6,6 +6,7 @@ import { ArticleCard } from '@/components/ArticleCard';
 import { CategoryCard } from '@/components/CategoryCard';
 import { Icon } from '@/components/Icon';
 import { Reveal } from '@/components/Reveal';
+import { RightsSearchForm } from '@/components/RightsSearchForm';
 import { PageHeader, Section } from '@/components/Section';
 import { getArticlesByCategory, getCategories, getRightsCategories } from '@/lib/content';
 import { getMessages, pick, toLocale } from '@/lib/i18n';
@@ -28,6 +29,10 @@ export default async function RightsIndexPage({ params }: { params: Promise<{ lo
       <PageHeader title={t.rights.title} subtitle={t.rights.subtitle} />
 
       <Section>
+        {/* 권리정보 검색: 등록된 정보를 낱말로 바로 찾기 */}
+        <div className="mb-10 max-w-3xl">
+          <RightsSearchForm locale={locale} />
+        </div>
         <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => (
             <li key={category.id}>

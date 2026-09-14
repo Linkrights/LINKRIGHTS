@@ -1,0 +1,23 @@
+{
+  "_readme": "협력기관 목록입니다. 실제로 협력하고 있는 기관만 적습니다. 공식 이름·주소(url)는 확인한 경우에만 적고, 모르면 한국어 이름을 그대로 두거나 url 을 빈 문자열로 둡니다. logo 는 public 폴더 기준 경로입니다. status 가 published 인 기관만 화면에 보입니다.",
+  "partners": [
+    {
+      "id": "sff",
+      "status": "published",
+      "name": {
+        "ko": "서울미래인재재단",
+        "en": "서울미래인재재단",
+        "zh": "서울미래인재재단",
+        "vi": "서울미래인재재단"
+      },
+      "relation": {
+        "ko": "협력기관",
+        "en": "Partner organisation",
+        "zh": "合作机构",
+        "vi": "Tổ chức hợp tác"
+      },
+      "logo": "/images/partners/sff.webp",
+      "url": ""
+    }
+  ]
+}

@@ -161,6 +161,50 @@ export interface AboutFile {
   i18n: { ko: AboutBody } & Partial<Record<Locale, AboutBody>>;
 }
 
+/**
+ * 상황 사전(content/search-intents.json)의 한 항목.
+ * 짧은 질문·구어체 표현을 이미 등록된 권리정보와 연결할 때만 쓰며, 그 자체로는 근거 자료가 아닙니다.
+ */
+export interface SearchIntent {
+  id: string;
+  /** 사람이 읽는 상황 이름 (AI가 상황을 이해하도록 돕는 힌트) */
+  label: string;
+  /** 연결할 등록 권리정보. direct = 말만으로 상황이 분명함, possible = 확인되지 않은 조건이 맞을 때만 관련 */
+  articles: { id: string; match: EvidenceTier }[];
+  /** 사용자가 쓸 법한 표현 (언어별) */
+  triggers: Partial<Record<Locale, string[]>>;
+  /** 이 상황에서 아직 확인되지 않은 사실 (AI가 조건으로 말할 부분) */
+  unknowns: string[];
+  /** 정말 필요할 때만 쓸, 사용자가 쉽게 답할 수 있는 확인 질문 하나 (없으면 빈 문자열) */
+  clarify: string;
+}
+
+export interface SearchIntentsFile {
+  owner: string;
+  reviewed_at: string;
+  intents: SearchIntent[];
+}
+
+/** 근거 자료의 관련 단계. direct = 사용자의 말과 자료의 상황이 직접 맞음, possible = 확인되지 않은 조건이 맞을 때만 관련 */
+export type EvidenceTier = 'direct' | 'possible';
+
+/** 협력기관 (content/partners.json). 실제로 협력하는 기관만 등록합니다. */
+export interface Partner {
+  id: string;
+  status: 'published' | 'draft';
+  name: LocalizedText;
+  /** 관계 표시 (예: 협력기관) */
+  relation: LocalizedText;
+  /** public 폴더 기준 로고 경로. 없으면 빈 문자열 */
+  logo: string;
+  /** 확인한 공식 주소. 모르면 빈 문자열 */
+  url: string;
+}
+
+export interface PartnersFile {
+  partners: Partner[];
+}
+
 /** AI 답변의 권리 한 항목. source 는 근거가 된 권리정보 id 입니다. (근거가 없으면 서버가 지웁니다) */
 export interface AiRight extends RightsBlock {
   source: string;
@@ -185,9 +229,13 @@ export interface AskApiSuccess {
   answer: AiAnswer | null;
   /**
    * AI 답변(mode: 'ai')의 근거 자료 상태.
-   * found = 등록 권리정보를 근거로 답함, none = 맞는 등록 자료가 없어 권리·기관 없이 답함
+   * found = 사용자의 말과 직접 맞는 등록 권리정보를 근거로 답함
+   * possible = 확인되지 않은 조건이 맞을 때만 관련되는 자료만 근거로 써서, 조건을 붙여 답함
+   * none = 맞는 등록 자료가 없어 권리·기관 없이 답함
    */
-  evidence?: 'found' | 'none';
+  evidence?: 'found' | 'possible' | 'none';
+  /** 답변에 쓰지 않았지만 상황에 따라 함께 볼 수 있는 등록 권리정보 (제목과 링크만) */
+  related?: { id: string; title: string; href: string }[];
   /** 화면에 그대로 그릴 수 있도록 서버가 채워 넣은 기관 정보 */
   organizations: Organization[];
   /** 근거로 사용한 권리정보 (제목, 링크, 검토일) */

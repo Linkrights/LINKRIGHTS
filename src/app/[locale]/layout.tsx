@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 import '../globals.css';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
-import { getSite } from '@/lib/content';
+import { getSite, resolveOrganizations } from '@/lib/content';
 import { LOCALES, getMessages, htmlLang, pick, toLocale } from '@/lib/i18n';
 
 export const dynamicParams = false;
@@ -70,6 +70,12 @@ export default async function LocaleLayout({
   const locale = toLocale(raw);
   const t = getMessages(locale);
   const site = getSite();
+  // 모든 페이지 위쪽의 "긴급 112·119" 버튼에 보여줄 연락처. 등록된 기관 정보(content/organizations.json)에서만 가져옵니다.
+  const emergencyContacts = resolveOrganizations(['police-112', 'fire-119']).map((org) => ({
+    id: org.id,
+    name: pick(org.name, locale),
+    phone: org.phone,
+  }));
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -87,7 +93,7 @@ export default async function LocaleLayout({
         <a href="#main" className="skip-link">
           {t.common.skipToContent}
         </a>
-        <Header locale={locale} />
+        <Header locale={locale} emergencyContacts={emergencyContacts} />
         <main id="main" className="flex-1">
           {children}
         </main>
