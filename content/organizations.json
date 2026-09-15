@@ -398,18 +398,205 @@
       "vi": "Trung tâm Gia đình địa phương (Hỗ trợ gia đình đa văn hóa)"
     },
     "description": {
-      "ko": "한국어 교육, 통·번역, 자녀 학습 지원 등을 제공하는 지역 기관입니다. 우리 지역 센터 위치는 다누리 포털에서 확인하세요.",
-      "en": "Local centres offering Korean lessons, interpretation and study support. Find your nearest one on the Danuri portal.",
-      "zh": "提供韩语教育、口笔译、子女学习支援的地区机构，可在 Danuri 门户查询就近中心。",
-      "vi": "Trung tâm địa phương cung cấp lớp tiếng Hàn, phiên dịch và hỗ trợ học tập. Tìm trung tâm gần bạn trên cổng Danuri."
+      "ko": "한국어 교육, 통·번역, 자녀 학습 지원 등을 제공하는 지역 기관입니다. 가족센터 통합안내(familynet)에서 시·도를 고르면 가까운 센터와 연락처를 볼 수 있어요.",
+      "en": "Local centres offering Korean lessons, interpretation and study support. On the Family Center portal (familynet), choose your city or province to see nearby centres and their contact details.",
+      "zh": "提供韩语教育、口笔译、子女学习支援的地区机构。在家庭中心综合指南（familynet）选择市/道，即可查看附近的中心及联系方式。",
+      "vi": "Trung tâm địa phương cung cấp lớp tiếng Hàn, phiên dịch và hỗ trợ học tập. Trên cổng Trung tâm Gia đình (familynet), chọn tỉnh/thành phố để xem trung tâm gần bạn và số liên hệ."
     },
-    "phone": "1577-1366",
-    "website": "https://www.liveinkorea.kr",
-    "languages": ["ko", "en", "zh", "vi", "other"],
+    "phone": "1577-9337",
+    "website": "https://www.familynet.or.kr",
+    "languages": [],
     "region": "전국",
     "status": "published",
     "owner": "운영팀",
-    "reviewed_at": "2026-09-06",
-    "source_url": "https://www.liveinkorea.kr"
+    "reviewed_at": "2026-09-16",
+    "source_url": "https://www.familynet.or.kr"
+  },
+  {
+    "id": "eps-1577-0071",
+    "category": "migrant",
+    "emergency": false,
+    "name": {
+      "ko": "외국인력상담센터 1577-0071",
+      "en": "Foreign Workforce Counseling Center 1577-0071",
+      "zh": "外国人力咨询中心 1577-0071",
+      "vi": "Trung tâm tư vấn lao động nước ngoài 1577-0071"
+    },
+    "description": {
+      "ko": "외국인 근로자와 고용주가 일하면서 겪는 어려움(고충)을 전화로 상담하는 곳이에요. 18개 언어로 상담할 수 있어요. 고용노동부가 맡기고 한국산업인력공단이 운영해요.",
+      "en": "A phone service where foreign workers and employers can get advice about problems at work, in 18 languages. Run by HRD Korea on behalf of the Ministry of Employment and Labor.",
+      "zh": "外国劳动者和雇主可以通过电话咨询工作中遇到的困难，提供18种语言的咨询。由雇佣劳动部委托、韩国产业人力公团运营。",
+      "vi": "Nơi người lao động nước ngoài và chủ sử dụng lao động được tư vấn qua điện thoại về khó khăn trong công việc, bằng 18 ngôn ngữ. Do HRD Korea vận hành theo ủy thác của Bộ Việc làm và Lao động."
+    },
+    "phone": "1577-0071",
+    "website": "",
+    "languages": ["ko", "other"],
+    "region": "전국",
+    "hours": { "ko": "09:00~18:00", "en": "09:00-18:00", "zh": "09:00~18:00", "vi": "09:00-18:00" },
+    "holidays": { "ko": "연중무휴", "en": "Open every day of the year", "zh": "全年无休", "vi": "Mở cửa quanh năm" },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-16",
+    "source_url": "https://www.gov.kr/portal/foreigner/ko/m020401"
+  },
+  {
+    "id": "migrant-worker-center",
+    "category": "migrant",
+    "emergency": false,
+    "name": {
+      "ko": "외국인노동자지원센터 (한국센터)",
+      "en": "Migrant Workers Support Center (Korea Center)",
+      "zh": "外国劳动者支援中心（韩国中心）",
+      "vi": "Trung tâm hỗ trợ lao động nước ngoài (Trung tâm Hàn Quốc)"
+    },
+    "description": {
+      "ko": "한국어 교육, 생활법률 교육, 일하면서 겪는 어려움(고충) 상담을 받을 수 있는 곳이에요. 전국에 거점센터 9곳과 소지역센터 31곳이 있고, 이 번호는 서울에 있는 한국센터예요.",
+      "en": "Offers Korean classes, everyday legal education and advice on problems at work. There are 9 hub centres and 31 local centres nationwide; this number is for the Korea Center in Seoul.",
+      "zh": "可以接受韩语教育、生活法律教育以及工作困难咨询的地方。全国有9个据点中心和31个小地区中心，这个号码是位于首尔的韩国中心。",
+      "vi": "Nơi học tiếng Hàn, học pháp luật đời sống và được tư vấn khó khăn trong công việc. Cả nước có 9 trung tâm chính và 31 trung tâm khu vực; số này là của Trung tâm Hàn Quốc ở Seoul."
+    },
+    "phone": "02-6900-8000",
+    "website": "",
+    "languages": [],
+    "region": "서울",
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-16",
+    "source_url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000040"
+  },
+  {
+    "id": "wmigrant-counseling",
+    "category": "migrant",
+    "emergency": false,
+    "name": {
+      "ko": "한국이주여성인권센터 (서울이주여성상담센터)",
+      "en": "Korea Migrant Women Human Rights Center (Seoul Migrant Women Counseling Center)",
+      "zh": "韩国移民女性人权中心（首尔移民女性咨询中心）",
+      "vi": "Trung tâm Nhân quyền Phụ nữ Di trú Hàn Quốc (Trung tâm tư vấn phụ nữ di trú Seoul)"
+    },
+    "description": {
+      "ko": "이주여성이 가정폭력, 이혼, 가족 갈등 등을 겪을 때 인권을 중심으로 상담해 주는 전문기관이에요. 베트남어, 중국어, 필리핀어, 몽골어, 영어로 상담할 수 있는 상담원이 있어요.",
+      "en": "A specialist organisation giving rights-based counselling to migrant women facing domestic violence, divorce or family conflict. Counsellors speak Vietnamese, Chinese, Filipino, Mongolian and English.",
+      "zh": "移民女性遭遇家庭暴力、离婚、家庭矛盾等问题时，以人权为中心提供咨询的专业机构。有可以用越南语、中文、菲律宾语、蒙古语、英语咨询的咨询员。",
+      "vi": "Tổ chức chuyên tư vấn dựa trên quyền con người cho phụ nữ di trú gặp bạo lực gia đình, ly hôn hay mâu thuẫn gia đình. Có tư vấn viên nói tiếng Việt, tiếng Trung, tiếng Philippines, tiếng Mông Cổ và tiếng Anh."
+    },
+    "phone": "02-3672-7559",
+    "website": "http://www.wmigrant.org",
+    "languages": ["en", "zh", "vi", "other"],
+    "region": "서울",
+    "hours": { "ko": "평일 09:00~18:00", "en": "Weekdays 09:00-18:00", "zh": "工作日 09:00~18:00", "vi": "Ngày thường 09:00-18:00" },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-16",
+    "source_url": "http://www.wmigrant.org"
+  },
+  {
+    "id": "lawhomedoctor",
+    "category": "legal",
+    "emergency": false,
+    "name": {
+      "ko": "법률홈닥터 (법무부)",
+      "en": "Legal Home Doctor (Ministry of Justice)",
+      "zh": "法律家庭医生（法务部）",
+      "vi": "Bác sĩ pháp luật tại nhà (Bộ Tư pháp)"
+    },
+    "description": {
+      "ko": "법무부 소속 변호사가 전국 시·군·구에서 결혼이주여성 등 취약계층에게 채권·채무, 임대차(집 계약), 이혼, 근로 문제를 무료로 상담해 줘요. 가까운 지역 기관에 전화로 예약한 뒤 방문하거나 전화로 상담하고, 누리집에서 온라인 상담도 신청할 수 있어요.",
+      "en": "Ministry of Justice lawyers based in cities and districts nationwide give free legal advice to vulnerable groups, such as marriage migrant women, on debts, leases, divorce and work problems. Book by phone with your nearest local office to visit or talk by phone, or apply for online advice on the website.",
+      "zh": "法务部所属律师在全国各市、郡、区为婚姻移民女性等弱势群体免费提供债权债务、租赁（房屋合同）、离婚、劳动问题的咨询。可电话预约附近的地区机构后到访或电话咨询，也可在网站申请在线咨询。",
+      "vi": "Luật sư thuộc Bộ Tư pháp có mặt tại các thành phố, quận, huyện trên cả nước, tư vấn miễn phí cho nhóm yếu thế như phụ nữ kết hôn di trú về nợ, thuê nhà, ly hôn và vấn đề lao động. Gọi điện đặt lịch với cơ quan gần bạn để đến gặp hoặc tư vấn qua điện thoại, hoặc đăng ký tư vấn trực tuyến trên trang web."
+    },
+    "phone": "",
+    "website": "https://lawhomedoctor.moj.go.kr",
+    "languages": [],
+    "region": "전국",
+    "hours": { "ko": "평일 10:00~17:00", "en": "Weekdays 10:00-17:00", "zh": "工作日 10:00~17:00", "vi": "Ngày thường 10:00-17:00" },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-16",
+    "source_url": "https://lawhomedoctor.moj.go.kr"
+  },
+  {
+    "id": "suicide-109",
+    "category": "emergency",
+    "emergency": true,
+    "name": {
+      "ko": "자살예방상담전화 109",
+      "en": "Suicide Prevention Hotline 109",
+      "zh": "自杀预防咨询电话 109",
+      "vi": "Đường dây phòng chống tự tử 109"
+    },
+    "description": {
+      "ko": "마음이 너무 힘들 때 24시간 언제든 전화할 수 있어요. 통화료는 무료이고, SNS 상담(마들랜)도 할 수 있어요. 2024년 1월부터 기존 1393이 109로 통합됐어요. (보건복지부·한국생명존중희망재단)",
+      "en": "Call any time, 24 hours a day, when things feel too hard. Calls are free, and counselling through social media (Madeullaen) is also available. Since January 2024 the former 1393 line has been merged into 109. (Ministry of Health and Welfare, Korea Foundation for Suicide Prevention)",
+      "zh": "心里非常难受时，可以24小时随时拨打。通话免费，也可以通过社交媒体咨询（Madeullaen）。自2024年1月起，原来的1393已并入109。（保健福祉部·韩国生命尊重希望财团）",
+      "vi": "Bạn có thể gọi bất cứ lúc nào, 24 giờ, khi thấy quá khó khăn. Cuộc gọi miễn phí, và cũng có tư vấn qua mạng xã hội (Madeullaen). Từ tháng 1/2024, đường dây 1393 cũ đã được gộp vào 109. (Bộ Y tế và Phúc lợi, Quỹ Tôn trọng Sự sống Hàn Quốc)"
+    },
+    "phone": "109",
+    "website": "",
+    "languages": [],
+    "region": "전국",
+    "hours": { "ko": "24시간", "en": "24 hours", "zh": "24小时", "vi": "24 giờ" },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-16",
+    "source_url": "https://www.mohw.go.kr/board.es?mid=a10503010100&bid=0027&act=view&list_no=1479607"
+  },
+  {
+    "id": "mental-health-1577-0199",
+    "category": "emergency",
+    "emergency": true,
+    "name": {
+      "ko": "정신건강위기상담전화 1577-0199",
+      "en": "Mental Health Crisis Line 1577-0199",
+      "zh": "精神健康危机咨询电话 1577-0199",
+      "vi": "Đường dây tư vấn khủng hoảng sức khỏe tâm thần 1577-0199"
+    },
+    "description": {
+      "ko": "109와 별도로 운영되는 정신건강 전문 상담 전화예요. 우울, 불안 등 정신건강 문제를 상담할 수 있어요.",
+      "en": "A specialist mental health phone line that runs separately from 109. You can talk about mental health problems such as depression or anxiety.",
+      "zh": "与109分开运营的精神健康专业咨询电话，可以咨询抑郁、焦虑等精神健康问题。",
+      "vi": "Đường dây tư vấn chuyên về sức khỏe tâm thần, hoạt động riêng với 109. Bạn có thể trao đổi về các vấn đề như trầm cảm, lo âu."
+    },
+    "phone": "1577-0199",
+    "website": "",
+    "languages": [],
+    "region": "전국",
+    "hours": { "ko": "24시간", "en": "24 hours", "zh": "24小时", "vi": "24 giờ" },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-16",
+    "source_url": ""
+  },
+  {
+    "id": "seoul-foreigner-counseling",
+    "category": "migrant",
+    "emergency": false,
+    "name": {
+      "ko": "서울외국인주민센터 무료 심리상담",
+      "en": "Seoul Foreign Residents Center: free counselling",
+      "zh": "首尔外国居民中心 免费心理咨询",
+      "vi": "Trung tâm cư dân nước ngoài Seoul: tư vấn tâm lý miễn phí"
+    },
+    "description": {
+      "ko": "서울에 살거나 서울에서 일하거나 학교에 다니는 성인 외국인 주민에게 1:1 심리상담 5회를 무료로 지원해요. 한국어, 영어, 중국어로 상담할 수 있어요. 2026년 신청 기간은 2월~10월이고, 예산이 모두 쓰이면 일찍 마감될 수 있어요.",
+      "en": "Five free one-to-one counselling sessions for adult foreign residents who live, work or study in Seoul, in Korean, English or Chinese. Applications for 2026 run from February to October and may close early if the budget runs out.",
+      "zh": "为居住在首尔或在首尔工作、上学的成年外国居民免费提供5次一对一心理咨询，可用韩语、英语、中文咨询。2026年申请期为2月至10月，预算用完可能提前截止。",
+      "vi": "Hỗ trợ miễn phí 5 buổi tư vấn tâm lý 1:1 cho cư dân nước ngoài đã trưởng thành đang sống, làm việc hoặc đi học ở Seoul, bằng tiếng Hàn, tiếng Anh hoặc tiếng Trung. Thời gian đăng ký năm 2026 là tháng 2 đến tháng 10 và có thể kết thúc sớm nếu hết ngân sách."
+    },
+    "phone": "02-2229-4900",
+    "website": "https://global.seoul.go.kr",
+    "languages": ["ko", "en", "zh"],
+    "region": "서울",
+    "address": {
+      "ko": "서울 영등포구 대림동",
+      "en": "Daerim-dong, Yeongdeungpo-gu, Seoul",
+      "zh": "首尔 永登浦区 大林洞",
+      "vi": "Daerim-dong, Yeongdeungpo-gu, Seoul"
+    },
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-16",
+    "source_url": "https://global.seoul.go.kr"
   }
 ]

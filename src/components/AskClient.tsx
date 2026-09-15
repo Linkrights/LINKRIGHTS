@@ -15,10 +15,12 @@ import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { PENDING_QUESTION_KEY } from './AskBox';
 import { EmergencyCard } from './EmergencyCard';
+import { Glossary } from './Glossary';
 import { Icon } from './Icon';
 import { OrgCard } from './OrgCard';
 import { PrivacyNotice } from './PrivacyNotice';
 import { findPersonalInfo, removePersonalInfo } from './privacy-detect';
+import { matchGlossary, type GlossaryTerm } from '@/lib/glossary';
 import { formatDate, getMessages, type Locale, type Messages } from '@/lib/i18n';
 import type { AskApiRequest, AskApiResponse, AskHistoryTurn } from '@/lib/types';
 
@@ -103,6 +105,7 @@ function ResultView({
   t,
   onNewQuestion,
   onAnswerFollowUp,
+  glossaryTerms = [],
 }: {
   result: AskApiResponse;
   locale: Locale;
@@ -110,8 +113,24 @@ function ResultView({
   onNewQuestion: () => void;
   /** 가장 최근 답변에만 넘깁니다. AI의 확인 질문에 바로 답할 수 있게 추가 질문 입력창으로 이동합니다. */
   onAnswerFollowUp?: () => void;
+  /** 쉬운 말 풀이 용어 (content/glossary.json). 답변에 나온 용어만 골라 옆에 보여주며, 답변 내용은 바꾸지 않습니다. */
+  glossaryTerms?: GlossaryTerm[];
 }) {
   const errorMessage = errorMessageOf(result, t);
+  const glossary =
+    result.ok && result.mode === 'ai' && result.answer
+      ? matchGlossary(
+          glossaryTerms,
+          [
+            result.answer.summary,
+            ...result.answer.rights.flatMap((item) => [item.title, item.body]),
+            ...result.answer.actions.flatMap((item) => [item.title, item.body]),
+            result.answer.limitations,
+          ],
+          locale,
+          locale,
+        )
+      : [];
 
   return (
     <>
@@ -193,6 +212,9 @@ function ResultView({
                 </ol>
               </section>
             )}
+
+            {/* 어려운 말 풀이: 답변에 나온 전문 용어 옆에 쉬운 설명 (등록 용어만, 새로운 근거나 내용은 더하지 않습니다) */}
+            <Glossary items={glossary} title={t.glossary.title} />
 
             {/* 도움받을 곳 (근거 자료와 연결된 기관이 있을 때만) */}
             {result.organizations.length > 0 && (
@@ -323,11 +345,14 @@ export function AskClient({
   examples,
   initialQuestion,
   fallbackLinks,
+  glossaryTerms = [],
 }: {
   locale: Locale;
   examples: string[];
   initialQuestion: string;
   fallbackLinks: FallbackLink[];
+  /** 쉬운 말 풀이 용어 (content/glossary.json) */
+  glossaryTerms?: GlossaryTerm[];
 }) {
   const t = getMessages(locale);
   const [question, setQuestion] = useState(initialQuestion);
@@ -475,6 +500,10 @@ export function AskClient({
           </span>{' '}
           <span className="mt-1.5 block text-[15px] leading-relaxed text-ink-500">{t.ask.questionHint}</span>
         </label>
+        {/* 개인정보 입력 금지 안내: 쓰기 전에 먼저 보이도록 입력창 위에 둡니다 (탐지 로직은 privacy-detect.ts 그대로) */}
+        <p className="mt-3 flex items-start gap-2 rounded-[var(--radius-control)] bg-brand-50 px-3 py-2 text-sm font-medium leading-relaxed text-brand-800">
+          <Icon name="shield" size={16} className="mt-0.5 shrink-0" /> <span>{t.ask.privacyShort}</span>
+        </p>
         <textarea
           ref={questionRef}
           id="question"
@@ -486,7 +515,7 @@ export function AskClient({
             if (blockedField === 'question') setBlockedField(null);
           }}
           placeholder={t.ask.placeholder}
-          className="lr-input mt-4 resize-y"
+          className="lr-input mt-3 resize-y"
         />
         <PrivacyNotice
           t={t}
@@ -500,10 +529,6 @@ export function AskClient({
             questionRef.current?.focus();
           }}
         />
-        {/* 개인정보 입력 금지 안내 */}
-        <p className="mt-2.5 flex items-start gap-2 text-sm leading-relaxed text-ink-500">
-          <Icon name="shield" size={16} className="mt-0.5 shrink-0 text-brand-600" /> <span>{t.ask.privacyShort}</span>
-        </p>
         <div className="mt-5 flex flex-col-reverse items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
           <span className="text-center text-sm text-ink-500 sm:text-left">
             {MAX_LENGTH - question.length} {t.ask.charsLeft}
@@ -561,6 +586,7 @@ export function AskClient({
               </div>
             )}
             <ResultView
+              glossaryTerms={glossaryTerms}
               result={turn.result}
               locale={locale}
               t={t}

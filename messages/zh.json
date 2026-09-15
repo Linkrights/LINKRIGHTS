@@ -145,6 +145,69 @@
     "askTitle": "说说你的情况",
     "scrollDown": "查看下方内容"
   },
+  "homeIntro": {
+    "whoLabel": "这是为谁准备的？",
+    "whoBody": "为在学校、打工、健康、居留方面有疑问的移民背景青少年准备。无需登录，可以直接使用。",
+    "helpLabel": "能提供什么帮助？",
+    "howLabel": "怎么使用？",
+    "how1": "在权利信息中选择想了解的领域来阅读。",
+    "how2": "说说你的情况，就能找到相关的权利信息和机构。",
+    "how3": "拨打机构电话或访问网站，获得帮助。",
+    "emailNote": "将通过电子邮件发送咨询"
+  },
+  "readAloud": {
+    "listen": "朗读",
+    "pause": "暂停",
+    "resume": "继续听",
+    "stop": "停止朗读",
+    "reading": "正在朗读",
+    "paused": "已暂停",
+    "unsupported": "此浏览器不支持朗读功能。可以在 Chrome、Edge、Safari 中使用。",
+    "noVoice": "此设备没有该语言的语音，可能会用其他声音朗读或无法朗读。"
+  },
+  "saved": {
+    "save": "收藏",
+    "savedText": "已收藏",
+    "saveLabel": "收藏 {title}",
+    "title": "收藏的权利信息",
+    "subtitle": "点击星号（☆）收藏的权利信息可以在这里再次查看。",
+    "noticeTitle": "只保存在此浏览器中",
+    "notice": "无需登录，只保存在你现在使用的浏览器中，不会发送到服务器。在其他设备上看不到，清除浏览器记录（网站数据）后会消失。不会保存姓名、联系方式等个人信息。",
+    "empty": "还没有收藏的权利信息。点击权利信息卡片上的星号（☆）试试收藏吧。",
+    "emptyCta": "查找权利信息",
+    "remove": "删除",
+    "clearAll": "全部删除",
+    "count": "已收藏 {count} 条",
+    "navLabel": "收藏的权利信息"
+  },
+  "callScript": {
+    "title": "打电话前，可以这样说",
+    "intro": "第一次打电话不知道从哪里说起时，可以参考下面的句子。这只是参考示例，不能代替机构的咨询。",
+    "line1": "您好，我有事情想咨询，所以打了电话。",
+    "line1Topic": "您好，我想咨询有关{topic}的问题。",
+    "line2": "现在发生了这样的事。（简单说明时间、地点、发生了什么）",
+    "line3": "我有什么办法吗？需要准备什么？",
+    "tipsTitle": "打电话时的小贴士",
+    "tip1": "韩语有困难时，可以问：“可以用其他语言咨询吗？”",
+    "tip2": "把日期、地点、收到的短信或合同等资料放在身边，更容易说明。",
+    "tip3": "咨询员说需要时，再告诉对方姓名或联系方式即可。",
+    "note": "实际咨询方式和程序请按照机构的说明。如果现在有危险，请直接拨打 112（警察）或 119（急救）。"
+  },
+  "testimonials": {
+    "title": "参与者的声音",
+    "subtitle": "参加 LINKRIGHTS 项目的青少年和大学生导师在采访中亲口说的话。"
+  },
+  "glossary": {
+    "title": "难懂词语解释"
+  },
+  "orgInfo": {
+    "holidays": "休息日",
+    "breakTime": "休息时间",
+    "region": "地区",
+    "address": "地址",
+    "nationwide": "全国",
+    "map": "查看地图"
+  },
   "heroVideo": {
     "label": "LINKRIGHTS 介绍视频",
     "caption": "我们正在打造一个平台：写下自己的情况，就能一起看到相关权利和可以求助的地方。",
@@ -174,16 +237,16 @@
     "whoSubtitle": "从适合自己的地方开始吧。",
     "youthTitle": "移民背景青少年",
     "youthBody": "查找学校、打工、健康、签证等方面的权利信息，也可以向 AI 询问自己的情况。",
-    "youthCta": "询问我的情况",
-    "youthSecondary": "查找权利信息",
+    "youthCta": "了解我的权利",
+    "youthSecondary": "询问我的情况",
     "mentorTitle": "大学生导师",
     "mentorBody": "可以参加大学生导师活动，与移民背景青少年交流，用简单的话传达权利信息。",
-    "mentorCta": "咨询导师参与",
+    "mentorCta": "作为大学生导师参与",
     "mentorSecondary": "了解导师活动",
     "mentorSubject": "[LINKRIGHTS] 大学生导师参与咨询",
     "partnerTitle": "学校·机构",
     "partnerBody": "学校或机构可以与 LINKRIGHTS 一起商讨权利教育和项目合作。",
-    "partnerCta": "咨询合作",
+    "partnerCta": "学校·机构合作咨询",
     "partnerSecondary": "了解更多参与方式",
     "partnerSubject": "[LINKRIGHTS] 学校·机构合作咨询",
     "howToTitle": "参与方式",
@@ -226,7 +289,7 @@
     "rightsHeading": "应该知道的权利",
     "actionsHeading": "可以这样做",
     "orgsHeading": "可以求助的地方",
-    "relatedHeading": "相关信息",
+    "relatedHeading": "你可能还想了解",
     "noteHeading": "请注意",
     "sourcesHeading": "本页出处",
     "step": "步骤"

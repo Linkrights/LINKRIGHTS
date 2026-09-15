@@ -3,7 +3,7 @@
 import type { Metadata } from 'next';
 import { AskClient } from '@/components/AskClient';
 import { PageHeader } from '@/components/Section';
-import { getSite } from '@/lib/content';
+import { getGlossary, getSite } from '@/lib/content';
 import { getMessages, toLocale } from '@/lib/i18n';
 import { fallbackArticles } from '@/lib/search';
 
@@ -43,6 +43,7 @@ export default async function AskPage({
         examples={examples}
         initialQuestion={q.slice(0, 500)}
         fallbackLinks={fallbackArticles(locale)}
+        glossaryTerms={getGlossary()}
       />
     </>
   );

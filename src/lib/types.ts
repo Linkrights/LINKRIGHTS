@@ -30,6 +30,10 @@ export interface Organization {
   website: string;
   address?: OptionalLocalizedText;
   hours?: OptionalLocalizedText;
+  /** 쉬는 날 (예: 주말·공휴일, 연중무휴). 확인되지 않았으면 넣지 않습니다. */
+  holidays?: OptionalLocalizedText;
+  /** 점심시간 등 상담하지 않는 시간. 확인되지 않았으면 넣지 않습니다. */
+  break_time?: OptionalLocalizedText;
   languages: string[];
   region: string;
   status: ContentStatus;
@@ -162,12 +166,33 @@ export interface AboutBody {
   team_body: string;
   future_title: string;
   future_body: string;
+  /** SDG 10(불평등 감소)과 LINKRIGHTS의 목적이 어떻게 이어지는지 (없으면 표시하지 않습니다) */
+  sdg10_title?: string;
+  sdg10_body?: string;
+  sdg10_points?: RightsBlock[];
 }
 
 export interface AboutFile {
   owner: string;
   reviewed_at: string;
   i18n: { ko: AboutBody } & Partial<Record<Locale, AboutBody>>;
+}
+
+/** 실제 참여자 후기 (content/testimonials.json). 인터뷰에서 실제로 한 말만, 공개 동의를 받은 경우에만 공개합니다. */
+export interface Testimonial {
+  id: string;
+  status: ContentStatus;
+  /** 공개 동의를 받았으면 true */
+  consent: boolean;
+  quote: LocalizedText;
+  /** 예: 대학생 멘토, 참여 청소년 (이름·학교 등 개인을 알아볼 수 있는 정보는 넣지 않습니다) */
+  role: LocalizedText;
+}
+
+export interface TestimonialsFile {
+  owner: string;
+  reviewed_at: string;
+  items: Testimonial[];
 }
 
 /**

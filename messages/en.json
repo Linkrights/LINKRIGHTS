@@ -145,6 +145,69 @@
     "askTitle": "Tell us about your situation",
     "scrollDown": "See more below"
   },
+  "homeIntro": {
+    "whoLabel": "Who is it for?",
+    "whoBody": "Young people with a migrant background who have questions about school, work, health or their stay in Korea. You can use it straight away, without logging in.",
+    "helpLabel": "How does it help?",
+    "howLabel": "How do I use it?",
+    "how1": "Pick a topic in Rights information and read.",
+    "how2": "Ask about your situation to find related rights information and organisations.",
+    "how3": "Call an organisation or visit its website to get help.",
+    "emailNote": "Your enquiry is sent by email"
+  },
+  "readAloud": {
+    "listen": "Read aloud",
+    "pause": "Pause",
+    "resume": "Continue",
+    "stop": "Stop reading",
+    "reading": "Reading",
+    "paused": "Paused",
+    "unsupported": "This browser does not support reading aloud. Try Chrome, Edge or Safari.",
+    "noVoice": "This device has no voice for this language, so it may read in another voice or not at all."
+  },
+  "saved": {
+    "save": "Save",
+    "savedText": "Saved",
+    "saveLabel": "Save {title}",
+    "title": "Saved rights information",
+    "subtitle": "See the rights information you saved with the star (☆).",
+    "noticeTitle": "Saved only in this browser",
+    "notice": "Saved without logging in, only in the browser you are using now, and never sent to our server. It will not appear on other devices and disappears if you clear your browsing data. No personal details such as names or contacts are saved.",
+    "empty": "You have not saved anything yet. Tap the star (☆) on a rights information card to save it.",
+    "emptyCta": "Find rights information",
+    "remove": "Remove",
+    "clearAll": "Clear all",
+    "count": "{count} saved",
+    "navLabel": "Saved rights information"
+  },
+  "callScript": {
+    "title": "Before you call, try saying this",
+    "intro": "If you are not sure how to start the call, use these sentences as a guide. They are only examples and do not replace advice from the organisation.",
+    "line1": "Hello. I'm calling because I'd like some advice.",
+    "line1Topic": "Hello. I'm calling because I'd like some advice about {topic}.",
+    "line2": "This is what happened. (Briefly say when, where and what happened.)",
+    "line3": "Is there anything I can do? What should I prepare?",
+    "tipsTitle": "Tips for the call",
+    "tip1": "If Korean is hard for you, ask: \"Can I get advice in another language?\"",
+    "tip2": "Keep dates, places and things like text messages or contracts next to you so it is easier to explain.",
+    "tip3": "You only need to give your name or contact details if the counsellor asks for them.",
+    "note": "Follow the organisation's own guidance on how advice works. If you are in danger now, call 112 (police) or 119 (ambulance) straight away."
+  },
+  "testimonials": {
+    "title": "Voices of people who took part",
+    "subtitle": "Words spoken in interviews by young people and university mentors who took part in LINKRIGHTS programmes."
+  },
+  "glossary": {
+    "title": "Difficult words explained"
+  },
+  "orgInfo": {
+    "holidays": "Closed",
+    "breakTime": "Break time",
+    "region": "Area",
+    "address": "Address",
+    "nationwide": "Nationwide",
+    "map": "View map"
+  },
   "heroVideo": {
     "label": "LINKRIGHTS introduction video",
     "caption": "We're building a platform that shows related rights and where to get help when you describe your situation.",
@@ -174,16 +237,16 @@
     "whoSubtitle": "Start from the place that fits you.",
     "youthTitle": "Migrant-background youth",
     "youthBody": "Look up rights information about school, work, health, visas and more, and ask the AI about your situation.",
-    "youthCta": "Ask about my situation",
-    "youthSecondary": "Browse rights information",
+    "youthCta": "Find out my rights",
+    "youthSecondary": "Ask about my situation",
     "mentorTitle": "University student mentor",
     "mentorBody": "Join our university student mentoring to talk with migrant-background youth and share rights information in easy words.",
-    "mentorCta": "Ask about mentoring",
+    "mentorCta": "Join as a university mentor",
     "mentorSecondary": "Learn about mentoring",
     "mentorSubject": "[LINKRIGHTS] University student mentor inquiry",
     "partnerTitle": "School or organisation",
     "partnerBody": "Schools and organisations can discuss rights education and programme cooperation with LINKRIGHTS.",
-    "partnerCta": "Contact us about partnering",
+    "partnerCta": "School & organisation partnerships",
     "partnerSecondary": "More about getting involved",
     "partnerSubject": "[LINKRIGHTS] School/organisation partnership inquiry",
     "howToTitle": "How to take part",
@@ -226,7 +289,7 @@
     "rightsHeading": "Rights you should know",
     "actionsHeading": "Try this",
     "orgsHeading": "Where to get help",
-    "relatedHeading": "Related information",
+    "relatedHeading": "You might also want to know",
     "noteHeading": "Please note",
     "sourcesHeading": "Sources for this page",
     "step": "Step"

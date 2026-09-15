@@ -1,25 +1,36 @@
 // 권리정보 상세 페이지입니다. (예: /ko/rights/labor/labor-unpaid-wages)
-// 화면 구성: 이동 경로·제목·핵심 요약 → ① 이런 상황인가요 ② 알아두어야 할 권리 ③ 이렇게 해보세요
-//           → 확인해 주세요 → ④ 도움받을 곳 → 출처 → ⑤ 함께 보면 좋은 정보
+// 화면 구성: 이동 경로·제목·핵심 요약·[읽어주기][저장] → 어려운 말 풀이
+//           → ① 이런 상황인가요 ② 알아두어야 할 권리 ③ 이렇게 해보세요 → 확인해 주세요
+//           → ④ 이것도 궁금하실 수 있어요(등록된 관련 권리정보) → ⑤ 도움받을 곳(+ 전화하기 전 도움말) → 출처 → 내 상황 물어보기
 
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArticleCard } from '@/components/ArticleCard';
+import { CallScript } from '@/components/CallScript';
+import { Glossary } from '@/components/Glossary';
 import { Icon } from '@/components/Icon';
+import { ReadAloud } from '@/components/ReadAloud';
+import { SaveButton } from '@/components/SaveButton';
 import { Notice } from '@/components/Section';
 import { OrgCard } from '@/components/OrgCard';
 import {
   getArticle,
   getArticles,
+  getArticlesByCategory,
   getCategory,
+  getGlossary,
   isStale,
   resolveArticle,
   resolveOrganizations,
 } from '@/lib/content';
+import { matchGlossary } from '@/lib/glossary';
 import { LOCALES, formatDate, getMessages, pick, toLocale } from '@/lib/i18n';
+import type { RightsArticle } from '@/lib/types';
 
 export const dynamicParams = false;
+
+const MAX_RELATED = 3;
 
 export function generateStaticParams() {
   const articles = getArticles();
@@ -45,6 +56,23 @@ export async function generateMetadata({
   };
 }
 
+/**
+ * 함께 볼 권리정보: 글에 직접 지정한 관련글(related)을 먼저 쓰고, 모자라면 같은 분야의 등록된 글로 채웁니다.
+ * 등록·공개된 글만 쓰며, 새로 만들어내지 않습니다.
+ */
+function relatedArticles(article: RightsArticle): RightsArticle[] {
+  const seen = new Set([article.id]);
+  const result: RightsArticle[] = [];
+  const add = (item: RightsArticle | undefined) => {
+    if (!item || seen.has(item.id) || result.length >= MAX_RELATED) return;
+    seen.add(item.id);
+    result.push(item);
+  };
+  article.related.forEach((id) => add(getArticle(id)));
+  getArticlesByCategory(article.category).forEach(add);
+  return result;
+}
+
 export default async function ArticlePage({
   params,
 }: {
@@ -59,8 +87,32 @@ export default async function ArticlePage({
   const { body, fallback } = resolveArticle(article, locale);
   const category = getCategory(article.category);
   const orgs = resolveOrganizations(article.organizations);
-  const related = article.related.map((id) => getArticle(id)).filter((a): a is NonNullable<typeof a> => Boolean(a));
+  const related = relatedArticles(article);
   const stale = isStale(article.reviewed_at);
+
+  // 본문이 실제로 쓰인 언어 (번역이 없어 한국어를 보여줄 때는 한국어로 읽고 찾습니다)
+  const textLocale = fallback ? 'ko' : locale;
+  const bodyTexts = [
+    body.summary,
+    ...body.situations,
+    ...body.rights.flatMap((item) => [item.title, item.body]),
+    ...body.actions.flatMap((item) => [item.title, item.body]),
+    body.note ?? '',
+  ];
+  const glossary = matchGlossary(getGlossary(), bodyTexts, textLocale, locale);
+  // 읽어주기: 화면 순서대로. 한국어 본문을 대신 보여줄 때는 다른 언어 소제목을 섞지 않습니다.
+  const heading = (text: string) => (fallback ? [] : [text]);
+  const readBlocks = [
+    body.title,
+    body.summary,
+    ...heading(t.rights.situationHeading),
+    ...body.situations,
+    ...heading(t.rights.rightsHeading),
+    ...body.rights.map((item) => `${item.title}. ${item.body}`),
+    ...heading(t.rights.actionsHeading),
+    ...body.actions.map((item, index) => `${index + 1}. ${item.title}. ${item.body}`),
+    body.note ?? '',
+  ];
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -102,6 +154,17 @@ export default async function ArticlePage({
             {t.common.reviewedAt} {formatDate(article.reviewed_at, locale)}
           </p>
 
+          {/* 읽어주기 · 저장 */}
+          <div className="mt-5 flex flex-wrap items-start gap-2">
+            <ReadAloud blocks={readBlocks} locale={textLocale} labels={t.readAloud} />
+            <SaveButton
+              id={article.id}
+              label={t.saved.saveLabel.replace('{title}', body.title)}
+              saveText={t.saved.save}
+              savedText={t.saved.savedText}
+            />
+          </div>
+
           {(fallback || stale) && (
             <div className="mt-5 space-y-3">
               {fallback && <Notice title={t.common.notTranslatedTitle} body={t.common.notTranslatedBody} />}
@@ -112,6 +175,9 @@ export default async function ArticlePage({
       </header>
 
       <article className="lr-container-narrow space-y-12 py-10 sm:space-y-14 sm:py-14">
+        {/* 어려운 말 풀이: 본문에 나온 전문 용어만 (content/glossary.json) */}
+        <Glossary items={glossary} title={t.glossary.title} />
+
         {/* ① 이런 상황인가요? */}
         <section>
           <h2 className={sectionTitle}>{t.rights.situationHeading}</h2>
@@ -161,7 +227,21 @@ export default async function ArticlePage({
 
         {body.note && <Notice tone="warn" title={t.rights.noteHeading} body={body.note} />}
 
-        {/* ④ 도움받을 수 있는 곳 */}
+        {/* ④ 이것도 궁금하실 수 있어요: 등록된 관련 권리정보만 */}
+        {related.length > 0 && (
+          <section>
+            <h2 className={sectionTitle}>{t.rights.relatedHeading}</h2>
+            <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+              {related.map((item) => (
+                <li key={item.id}>
+                  <ArticleCard article={item} locale={locale} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* ⑤ 도움받을 수 있는 곳 + 전화하기 전 도움말 */}
         {orgs.length > 0 && (
           <section>
             <h2 className={sectionTitle}>{t.rights.orgsHeading}</h2>
@@ -172,6 +252,12 @@ export default async function ArticlePage({
                 </li>
               ))}
             </ul>
+            {/* 말하기 쉬운 분야 이름만 씁니다 (예: "일·알바 / 근로권" → "일·알바") */}
+            <CallScript
+              t={t}
+              topic={category ? pick(category.name, locale).split(' / ')[0] : undefined}
+              className="mt-4"
+            />
           </section>
         )}
 
@@ -198,21 +284,7 @@ export default async function ArticlePage({
           </section>
         )}
 
-        {/* ⑤ 함께 보면 좋은 정보 */}
-        {related.length > 0 && (
-          <section>
-            <h2 className={sectionTitle}>{t.rights.relatedHeading}</h2>
-            <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-              {related.map((item) => (
-                <li key={item.id}>
-                  <ArticleCard article={item} locale={locale} />
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {/* 내 상황 질문하기 */}
+        {/* 내 상황 물어보기 */}
         <div className="lr-panel border-brand-100 bg-brand-50 p-6 sm:p-8">
           <p className="text-base font-semibold leading-relaxed text-brand-900">{t.ask.subtitle}</p>
           <Link href={`/${locale}/ask`} className="lr-btn lr-btn-primary lr-press mt-4">

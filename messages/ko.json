@@ -2,7 +2,7 @@
   "nav": {
     "home": "홈",
     "ask": "AI에게 질문하기",
-    "askShort": "질문하기",
+    "askShort": "내 상황 물어보기",
     "rights": "권리정보",
     "organizations": "도움받을 곳",
     "about": "소개",
@@ -145,6 +145,69 @@
     "askTitle": "내 상황을 말해 보세요",
     "scrollDown": "아래 내용 보기"
   },
+  "homeIntro": {
+    "whoLabel": "누구를 위한 곳인가요?",
+    "whoBody": "학교, 일, 건강, 체류 문제로 궁금한 점이 있는 이주배경청소년을 위한 곳이에요. 로그인 없이 바로 쓸 수 있어요.",
+    "helpLabel": "어떤 도움을 주나요?",
+    "howLabel": "어떻게 쓰나요?",
+    "how1": "권리정보에서 궁금한 분야를 골라 읽어보세요.",
+    "how2": "내 상황을 물어보면 관련 권리정보와 기관을 찾아 안내해요.",
+    "how3": "도움받을 곳에 전화하거나 홈페이지를 방문해 도움을 받으세요.",
+    "emailNote": "이메일로 문의가 전달돼요"
+  },
+  "readAloud": {
+    "listen": "읽어주기",
+    "pause": "잠시 멈추기",
+    "resume": "이어서 듣기",
+    "stop": "그만 읽기",
+    "reading": "읽는 중이에요",
+    "paused": "멈췄어요",
+    "unsupported": "이 브라우저는 읽어주기 기능을 지원하지 않아요. 크롬, 엣지, 사파리에서 사용할 수 있어요.",
+    "noVoice": "이 기기에는 이 언어 음성이 없어서 다른 목소리로 읽거나 읽지 못할 수 있어요."
+  },
+  "saved": {
+    "save": "저장",
+    "savedText": "저장됨",
+    "saveLabel": "{title} 저장하기",
+    "title": "저장한 권리정보",
+    "subtitle": "별(☆)을 눌러 저장한 권리정보를 다시 볼 수 있어요.",
+    "noticeTitle": "이 브라우저에만 저장돼요",
+    "notice": "로그인 없이 지금 쓰는 브라우저에만 저장되고, 서버로 보내지 않아요. 다른 기기에서는 보이지 않고, 브라우저 기록(사이트 데이터)을 지우면 사라져요. 이름이나 연락처 같은 개인정보는 저장하지 않아요.",
+    "empty": "아직 저장한 권리정보가 없어요. 권리정보 카드의 별(☆)을 눌러 저장해 보세요.",
+    "emptyCta": "권리정보 찾아보기",
+    "remove": "삭제",
+    "clearAll": "모두 지우기",
+    "count": "저장한 권리정보 {count}개",
+    "navLabel": "저장한 권리정보"
+  },
+  "callScript": {
+    "title": "전화하기 전에 이렇게 말해보세요",
+    "intro": "처음 전화할 때 무슨 말부터 해야 할지 막막하다면 아래 문장을 참고해 보세요. 참고용 예시이며, 기관 상담을 대신하지 않아요.",
+    "line1": "안녕하세요. 상담받고 싶은 일이 있어서 전화드렸어요.",
+    "line1Topic": "안녕하세요. {topic} 관련해서 상담받고 싶어서 전화드렸어요.",
+    "line2": "지금 이런 일이 있었어요. (언제, 어디서, 무슨 일이 있었는지 짧게 말해요)",
+    "line3": "제가 할 수 있는 방법이 있을까요? 무엇을 준비하면 될까요?",
+    "tipsTitle": "전화할 때 도움이 되는 점",
+    "tip1": "한국어가 어려우면 \"다른 언어로 상담할 수 있나요?\"라고 물어보세요.",
+    "tip2": "날짜, 장소, 받은 문자나 계약서 같은 자료를 옆에 두면 설명하기 쉬워요.",
+    "tip3": "이름이나 연락처는 상담원이 필요하다고 안내할 때 알려주면 돼요.",
+    "note": "실제 상담 방법과 절차는 기관의 안내를 따라 주세요. 지금 위험하다면 112(경찰) 또는 119(구급)로 바로 전화하세요."
+  },
+  "testimonials": {
+    "title": "함께한 사람들의 목소리",
+    "subtitle": "LINKRIGHTS 프로그램에 참여한 청소년과 대학생 멘토가 인터뷰에서 직접 한 말이에요."
+  },
+  "glossary": {
+    "title": "어려운 말 풀이"
+  },
+  "orgInfo": {
+    "holidays": "쉬는 날",
+    "breakTime": "휴게시간",
+    "region": "지역",
+    "address": "주소",
+    "nationwide": "전국",
+    "map": "지도 보기"
+  },
   "heroVideo": {
     "label": "LINKRIGHTS 소개 영상",
     "caption": "상황을 적으면 관련 권리와 도움받을 곳을 함께 보여주는 플랫폼을 만들고 있어요.",
@@ -174,16 +237,16 @@
     "whoSubtitle": "나에게 맞는 곳에서 시작해 보세요.",
     "youthTitle": "이주배경청소년",
     "youthBody": "학교·일·건강·비자 등 궁금한 상황의 권리정보를 찾아보고, 내 상황을 AI에게 물어볼 수 있어요.",
-    "youthCta": "내 상황 질문하기",
-    "youthSecondary": "권리정보 찾아보기",
+    "youthCta": "내 권리 알아보기",
+    "youthSecondary": "내 상황 물어보기",
     "mentorTitle": "대학생 멘토",
     "mentorBody": "이주배경청소년과 함께 이야기 나누고 권리정보를 쉽게 전하는 대학생 멘토링에 참여할 수 있어요.",
-    "mentorCta": "멘토 참여 문의하기",
+    "mentorCta": "대학생 멘토로 함께하기",
     "mentorSecondary": "멘토링 알아보기",
     "mentorSubject": "[LINKRIGHTS] 대학생 멘토 참여 문의",
     "partnerTitle": "학교·기관",
     "partnerBody": "학교나 기관에서 권리교육, 프로그램 협력을 LINKRIGHTS와 함께 논의할 수 있어요.",
-    "partnerCta": "협력 문의하기",
+    "partnerCta": "학교·기관 파트너십 문의",
     "partnerSecondary": "함께하기 자세히 보기",
     "partnerSubject": "[LINKRIGHTS] 학교·기관 협력 문의",
     "howToTitle": "참여 방법",
@@ -226,7 +289,7 @@
     "rightsHeading": "알아두어야 할 권리",
     "actionsHeading": "이렇게 해보세요",
     "orgsHeading": "도움받을 수 있는 곳",
-    "relatedHeading": "함께 보면 좋은 정보",
+    "relatedHeading": "이것도 궁금하실 수 있어요",
     "noteHeading": "확인해 주세요",
     "sourcesHeading": "이 정보의 출처",
     "step": "단계"

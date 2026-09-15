@@ -1,0 +1,29 @@
+{
+  "_readme": "권리정보 본문과 AI 답변에 나오는 전문 용어 옆에 붙이는 '쉬운 말 풀이'입니다. 권리정보 본문이나 AI 근거 자료는 바꾸지 않고 화면에만 덧붙입니다. term 은 본문에 실제로 쓰인 표현과 똑같이 적어야 찾을 수 있습니다. 법적 의미가 좁아지거나 달라지지 않도록 검토한 뒤 status 를 published 로 바꾸세요.",
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-16",
+  "terms": [
+    {
+      "id": "unpaid-wages",
+      "status": "published",
+      "term": { "ko": "임금체불", "en": "unpaid wages", "zh": "拖欠工资", "vi": "nợ lương" },
+      "easy": {
+        "ko": "일한 돈을 받지 못한 경우",
+        "en": "When you have not been paid for the work you did",
+        "zh": "干了活却没有拿到工钱的情况",
+        "vi": "Khi bạn không nhận được tiền cho công việc đã làm"
+      }
+    },
+    {
+      "id": "employment-contract",
+      "status": "published",
+      "term": { "ko": "근로계약", "en": "employment contract", "zh": "劳动合同", "vi": "hợp đồng lao động" },
+      "easy": {
+        "ko": "일할 조건(하는 일, 시간, 돈 등)을 정하는 약속",
+        "en": "An agreement that sets your working conditions (the work, hours, pay and so on)",
+        "zh": "约定工作条件（做什么工作、工作时间、工资等）的约定",
+        "vi": "Thỏa thuận về điều kiện làm việc (công việc, thời gian, tiền lương…)"
+      }
+    }
+  ]
+}

@@ -145,6 +145,69 @@
     "askTitle": "Hãy kể về tình huống của bạn",
     "scrollDown": "Xem nội dung bên dưới"
   },
+  "homeIntro": {
+    "whoLabel": "Trang này dành cho ai?",
+    "whoBody": "Dành cho thanh thiếu niên có nền tảng di cư đang có thắc mắc về trường học, việc làm, sức khỏe hoặc cư trú. Bạn có thể dùng ngay mà không cần đăng nhập.",
+    "helpLabel": "Trang này giúp gì cho bạn?",
+    "howLabel": "Dùng như thế nào?",
+    "how1": "Chọn lĩnh vực bạn quan tâm trong mục Thông tin quyền và đọc.",
+    "how2": "Kể về tình huống của bạn để tìm thông tin quyền và cơ quan liên quan.",
+    "how3": "Gọi điện hoặc truy cập trang web của cơ quan để được giúp đỡ.",
+    "emailNote": "Yêu cầu được gửi qua email"
+  },
+  "readAloud": {
+    "listen": "Đọc to",
+    "pause": "Tạm dừng",
+    "resume": "Nghe tiếp",
+    "stop": "Dừng đọc",
+    "reading": "Đang đọc",
+    "paused": "Đã tạm dừng",
+    "unsupported": "Trình duyệt này không hỗ trợ đọc to. Bạn có thể dùng Chrome, Edge hoặc Safari.",
+    "noVoice": "Thiết bị này không có giọng đọc cho ngôn ngữ này nên có thể đọc bằng giọng khác hoặc không đọc được."
+  },
+  "saved": {
+    "save": "Lưu",
+    "savedText": "Đã lưu",
+    "saveLabel": "Lưu {title}",
+    "title": "Thông tin quyền đã lưu",
+    "subtitle": "Xem lại thông tin quyền bạn đã lưu bằng dấu sao (☆).",
+    "noticeTitle": "Chỉ lưu trên trình duyệt này",
+    "notice": "Lưu mà không cần đăng nhập, chỉ trên trình duyệt bạn đang dùng và không gửi lên máy chủ. Sẽ không hiện trên thiết bị khác và sẽ mất nếu bạn xóa dữ liệu duyệt web. Không lưu thông tin cá nhân như tên hay số liên lạc.",
+    "empty": "Bạn chưa lưu thông tin quyền nào. Hãy nhấn dấu sao (☆) trên thẻ thông tin quyền để lưu.",
+    "emptyCta": "Tìm thông tin quyền",
+    "remove": "Xóa",
+    "clearAll": "Xóa tất cả",
+    "count": "Đã lưu {count} mục",
+    "navLabel": "Thông tin quyền đã lưu"
+  },
+  "callScript": {
+    "title": "Trước khi gọi, hãy thử nói như thế này",
+    "intro": "Nếu bạn không biết bắt đầu cuộc gọi thế nào, hãy tham khảo các câu dưới đây. Đây chỉ là ví dụ tham khảo, không thay thế tư vấn của cơ quan.",
+    "line1": "Xin chào. Tôi gọi vì có việc muốn được tư vấn.",
+    "line1Topic": "Xin chào. Tôi gọi vì muốn được tư vấn về {topic}.",
+    "line2": "Tôi đang gặp chuyện như thế này. (Nói ngắn gọn khi nào, ở đâu, chuyện gì đã xảy ra)",
+    "line3": "Tôi có thể làm gì không? Tôi cần chuẩn bị gì?",
+    "tipsTitle": "Mẹo khi gọi điện",
+    "tip1": "Nếu tiếng Hàn khó với bạn, hãy hỏi: \"Tôi có thể được tư vấn bằng ngôn ngữ khác không?\"",
+    "tip2": "Để sẵn ngày tháng, địa điểm và giấy tờ như tin nhắn, hợp đồng bên cạnh để dễ giải thích hơn.",
+    "tip3": "Bạn chỉ cần cho biết tên hoặc số liên lạc khi tư vấn viên yêu cầu.",
+    "note": "Hãy làm theo hướng dẫn của cơ quan về cách tư vấn và thủ tục. Nếu đang gặp nguy hiểm, hãy gọi ngay 112 (cảnh sát) hoặc 119 (cấp cứu)."
+  },
+  "testimonials": {
+    "title": "Tiếng nói của những người đã tham gia",
+    "subtitle": "Những lời do thanh thiếu niên và cố vấn sinh viên tham gia chương trình LINKRIGHTS nói trong phỏng vấn."
+  },
+  "glossary": {
+    "title": "Giải thích từ khó"
+  },
+  "orgInfo": {
+    "holidays": "Ngày nghỉ",
+    "breakTime": "Giờ nghỉ",
+    "region": "Khu vực",
+    "address": "Địa chỉ",
+    "nationwide": "Toàn quốc",
+    "map": "Xem bản đồ"
+  },
   "heroVideo": {
     "label": "Video giới thiệu LINKRIGHTS",
     "caption": "Chúng tôi đang xây dựng nền tảng: mô tả tình huống là thấy ngay các quyền liên quan và nơi có thể giúp bạn.",
@@ -174,16 +237,16 @@
     "whoSubtitle": "Hãy bắt đầu từ nơi phù hợp với bạn.",
     "youthTitle": "Thanh thiếu niên gốc di cư",
     "youthBody": "Tìm thông tin quyền về trường học, việc làm, sức khỏe, visa và hỏi AI về tình huống của bạn.",
-    "youthCta": "Hỏi về tình huống của tôi",
-    "youthSecondary": "Tìm thông tin quyền",
+    "youthCta": "Tìm hiểu quyền của tôi",
+    "youthSecondary": "Hỏi về tình huống của tôi",
     "mentorTitle": "Sinh viên cố vấn",
     "mentorBody": "Bạn có thể tham gia chương trình cố vấn sinh viên, trò chuyện với thanh thiếu niên gốc di cư và truyền đạt thông tin quyền một cách dễ hiểu.",
-    "mentorCta": "Hỏi về việc làm cố vấn",
+    "mentorCta": "Tham gia làm cố vấn sinh viên",
     "mentorSecondary": "Tìm hiểu chương trình cố vấn",
     "mentorSubject": "[LINKRIGHTS] Hỏi về tham gia sinh viên cố vấn",
     "partnerTitle": "Trường học · Tổ chức",
     "partnerBody": "Trường học và tổ chức có thể cùng LINKRIGHTS trao đổi về giáo dục quyền và hợp tác chương trình.",
-    "partnerCta": "Liên hệ hợp tác",
+    "partnerCta": "Hợp tác với trường học, tổ chức",
     "partnerSecondary": "Xem thêm cách tham gia",
     "partnerSubject": "[LINKRIGHTS] Hỏi về hợp tác trường học · tổ chức",
     "howToTitle": "Cách tham gia",
@@ -226,7 +289,7 @@
     "rightsHeading": "Quyền bạn nên biết",
     "actionsHeading": "Hãy thử làm thế này",
     "orgsHeading": "Nơi có thể giúp bạn",
-    "relatedHeading": "Thông tin liên quan",
+    "relatedHeading": "Có thể bạn cũng muốn biết",
     "noteHeading": "Lưu ý",
     "sourcesHeading": "Nguồn của trang này",
     "step": "Bước"

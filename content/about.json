@@ -51,6 +51,22 @@
           "body": "국적과 언어 때문에 정보에서 소외되지 않도록, 정보 접근의 격차를 줄이는 것을 목표로 합니다."
         }
       ],
+      "sdg10_title": "LINKRIGHTS가 SDG 10(불평등 감소)을 이야기하는 이유",
+      "sdg10_body": "SDG 10은 불평등을 줄이고 누구도 소외되지 않게 하자는 목표입니다. 법과 제도는 이미 있지만, 이주배경청소년에게는 국적과 언어, 흩어진 정보 때문에 그 권리를 알고 쓰기까지의 거리가 멉니다. LINKRIGHTS는 이 거리를 줄이는 일에서 시작합니다.",
+      "sdg10_points": [
+        {
+          "title": "불평등 감소: 정보의 격차를 줄입니다",
+          "body": "노동, 교육, 의료, 체류 정보는 여러 기관에 흩어져 있고 전문용어도 어렵습니다. 검토를 거친 권리정보를 쉬운 언어와 단계별 안내로 한곳에 정리합니다."
+        },
+        {
+          "title": "차별 감소: 차별을 겪었을 때 할 수 있는 일을 알려줍니다",
+          "body": "국적, 피부색, 언어 등을 이유로 차별을 받았을 때 국가인권위원회에 진정할 수 있다는 정보처럼, 차별 상황에서 할 수 있는 일과 연락할 곳을 함께 안내합니다."
+        },
+        {
+          "title": "포용: 스스로 선택하는 주체가 되도록 돕습니다",
+          "body": "한국어·영어·중국어·베트남어로 정보를 제공하고, 이주배경청소년이 \"도움을 받는 대상\"이 아니라 \"자신의 권리를 알고 선택하는 주체\"가 되도록 돕습니다."
+        }
+      ],
       "team_title": "함께 만드는 사람들",
       "team_body": "LINKRIGHTS는 이주배경청소년, 대학생 멘토, 현장 활동가가 함께 만들어 갑니다. 콘텐츠는 공식 자료를 바탕으로 작성한 뒤 검토를 거쳐 공개하며, 각 정보에는 출처와 검토일을 함께 표시합니다.",
       "future_title": "앞으로의 방향",
@@ -102,6 +118,22 @@
           "code": "SDG 10",
           "name": "Reduced Inequalities",
           "body": "Narrowing the information gap so that nationality and language do not decide who gets help."
+        }
+      ],
+      "sdg10_title": "Why LINKRIGHTS talks about SDG 10 (Reduced Inequalities)",
+      "sdg10_body": "SDG 10 is about reducing inequality and leaving no one behind. The laws and systems already exist, but for migrant-background young people, nationality, language and scattered information put a long distance between having a right and being able to use it. LINKRIGHTS starts by shortening that distance.",
+      "sdg10_points": [
+        {
+          "title": "Reducing inequality: closing the information gap",
+          "body": "Work, education, health and visa information is spread across many organisations and full of technical terms. We bring reviewed rights information together in one place, in plain language with step-by-step guidance."
+        },
+        {
+          "title": "Reducing discrimination: knowing what you can do",
+          "body": "Like the information that you can file a complaint with the National Human Rights Commission if you face discrimination because of nationality, skin colour or language, we show what you can do and who to contact when discrimination happens."
+        },
+        {
+          "title": "Inclusion: making your own choices",
+          "body": "We provide information in Korean, English, Chinese and Vietnamese, and help migrant-background young people become \"people who know their rights and make their own choices\" rather than \"people who receive help\"."
         }
       ],
       "team_title": "Who makes this",

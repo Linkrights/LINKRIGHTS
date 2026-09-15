@@ -18,6 +18,7 @@ export function Footer({ locale }: { locale: Locale }) {
     { href: `/${locale}/about`, label: t.nav.about },
     { href: `/${locale}/get-involved`, label: t.nav.getInvolved },
     { href: `/${locale}/faq`, label: t.nav.faq },
+    { href: `/${locale}/saved`, label: t.saved.navLabel },
     { href: `/${locale}/privacy`, label: t.footer.privacy },
   ];
 

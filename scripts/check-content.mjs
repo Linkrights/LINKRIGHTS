@@ -277,6 +277,43 @@ if (faqFile) {
   if (featuredCount > 4) warn('content/faq.json', `홈에는 4개까지만 보입니다. featured 가 ${featuredCount}개입니다.`);
 }
 
+// ---------- 4-4. 참여자 후기(testimonials.json) ----------
+// 실제 인터뷰 문구만, 공개 동의(consent: true)를 받은 경우에만 공개할 수 있습니다.
+const testimonialsPath = path.join(CONTENT, 'testimonials.json');
+if (fs.existsSync(testimonialsPath)) {
+  const file = readJson(testimonialsPath, 'content/testimonials.json');
+  if (file && !Array.isArray(file.items)) fail('content/testimonials.json', '"items" 는 대괄호 [ ] 로 된 목록이어야 합니다.');
+  const ids = new Set();
+  for (const item of Array.isArray(file?.items) ? file.items : []) {
+    const label = `content/testimonials.json > ${item.id ?? '(id 없음)'}`;
+    if (!item.id) fail(label, '"id" 가 반드시 필요합니다.');
+    else if (ids.has(item.id)) fail(label, `후기 id 가 중복됩니다: ${item.id}`);
+    else ids.add(item.id);
+    if (!VALID_STATUS.includes(item.status)) fail(label, '"status" 는 published 또는 draft 이어야 합니다.');
+    if (!item.quote?.ko?.trim()) fail(label, '"quote" 에 한국어(ko) 문구가 필요합니다.');
+    if (!item.role?.ko?.trim()) fail(label, '"role"(예: 대학생 멘토)에 한국어(ko)가 필요합니다.');
+    if (item.status === 'published' && item.consent !== true) {
+      fail(label, '공개(published)하려면 공개 동의를 받았다는 뜻으로 "consent": true 가 필요합니다.');
+    }
+  }
+}
+
+// ---------- 4-5. 쉬운 말 풀이(glossary.json) ----------
+const glossaryPath = path.join(CONTENT, 'glossary.json');
+if (fs.existsSync(glossaryPath)) {
+  const file = readJson(glossaryPath, 'content/glossary.json');
+  if (file && !Array.isArray(file.terms)) fail('content/glossary.json', '"terms" 는 대괄호 [ ] 로 된 목록이어야 합니다.');
+  const ids = new Set();
+  for (const item of Array.isArray(file?.terms) ? file.terms : []) {
+    const label = `content/glossary.json > ${item.id ?? '(id 없음)'}`;
+    if (!item.id) fail(label, '"id" 가 반드시 필요합니다.');
+    else if (ids.has(item.id)) fail(label, `용어 id 가 중복됩니다: ${item.id}`);
+    else ids.add(item.id);
+    if (!VALID_STATUS.includes(item.status)) fail(label, '"status" 는 published 또는 draft 이어야 합니다.');
+    if (!item.term?.ko?.trim() || !item.easy?.ko?.trim()) fail(label, '"term"(용어)과 "easy"(쉬운 설명)에 한국어(ko)가 필요합니다.');
+  }
+}
+
 // ---------- 5. 나머지 파일 ----------
 for (const name of ['site.json', 'about.json', 'programs.json', 'faq.json']) {
   const data = readJson(path.join(CONTENT, name), `content/${name}`);

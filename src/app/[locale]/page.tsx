@@ -1,8 +1,8 @@
 // 홈(첫 화면)입니다.
-// 첫 화면은 LINKRIGHTS 소개 영상을 배경으로 한 hero(HomeHero)로 브랜드와 핵심 메시지를 먼저 보여주고,
-// 아래로 내려가며 브랜드 소개 → 어떤 상황인가요(분야) → 내 상황 말하기(AI) → 숫자 → 권리정보 → 기관 → 프로그램
-// → 우리에게 도움을 주는 곳 → 나는 누구인가요 → SDGs → 자주 묻는 질문 순서로 이어집니다.
-// 카드는 꼭 필요한 곳에만 쓰고, 소개·분야는 큰 글씨와 가는 선으로 구분합니다.
+// 첫 화면은 LINKRIGHTS 소개 영상 "전체"를 배경으로 한 hero(HomeHero)로 브랜드와 핵심 메시지를 먼저 보여주고,
+// 아래로 내려가며 LINKRIGHTS 소개(누구를 위한 곳 · 어떤 도움 · 어떻게 쓰나요) → 어떤 상황인가요(분야) → 내 상황 말하기(AI)
+// → 숫자 → 참여자 후기(등록된 경우만) → 권리정보 → 기관 → 프로그램 → 우리에게 도움을 주는 곳 → 나는 누구인가요 → SDGs → 자주 묻는 질문
+// 순서로 이어집니다. 카드는 꼭 필요한 곳에만 쓰고, 소개·분야는 큰 글씨와 가는 선으로 구분합니다.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -17,6 +17,7 @@ import { PartnerList } from '@/components/PartnerList';
 import { Reveal } from '@/components/Reveal';
 import { SdgIcon } from '@/components/SdgIcon';
 import { Section } from '@/components/Section';
+import { Testimonials } from '@/components/Testimonials';
 import {
   getAbout,
   getArticles,
@@ -27,6 +28,7 @@ import {
   getPartners,
   getPrograms,
   getSite,
+  getTestimonials,
   resolveOrganizations,
 } from '@/lib/content';
 import { LOCALES, formatDate, getMessages, pick, toLocale } from '@/lib/i18n';
@@ -61,12 +63,19 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     phone: org.phone,
   }));
 
-  // 브랜드 소개: LINKRIGHTS가 함께 알려주는 세 가지
-  const introSteps = [
+  // LINKRIGHTS가 함께 알려주는 세 가지
+  const helpSteps = [
     { title: t.ask.resultRights, body: t.homeBrand.step1 },
     { title: t.ask.resultActions, body: t.homeBrand.step2 },
     { title: t.ask.resultOrgs, body: t.homeBrand.step3 },
   ];
+  // 사용하는 방법 세 단계 (각 단계에서 바로 이동)
+  const howSteps = [
+    { body: t.homeIntro.how1, href: `/${locale}/rights`, label: t.nav.rights },
+    { body: t.homeIntro.how2, href: `/${locale}/ask`, label: t.home.ctaAsk },
+    { body: t.homeIntro.how3, href: `/${locale}/organizations`, label: t.nav.organizations },
+  ];
+  const introLabel = 'text-sm font-bold tracking-[0.04em] text-brand-700';
 
   // 숫자로 보는 LINKRIGHTS: 함께하는 청소년 수는 content/impact.json 의 실제 숫자, 나머지는 등록된 자료를 그대로 셉니다.
   const stats = [
@@ -84,7 +93,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <>
-      {/* 1. 첫 화면: 소개 영상 + 핵심 메시지 ---------------------------- */}
+      {/* 1. 첫 화면: 소개 영상 전체 + 핵심 메시지 -------------------- */}
       <HomeHero
         rightsHref={`/${locale}/rights`}
         askHref={`/${locale}/ask`}
@@ -110,7 +119,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         }}
       />
 
-      {/* 2. 브랜드 소개: 권리를 아는 것에서 시작합니다 ------------------ */}
+      {/* 2. LINKRIGHTS 소개: 처음 온 사람도 "무엇을 하는 곳인지" 바로 알 수 있게 (content/about.json 과 기존 문구) */}
       <section id="home-intro" className="scroll-mt-20 border-b border-[var(--color-line)] bg-white">
         <div className="lr-container py-20 sm:py-28">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
@@ -119,7 +128,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <h2 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-ink-900 sm:text-[2.5rem]">
                 {about.hero_title}
               </h2>
-              <p className="mt-6 text-lg leading-relaxed text-ink-700">{about.change_body}</p>
+              <p className="mt-6 text-lg leading-relaxed text-ink-700">{about.hero_body}</p>
+              <p className="mt-4 text-[17px] leading-relaxed text-ink-500">{about.change_body}</p>
               <Link
                 href={`/${locale}/about`}
                 className="lr-link mt-7 inline-flex items-center gap-1.5 text-[15px] font-semibold"
@@ -127,24 +137,59 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 {t.nav.about} <Icon name="arrow-right" size={16} />
               </Link>
             </div>
-            <ol className="border-t-2 border-ink-900 lg:col-span-7">
-              {introSteps.map((step, index) => (
-                <Reveal
-                  key={step.title}
-                  index={index}
-                  className="grid grid-cols-[3.5rem_1fr] gap-4 border-b border-[var(--color-line)] py-7 sm:grid-cols-[5.5rem_1fr] sm:py-9"
-                >
-                  <span className="text-3xl font-extrabold tabular-nums text-brand-600 sm:text-[2.5rem]">
-                    {String(index + 1).padStart(2, '0')}
-                    <span className="sr-only">.</span>
-                  </span>{' '}
-                  <div>
-                    <h3 className="text-xl font-bold text-ink-900 sm:text-2xl">{step.title}</h3>{' '}
-                    <p className="mt-2 text-[17px] leading-relaxed text-ink-500">{step.body}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </ol>
+
+            <div className="space-y-12 lg:col-span-7">
+              {/* 누구를 위한 곳인가요? */}
+              <div>
+                <h3 className={introLabel}>{t.homeIntro.whoLabel}</h3>
+                <p className="mt-3 text-xl font-semibold leading-relaxed text-ink-900 sm:text-2xl">{t.homeIntro.whoBody}</p>
+              </div>
+
+              {/* 어떤 도움을 주나요? */}
+              <div>
+                <h3 className={introLabel}>{t.homeIntro.helpLabel}</h3>
+                <ol className="mt-3 border-t-2 border-navy-900">
+                  {helpSteps.map((step, index) => (
+                    <Reveal
+                      key={step.title}
+                      index={index}
+                      className="grid grid-cols-[3rem_1fr] gap-4 border-b border-[var(--color-line)] py-5 sm:grid-cols-[4.5rem_1fr] sm:py-6"
+                    >
+                      <span className="text-2xl font-extrabold tabular-nums text-brand-600 sm:text-3xl">
+                        {String(index + 1).padStart(2, '0')}
+                        <span className="sr-only">.</span>
+                      </span>{' '}
+                      <div>
+                        <h4 className="text-lg font-bold text-ink-900 sm:text-xl">{step.title}</h4>{' '}
+                        <p className="mt-1 text-[16px] leading-relaxed text-ink-500">{step.body}</p>
+                      </div>
+                    </Reveal>
+                  ))}
+                </ol>
+              </div>
+
+              {/* 어떻게 쓰나요? */}
+              <div>
+                <h3 className={introLabel}>{t.homeIntro.howLabel}</h3>
+                <ol className="mt-4 grid gap-6 sm:grid-cols-3 sm:gap-5">
+                  {howSteps.map((step, index) => (
+                    <li key={step.href} className="flex flex-col border-t border-[var(--color-line)] pt-4">
+                      <span className="grid h-8 w-8 place-items-center rounded-full bg-navy-900 text-sm font-bold text-white">
+                        {index + 1}
+                        <span className="sr-only">.</span>
+                      </span>{' '}
+                      <p className="mt-3 flex-1 text-[15px] leading-relaxed text-ink-700">{step.body}</p>
+                      <Link
+                        href={step.href}
+                        className="lr-link mt-3 inline-flex items-center gap-1 text-[15px] font-semibold"
+                      >
+                        {step.label} <Icon name="arrow-right" size={16} />
+                      </Link>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -199,15 +244,15 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </Section>
 
-      {/* 5. 숫자로 보는 LINKRIGHTS: 짙은 네이비 띠 ------------------------ */}
-      <section aria-labelledby="impact-title" className="bg-[#0b1730] text-white">
+      {/* 5. 숫자로 보는 LINKRIGHTS: LINKRIGHTS 네이비 띠 ------------------ */}
+      <section aria-labelledby="impact-title" className="bg-navy-900 text-white">
         <div className="lr-container py-14 sm:py-16">
           <h2 id="impact-title" className="text-2xl font-extrabold tracking-tight sm:text-3xl">
             {t.home.impactTitle}
           </h2>
           <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
             {stats.map((stat) => (
-              <div key={stat.key} className="flex flex-col-reverse border-l-2 border-brand-400 pl-4">
+              <div key={stat.key} className="flex flex-col-reverse border-l-2 border-sun-400 pl-4">
                 <dt className="mt-1 text-[15px] font-semibold leading-snug text-white/75">{stat.label}</dt>
                 <dd className="flex items-baseline gap-1 text-white">
                   <span className="text-4xl font-extrabold tracking-tight sm:text-5xl">
@@ -223,6 +268,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </p>
         </div>
       </section>
+
+      {/* 5-1. 실제 참여자 후기: content/testimonials.json 에 공개 동의를 받아 등록한 후기가 있을 때만 */}
+      <Testimonials items={getTestimonials()} t={t} locale={locale} />
 
       {/* 6. 많이 찾는 권리정보 -------------------------------------- */}
       <Section title={t.home.featuredTitle} subtitle={t.home.featuredSubtitle} action={viewAll(`/${locale}/rights`)}>
@@ -255,7 +303,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <Section title={t.home.programsTitle} subtitle={t.home.programsSubtitle} action={viewAll(`/${locale}/programs`)}>
         <ul className="grid gap-8 sm:grid-cols-3">
           {programs.map((program, index) => (
-            <Reveal key={program.id} index={index} className="border-t-2 border-brand-600 pt-5">
+            <Reveal key={program.id} index={index} className="border-t-2 border-navy-900 pt-5">
               <span className="text-sm font-semibold text-brand-700">{pick(program.tag, locale)}</span>{' '}
               <h3 className="lr-h3 mt-1.5">{pick(program.title, locale)}</h3>{' '}
               <p className="mt-2 text-[15px] leading-relaxed text-ink-500">{pick(program.body, locale)}</p>
@@ -280,9 +328,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </Section>
       )}
 
-      {/* 10. 나는 누구인가요?: 청소년 · 대학생 멘토 · 학교/기관 ----------- */}
+      {/* 10. 나는 누구인가요?: 청소년 · 대학생 멘토 · 학교/기관 (실제 운영 중인 방법: 권리정보·질문, 이메일 문의) */}
       <Section title={t.involved.whoTitle} subtitle={t.involved.whoSubtitle}>
-        <ul className="grid gap-3 md:grid-cols-3">
+        <ul className="grid gap-x-8 gap-y-10 md:grid-cols-3">
           {(
             [
               {
@@ -291,9 +339,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 title: t.involved.youthTitle,
                 body: t.involved.youthBody,
                 cta: t.involved.youthCta,
-                href: `/${locale}/ask`,
+                href: `/${locale}/rights`,
                 secondary: t.involved.youthSecondary,
-                secondaryHref: `/${locale}/rights`,
+                secondaryHref: `/${locale}/ask`,
               },
               {
                 key: 'mentor',
@@ -317,23 +365,26 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               },
             ] as { key: string; icon: IconName; title: string; body: string; cta: string; href: string; secondary: string; secondaryHref: string }[]
           ).map((item, index) => (
-            <Reveal key={item.key} index={index} className="flex flex-col border-t-2 border-ink-900 pt-6">
+            <Reveal key={item.key} index={index} className="flex flex-col border-t-2 border-navy-900 pt-6">
               <span className="lr-icon-badge h-11 w-11">
                 <Icon name={item.icon} size={22} />
               </span>{' '}
               <h3 className="lr-h3 mt-4">{item.title}</h3>{' '}
               <p className="mt-2 flex-1 text-[15px] leading-relaxed text-ink-500">{item.body}</p>
-              <div className="mt-5 flex flex-col items-start gap-3">
+              <div className="mt-5 flex flex-col items-start gap-2">
                 {item.href.startsWith('mailto:') ? (
-                  <a href={item.href} className="lr-btn lr-btn-ghost lr-press">
-                    {item.cta} <Icon name="arrow-right" size={18} />
-                  </a>
+                  <>
+                    <a href={item.href} className="lr-btn lr-btn-primary lr-press">
+                      {item.cta} <Icon name="arrow-right" size={18} />
+                    </a>
+                    <span className="text-[13px] text-ink-500">{t.homeIntro.emailNote}</span>
+                  </>
                 ) : (
-                  <Link href={item.href} className="lr-btn lr-btn-ghost lr-press">
+                  <Link href={item.href} className="lr-btn lr-btn-primary lr-press">
                     {item.cta} <Icon name="arrow-right" size={18} />
                   </Link>
                 )}
-                <Link href={item.secondaryHref} className="lr-link text-[15px] font-semibold">
+                <Link href={item.secondaryHref} className="lr-link mt-1 text-[15px] font-semibold">
                   {item.secondary}
                 </Link>
               </div>
@@ -357,6 +408,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </li>
           ))}
         </ul>
+        {about.sdg10_title && (
+          <Link href={`/${locale}/about`} className="lr-link mt-8 inline-flex items-center gap-1.5 text-[15px] font-semibold">
+            {about.sdg10_title} <Icon name="arrow-right" size={16} />
+          </Link>
+        )}
       </Section>
 
       {/* 12. 자주 묻는 질문: 하나의 카드 안에서 선으로 구분 ----------- */}

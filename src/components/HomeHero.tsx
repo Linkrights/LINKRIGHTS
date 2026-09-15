@@ -134,7 +134,7 @@ export function HomeHero({
   return (
     <section
       aria-labelledby="home-hero-title"
-      className="relative isolate -mt-[65px] flex min-h-[max(600px,100svh)] flex-col overflow-hidden bg-[#0b1730] text-white sm:-mt-[73px]"
+      className="relative isolate -mt-[65px] flex min-h-[max(600px,100svh)] flex-col overflow-hidden bg-navy-900 text-white sm:-mt-[73px]"
     >
       {poster && (
         // eslint-disable-next-line @next/next/no-img-element
@@ -197,7 +197,7 @@ export function HomeHero({
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/90 sm:text-xl">{labels.subtitle}</p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <Link href={rightsHref} className="lr-btn lr-btn-lg lr-press bg-white text-[#0b1730] hover:bg-brand-50">
+          <Link href={rightsHref} className="lr-btn lr-btn-lg lr-press bg-white text-navy-900 hover:bg-brand-50">
             {labels.ctaRights} <Icon name="arrow-right" size={18} />
           </Link>
           <Link

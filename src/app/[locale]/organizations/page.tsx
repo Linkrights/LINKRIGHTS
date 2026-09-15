@@ -1,6 +1,8 @@
 // 도움받을 수 있는 기관 목록 페이지입니다.
+// 기관 정보는 content/organizations.json 에 등록된 것만 보여주고, 위쪽에 "전화하기 전에 이렇게 말해보세요" 도움말을 둡니다.
 
 import type { Metadata } from 'next';
+import { CallScript } from '@/components/CallScript';
 import { OrgCard } from '@/components/OrgCard';
 import { Reveal } from '@/components/Reveal';
 import { PageHeader, Section } from '@/components/Section';
@@ -39,6 +41,11 @@ export default async function OrganizationsPage({ params }: { params: Promise<{ 
             </a>
           ))}
         </div>
+      </div>
+
+      {/* 전화하기 전 도움말 (참고용) */}
+      <div className="lr-container pt-10 sm:pt-12">
+        <CallScript t={t} className="max-w-3xl" />
       </div>
 
       {ORDER.map((key) => {

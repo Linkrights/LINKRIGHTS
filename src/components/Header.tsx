@@ -150,13 +150,17 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
         dark
           ? transparent
             ? 'border-transparent bg-transparent'
-            : 'border-white/10 bg-[#0b1730]'
+            : 'border-white/10 bg-navy-900'
           : 'border-[var(--color-line)] bg-white/95 backdrop-blur'
       }`}
     >
       <div className="lr-container relative flex h-16 items-center gap-3 sm:h-[72px]">
-        <Link href={`/${locale}`} className="shrink-0 rounded-[var(--radius-control)]">
-          <Logo className="h-11 w-11 sm:h-12 sm:w-12" nameClassName={dark ? 'text-white' : 'text-ink-900'} />
+        {/* 480px 미만 휴대폰에서는 언어 버튼 자리를 위해 로고 옆 "LINKRIGHTS" 글자만 숨깁니다. (로고 그림 안에 이름이 있습니다) */}
+        <Link href={`/${locale}`} aria-label="LINKRIGHTS" className="shrink-0 rounded-[var(--radius-control)]">
+          <Logo
+            className="h-11 w-11 sm:h-12 sm:w-12"
+            nameClassName={`max-[479px]:hidden ${dark ? 'text-white' : 'text-ink-900'}`}
+          />
         </Link>
 
         <nav aria-label="주요 메뉴" className="ml-4 hidden flex-1 items-center gap-0.5 lg:flex xl:ml-8 xl:gap-1">
@@ -201,8 +205,27 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
           </Link>
         </div>
 
+        {/* 휴대폰: 지금 어떤 언어인지 바로 보이고(KO·EN·ZH·VI), 누르면 각 언어를 그 언어로 적은 목록
+            (한국어 / English / 中文 / Tiếng Việt)이 열립니다. 메뉴를 열지 않아도 언어를 바꿀 수 있습니다. */}
+        <span className="relative ml-auto inline-flex h-11 shrink-0 items-center gap-1 rounded-[var(--radius-control)] border border-[var(--color-line)] bg-white px-2.5 text-sm font-bold text-ink-700 focus-within:ring-2 focus-within:ring-brand-500 lg:hidden">
+          <Icon name="globe" size={16} className="text-ink-500" />
+          <span aria-hidden="true">{locale.toUpperCase()}</span>
+          <select
+            aria-label={t.nav.language}
+            value={locale}
+            onChange={(event) => changeLocale(event.target.value)}
+            className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+          >
+            {LOCALES.map((code) => (
+              <option key={code} value={code}>
+                {localeNames[code]}
+              </option>
+            ))}
+          </select>
+        </span>
+
         {/* 휴대폰: 메뉴를 열지 않아도 긴급 번호에 바로 닿도록 메뉴 버튼 옆에 둡니다. */}
-        {sosButton('ml-auto h-11 border border-[var(--color-line)] bg-white px-3 text-sm lg:hidden', 'mobile')}
+        {sosButton('h-11 border border-[var(--color-line)] bg-white px-3 text-sm lg:hidden', 'mobile')}
 
         <button
           type="button"

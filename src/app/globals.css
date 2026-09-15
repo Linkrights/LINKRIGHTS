@@ -12,17 +12,26 @@
      색이나 크기를 바꾸고 싶으면 이 파일의 숫자만 바꾸면 사이트 전체가 함께 바뀝니다.
    ------------------------------------------------------------------ */
 @theme {
-  /* 메인 색: 신뢰감을 주는 파랑 */
-  --color-brand-50: #eef4ff;
-  --color-brand-100: #dce7ff;
-  --color-brand-200: #bbcfff;
-  --color-brand-300: #8faefb;
-  --color-brand-400: #5c86f2;
-  --color-brand-500: #2f63e0;
-  --color-brand-600: #1f4fc4;
-  --color-brand-700: #1a3e9b;
-  --color-brand-800: #17357c;
-  --color-brand-900: #142c63;
+  /* LINKRIGHTS 브랜드 색은 두 가지입니다.
+     1) LINKRIGHTS 네이비(navy-900): 첫 화면 영상 위, 헤더(홈 스크롤 시), 숫자 띠처럼 어두운 면과 굵은 구분선
+     2) 깊은 블루(brand-600): 버튼·링크·강조. 흔한 밝은 파랑 대신 네이비에 가까운 깊은 파랑으로 맞춥니다.
+     로고의 노랑(sun-400)은 어두운 배경 위의 아주 작은 표시에만 씁니다. */
+  --color-navy-900: #0b1730;
+  --color-navy-800: #12234a;
+  --color-navy-700: #1b3160;
+
+  --color-brand-50: #edf2fa;
+  --color-brand-100: #dbe4f4;
+  --color-brand-200: #b7c9e8;
+  --color-brand-300: #8aa6d6;
+  --color-brand-400: #5a7fbf;
+  --color-brand-500: #34609f;
+  --color-brand-600: #1d4690;
+  --color-brand-700: #173a78;
+  --color-brand-800: #122f62;
+  --color-brand-900: #0e254f;
+
+  --color-sun-400: #f2d23c;
 
   /* 포인트 색: 로고와 SDG 10 에서 가져온 분홍 (작은 강조에만 사용) */
   --color-accent-50: #fff1f6;
@@ -429,6 +438,20 @@
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* 페이지를 옮길 때 새 화면이 아주 짧게 서서히 나타납니다. (template.tsx)
+   투명도만 바꾸고, 끝나면 아무 스타일도 남기지 않도록 backwards 로 둡니다. */
+.lr-page-enter {
+  animation: lr-page-in 0.18s ease-out backwards;
+}
+@keyframes lr-page-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 

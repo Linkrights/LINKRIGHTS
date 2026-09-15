@@ -158,6 +158,28 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             </li>
           ))}
         </ul>
+
+        {/* SDG 10: 불평등 감소 · 차별 감소 · 포용이 LINKRIGHTS의 목적과 이어지는 방식 (content/about.json) */}
+        {about.sdg10_title && (
+          <div className="mt-12 border-t-2 border-navy-900 pt-8">
+            <h3 className="text-xl font-extrabold leading-snug text-ink-900 sm:text-2xl">{about.sdg10_title}</h3>
+            {about.sdg10_body && <p className="lr-lead mt-3 max-w-3xl">{about.sdg10_body}</p>}
+            {about.sdg10_points && about.sdg10_points.length > 0 && (
+              <ol className="mt-8 grid gap-8 md:grid-cols-3">
+                {about.sdg10_points.map((point, index) => (
+                  <li key={point.title}>
+                    <span className="text-2xl font-extrabold tabular-nums text-brand-600">
+                      {String(index + 1).padStart(2, '0')}
+                      <span className="sr-only">.</span>
+                    </span>{' '}
+                    <h4 className="lr-h3 mt-2">{point.title}</h4>{' '}
+                    <p className="lr-body mt-1.5">{point.body}</p>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </div>
+        )}
       </Section>
 
       {/* 9. 팀 + 앞으로의 방향 */}

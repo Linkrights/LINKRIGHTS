@@ -19,9 +19,26 @@ import type {
   SearchIntent,
   SearchIntentsFile,
   SiteConfig,
+  Testimonial,
+  TestimonialsFile,
 } from './types';
+import type { GlossaryFile, GlossaryTerm } from './glossary';
 
 const CONTENT_DIR = path.join(process.cwd(), 'content');
+
+/** 공개 동의(consent)를 받아 공개로 표시한 실제 참여자 후기만 돌려줍니다. 파일이 없으면 빈 목록입니다. */
+export function getTestimonials(): Testimonial[] {
+  if (!fs.existsSync(path.join(CONTENT_DIR, 'testimonials.json'))) return [];
+  return (readJson<TestimonialsFile>('testimonials.json').items ?? []).filter(
+    (item) => item.status === 'published' && item.consent === true && Boolean(item.quote?.ko?.trim()),
+  );
+}
+
+/** 공개로 표시한 "쉬운 말 풀이" 용어 (content/glossary.json). 파일이 없으면 빈 목록입니다. */
+export function getGlossary(): GlossaryTerm[] {
+  if (!fs.existsSync(path.join(CONTENT_DIR, 'glossary.json'))) return [];
+  return (readJson<GlossaryFile>('glossary.json').terms ?? []).filter((term) => term.status === 'published');
+}
 
 /** 마지막 검토일이 이 일수보다 오래되면 "검토 필요"로 표시하고 AI 근거에서 제외합니다. */
 export const STALE_AFTER_DAYS = 365;

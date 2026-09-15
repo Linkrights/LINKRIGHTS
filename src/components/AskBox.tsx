@@ -64,6 +64,10 @@ export function AskBox({ locale, examples }: { locale: Locale; examples: string[
           </span>{' '}
           <span className="mt-1.5 block text-[15px] leading-relaxed text-ink-500">{t.ask.questionHint}</span>
         </label>
+        {/* 개인정보 입력 금지 안내: 쓰기 전에 먼저 보이도록 입력창 위에 둡니다 */}
+        <p className="mt-3 flex items-start gap-2 rounded-[var(--radius-control)] bg-brand-50 px-3 py-2 text-sm font-medium leading-relaxed text-brand-800">
+          <Icon name="shield" size={16} className="mt-0.5 shrink-0" /> <span>{t.ask.privacyShort}</span>
+        </p>
         <textarea
           ref={inputRef}
           id="hero-question"
@@ -92,9 +96,6 @@ export function AskBox({ locale, examples }: { locale: Locale; examples: string[
             inputRef.current?.focus();
           }}
         />
-        <p className="mt-2.5 flex items-start gap-2 text-sm leading-relaxed text-ink-500">
-          <Icon name="shield" size={16} className="mt-0.5 shrink-0 text-brand-600" /> <span>{t.ask.privacyShort}</span>
-        </p>
         <button type="submit" disabled={!value.trim()} className="lr-btn lr-btn-primary lr-btn-lg mt-4 w-full">
           {t.home.askButton} <Icon name="arrow-right" size={18} />
         </button>

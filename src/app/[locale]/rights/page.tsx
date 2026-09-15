@@ -30,8 +30,15 @@ export default async function RightsIndexPage({ params }: { params: Promise<{ lo
 
       <Section>
         {/* 권리정보 검색: 등록된 정보를 낱말로 바로 찾기 */}
-        <div className="mb-10 max-w-3xl">
+        <div className="mb-10 flex max-w-3xl flex-col gap-4">
           <RightsSearchForm locale={locale} />
+          {/* 이 브라우저에 저장한 권리정보 */}
+          <Link
+            href={`/${locale}/saved`}
+            className="lr-link inline-flex items-center gap-1.5 self-start text-[15px] font-semibold"
+          >
+            <Icon name="star" size={16} /> {t.saved.navLabel}
+          </Link>
         </div>
         <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => (
