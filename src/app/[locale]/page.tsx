@@ -46,11 +46,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const faq = getFaq().items.filter((item) => item.featured).slice(0, 4);
   const examples = site.exampleQuestions[locale] ?? site.exampleQuestions.ko;
 
-  // 소개 영상: public 폴더에 파일이 있을 때만 씁니다. (없으면 대표 이미지 또는 네이비 배경만)
+  // 소개 영상: 팀이 만든 LINKRIGHTS 소개 영상 전체(144초, 자르지 않은 웹용 압축본, 소리 없음).
+  // public 폴더에 파일이 있을 때만 씁니다. (없으면 대표 이미지 또는 네이비 배경만)
   const publicFile = (file: string) => fs.existsSync(path.join(process.cwd(), 'public', file));
   const heroVideo = {
-    loop: '/videos/linkrights-hero-loop.mp4',
-    full: '/videos/linkrights-promo.mp4',
+    desktop: '/videos/linkrights-hero-full-720.mp4',
+    mobile: '/videos/linkrights-hero-full-480.mp4',
     poster: '/images/hero-poster.jpg',
   };
   // 첫 화면 긴급 연락처는 등록된 기관(content/organizations.json)의 번호만 씁니다.
@@ -89,8 +90,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         askHref={`/${locale}/ask`}
         emergencyHref={`/${locale}/emergency`}
         contacts={heroContacts}
-        loopSrc={publicFile(heroVideo.loop) ? heroVideo.loop : undefined}
-        fullSrc={publicFile(heroVideo.full) ? heroVideo.full : undefined}
+        sources={
+          publicFile(heroVideo.desktop)
+            ? { desktop: heroVideo.desktop, mobile: publicFile(heroVideo.mobile) ? heroVideo.mobile : undefined }
+            : undefined
+        }
         poster={publicFile(heroVideo.poster) ? heroVideo.poster : undefined}
         labels={{
           eyebrow: t.homeBrand.eyebrow,
@@ -101,15 +105,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           emergency: t.home.emergencyBanner,
           call: t.nav.emergencyCall,
           scrollDown: t.homeBrand.scrollDown,
-          video: {
-            label: t.heroVideo.label,
-            play: t.heroVideo.play,
-            pause: t.heroVideo.pause,
-            playFull: t.heroVideo.playFull,
-            duration: t.heroVideo.duration,
-            close: t.heroVideo.close,
-            note: t.heroVideo.note,
-          },
+          play: t.heroVideo.play,
+          pause: t.heroVideo.pause,
         }}
       />
 

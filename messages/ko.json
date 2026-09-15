@@ -44,8 +44,8 @@
   "home": {
     "heroTitle": "내 권리를 알고,\n필요한 도움까지 연결받아요.",
     "heroSubtitle": "학교, 일, 건강, 비자, 일상에서 궁금한 권리를 쉽게 알아보고 필요한 도움을 받을 수 있는 정보를 찾아보세요.",
-    "ctaAsk": "내 상황 질문하기",
-    "ctaRights": "권리 알아보기",
+    "ctaAsk": "내 상황 물어보기",
+    "ctaRights": "권리정보 찾아보기",
     "askPlaceholder": "예: 알바를 했는데 아직 돈을 받지 못했어요.",
     "askButton": "내 권리 알아보기",
     "exampleLabel": "이렇게 물어봐도 좋아요",
