@@ -314,11 +314,116 @@ if (fs.existsSync(glossaryPath)) {
   }
 }
 
+// ---------- 4-6. 지역(regions.json)과 기관의 이용 지역 ----------
+const regionsFile = readJson(path.join(CONTENT, 'regions.json'), 'content/regions.json');
+const regionKeys = new Set();
+if (regionsFile) {
+  if (!Array.isArray(regionsFile.regions)) fail('content/regions.json', '"regions" 는 대괄호 [ ] 로 된 목록이어야 합니다.');
+  for (const region of Array.isArray(regionsFile.regions) ? regionsFile.regions : []) {
+    if (!region.key) fail('content/regions.json', '"key" 가 없는 지역이 있습니다.');
+    else if (regionKeys.has(region.key)) fail('content/regions.json', `지역 key 가 중복됩니다: ${region.key}`);
+    else regionKeys.add(region.key);
+    hasKo(region.name, 'content/regions.json', `${region.key} > name`);
+  }
+}
+for (const org of Array.isArray(organizations) ? organizations : []) {
+  const label = `content/organizations.json > ${org.id ?? '(id 없음)'}`;
+  if (org.region !== '전국' && !regionKeys.has(org.region)) {
+    fail(label, `"region" 은 "전국" 또는 content/regions.json 의 key 여야 합니다. (현재: ${org.region})`);
+  }
+  if (org.nationwide !== undefined && typeof org.nationwide !== 'boolean') fail(label, '"nationwide" 는 true 또는 false 여야 합니다.');
+  if (org.regions !== undefined) {
+    if (!Array.isArray(org.regions)) fail(label, '"regions" 는 대괄호 [ ] 로 된 목록이어야 합니다.');
+    for (const key of Array.isArray(org.regions) ? org.regions : []) {
+      if (!regionKeys.has(key)) fail(label, `"regions" 에 content/regions.json 에 없는 지역이 있습니다: ${key}`);
+    }
+  }
+  const nationwide = org.nationwide ?? org.region === '전국';
+  const regions = org.regions ?? (org.region && org.region !== '전국' ? [org.region] : []);
+  if (!nationwide && regions.length === 0) warn(label, '전국 기관도 아니고 이용 지역도 없어 지역을 고르면 보이지 않습니다.');
+}
+
+// ---------- 4-7. 검색용 유사 표현(search-synonyms.json) ----------
+const synonymsPath = path.join(CONTENT, 'search-synonyms.json');
+if (fs.existsSync(synonymsPath)) {
+  const file = readJson(synonymsPath, 'content/search-synonyms.json');
+  if (file && !Array.isArray(file.groups)) fail('content/search-synonyms.json', '"groups" 는 대괄호 [ ] 로 된 목록이어야 합니다.');
+  const ids = new Set();
+  for (const group of Array.isArray(file?.groups) ? file.groups : []) {
+    const label = `content/search-synonyms.json > ${group.id ?? '(id 없음)'}`;
+    if (!group.id) fail(label, '"id" 가 반드시 필요합니다.');
+    else if (ids.has(group.id)) fail(label, `묶음 id 가 중복됩니다: ${group.id}`);
+    else ids.add(group.id);
+    if (!Array.isArray(group.terms) || group.terms.length < 2) fail(label, '"terms" 에는 표현이 두 개 이상 있어야 합니다.');
+    for (const term of Array.isArray(group.terms) ? group.terms : []) {
+      if (typeof term !== 'string' || term.replace(/\s/g, '').length < 2) fail(label, `표현은 띄어쓰기를 빼고 두 글자 이상이어야 합니다: ${term}`);
+    }
+  }
+}
+
+// ---------- 4-8. 체크리스트(content/checklists/*.json) ----------
+const checklistDir = path.join(CONTENT, 'checklists');
+if (fs.existsSync(checklistDir)) {
+  const checklistIds = new Set();
+  for (const fileName of fs.readdirSync(checklistDir).filter((n) => n.endsWith('.json'))) {
+    const label = `content/checklists/${fileName}`;
+    const checklist = readJson(path.join(checklistDir, fileName), label);
+    if (!checklist) continue;
+    const expectedId = fileName.replace(/\.json$/, '');
+    if (checklist.id !== expectedId) fail(label, `"id" 값(${checklist.id})과 파일 이름(${expectedId})이 다릅니다.`);
+    if (checklistIds.has(checklist.id)) fail(label, `체크리스트 id 가 중복됩니다: ${checklist.id}`);
+    checklistIds.add(checklist.id);
+    if (!VALID_STATUS.includes(checklist.status)) fail(label, '"status" 는 published 또는 draft 여야 합니다.');
+    if (!isDate(checklist.reviewed_at)) fail(label, '"reviewed_at" 은 2026-09-06 처럼 연-월-일 형식이어야 합니다.');
+    if (!categoryIds.has(checklist.category)) fail(label, `"category" 값(${checklist.category})이 categories.json 에 없습니다.`);
+    if (!checklist.i18n?.ko?.title) fail(label, '한국어("ko") 제목(title)이 필요합니다.');
+    for (const id of checklist.based_on ?? []) {
+      if (!articleIds.has(id)) fail(label, `"based_on" 에 등록되지 않은 권리정보 id 가 있습니다: ${id}`);
+    }
+    for (const id of checklist.organizations ?? []) {
+      if (!orgIds.has(id)) fail(label, `"organizations" 에 등록되지 않은 기관 id 가 있습니다: ${id}`);
+    }
+    if (!Array.isArray(checklist.items) || checklist.items.length === 0) fail(label, '"items" 에 항목이 하나 이상 있어야 합니다.');
+    const itemIds = new Set();
+    for (const item of Array.isArray(checklist.items) ? checklist.items : []) {
+      if (!item.id) fail(label, '"id" 가 없는 항목이 있습니다.');
+      else if (itemIds.has(item.id)) fail(label, `항목 id 가 중복됩니다: ${item.id}`);
+      else itemIds.add(item.id);
+      hasKo(item.text, label, `${item.id} > text`);
+      if (item.article && !articleIds.has(item.article)) fail(label, `항목 ${item.id} 의 "article" 이 등록되지 않은 권리정보입니다: ${item.article}`);
+      if (item.link && !['organizations', 'emergency'].includes(item.link)) fail(label, `항목 ${item.id} 의 "link" 는 organizations 또는 emergency 여야 합니다.`);
+    }
+  }
+}
+
+// ---------- 4-9. 하단 SNS·카카오톡 채널 주소(site.json) ----------
+{
+  const site = readJson(path.join(CONTENT, 'site.json'), 'content/site.json');
+  for (const [key, link] of Object.entries(site?.social ?? {})) {
+    if (link?.url && !/^https:\/\//.test(link.url)) fail('content/site.json', `social.${key}.url 은 https:// 로 시작하는 실제 주소여야 합니다: ${link.url}`);
+    if (link?.url && !link.label) warn('content/site.json', `social.${key} 에 표시할 이름(label)이 비어 있습니다.`);
+  }
+  if (site?.locations !== undefined && !Array.isArray(site.locations)) fail('content/site.json', 'locations 는 목록이어야 합니다.');
+  for (const [i, place] of (Array.isArray(site?.locations) ? site.locations : []).entries()) {
+    if (!place?.name?.ko) fail('content/site.json', `locations[${i}] 에 한국어 이름(name.ko)이 필요합니다.`);
+    if (!place?.address?.ko) fail('content/site.json', `locations[${i}] 에 한국어 주소(address.ko)가 필요합니다.`);
+  }
+}
+
 // ---------- 5. 나머지 파일 ----------
 for (const name of ['site.json', 'about.json', 'programs.json', 'faq.json']) {
   const data = readJson(path.join(CONTENT, name), `content/${name}`);
   if (!data) continue;
   if (name === 'about.json' && !data.i18n?.ko) fail('content/about.json', '한국어("ko") 내용이 필요합니다.');
+  if (name === 'about.json') {
+    for (const [lang, body] of Object.entries(data.i18n ?? {})) {
+      const codes = new Set((body?.sdgs ?? []).map((sdg) => sdg.code));
+      for (const detail of body?.sdg_details ?? []) {
+        if (!codes.has(detail?.code)) fail('content/about.json', `${lang}.sdg_details 의 code "${detail?.code}" 가 sdgs 목록에 없습니다.`);
+        if (!detail?.title) fail('content/about.json', `${lang}.sdg_details(${detail?.code}) 에 제목(title)이 필요합니다.`);
+      }
+    }
+  }
   if (name === 'site.json' && !data.contactEmail) warn('content/site.json', '"contactEmail"(문의 이메일)이 비어 있습니다.');
 }
 

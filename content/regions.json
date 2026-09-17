@@ -1,0 +1,22 @@
+{
+  "_readme": "도움받을 곳의 지역 선택에 쓰는 시·도 목록입니다. organizations.json 의 region 에는 \"전국\" 또는 아래 key 를 적습니다. 여러 지역에서 이용할 수 있는 기관은 \"regions\": [\"서울\", \"경기\"] 처럼, 전국 기관은 \"nationwide\": true 처럼 적을 수 있습니다. (적지 않으면 region 값으로 판단합니다)",
+  "regions": [
+    { "key": "서울", "name": { "ko": "서울", "en": "Seoul", "zh": "首尔", "vi": "Seoul" } },
+    { "key": "부산", "name": { "ko": "부산", "en": "Busan", "zh": "釜山", "vi": "Busan" } },
+    { "key": "대구", "name": { "ko": "대구", "en": "Daegu", "zh": "大邱", "vi": "Daegu" } },
+    { "key": "인천", "name": { "ko": "인천", "en": "Incheon", "zh": "仁川", "vi": "Incheon" } },
+    { "key": "광주", "name": { "ko": "광주", "en": "Gwangju", "zh": "光州", "vi": "Gwangju" } },
+    { "key": "대전", "name": { "ko": "대전", "en": "Daejeon", "zh": "大田", "vi": "Daejeon" } },
+    { "key": "울산", "name": { "ko": "울산", "en": "Ulsan", "zh": "蔚山", "vi": "Ulsan" } },
+    { "key": "세종", "name": { "ko": "세종", "en": "Sejong", "zh": "世宗", "vi": "Sejong" } },
+    { "key": "경기", "name": { "ko": "경기", "en": "Gyeonggi", "zh": "京畿", "vi": "Gyeonggi" } },
+    { "key": "강원", "name": { "ko": "강원", "en": "Gangwon", "zh": "江原", "vi": "Gangwon" } },
+    { "key": "충북", "name": { "ko": "충북", "en": "Chungbuk", "zh": "忠北", "vi": "Chungbuk" } },
+    { "key": "충남", "name": { "ko": "충남", "en": "Chungnam", "zh": "忠南", "vi": "Chungnam" } },
+    { "key": "전북", "name": { "ko": "전북", "en": "Jeonbuk", "zh": "全北", "vi": "Jeonbuk" } },
+    { "key": "전남", "name": { "ko": "전남", "en": "Jeonnam", "zh": "全南", "vi": "Jeonnam" } },
+    { "key": "경북", "name": { "ko": "경북", "en": "Gyeongbuk", "zh": "庆北", "vi": "Gyeongbuk" } },
+    { "key": "경남", "name": { "ko": "경남", "en": "Gyeongnam", "zh": "庆南", "vi": "Gyeongnam" } },
+    { "key": "제주", "name": { "ko": "제주", "en": "Jeju", "zh": "济州", "vi": "Jeju" } }
+  ]
+}

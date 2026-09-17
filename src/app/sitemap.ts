@@ -2,7 +2,7 @@
 // 권리정보를 새로 추가하면 자동으로 여기에 포함됩니다.
 
 import type { MetadataRoute } from 'next';
-import { getArticles, getRightsCategories } from '@/lib/content';
+import { getArticles, getChecklists, getRightsCategories } from '@/lib/content';
 import { LOCALES } from '@/lib/i18n';
 
 function base(): string {
@@ -12,9 +12,11 @@ function base(): string {
 export default function sitemap(): MetadataRoute.Sitemap {
   const root = base();
   // AI 질문 페이지(ask)는 검색 결과에 나오지 않도록 설정되어 있어 여기에 넣지 않습니다.
-  const staticPaths = ['', 'rights', 'organizations', 'emergency', 'about', 'programs', 'get-involved', 'faq', 'privacy'];
+  // 저장한 권리정보(saved)는 브라우저마다 내용이 달라 넣지 않습니다.
+  const staticPaths = ['', 'rights', 'organizations', 'emergency', 'about', 'programs', 'get-involved', 'faq', 'privacy', 'checklists'];
   const categories = getRightsCategories();
   const articles = getArticles();
+  const checklists = getChecklists();
   const entries: MetadataRoute.Sitemap = [];
 
   for (const locale of LOCALES) {
@@ -28,6 +30,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     for (const category of categories) {
       entries.push({
         url: `${root}/${locale}/rights/${category.id}`,
+        changeFrequency: 'monthly',
+        priority: 0.6,
+      });
+    }
+    for (const checklist of checklists) {
+      entries.push({
+        url: `${root}/${locale}/checklists/${checklist.id}`,
+        lastModified: new Date(checklist.reviewed_at),
         changeFrequency: 'monthly',
         priority: 0.6,
       });

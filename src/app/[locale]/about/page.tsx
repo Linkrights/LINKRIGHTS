@@ -8,7 +8,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Icon } from '@/components/Icon';
 import { PartnerList } from '@/components/PartnerList';
-import { SdgIcon } from '@/components/SdgIcon';
+import { SdgIcon, sdgAnchor } from '@/components/SdgIcon';
 import { Notice, PageHeader, Section } from '@/components/Section';
 import { getAbout, getPartners, getPrograms } from '@/lib/content';
 import { getMessages, pick, toLocale } from '@/lib/i18n';
@@ -153,20 +153,25 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
                 <h3 className="lr-h3">
                   {sdg.code} · {sdg.name}
                 </h3>{' '}
+                {sdg.goal && <p className="mt-0.5 text-sm font-semibold text-brand-700">{sdg.goal}</p>}{' '}
                 <p className="lr-body mt-1">{sdg.body}</p>
               </div>
             </li>
           ))}
         </ul>
+        {about.sdg_link && <p className="lr-lead mt-8 max-w-3xl font-semibold text-ink-900">{about.sdg_link}</p>}
 
-        {/* SDG 10: 불평등 감소 · 차별 감소 · 포용이 LINKRIGHTS의 목적과 이어지는 방식 (content/about.json) */}
-        {about.sdg10_title && (
-          <div className="mt-12 border-t-2 border-navy-900 pt-8">
-            <h3 className="text-xl font-extrabold leading-snug text-ink-900 sm:text-2xl">{about.sdg10_title}</h3>
-            {about.sdg10_body && <p className="lr-lead mt-3 max-w-3xl">{about.sdg10_body}</p>}
-            {about.sdg10_points && about.sdg10_points.length > 0 && (
+        {/* SDG 4 · SDG 10 이 각각 LINKRIGHTS의 목적과 이어지는 방식 (content/about.json 의 sdg_details) */}
+        {(about.sdg_details ?? []).map((detail) => (
+          <div key={detail.code} id={sdgAnchor(detail.code)} className="mt-12 scroll-mt-24 border-t-2 border-navy-900 pt-8">
+            <div className="flex items-center gap-3">
+              <SdgIcon code={detail.code} size="sm" />
+              <h3 className="text-xl font-extrabold leading-snug text-ink-900 sm:text-2xl">{detail.title}</h3>
+            </div>
+            {detail.body && <p className="lr-lead mt-4 max-w-3xl">{detail.body}</p>}
+            {detail.points && detail.points.length > 0 && (
               <ol className="mt-8 grid gap-8 md:grid-cols-3">
-                {about.sdg10_points.map((point, index) => (
+                {detail.points.map((point, index) => (
                   <li key={point.title}>
                     <span className="text-2xl font-extrabold tabular-nums text-brand-600">
                       {String(index + 1).padStart(2, '0')}
@@ -179,7 +184,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
               </ol>
             )}
           </div>
-        )}
+        ))}
       </Section>
 
       {/* 9. 팀 + 앞으로의 방향 */}

@@ -208,6 +208,90 @@
     "nationwide": "Nationwide",
     "map": "View map"
   },
+  "answerUi": {
+    "situation": "Your situation",
+    "checks": "Check these first",
+    "rights": "Rights you should know",
+    "actions": "What you can do now",
+    "actionsNote": "Start from the top and go one step at a time.",
+    "orgs": "Where you can get help",
+    "followUp": "One question for you",
+    "followUpNote": "If you answer, we can give you more specific guidance.",
+    "references": "References",
+    "noEvidenceTitle": "We don't have enough information on this situation yet",
+    "noEvidenceBody": "We could not find registered LINKRIGHTS information that fits this exact situation, so we won't point to rights or organisations we haven't checked. Here are other next steps.",
+    "errorTitle": "We couldn't create an answer right now",
+    "nextTitle": "Here's what you can do",
+    "similar": "See similar rights information",
+    "categoryAll": "See all ‘{category}’ information",
+    "browseRights": "Browse rights information by topic",
+    "region": "Choose your area to find help",
+    "generalTitle": "Counselling for young people about any worry",
+    "retry": "Ask again in different words",
+    "ask": "Ask about my situation"
+  },
+  "orgFinder": {
+    "title": "Choose your area",
+    "hint": "Choose an area to see organisations there together with those available anywhere in Korea. You can also see every organisation without choosing.",
+    "all": "All",
+    "countAll": "{n} registered organisations",
+    "countRegion": "{local} in {region} · {nationwide} nationwide",
+    "noRegional": "No organisations are registered for {region} yet. The nationwide organisations below can be used from any area. To find a nearby Family Center, choose your city or province on the website in the ‘Local Family Center’ card.",
+    "groupsLabel": "Organisation types"
+  },
+  "checklist": {
+    "navLabel": "Checklists",
+    "listTitle": "Checklists for your situation",
+    "listSubtitle": "Tick off what to check before you start a job or apply for something.",
+    "itemCount": "{n} things to check",
+    "open": "Open checklist",
+    "progress": "{done} of {total} checked",
+    "reset": "Clear all ticks",
+    "noticeTitle": "Your ticks are saved only in this browser",
+    "notice": "They are saved without logging in, only in the browser you are using now, and never sent to our server. They will not appear on other devices and disappear if you clear your browsing data.",
+    "basedOnTitle": "Rights information this checklist is based on",
+    "orgsTitle": "Where you can get help",
+    "more": "Read more",
+    "orgLink": "See where to get help",
+    "emergencyLink": "See emergency help",
+    "relatedTitle": "Checklists to use with this information",
+    "homeTitle": "Try it: checklists for your situation",
+    "homeSubtitle": "Before starting a part-time job or extending your visa, tick off what to check one by one."
+  },
+  "homeAsk": {
+    "subtitle": "We'll help you find which rights may apply and what to check right now.",
+    "getsTitle": "What the answer tells you",
+    "gets": [
+      { "title": "Your situation", "body": "A short summary of what you told us." },
+      { "title": "Check these first", "body": "Facts that change what you should do next." },
+      { "title": "Rights you should know", "body": "Explained from registered rights information." },
+      { "title": "What you can do now", "body": "What to check, prepare and ask, in order." },
+      { "title": "Where you can get help", "body": "Only registered organisations." }
+    ],
+    "trust": "Answers are based only on information reviewed and registered by LINKRIGHTS, and never make legal, visa or medical decisions for you."
+  },
+  "footerNav": {
+    "aboutTitle": "About",
+    "aboutLink": "About LINKRIGHTS",
+    "rights": "All rights reserved.",
+    "operatorLabel": "Run by",
+    "locationLabel": "Location",
+    "emailLabel": "Email",
+    "socialLabel": "LINKRIGHTS channels",
+    "feedback": "Send feedback or suggest content",
+    "feedbackSubject": "[LINKRIGHTS feedback / content suggestion]",
+    "youtube": "YouTube",
+    "kakaoChannel": "KakaoTalk channel",
+    "kakaoCta": "Add our KakaoTalk channel"
+  },
+  "rightsMeta": {
+    "sourceLabel": "Source",
+    "sourcesMore": "See sources",
+    "feedbackTitle": "Is this information wrong or out of date?",
+    "feedbackBody": "Let us know and we will review and fix it. You don't need to include personal details such as your name or contact in the email.",
+    "feedbackCta": "Suggest a correction",
+    "feedbackSubject": "[Correction suggestion] {title}"
+  },
   "heroVideo": {
     "label": "LINKRIGHTS introduction video",
     "caption": "We're building a platform that shows related rights and where to get help when you describe your situation.",
@@ -384,7 +468,7 @@
     ]
   },
   "footer": {
-    "aboutSite": "LINKRIGHTS is a rights information platform for young people with a migrant background.",
+    "aboutSite": "A rights information platform for young people with a migrant background",
     "notAdvice": "Information here is general guidance, not legal or medical advice. Confirm decisions with an official organisation.",
     "contact": "Contact",
     "instagram": "Instagram",

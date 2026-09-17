@@ -43,28 +43,55 @@
         {
           "code": "SDG 4",
           "name": "양질의 교육",
+          "goal": "포용적이고 공평한 교육 기회",
           "body": "이주배경청소년이 학교와 학습에서 배제되지 않고, 교육에 관한 권리를 알고 사용할 수 있도록 돕습니다."
         },
         {
           "code": "SDG 10",
           "name": "불평등 감소",
+          "goal": "나라 안과 나라 사이의 불평등 줄이기",
           "body": "국적과 언어 때문에 정보에서 소외되지 않도록, 정보 접근의 격차를 줄이는 것을 목표로 합니다."
         }
       ],
-      "sdg10_title": "LINKRIGHTS가 SDG 10(불평등 감소)을 이야기하는 이유",
-      "sdg10_body": "SDG 10은 불평등을 줄이고 누구도 소외되지 않게 하자는 목표입니다. 법과 제도는 이미 있지만, 이주배경청소년에게는 국적과 언어, 흩어진 정보 때문에 그 권리를 알고 쓰기까지의 거리가 멉니다. LINKRIGHTS는 이 거리를 줄이는 일에서 시작합니다.",
-      "sdg10_points": [
+      "sdg_link": "LINKRIGHTS는 이주배경청소년이 필요한 정보와 권리에 접근할 수 있도록 돕는다는 점에서 이 두 목표와 연결됩니다.",
+      "sdg_details": [
         {
-          "title": "불평등 감소: 정보의 격차를 줄입니다",
-          "body": "노동, 교육, 의료, 체류 정보는 여러 기관에 흩어져 있고 전문용어도 어렵습니다. 검토를 거친 권리정보를 쉬운 언어와 단계별 안내로 한곳에 정리합니다."
+          "code": "SDG 4",
+          "title": "LINKRIGHTS가 SDG 4(양질의 교육)를 이야기하는 이유",
+          "body": "SDG 4는 모든 사람이 차별 없이 질 좋은 교육을 받고, 평생 배울 기회를 갖도록 하자는 목표입니다. 한국에 사는 청소년은 국적이나 체류자격과 상관없이 학교에 다닐 수 있지만, 들어가는 방법을 모르거나 한국어가 아직 서툴거나 학교에서 차별을 겪으면 배움에서 멀어지기 쉽습니다. LINKRIGHTS는 배움이 끊기지 않도록 돕는 일에서 시작합니다.",
+          "points": [
+            {
+              "title": "교육 접근: 학교에 들어가는 길을 알려줍니다",
+              "body": "나이와 이전 학력에 따라 달라지는 입학 방법, 이전 학력을 인정받는 절차, 한국어 지원, 학교 밖에서 학력을 얻는 길처럼 배움을 시작하고 이어가는 데 필요한 정보를 쉬운 말로 정리합니다."
+            },
+            {
+              "title": "안전한 배움: 학교에서 차별이나 괴롭힘을 겪었을 때",
+              "body": "출신 나라, 피부색, 말투 때문에 놀림받거나 불이익을 받는 것은 차별입니다. 학교에서 이런 일을 겪었을 때 할 수 있는 일과 도움받을 곳을 함께 안내합니다."
+            },
+            {
+              "title": "배움의 기회: 권리교육과 대학생 멘토링",
+              "body": "쉬운 언어로 자기 권리를 배우는 권리교육과, 가까운 나이의 대학생 멘토와 학업·진로 이야기를 나누는 멘토링으로 스스로 배우고 선택하는 힘을 키웁니다."
+            }
+          ]
         },
         {
-          "title": "차별 감소: 차별을 겪었을 때 할 수 있는 일을 알려줍니다",
-          "body": "국적, 피부색, 언어 등을 이유로 차별을 받았을 때 국가인권위원회에 진정할 수 있다는 정보처럼, 차별 상황에서 할 수 있는 일과 연락할 곳을 함께 안내합니다."
-        },
-        {
-          "title": "포용: 스스로 선택하는 주체가 되도록 돕습니다",
-          "body": "한국어·영어·중국어·베트남어로 정보를 제공하고, 이주배경청소년이 \"도움을 받는 대상\"이 아니라 \"자신의 권리를 알고 선택하는 주체\"가 되도록 돕습니다."
+          "code": "SDG 10",
+          "title": "LINKRIGHTS가 SDG 10(불평등 감소)을 이야기하는 이유",
+          "body": "SDG 10은 불평등을 줄이고 누구도 소외되지 않게 하자는 목표입니다. 법과 제도는 이미 있지만, 이주배경청소년에게는 국적과 언어, 흩어진 정보 때문에 그 권리를 알고 쓰기까지의 거리가 멉니다. LINKRIGHTS는 이 거리를 줄이는 일에서 시작합니다.",
+          "points": [
+            {
+              "title": "불평등 감소: 정보의 격차를 줄입니다",
+              "body": "노동, 교육, 의료, 체류 정보는 여러 기관에 흩어져 있고 전문용어도 어렵습니다. 검토를 거친 권리정보를 쉬운 언어와 단계별 안내로 한곳에 정리합니다."
+            },
+            {
+              "title": "차별 감소: 차별을 겪었을 때 할 수 있는 일을 알려줍니다",
+              "body": "국적, 피부색, 언어 등을 이유로 차별을 받았을 때 국가인권위원회에 진정할 수 있다는 정보처럼, 차별 상황에서 할 수 있는 일과 연락할 곳을 함께 안내합니다."
+            },
+            {
+              "title": "포용: 스스로 선택하는 주체가 되도록 돕습니다",
+              "body": "한국어·영어·중국어·베트남어로 정보를 제공하고, 이주배경청소년이 \"도움을 받는 대상\"이 아니라 \"자신의 권리를 알고 선택하는 주체\"가 되도록 돕습니다."
+            }
+          ]
         }
       ],
       "team_title": "함께 만드는 사람들",
@@ -112,28 +139,55 @@
         {
           "code": "SDG 4",
           "name": "Quality Education",
+          "goal": "Inclusive and equitable education for everyone",
           "body": "Helping migrant-background youth stay included in school and use their rights around education."
         },
         {
           "code": "SDG 10",
           "name": "Reduced Inequalities",
+          "goal": "Reducing inequality within and between countries",
           "body": "Narrowing the information gap so that nationality and language do not decide who gets help."
         }
       ],
-      "sdg10_title": "Why LINKRIGHTS talks about SDG 10 (Reduced Inequalities)",
-      "sdg10_body": "SDG 10 is about reducing inequality and leaving no one behind. The laws and systems already exist, but for migrant-background young people, nationality, language and scattered information put a long distance between having a right and being able to use it. LINKRIGHTS starts by shortening that distance.",
-      "sdg10_points": [
+      "sdg_link": "LINKRIGHTS connects to both goals by helping migrant-background young people reach the information and rights they need.",
+      "sdg_details": [
         {
-          "title": "Reducing inequality: closing the information gap",
-          "body": "Work, education, health and visa information is spread across many organisations and full of technical terms. We bring reviewed rights information together in one place, in plain language with step-by-step guidance."
+          "code": "SDG 4",
+          "title": "Why LINKRIGHTS talks about SDG 4 (Quality Education)",
+          "body": "SDG 4 is about everyone getting a good education without discrimination and having the chance to keep learning throughout life. Young people living in Korea can attend school regardless of nationality or visa status, but not knowing how to enrol, still learning Korean, or facing discrimination at school can easily push them away from learning. LINKRIGHTS starts by helping that learning continue.",
+          "points": [
+            {
+              "title": "Access to education: showing the way into school",
+              "body": "We explain in plain language what you need to start and keep learning: how enrolment depends on your age and previous schooling, how previous study can be recognised, Korean language support, and routes to qualifications outside mainstream school."
+            },
+            {
+              "title": "Safe learning: when discrimination or bullying happens at school",
+              "body": "Being teased or treated unfairly because of where you come from, your skin colour or the way you speak is discrimination. We show what you can do and where to get help when it happens at school."
+            },
+            {
+              "title": "Chances to learn: rights education and university mentoring",
+              "body": "Rights education in plain language, and mentoring with university students close in age who share their experience of study and career paths, help young people build the confidence to learn and choose for themselves."
+            }
+          ]
         },
         {
-          "title": "Reducing discrimination: knowing what you can do",
-          "body": "Like the information that you can file a complaint with the National Human Rights Commission if you face discrimination because of nationality, skin colour or language, we show what you can do and who to contact when discrimination happens."
-        },
-        {
-          "title": "Inclusion: making your own choices",
-          "body": "We provide information in Korean, English, Chinese and Vietnamese, and help migrant-background young people become \"people who know their rights and make their own choices\" rather than \"people who receive help\"."
+          "code": "SDG 10",
+          "title": "Why LINKRIGHTS talks about SDG 10 (Reduced Inequalities)",
+          "body": "SDG 10 is about reducing inequality and leaving no one behind. The laws and systems already exist, but for migrant-background young people, nationality, language and scattered information put a long distance between having a right and being able to use it. LINKRIGHTS starts by shortening that distance.",
+          "points": [
+            {
+              "title": "Reducing inequality: closing the information gap",
+              "body": "Work, education, health and visa information is spread across many organisations and full of technical terms. We bring reviewed rights information together in one place, in plain language with step-by-step guidance."
+            },
+            {
+              "title": "Reducing discrimination: knowing what you can do",
+              "body": "Like the information that you can file a complaint with the National Human Rights Commission if you face discrimination because of nationality, skin colour or language, we show what you can do and who to contact when discrimination happens."
+            },
+            {
+              "title": "Inclusion: making your own choices",
+              "body": "We provide information in Korean, English, Chinese and Vietnamese, and help migrant-background young people become \"people who know their rights and make their own choices\" rather than \"people who receive help\"."
+            }
+          ]
         }
       ],
       "team_title": "Who makes this",

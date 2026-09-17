@@ -1,7 +1,7 @@
 {
   "_readme": "짧은 질문·구어체·문법이 틀린 문장에서도 관련 권리정보를 찾기 위한 '상황 사전'입니다. triggers 에는 사용자가 실제로 쓸 법한 표현을 적습니다(띄어쓰기·조사·어미 차이는 자동으로 맞춥니다). articles 의 id 는 content/rights 에 등록된 글이어야 하며 빌드할 때 자동으로 확인합니다. match 는 direct(말만으로 이 글의 상황이 분명함) 또는 possible(사용자가 말하지 않은 조건이 맞을 때만 관련될 수 있음, AI는 조건부로만 안내)입니다. 이 파일은 이미 등록된 글을 찾는 데만 쓰이며, 새 권리·기관·전화번호를 만들지 않습니다. unknowns 와 clarify 는 AI가 상황을 이해하도록 돕는 힌트이며 근거 자료가 아닙니다.",
   "owner": "운영팀",
-  "reviewed_at": "2026-09-14",
+  "reviewed_at": "2026-09-17",
   "intents": [
     {
       "id": "unpaid-wages",
@@ -10,16 +10,17 @@
       "triggers": {
         "ko": [
           "돈 안 줘", "돈을 안 줘", "돈 안 주", "돈을 안 주", "돈 못 받", "돈을 못 받", "돈이 안 들어", "돈 안 들어", "일한 돈", "돈 떼먹",
-          "월급 안 줘", "월급을 안 줘", "월급 안 들어", "월급이 안 들어", "월급 안 나와", "월급이 안 나와", "월급 못 받", "월급을 못 받", "월급이 밀", "월급 밀려",
-          "급여 안 줘", "급여를 안 줘", "급여가 안 들어", "급여 못 받", "급여를 못 받", "급여 미뤄", "급여를 미뤄", "급여가 밀",
-          "알바비 안 줘", "알바비를 안 줘", "알바비 못 받", "알바비를 못 받", "알바비가 안 들어",
+          "돈 안 줬", "돈을 안 줬",
+          "월급 안 줘", "월급을 안 줘", "월급 안 줬", "월급을 안 줬", "월급 안 들어", "월급이 안 들어", "월급 안 나와", "월급이 안 나와", "월급 못 받", "월급을 못 받", "월급이 밀", "월급 밀려",
+          "급여 안 줘", "급여를 안 줘", "급여 안 줬", "급여를 안 줬", "급여가 안 들어", "급여 못 받", "급여를 못 받", "급여 미뤄", "급여를 미뤄", "급여가 밀",
+          "알바비 안 줘", "알바비를 안 줘", "알바비 안 줬", "알바비를 안 줬", "알바비 못 받", "알바비를 못 받", "알바비가 안 들어",
           "임금 안 줘", "임금을 안 줘", "임금 못 받", "임금을 못 받", "일당 안 줘", "일당을 못 받", "페이 안 줘"
         ],
-        "en": ["not paid", "didn't pay", "did not pay", "haven't been paid", "hasn't paid", "not getting paid", "unpaid wage", "owes me money", "owe me money"],
+        "en": ["not paid", "didn't pay", "did not pay", "haven't been paid", "hasn't paid", "haven't paid me", "not getting paid", "unpaid wage", "owes me money", "owe me money"],
         "zh": ["不给工资", "没给工资", "拖欠工资", "工资没发", "没发工资", "不给钱", "没拿到工资", "工资还没给"],
         "vi": ["không trả lương", "chưa trả lương", "không trả tiền", "nợ lương", "chưa nhận lương", "không được trả lương", "chưa được trả lương"]
       },
-      "unknowns": ["돈을 받기로 한 날짜가 이미 지났는지", "지금도 그곳에서 일하고 있는지"],
+      "unknowns": ["돈을 받기로 한 날짜가 이미 지났는지", "지금도 그곳에서 일하고 있는지", "일한 날짜와 시간을 기록해 두었는지"],
       "clarify": "돈을 받기로 한 날짜가 이미 지났나요?"
     },
     {
@@ -27,8 +28,8 @@
       "label": "근로계약서를 쓰지 않았거나 받지 못한 상황",
       "articles": [{ "id": "labor-contract", "match": "direct" }],
       "triggers": {
-        "ko": ["계약서 안 썼", "계약서를 안 썼", "계약서 안 써", "계약서를 안 써", "계약서 없", "계약서가 없", "계약서를 못 받", "계약서 안 줘", "계약서를 안 줘", "계약서 쓰지 않", "근로계약서 안", "근로계약서를 안"],
-        "en": ["no contract", "didn't sign a contract", "did not sign a contract", "without a contract", "no written contract", "never signed"],
+        "ko": ["계약서 안 썼", "계약서를 안 썼", "계약서 안 써", "계약서를 안 써", "계약서 없", "계약서가 없", "계약서를 못 받", "계약서 안 받", "계약서를 안 받", "계약서 안 줘", "계약서를 안 줘", "계약서 안 줬", "계약서를 안 줬", "계약서 쓰지 않", "근로계약서 안", "근로계약서를 안"],
+        "en": ["no contract", "didn't sign a contract", "did not sign a contract", "without a contract", "no written contract", "never signed", "didn't give me a contract"],
         "zh": ["没签合同", "没有合同", "没签劳动合同", "不给合同"],
         "vi": ["không có hợp đồng", "chưa ký hợp đồng", "không ký hợp đồng"]
       },
@@ -66,7 +67,7 @@
       "label": "친구들의 말이나 행동 때문에 힘든 상황",
       "articles": [{ "id": "education-school-discrimination", "match": "possible" }],
       "triggers": {
-        "ko": ["놀려요", "놀려서", "놀렸", "놀리", "놀려대", "비웃", "이상하게 봐", "이상하게 쳐다", "나만 빼", "끼워주지 않", "안 끼워", "나를 싫어", "날 싫어", "나 싫어해", "친구 나 싫어", "욕해요", "욕했", "무시해요", "무시했"],
+        "ko": ["놀려요", "놀려서", "놀렸", "놀리", "놀려대", "비웃", "이상하게 봐", "이상하게 쳐다", "나만 빼", "나만 무시", "끼워주지 않", "안 끼워", "나를 싫어", "날 싫어", "나 싫어해", "친구 나 싫어", "욕해요", "욕했", "무시해요", "무시했"],
         "en": ["tease me", "teasing me", "make fun of me", "laugh at me", "left me out", "they ignore me"],
         "zh": ["嘲笑我", "取笑我", "排挤我", "不理我", "笑话我"],
         "vi": ["trêu chọc", "chế giễu", "cô lập tôi", "không chơi với tôi", "cười nhạo"]
@@ -123,7 +124,7 @@
         "zh": ["签证到期", "签证快到期", "签证过期", "延长签证", "签证延期", "签证快过期"],
         "vi": ["visa hết hạn", "hết hạn visa", "gia hạn visa", "sắp hết hạn visa", "hết hạn cư trú"]
       },
-      "unknowns": ["체류기간 만료일이 이미 지났는지, 아직 남았는지"],
+      "unknowns": ["지금 가진 체류자격(비자 종류)", "체류기간 만료일이 이미 지났는지, 아직 남았는지"],
       "clarify": "체류기간이 끝나는 날짜가 아직 지나지 않았나요?"
     },
     {
@@ -150,12 +151,12 @@
         { "id": "health-hospital-visit", "match": "possible" }
       ],
       "triggers": {
-        "ko": ["병원비", "병원 돈", "치료비", "진료비", "약값", "보험이 없", "보험 없어", "건강보험 없", "보험 가입 안"],
-        "en": ["hospital bill", "medical bill", "medical cost", "no insurance", "no health insurance"],
-        "zh": ["医药费", "看病太贵", "没有保险", "医疗费"],
-        "vi": ["viện phí", "tiền viện phí", "không có bảo hiểm", "chi phí khám bệnh"]
+        "ko": ["병원비", "병원 돈", "치료비", "진료비", "약값", "보험이 없", "보험 없어", "건강보험 없", "보험 가입 안", "병원 돈 없", "돈이 없어서 병원", "병원 갈 돈"],
+        "en": ["hospital bill", "medical bill", "medical cost", "no insurance", "no health insurance", "can't afford a doctor"],
+        "zh": ["医药费", "看病太贵", "没有保险", "医疗费", "没钱看病"],
+        "vi": ["viện phí", "tiền viện phí", "không có bảo hiểm", "chi phí khám bệnh", "không có tiền khám bệnh"]
       },
-      "unknowns": ["건강보험에 가입되어 있는지"],
+      "unknowns": ["건강보험에 가입되어 있는지", "지금 급하게 치료가 필요한 상태인지"],
       "clarify": ""
     },
     {
@@ -215,12 +216,12 @@
       "label": "한국에서 학교에 다니고 싶거나 입학·전학이 필요한 상황",
       "articles": [{ "id": "education-school-enrollment", "match": "direct" }],
       "triggers": {
-        "ko": ["학교 다니고 싶", "학교에 다니고 싶", "학교 들어가고 싶", "학교에 들어가고 싶", "한국 학교 가고 싶", "입학하고 싶", "학교 못 다니", "학교에 못 다니", "학교 안 받아", "전학 가고 싶"],
-        "en": ["want to go to school in korea", "enroll in school", "school admission", "transfer school"],
+        "ko": ["학교 다니고 싶", "학교에 다니고 싶", "학교 들어가고 싶", "학교에 들어가고 싶", "한국 학교 가고 싶", "입학하고 싶", "학교 못 다니", "학교에 못 다니", "학교 안 받아", "전학 가고 싶", "전학을 가고 싶", "전학하고 싶", "학교를 옮기", "학교 옮기", "다른 학교로 옮기"],
+        "en": ["want to go to school in korea", "enroll in school", "school admission", "transfer school", "change schools", "move to another school"],
         "zh": ["想在韩国上学", "入学", "转学"],
         "vi": ["muốn đi học ở hàn", "nhập học", "chuyển trường"]
       },
-      "unknowns": ["지금 학교에 다니고 있는지", "나이"],
+      "unknowns": ["지금 학교에 다니고 있는지", "나이", "살고 있는 지역"],
       "clarify": ""
     }
   ]

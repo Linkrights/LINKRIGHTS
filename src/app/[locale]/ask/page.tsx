@@ -3,8 +3,8 @@
 import type { Metadata } from 'next';
 import { AskClient } from '@/components/AskClient';
 import { PageHeader } from '@/components/Section';
-import { getGlossary, getSite } from '@/lib/content';
-import { getMessages, toLocale } from '@/lib/i18n';
+import { getGlossary, getOrganizations, getRightsCategories, getSite } from '@/lib/content';
+import { getMessages, pick, toLocale } from '@/lib/i18n';
 import { fallbackArticles } from '@/lib/search';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -34,6 +34,9 @@ export default async function AskPage({
   const t = getMessages(locale);
   const site = getSite();
   const examples = site.exampleQuestions[locale] ?? site.exampleQuestions.ko;
+  // 자료가 없거나 답변을 만들지 못했을 때 보여줄, 누구나 이용할 수 있는 청소년 상담 기관 (AI가 고른 기관이 아닌 등록 기관)
+  const generalHelp = getOrganizations().filter((org) => org.category === 'youth');
+  const categoryNames = Object.fromEntries(getRightsCategories().map((category) => [category.id, pick(category.name, locale)]));
 
   return (
     <>
@@ -44,6 +47,8 @@ export default async function AskPage({
         initialQuestion={q.slice(0, 500)}
         fallbackLinks={fallbackArticles(locale)}
         glossaryTerms={getGlossary()}
+        generalHelp={generalHelp}
+        categoryNames={categoryNames}
       />
     </>
   );

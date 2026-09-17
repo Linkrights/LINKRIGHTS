@@ -7,6 +7,7 @@ import path from 'node:path';
 import type {
   AboutFile,
   Category,
+  Checklist,
   EmergencyConfig,
   FaqFile,
   Locale,
@@ -19,12 +20,35 @@ import type {
   SearchIntent,
   SearchIntentsFile,
   SiteConfig,
+  SynonymGroup,
   Testimonial,
   TestimonialsFile,
 } from './types';
 import type { GlossaryFile, GlossaryTerm } from './glossary';
 
 const CONTENT_DIR = path.join(process.cwd(), 'content');
+
+/** 체크리스트 (content/checklists/*.json 의 published 만, 파일 이름 순). 폴더가 없으면 빈 목록입니다. */
+export function getChecklists(): Checklist[] {
+  const dir = path.join(CONTENT_DIR, 'checklists');
+  if (!fs.existsSync(dir)) return [];
+  return fs
+    .readdirSync(dir)
+    .filter((name) => name.endsWith('.json'))
+    .sort()
+    .map((name) => readJson<Checklist>('checklists', name))
+    .filter((checklist) => checklist.status === 'published');
+}
+
+export function getChecklist(id: string): Checklist | undefined {
+  return getChecklists().find((checklist) => checklist.id === id);
+}
+
+/** 검색용 유사 표현 묶음 (content/search-synonyms.json). 검색에만 쓰며 근거가 아닙니다. 파일이 없으면 빈 목록입니다. */
+export const getSearchSynonyms = cache((): SynonymGroup[] => {
+  if (!fs.existsSync(path.join(CONTENT_DIR, 'search-synonyms.json'))) return [];
+  return readJson<{ groups?: SynonymGroup[] }>('search-synonyms.json').groups ?? [];
+});
 
 /** 공개 동의(consent)를 받아 공개로 표시한 실제 참여자 후기만 돌려줍니다. 파일이 없으면 빈 목록입니다. */
 export function getTestimonials(): Testimonial[] {

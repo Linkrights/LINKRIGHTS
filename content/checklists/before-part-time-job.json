@@ -1,0 +1,84 @@
+{
+  "_readme": "체크리스트 하나를 담는 파일입니다. 항목의 article 에는 더 자세히 볼 등록 권리정보 id 를, link 에는 organizations(도움받을 곳) 또는 emergency(긴급 도움)를 적을 수 있습니다. 체크 상태는 이용자의 브라우저에만 저장되며, 체크리스트마다 따로 저장됩니다. 항목 id 를 바꾸면 그 항목의 저장된 체크 상태는 사라집니다.",
+  "id": "before-part-time-job",
+  "status": "published",
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-17",
+  "category": "labor",
+  "based_on": ["labor-contract", "labor-minimum-wage", "labor-youth-work-rules", "labor-unpaid-wages"],
+  "organizations": ["moel-1350", "youth-1388"],
+  "i18n": {
+    "ko": {
+      "title": "알바 시작 전 확인할 것",
+      "summary": "일을 시작하기 전에 아래 항목을 하나씩 확인해 보세요. 궁금한 항목은 연결된 권리정보에서 자세히 볼 수 있어요.",
+      "note": "이 체크리스트는 스스로 확인하기 위한 참고용이에요. 자세한 기준은 각 항목에 연결된 권리정보에서 확인하세요."
+    },
+    "en": {
+      "title": "Before starting a part-time job",
+      "summary": "Check each item before you start work. You can read more about each item in the linked rights information.",
+      "note": "This checklist is a guide for checking things yourself. See the linked rights information for the details."
+    },
+    "zh": {
+      "title": "开始打工前要确认的事",
+      "summary": "开始工作前，请逐项确认下面的内容。想进一步了解的项目，可以在相连的权利信息中查看。",
+      "note": "这份清单只是帮助你自己确认的参考。具体标准请查看各项目相连的权利信息。"
+    },
+    "vi": {
+      "title": "Những điều cần kiểm tra trước khi đi làm thêm",
+      "summary": "Hãy kiểm tra từng mục dưới đây trước khi bắt đầu làm việc. Bạn có thể xem chi tiết từng mục trong thông tin quyền được liên kết.",
+      "note": "Danh sách này chỉ để bạn tự kiểm tra. Hãy xem chi tiết trong thông tin quyền được liên kết với từng mục."
+    }
+  },
+  "items": [
+    {
+      "id": "conditions",
+      "text": {
+        "ko": "근로조건을 확인했나요?",
+        "en": "Have you checked your working conditions?",
+        "zh": "确认过劳动条件了吗？",
+        "vi": "Bạn đã kiểm tra điều kiện làm việc chưa?"
+      },
+      "article": "labor-contract"
+    },
+    {
+      "id": "pay",
+      "text": {
+        "ko": "임금과 지급일을 확인했나요?",
+        "en": "Have you checked your pay and payday?",
+        "zh": "确认过工资和发薪日了吗？",
+        "vi": "Bạn đã kiểm tra tiền lương và ngày trả lương chưa?"
+      },
+      "article": "labor-minimum-wage"
+    },
+    {
+      "id": "hours",
+      "text": {
+        "ko": "근무시간을 확인했나요?",
+        "en": "Have you checked your working hours?",
+        "zh": "确认过工作时间了吗？",
+        "vi": "Bạn đã kiểm tra giờ làm việc chưa?"
+      },
+      "article": "labor-youth-work-rules"
+    },
+    {
+      "id": "documents",
+      "text": {
+        "ko": "필요한 계약/서류를 확인했나요?",
+        "en": "Have you checked the contract and documents you need?",
+        "zh": "确认过需要的合同和材料了吗？",
+        "vi": "Bạn đã kiểm tra hợp đồng và giấy tờ cần thiết chưa?"
+      },
+      "article": "labor-contract"
+    },
+    {
+      "id": "help",
+      "text": {
+        "ko": "문제가 생겼을 때 도움받을 곳을 알아두었나요?",
+        "en": "Do you know where to get help if something goes wrong?",
+        "zh": "知道出问题时可以向哪里求助吗？",
+        "vi": "Bạn đã biết nơi nhờ giúp đỡ khi có vấn đề chưa?"
+      },
+      "link": "organizations"
+    }
+  ]
+}

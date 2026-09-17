@@ -1,8 +1,9 @@
 // 홈(첫 화면)입니다.
 // 첫 화면은 LINKRIGHTS 소개 영상 "전체"를 배경으로 한 hero(HomeHero)로 브랜드와 핵심 메시지를 먼저 보여주고,
 // 아래로 내려가며 LINKRIGHTS 소개(누구를 위한 곳 · 어떤 도움 · 어떻게 쓰나요) → 어떤 상황인가요(분야) → 내 상황 말하기(AI)
-// → 숫자 → 참여자 후기(등록된 경우만) → 권리정보 → 기관 → 프로그램 → 우리에게 도움을 주는 곳 → 나는 누구인가요 → SDGs → 자주 묻는 질문
-// 순서로 이어집니다. 카드는 꼭 필요한 곳에만 쓰고, 소개·분야는 큰 글씨와 가는 선으로 구분합니다.
+// → 숫자 → 참여자 후기(등록된 경우만) → 권리정보 → 해보기(체크리스트) → 기관 → 프로그램 → 우리에게 도움을 주는 곳
+// → 나는 누구인가요 → SDGs → 자주 묻는 질문 순서로 이어집니다.
+// 정보 → 도움받기 → 해보기 → 참여하기로 이어지도록, 각 영역에서 다음 행동으로 갈 수 있게 합니다.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -15,13 +16,15 @@ import { Icon, type IconName } from '@/components/Icon';
 import { OrgCard } from '@/components/OrgCard';
 import { PartnerList } from '@/components/PartnerList';
 import { Reveal } from '@/components/Reveal';
-import { SdgIcon } from '@/components/SdgIcon';
+import { SdgIcon, sdgAnchor } from '@/components/SdgIcon';
 import { Section } from '@/components/Section';
 import { Testimonials } from '@/components/Testimonials';
 import {
   getAbout,
   getArticles,
   getCategories,
+  getCategory,
+  getChecklists,
   getFaq,
   getFeaturedArticles,
   getOrganizations,
@@ -41,6 +44,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const site = getSite();
   const categories = getCategories();
   const featured = getFeaturedArticles(6);
+  const checklists = getChecklists();
   const orgs = getOrganizations().filter((o) => !o.emergency).slice(0, 3);
   const about = getAbout().i18n[locale] ?? getAbout().i18n.ko;
   const programs = getPrograms().items.filter((p) => p.status === 'published').slice(0, 3);
@@ -221,8 +225,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </ul>
       </Section>
 
-      {/* 4. 내 상황을 말해 보세요: AI는 권리를 알아가는 도구 --------------- */}
-      <Section tone="soft" title={t.homeBrand.askTitle} subtitle={t.ask.subtitle}>
+      {/* 4. 내 상황을 말해 보세요: 무엇을 얻을 수 있는지 함께 보여줍니다 (AI는 권리를 알아가는 도구) */}
+      <Section tone="soft" title={t.homeBrand.askTitle} subtitle={t.homeAsk.subtitle}>
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-7">
             <div className="rounded-[var(--radius-card)] border border-[var(--color-line)] bg-surface-soft p-5 sm:p-7">
@@ -230,16 +234,29 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </div>
           </div>
           <div className="lg:col-span-5">
-            <h3 className="text-lg font-bold text-ink-900">{t.home.aiTitle}</h3>
-            <p className="mt-1 text-[15px] leading-relaxed text-ink-500">{t.home.aiSubtitle}</p>
-            <ul className="mt-5 border-t border-[var(--color-line)]">
-              {t.home.aiPoints.slice(0, 3).map((point) => (
-                <li key={point.title} className="border-b border-[var(--color-line)] py-4">
-                  <p className="font-bold text-ink-900">{point.title}</p>{' '}
-                  <p className="mt-1 text-[15px] leading-relaxed text-ink-500">{point.body}</p>
+            <h3 className="text-lg font-bold text-ink-900">{t.homeAsk.getsTitle}</h3>
+            <ol className="mt-4 border-t border-[var(--color-line)]">
+              {t.homeAsk.gets.map((item, index) => (
+                <li
+                  key={item.title}
+                  className={`flex gap-3 border-b border-[var(--color-line)] py-3.5 ${
+                    index === 3 ? '-mx-3 rounded-[var(--radius-control)] bg-brand-50 px-3' : ''
+                  }`}
+                >
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-navy-900 text-[13px] font-bold text-white">
+                    {index + 1}
+                    <span className="sr-only">.</span>
+                  </span>{' '}
+                  <span className="min-w-0">
+                    <span className="block font-bold text-ink-900">{item.title}</span>{' '}
+                    <span className="mt-0.5 block text-[15px] leading-relaxed text-ink-500">{item.body}</span>
+                  </span>
                 </li>
               ))}
-            </ul>
+            </ol>
+            <p className="mt-5 flex items-start gap-2 text-sm leading-relaxed text-ink-500">
+              <Icon name="shield" size={16} className="mt-0.5 shrink-0 text-brand-600" /> <span>{t.homeAsk.trust}</span>
+            </p>
           </div>
         </div>
       </Section>
@@ -283,13 +300,47 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </ul>
       </Section>
 
+      {/* 6-1. 해보기: 상황별 체크리스트 (content/checklists) -------------- */}
+      {checklists.length > 0 && (
+        <Section
+          tone="soft"
+          title={t.checklist.homeTitle}
+          subtitle={t.checklist.homeSubtitle}
+          action={viewAll(`/${locale}/checklists`)}
+        >
+          <ul className="grid gap-4 md:grid-cols-2">
+            {checklists.map((checklist, index) => {
+              const body = checklist.i18n[locale] ?? checklist.i18n.ko;
+              const category = getCategory(checklist.category);
+              return (
+                <Reveal key={checklist.id} index={index} className="lr-card lr-card-hover group relative flex flex-col p-6">
+                  {category && <span className="text-sm font-semibold text-brand-700">{pick(category.name, locale)}</span>}{' '}
+                  <h3 className="mt-1.5 text-lg font-extrabold leading-snug text-ink-900 group-hover:text-brand-800">
+                    <Link
+                      href={`/${locale}/checklists/${checklist.id}`}
+                      className="after:absolute after:inset-0 after:rounded-[var(--radius-card)] after:content-['']"
+                    >
+                      {body.title}
+                    </Link>
+                  </h3>{' '}
+                  <p className="mt-2 flex-1 text-[15px] leading-relaxed text-ink-500">{body.summary}</p>
+                  <p className="mt-4 flex items-center justify-between gap-3 text-sm font-semibold text-brand-700">
+                    <span className="inline-flex items-center gap-1.5">
+                      <Icon name="check" size={16} /> {t.checklist.itemCount.replace('{n}', String(checklist.items.length))}
+                    </span>
+                    <span className="inline-flex items-center gap-1">
+                      {t.checklist.open} <Icon name="arrow-right" size={16} />
+                    </span>
+                  </p>
+                </Reveal>
+              );
+            })}
+          </ul>
+        </Section>
+      )}
+
       {/* 7. 실제 도움을 받을 수 있는 곳 ----------------------------- */}
-      <Section
-        tone="soft"
-        title={t.home.orgTitle}
-        subtitle={t.home.orgSubtitle}
-        action={viewAll(`/${locale}/organizations`)}
-      >
+      <Section title={t.home.orgTitle} subtitle={t.home.orgSubtitle} action={viewAll(`/${locale}/organizations`)}>
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {orgs.map((org, index) => (
             <Reveal key={org.id} index={index}>
@@ -297,10 +348,21 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </Reveal>
           ))}
         </ul>
+        <Link
+          href={`/${locale}/organizations`}
+          className="lr-link mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold"
+        >
+          <Icon name="map-pin" size={16} /> {t.orgFinder.title}
+        </Link>
       </Section>
 
       {/* 8. 프로그램 및 활동: 선으로 나눈 목록 ---------------------- */}
-      <Section title={t.home.programsTitle} subtitle={t.home.programsSubtitle} action={viewAll(`/${locale}/programs`)}>
+      <Section
+        tone="soft"
+        title={t.home.programsTitle}
+        subtitle={t.home.programsSubtitle}
+        action={viewAll(`/${locale}/programs`)}
+      >
         <ul className="grid gap-8 sm:grid-cols-3">
           {programs.map((program, index) => (
             <Reveal key={program.id} index={index} className="border-t-2 border-navy-900 pt-5">
@@ -315,7 +377,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       {/* 9. 우리에게 도움을 주는 곳 (content/partners.json 에 등록된 기관만) ------ */}
       {getPartners().length > 0 && (
         <Section
-          tone="soft"
           title={t.involved.partnersTitle}
           subtitle={t.involved.partnersSubtitle}
           action={
@@ -328,8 +389,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </Section>
       )}
 
-      {/* 10. 나는 누구인가요?: 청소년 · 대학생 멘토 · 학교/기관 (실제 운영 중인 방법: 권리정보·질문, 이메일 문의) */}
-      <Section title={t.involved.whoTitle} subtitle={t.involved.whoSubtitle}>
+      {/* 10. 참여하기 — 나는 누구인가요?: 청소년 · 대학생 멘토 · 학교/기관 (실제 운영 중인 방법: 권리정보·질문, 이메일 문의) */}
+      <Section tone="soft" title={t.involved.whoTitle} subtitle={t.involved.whoSubtitle}>
         <ul className="grid gap-x-8 gap-y-10 md:grid-cols-3">
           {(
             [
@@ -393,30 +454,38 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </ul>
       </Section>
 
-      {/* 11. SDGs ---------------------------------------------------- */}
-      <Section tone="soft" title={t.home.sdgTitle} subtitle={t.home.sdgSubtitle}>
+      {/* 11. SDGs: 목표와 LINKRIGHTS가 이어지는 이유 ---------------------- */}
+      <Section title={t.home.sdgTitle} subtitle={t.home.sdgSubtitle}>
         <ul className="grid gap-8 sm:grid-cols-2">
-          {about.sdgs.map((sdg) => (
-            <li key={sdg.code} className="flex gap-4">
-              <SdgIcon code={sdg.code} />{' '}
-              <div>
-                <h3 className="lr-h3">
-                  {sdg.code} · {sdg.name}
-                </h3>{' '}
-                <p className="lr-body mt-1">{sdg.body}</p>
-              </div>
-            </li>
-          ))}
+          {about.sdgs.map((sdg) => {
+            const detail = about.sdg_details?.find((item) => item.code === sdg.code);
+            return (
+              <li key={sdg.code} className="flex gap-4">
+                <SdgIcon code={sdg.code} />{' '}
+                <div>
+                  <h3 className="lr-h3">
+                    {sdg.code} · {sdg.name}
+                  </h3>{' '}
+                  {sdg.goal && <p className="mt-0.5 text-sm font-semibold text-brand-700">{sdg.goal}</p>}{' '}
+                  <p className="lr-body mt-1">{sdg.body}</p>
+                  {detail && (
+                    <Link
+                      href={`/${locale}/about#${sdgAnchor(sdg.code)}`}
+                      className="lr-link mt-3 inline-flex items-center gap-1.5 text-[15px] font-semibold"
+                    >
+                      {detail.title} <Icon name="arrow-right" size={16} />
+                    </Link>
+                  )}
+                </div>
+              </li>
+            );
+          })}
         </ul>
-        {about.sdg10_title && (
-          <Link href={`/${locale}/about`} className="lr-link mt-8 inline-flex items-center gap-1.5 text-[15px] font-semibold">
-            {about.sdg10_title} <Icon name="arrow-right" size={16} />
-          </Link>
-        )}
+        {about.sdg_link && <p className="mt-8 max-w-3xl text-[17px] font-semibold leading-relaxed text-ink-900">{about.sdg_link}</p>}
       </Section>
 
       {/* 12. 자주 묻는 질문: 하나의 카드 안에서 선으로 구분 ----------- */}
-      <Section title={t.home.faqTitle} action={viewAll(`/${locale}/faq`)}>
+      <Section tone="soft" title={t.home.faqTitle} action={viewAll(`/${locale}/faq`)}>
         <ul className="lr-card divide-y divide-[var(--color-line)] overflow-hidden">
           {faq.map((item) => (
             <li key={item.id}>

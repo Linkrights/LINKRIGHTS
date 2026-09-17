@@ -156,6 +156,15 @@ function rulebreakingAnswer(body) {
     category: 'not-a-category',
     urgency: 'normal',
     summary: '친구들의 행동은 학교폭력입니다. https://evil.example.com 을 보세요. 010-1234-5678 돈을 안 주는 것은 법을 어기는 일입니다.',
+    checks: [
+      '안내받은 번호 010-1234-5678 이 맞는지 확인해 보세요.',
+      '국가인권위원회에 진정할 수 있는지 확인해 보세요.',
+      '이 일이 학교폭력인가요?',
+      '사장님의 행동은 불법입니다.',
+      '돈을 받기로 한 날짜가 지났는지 확인해 보세요.',
+      '일한 날짜와 시간을 적어 두었는지 확인해 보세요.',
+      '지금 안전한지 확인해 보세요.',
+    ],
     rights: [
       { title: '근거 없는 권리', body: '자료에 없는 권리입니다.', source: 'not-a-document' },
       { title: '출처가 빈 권리', body: '출처 칸이 비었습니다.', source: '' },
@@ -250,6 +259,26 @@ const CASES = [
   { q: 'chủ không trả lương', direct: ['labor-unpaid-wages'] },
   { q: 'my visa is expiring', direct: ['visa-extension'] },
   { q: '老板没给工资', direct: ['labor-unpaid-wages'] },
+  // --- 2026-09-17 사용자 피드백 질문 (자연스러운 문장) ---
+  { q: '알바를 했는데 돈을 못 받았어요.', direct: ['labor-unpaid-wages'], mustNot: ['life-housing', 'visa-status-basics'] },
+  {
+    q: '친구들이 계속 놀려서 학교에 가기 싫어요.',
+    possible: ['education-school-discrimination'],
+    noDirect: true,
+    mustNot: ['human-rights-violence-and-safety'],
+  },
+  { q: '비자가 곧 끝나는데 어떻게 해야 해요?', direct: ['visa-extension'], mustNot: ['education-school-enrollment'] },
+  { q: '병원에 가고 싶은데 건강보험이 없어요.', direct: ['health-hospital-visit', 'health-insurance'] },
+  { q: '학교를 옮기고 싶은데 어떻게 해요?', direct: ['education-school-enrollment'], mustNot: ['education-school-discrimination'] },
+  { q: '학교에서 나만 무시하는 것 같아요', possible: ['education-school-discrimination'], noDirect: true },
+  { q: '알바했는데 돈을 안 줬어요', direct: ['labor-unpaid-wages'] },
+  { q: '사장님이 계약서를 안 줬어요', direct: ['labor-contract'] },
+  { q: '병원에 가고 싶은데 돈이 없어요', must: ['health-insurance'] },
+  { q: '주급이 아직 안 들어왔어요', direct: ['labor-unpaid-wages'], note: '유사 표현(주급 → 월급·급여)으로 등록 키워드를 찾음' },
+  { q: '아르바이트 시작 전에 뭘 봐야 해요?', direct: ['labor-contract'], note: '유사 표현(아르바이트 → 알바)으로 등록 키워드 "알바 시작"을 찾음' },
+  { q: '요즘 너무 힘들어요', noDirect: true, note: '정보가 부족한 질문: 상황을 확정하는 자료 없음' },
+  { q: '운전면허를 따고 싶어요', none: true, note: '등록 자료가 없는 질문' },
+  { q: '페이스북 계정을 잃어버렸어요', none: true, note: '"페이" 같은 다른 낱말 일부로 유사 표현을 넓히지 않음' },
 ];
 
 function verifyEvidence(label, sentDocs, testCase, tiers) {
@@ -336,8 +365,13 @@ function verifyAnswer(label, res) {
     related.map((r) => r.id).join(', '),
   );
 
-  const texts = [a.summary, a.follow_up_question, a.limitations, ...a.rights.flatMap((r) => [r.title, r.body]), ...a.actions.flatMap((x) => [x.title, x.body])].join('\n');
+  const texts = [a.summary, a.follow_up_question, a.limitations, ...a.checks, ...a.rights.flatMap((r) => [r.title, r.body]), ...a.actions.flatMap((x) => [x.title, x.body])].join('\n');
   check(`${label}: 등록되지 않은 링크·번호가 답변에 없음`, !texts.includes('evil.example') && !texts.includes('1234-5678'));
+  check(
+    `${label}: 먼저 확인할 것은 최대 3개, 질문(물음표)이 아닌 문장만`,
+    Array.isArray(a.checks) && a.checks.length <= 3 && a.checks.every((c) => typeof c === 'string' && c && !/[?？]/.test(c)),
+    (a.checks ?? []).join(' / '),
+  );
 
   const shownIds = new Set(body.organizations.map((o) => o.id));
   const shownPhones = new Set(body.organizations.map((o) => o.phone.replace(/\D/g, '')).filter(Boolean));
@@ -347,7 +381,7 @@ function verifyAnswer(label, res) {
     a.actions.every((x) => !hidden.some((o) => sanitize.mentionsOrganization(`${x.title} ${x.body}`, o, shownPhones))),
     a.actions.map((x) => x.title).join(' / '),
   );
-  const otherTexts = [a.summary, a.limitations, a.follow_up_question, ...a.rights.flatMap((r) => [r.title, r.body])];
+  const otherTexts = [a.summary, a.limitations, a.follow_up_question, ...a.checks, ...a.rights.flatMap((r) => [r.title, r.body])];
   check(
     `${label}: 보여주지 않는 기관을 말하는 권리·요약·참고·추가 질문 문장이 없음`,
     otherTexts.every((text) => !hidden.some((o) => sanitize.mentionsOrganization(text, o, shownPhones))),
@@ -514,6 +548,14 @@ async function runDeterministic() {
     check('프롬프트: possible 권리는 조건부·2개까지, 조건 없으면 서버가 지운다는 규칙', system.includes('The server removes rights from possible documents'));
     check('프롬프트: 카드로 보여주지 않는 기관 이름을 쓰지 않는 규칙', system.includes('Do not name any organisation in "summary"'));
     check('프롬프트: 위법 단정 금지 규칙', system.includes('Never say that someone broke the law'));
+    check(
+      '프롬프트: 먼저 확인할 것(checks)은 등록 자료·상황 힌트에서만, 질문이 아닌 문장, 자료에 없는 조건 금지',
+      system.includes('"checks": 0 to 3 facts') && system.includes('not as a question') && system.includes('Never invent conditions'),
+    );
+    check('프롬프트: "기관에 문의하세요"로 끝내지 않고 확인·준비·문의·절차를 구체적으로', system.includes('Be specific, not longer') && system.includes('"Contact an organisation" alone is not a useful step'));
+    check('프롬프트: 정보가 부족하면 판단하기 어렵다고 말하고 질문은 하나만', system.includes('not enough to tell what kind of situation'));
+    check('프롬프트: AI가 대신 판단하지 않는다는 원칙', system.includes('LINKRIGHTS does not decide for the user'));
+    check('프롬프트: 답변 형식에 checks 칸이 필수', res.call.response_format.json_schema.schema.required.includes('checks'));
     check('입력: 상황 힌트와 자료의 관련 단계·찾은 이유가 태그로 들어감', user.includes('<query_understanding') && /<document id="labor-unpaid-wages" relevance="direct">/.test(user) && user.includes('<why_retrieved>'));
 
     const article = {
@@ -673,6 +715,70 @@ async function runDeterministic() {
       }
       check(`권리정보 검색 예시(${locale}): 예시 낱말이 있음`, (messages.search?.examples ?? []).length > 0);
     }
+  }
+
+  // 6-3) 지역 기반 기관 찾기: 고른 지역의 기관 + 전국 기관만, 전국 기관은 어느 지역에서나
+  {
+    const regions = data.load('src/lib/regions.ts');
+    const areaOf = (org) => regions.organizationArea(org);
+    const shownFor = (region) => organizations.filter((org) => regions.servesRegion(areaOf(org), region)).map((org) => org.id);
+    const nationwideIds = organizations.filter((org) => areaOf(org).nationwide).map((org) => org.id);
+    const onlyIn = (key) => organizations.filter((org) => !areaOf(org).nationwide && areaOf(org).regions.includes(key)).map((org) => org.id);
+    const same = (a, b) => JSON.stringify([...a].sort()) === JSON.stringify([...b].sort());
+    check('지역: 지역을 고르지 않으면 모든 기관', shownFor(null).length === organizations.length, String(shownFor(null).length));
+    check('지역: 서울 → 서울 기관 + 전국 기관', onlyIn('서울').length > 0 && same(shownFor('서울'), [...onlyIn('서울'), ...nationwideIds]), shownFor('서울').join(', '));
+    check('지역: 경기 → 경기 기관 + 전국 기관', same(shownFor('경기'), [...onlyIn('경기'), ...nationwideIds]), shownFor('경기').join(', '));
+    check(
+      '지역: 전국 기관(112·119·1388)은 모든 지역에서 보임',
+      regions.REGIONS.length === 17 && regions.REGIONS.every((r) => ['police-112', 'fire-119', 'youth-1388'].every((id) => shownFor(r.key).includes(id))),
+    );
+    check('지역: 서울 전용 기관은 다른 지역(부산)에서 보이지 않음', !shownFor('부산').some((id) => onlyIn('서울').includes(id)));
+    const multi = regions.organizationArea({ region: '서울', regions: ['서울', '경기'] });
+    check(
+      '지역: regions·nationwide 칸을 적으면 그 값을 우선',
+      regions.organizationArea({ region: '서울', nationwide: true }).nationwide === true && regions.servesRegion(multi, '경기') && !regions.servesRegion(multi, '부산'),
+    );
+    check('지역: 지역 이름은 언어별로 표시', regions.regionName('서울', 'en') === 'Seoul' && regions.regionName('서울', 'zh') === '首尔');
+  }
+
+  // 6-4) 유사 표현(검색용) · 자료가 없을 때 보여줄 비슷한 권리정보(링크만)
+  {
+    const search = data.load('src/lib/search.ts');
+    check('유사 표현: "주급" → 같은 묶음의 "월급"으로 넓힘', search.expandQuery('주급이 밀렸어요').includes('월급'));
+    check('유사 표현: 다른 낱말의 일부("페이스북")로는 넓히지 않음', search.expandQuery('페이스북 계정').length === 0);
+    check('유사 표현: "최저임금"을 월급 묶음으로 넓히지 않음', !search.expandQuery('최저임금이 얼마예요').includes('월급'));
+    const via = search.findEvidence('주급이 아직 안 들어왔어요').matches.find((m) => m.article.id === 'labor-unpaid-wages');
+    check('유사 표현: 찾은 이유에 "유사 표현"이 기록됨', Boolean(via && via.reasons.some((r) => r.includes('유사 표현'))), via ? via.reasons.join(' / ') : '없음');
+    const similar = search.findSimilarArticles('은행에서 계좌를 만들어 주지 않아요', 3).map((a) => a.id);
+    check('비슷한 권리정보: 등록 글만, 최대 3개', similar.length <= 3 && similar.every((id) => articleById.has(id)), similar.join(', '));
+    check('비슷한 권리정보: 은행 계좌 질문 → 통장·휴대폰 글', similar.includes('life-bank-and-phone'), similar.join(', '));
+    check('비슷한 권리정보: 흔한 말만 있으면 제안하지 않음', search.findSimilarArticles('어떻게 해야 하나요', 3).length === 0);
+
+    const api = makeApi(() => ({
+      category: 'life', urgency: 'normal', summary: '은행에서 계좌를 만들 수 없었다고 했어요.', checks: [], rights: [],
+      actions: [{ title: '들은 이유를 적어 두기', body: '은행에서 들은 이유를 적어 두세요.' }],
+      organizations: [], sources: [], follow_up_question: '', limitations: '등록된 자료로는 판단하기 어려워요.',
+    }));
+    const res = await api.ask({ question: '운전면허를 따고 싶어요', locale: 'ko' });
+    check('자료 없음: 기관 없음, 비슷한 권리정보 링크는 등록 글만', res.body.evidence === 'none' && res.body.organizations.length === 0 && (res.body.related ?? []).every((r) => articleById.has(r.id)));
+  }
+
+  // 6-5) 체크리스트 데이터 (체크 상태는 체크리스트마다 따로 저장)
+  {
+    const checklists = content.getChecklists();
+    check('체크리스트: 2개 이상 등록', checklists.length >= 2, checklists.map((c) => c.id).join(', '));
+    check('체크리스트: 저장 이름이 체크리스트마다 다름', new Set(checklists.map((c) => `linkrights:checklist:${c.id}`)).size === checklists.length);
+    check('체크리스트: 항목 id가 체크리스트 안에서 겹치지 않음', checklists.every((c) => new Set(c.items.map((i) => i.id)).size === c.items.length));
+    check(
+      '체크리스트: 연결 권리정보·기관은 등록된 것만',
+      checklists.every(
+        (c) =>
+          c.based_on.every((id) => articleById.has(id)) &&
+          c.items.every((i) => !i.article || articleById.has(i.article)) &&
+          c.organizations.every((id) => organizations.some((o) => o.id === id)),
+      ),
+    );
+    check('체크리스트: 4개 언어 제목과 항목', checklists.every((c) => ['ko', 'en', 'zh', 'vi'].every((l) => c.i18n[l]?.title && c.items.every((i) => i.text[l]))));
   }
 
   // 7) 화면 문구 4개 언어

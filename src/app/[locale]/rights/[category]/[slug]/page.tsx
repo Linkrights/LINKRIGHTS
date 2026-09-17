@@ -1,7 +1,8 @@
 // 권리정보 상세 페이지입니다. (예: /ko/rights/labor/labor-unpaid-wages)
-// 화면 구성: 이동 경로·제목·핵심 요약·[읽어주기][저장] → 어려운 말 풀이
-//           → ① 이런 상황인가요 ② 알아두어야 할 권리 ③ 이렇게 해보세요 → 확인해 주세요
-//           → ④ 이것도 궁금하실 수 있어요(등록된 관련 권리정보) → ⑤ 도움받을 곳(+ 전화하기 전 도움말) → 출처 → 내 상황 물어보기
+// 화면 구성: 이동 경로·제목·핵심 요약·출처와 검토일·[읽어주기][저장] → 어려운 말 풀이
+//           → ① 이런 상황인가요 ② 알아두어야 할 권리 ③ 이렇게 해보세요 → 확인해 주세요 → 함께 쓰는 체크리스트
+//           → ④ 이것도 궁금하실 수 있어요(등록된 관련 권리정보) → ⑤ 도움받을 곳(+ 전화하기 전 도움말)
+//           → 출처 → 정보 수정 제안 → 내 상황 물어보기
 
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -19,7 +20,9 @@ import {
   getArticles,
   getArticlesByCategory,
   getCategory,
+  getChecklists,
   getGlossary,
+  getSite,
   isStale,
   resolveArticle,
   resolveOrganizations,
@@ -84,11 +87,18 @@ export default async function ArticlePage({
   if (!article || article.category !== categoryId) notFound();
 
   const t = getMessages(locale);
+  const site = getSite();
   const { body, fallback } = resolveArticle(article, locale);
   const category = getCategory(article.category);
   const orgs = resolveOrganizations(article.organizations);
   const related = relatedArticles(article);
   const stale = isStale(article.reviewed_at);
+  const checklists = getChecklists().filter((checklist) => checklist.based_on.includes(article.id));
+  // 제목 아래에 보여줄 출처 기관 (등록된 출처의 발행기관, 없으면 출처 제목)
+  const publishers = [...new Set(article.sources.map((source) => source.publisher || source.title))];
+  const feedbackHref = `mailto:${site.contactEmail}?subject=${encodeURIComponent(
+    t.rightsMeta.feedbackSubject.replace('{title}', body.title),
+  )}`;
 
   // 본문이 실제로 쓰인 언어 (번역이 없어 한국어를 보여줄 때는 한국어로 읽고 찾습니다)
   const textLocale = fallback ? 'ko' : locale;
@@ -150,9 +160,23 @@ export default async function ArticlePage({
 
           <h1 className="lr-h1 mt-4">{body.title}</h1>
           <p className="lr-lead mt-4">{body.summary}</p>
-          <p className="mt-4 text-sm text-ink-500">
-            {t.common.reviewedAt} {formatDate(article.reviewed_at, locale)}
-          </p>
+
+          {/* 이 정보가 어디에서 왔는지, 언제 검토했는지 */}
+          <dl className="mt-5 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 rounded-[var(--radius-control)] border border-[var(--color-line)] bg-surface-soft px-4 py-3 text-[15px] leading-relaxed">
+            {publishers.length > 0 && (
+              <>
+                <dt className="font-bold text-ink-900">{t.rightsMeta.sourceLabel}</dt>
+                <dd className="min-w-0 text-ink-700">
+                  {publishers.join(' · ')}{' '}
+                  <a href="#sources" className="lr-link whitespace-nowrap text-sm font-semibold">
+                    {t.rightsMeta.sourcesMore}
+                  </a>
+                </dd>
+              </>
+            )}
+            <dt className="font-bold text-ink-900">{t.common.reviewedAt}</dt>
+            <dd className="text-ink-700">{formatDate(article.reviewed_at, locale)}</dd>
+          </dl>
 
           {/* 읽어주기 · 저장 */}
           <div className="mt-5 flex flex-wrap items-start gap-2">
@@ -209,7 +233,7 @@ export default async function ArticlePage({
         {/* ③ 이렇게 해보세요: 순서가 보이도록 번호와 선으로 나눕니다 */}
         <section>
           <h2 className={sectionTitle}>{t.rights.actionsHeading}</h2>
-          <ol className="mt-5 divide-y divide-[var(--color-line)] rounded-[var(--radius-card)] border border-[var(--color-line)] bg-white">
+          <ol className="mt-5 divide-y divide-[var(--color-line)] rounded-[var(--radius-card)] border-2 border-navy-900 bg-white">
             {body.actions.map((item, index) => (
               <li key={item.title} className="flex gap-4 p-5">
                 <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand-600 text-[15px] font-bold text-white">
@@ -226,6 +250,27 @@ export default async function ArticlePage({
         </section>
 
         {body.note && <Notice tone="warn" title={t.rights.noteHeading} body={body.note} />}
+
+        {/* 이 정보를 바탕으로 만든 체크리스트 */}
+        {checklists.length > 0 && (
+          <section className="rounded-[var(--radius-card)] border border-[var(--color-line)] bg-white p-5 sm:p-6">
+            <h2 className="flex items-center gap-2 text-lg font-extrabold text-ink-900">
+              <Icon name="check" size={20} className="text-brand-600" /> {t.checklist.relatedTitle}
+            </h2>
+            <ul className="mt-3 space-y-2">
+              {checklists.map((checklist) => (
+                <li key={checklist.id}>
+                  <Link
+                    href={`/${locale}/checklists/${checklist.id}`}
+                    className="lr-link inline-flex items-center gap-1.5 text-[15px] font-semibold"
+                  >
+                    {(checklist.i18n[locale] ?? checklist.i18n.ko).title} <Icon name="arrow-right" size={16} />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         {/* ④ 이것도 궁금하실 수 있어요: 등록된 관련 권리정보만 */}
         {related.length > 0 && (
@@ -252,6 +297,12 @@ export default async function ArticlePage({
                 </li>
               ))}
             </ul>
+            <Link
+              href={`/${locale}/organizations`}
+              className="lr-link mt-4 inline-flex items-center gap-1.5 text-[15px] font-semibold"
+            >
+              <Icon name="map-pin" size={16} /> {t.orgFinder.title}
+            </Link>
             {/* 말하기 쉬운 분야 이름만 씁니다 (예: "일·알바 / 근로권" → "일·알바") */}
             <CallScript
               t={t}
@@ -261,14 +312,15 @@ export default async function ArticlePage({
           </section>
         )}
 
-        {/* 출처 */}
+        {/* 출처: 발행기관 · 제목(공식 링크) · 검토일 */}
         {article.sources.length > 0 && (
-          <section className="border-t border-[var(--color-line)] pt-8">
-            <h2 className="text-base font-bold text-ink-900">{t.rights.sourcesHeading}</h2>
-            <ul className="mt-3 space-y-2">
+          <section id="sources" className="scroll-mt-24 border-t border-[var(--color-line)] pt-8">
+            <h2 className="text-lg font-extrabold text-ink-900 sm:text-xl">{t.rights.sourcesHeading}</h2>
+            <ul className="mt-4 space-y-3">
               {article.sources.map((source) => (
                 <li key={source.url} className="text-[15px] leading-relaxed text-ink-700">
-                  {source.publisher && <span className="text-ink-500">{source.publisher} · </span>}
+                  {source.publisher && <span className="font-bold text-ink-900">{source.publisher}</span>}{' '}
+                  {source.publisher && <span className="text-ink-300">·</span>}{' '}
                   <a
                     href={source.url}
                     target="_blank"
@@ -281,8 +333,20 @@ export default async function ArticlePage({
                 </li>
               ))}
             </ul>
+            <p className="mt-4 text-[15px] font-semibold text-ink-700">
+              {t.common.reviewedAt} {formatDate(article.reviewed_at, locale)}
+            </p>
           </section>
         )}
+
+        {/* 정보 수정 제안: 틀리거나 오래된 정보를 알려주는 창구 (이메일) */}
+        <section className="rounded-[var(--radius-card)] border border-[var(--color-line)] bg-surface-soft p-5 sm:p-6">
+          <h2 className="text-base font-bold text-ink-900">{t.rightsMeta.feedbackTitle}</h2>
+          <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{t.rightsMeta.feedbackBody}</p>
+          <a href={feedbackHref} className="lr-btn lr-btn-ghost lr-btn-sm lr-press mt-3">
+            {t.rightsMeta.feedbackCta}
+          </a>
+        </section>
 
         {/* 내 상황 물어보기 */}
         <div className="lr-panel border-brand-100 bg-brand-50 p-6 sm:p-8">

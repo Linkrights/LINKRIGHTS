@@ -11,7 +11,13 @@ const FALLBACK_COLORS: Record<string, string> = {
   '10': 'var(--color-sdg10)',
 };
 
-export function SdgIcon({ code }: { code: string }) {
+/** 소개 페이지에서 각 목표 설명으로 바로 가는 주소 조각 (예: SDG 4 → sdg-4) */
+export function sdgAnchor(code: string) {
+  return `sdg-${code.replace(/\D/g, '')}`;
+}
+
+/** size: 'md' 목표 목록용(기본), 'sm' 설명 제목 옆 작은 아이콘 */
+export function SdgIcon({ code, size = 'md' }: { code: string; size?: 'md' | 'sm' }) {
   const number = code.replace(/\D/g, '');
   const fileName = `sdg-${number}.png`;
   const hasImage = fs.existsSync(path.join(process.cwd(), 'public', 'images', 'sdg', fileName));
@@ -25,14 +31,14 @@ export function SdgIcon({ code }: { code: string }) {
         width={80}
         height={80}
         loading="lazy"
-        className="h-16 w-16 shrink-0 sm:h-20 sm:w-20"
+        className={size === 'sm' ? 'h-10 w-10 shrink-0 sm:h-12 sm:w-12' : 'h-16 w-16 shrink-0 sm:h-20 sm:w-20'}
       />
     );
   }
 
   return (
     <span
-      className="grid h-12 w-12 shrink-0 place-items-center rounded-[var(--radius-control)] text-base font-extrabold text-white"
+      className={`grid shrink-0 place-items-center ${size === 'sm' ? 'h-10 w-10' : 'h-12 w-12'} rounded-[var(--radius-control)] text-base font-extrabold text-white`}
       style={{ background: FALLBACK_COLORS[number] ?? 'var(--color-brand-600)' }}
     >
       {number}

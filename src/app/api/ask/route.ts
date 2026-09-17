@@ -45,7 +45,7 @@ import {
   scrubBlocks,
   type Allowlist,
 } from '@/lib/sanitize';
-import { findEvidence, fallbackArticles } from '@/lib/search';
+import { findEvidence, findSimilarArticles, fallbackArticles } from '@/lib/search';
 import type {
   AiAnswer,
   AiRight,
@@ -80,6 +80,9 @@ const MAX_POSSIBLE_ORGANIZATIONS = 1;
 const MAX_POSSIBLE_RIGHTS = 2;
 /** 답변에 쓰지 않았지만 함께 볼 수 있는 등록 권리정보 링크 수 */
 const MAX_RELATED = 3;
+/** "먼저 확인할 것" 최대 개수와 한 항목의 최대 길이 */
+const MAX_CHECKS = 3;
+const MAX_CHECK_LENGTH = 200;
 /**
  * possible 자료에서 AI에게 넘기는 기관 분류.
  * 사용자가 확인하지 않은 조건에 기대어 전문 기관(인권위, 법률, 이주민 재단 등)으로 서둘러 연결하지 않도록,
@@ -321,10 +324,21 @@ export async function POST(request: Request) {
     .slice(0, MAX_RIGHTS);
   const followUp = firstQuestion(typeof raw.follow_up_question === 'string' ? raw.follow_up_question : '');
 
+  // 먼저 확인할 것: 질문이 아닌 짧은 문장만, 최대 3개. (사용자에게 묻는 질문은 follow_up_question 하나뿐입니다)
+  // 보여주지 않는 기관을 말하거나 위법을 단정하는 문장, 등록되지 않은 번호·링크는 다른 칸과 똑같이 지웁니다.
+  const checks = (Array.isArray(raw.checks) ? raw.checks : [])
+    .filter((item): item is string => typeof item === 'string')
+    .map((item) => item.trim().slice(0, MAX_CHECK_LENGTH))
+    .filter((item) => item && !/[?？]/.test(item))
+    .map((item) => scrub(withoutHidden(item), allow))
+    .filter(Boolean)
+    .slice(0, MAX_CHECKS);
+
   const answer: AiAnswer = {
     category: categoryIds.includes(raw.category) ? raw.category : 'other',
     urgency: urgent ? 'urgent' : 'normal',
     summary: scrub(withoutHidden(typeof raw.summary === 'string' ? raw.summary : ''), allow),
+    checks,
     rights: scrubBlocks(visibleRights, allow),
     actions: scrubBlocks(actions, allow),
     organizations: orgIds,
@@ -358,6 +372,18 @@ export async function POST(request: Request) {
       title: resolveArticle(article, locale).body.title,
       href: `/${locale}/rights/${article.category}/${article.id}`,
     }));
+  // 근거 자료를 하나도 쓰지 못했다면, 질문과 낱말이 비슷한 등록 권리정보를 "링크로만" 더 보여줍니다. (근거로 쓰지 않습니다)
+  if (usedArticles.length === 0 && related.length < MAX_RELATED) {
+    for (const article of findSimilarArticles(searchText, MAX_RELATED)) {
+      if (related.length >= MAX_RELATED) break;
+      if (usedIds.has(article.id) || related.some((item) => item.id === article.id)) continue;
+      related.push({
+        id: article.id,
+        title: resolveArticle(article, locale).body.title,
+        href: `/${locale}/rights/${article.category}/${article.id}`,
+      });
+    }
+  }
 
   return json({
     ok: true,

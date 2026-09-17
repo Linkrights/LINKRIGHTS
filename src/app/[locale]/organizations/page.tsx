@@ -1,13 +1,17 @@
 // 도움받을 수 있는 기관 목록 페이지입니다.
-// 기관 정보는 content/organizations.json 에 등록된 것만 보여주고, 위쪽에 "전화하기 전에 이렇게 말해보세요" 도움말을 둡니다.
+// 기관 정보는 content/organizations.json 에 등록된 것만 보여줍니다.
+// "내 지역 선택하기"로 지역을 고르면 그 지역 기관과 전국 기관만 보여줍니다. (OrgDirectory)
+// 위쪽에 "전화하기 전에 이렇게 말해보세요" 도움말을 둡니다.
 
 import type { Metadata } from 'next';
 import { CallScript } from '@/components/CallScript';
 import { OrgCard } from '@/components/OrgCard';
+import { OrgDirectory, type DirectoryGroup } from '@/components/OrgDirectory';
 import { Reveal } from '@/components/Reveal';
-import { PageHeader, Section } from '@/components/Section';
+import { PageHeader } from '@/components/Section';
 import { getOrganizations } from '@/lib/content';
-import { getMessages, toLocale } from '@/lib/i18n';
+import { getMessages, pick, toLocale } from '@/lib/i18n';
+import { REGIONS, organizationArea } from '@/lib/regions';
 
 const ORDER = ['emergency', 'youth', 'migrant', 'public', 'legal'] as const;
 
@@ -24,52 +28,46 @@ export default async function OrganizationsPage({ params }: { params: Promise<{ 
   const t = getMessages(locale);
   const organizations = getOrganizations();
 
+  const groups: DirectoryGroup[] = ORDER.map((key) => ({
+    key,
+    title: t.organizations.categories[key],
+    items: organizations
+      .filter((org) => org.category === key)
+      .map((org, index) => {
+        const area = organizationArea(org);
+        return {
+          id: org.id,
+          nationwide: area.nationwide,
+          regions: area.regions,
+          // 긴급 연락처는 움직임 없이 처음부터 바로 보여줍니다.
+          card:
+            key === 'emergency' ? (
+              <li>
+                <OrgCard org={org} locale={locale} />
+              </li>
+            ) : (
+              <Reveal index={index}>
+                <OrgCard org={org} locale={locale} />
+              </Reveal>
+            ),
+        };
+      }),
+  })).filter((group) => group.items.length > 0);
+
   return (
     <>
       <PageHeader title={t.organizations.title} subtitle={t.organizations.subtitle} />
 
-      {/* 분류 바로가기 */}
-      <div className="border-b border-[var(--color-line)] bg-white">
-        <div className="lr-container flex flex-wrap gap-2 py-4">
-          {ORDER.filter((key) => organizations.some((org) => org.category === key)).map((key) => (
-            <a
-              key={key}
-              href={`#${key}`}
-              className="rounded-full border border-[var(--color-line)] bg-white px-4 py-2 text-[15px] font-semibold text-ink-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
-            >
-              {t.organizations.categories[key]}
-            </a>
-          ))}
-        </div>
-      </div>
+      <OrgDirectory
+        groups={groups}
+        regions={REGIONS.map((region) => ({ key: region.key, label: pick(region.name, locale) }))}
+        labels={t.orgFinder}
+      />
 
       {/* 전화하기 전 도움말 (참고용) */}
-      <div className="lr-container pt-10 sm:pt-12">
+      <div className="lr-container pb-14">
         <CallScript t={t} className="max-w-3xl" />
       </div>
-
-      {ORDER.map((key) => {
-        const group = organizations.filter((org) => org.category === key);
-        if (group.length === 0) return null;
-        return (
-          <Section key={key} id={key} title={t.organizations.categories[key]}>
-            <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {group.map((org, index) =>
-                // 긴급 연락처는 움직임 없이 처음부터 바로 보여줍니다.
-                key === 'emergency' ? (
-                  <li key={org.id}>
-                    <OrgCard org={org} locale={locale} />
-                  </li>
-                ) : (
-                  <Reveal key={org.id} index={index}>
-                    <OrgCard org={org} locale={locale} />
-                  </Reveal>
-                ),
-              )}
-            </ul>
-          </Section>
-        );
-      })}
     </>
   );
 }

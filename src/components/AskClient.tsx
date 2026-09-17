@@ -7,9 +7,11 @@
 // 최근 대화(질문 + 답변)를 함께 보내 앞의 내용에 이어서 답하게 합니다.
 // "새 질문"을 누르면 대화를 모두 지우고 처음 상태로 돌아갑니다.
 //
-// 답변 칸 순서 (먼저 돕고, 질문은 마지막에 하나만):
-//   지금 상황을 보면 → 내가 알아야 할 권리 → 지금 할 수 있는 일 → 도움받을 곳
-//   → (자료 상태 안내) → 함께 볼 수 있는 권리정보 → 더 정확히 알고 싶다면 → 참고해 주세요 → 확인한 정보
+// 답변 칸 순서 (내 상황 → 확인 → 권리 → 행동 → 도움 → 질문 하나 → 참고 자료):
+//   ① 지금 상황 ② 먼저 확인할 것 ③ 내가 알아야 할 권리 ④ 지금 할 수 있는 일(가장 눈에 띄게)
+//   ⑤ 도움받을 수 있는 곳 ⑥ 한 가지 확인 질문 ⑦ 참고 자료(함께 볼 권리정보·참고·확인한 정보)
+// 내용이 없는 칸은 보여주지 않고, 번호는 보이는 칸끼리 차례로 매깁니다.
+// 등록 자료를 찾지 못했거나 답변을 만들지 못했으면 "다음에 할 수 있는 일"(NoResultHelp)을 보여줍니다.
 
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -17,12 +19,13 @@ import { PENDING_QUESTION_KEY } from './AskBox';
 import { EmergencyCard } from './EmergencyCard';
 import { Glossary } from './Glossary';
 import { Icon } from './Icon';
+import { NoResultHelp } from './NoResultHelp';
 import { OrgCard } from './OrgCard';
 import { PrivacyNotice } from './PrivacyNotice';
 import { findPersonalInfo, removePersonalInfo } from './privacy-detect';
 import { matchGlossary, type GlossaryTerm } from '@/lib/glossary';
 import { formatDate, getMessages, type Locale, type Messages } from '@/lib/i18n';
-import type { AskApiRequest, AskApiResponse, AskHistoryTurn } from '@/lib/types';
+import type { AskApiRequest, AskApiResponse, AskHistoryTurn, Organization } from '@/lib/types';
 
 const MAX_LENGTH = 500;
 /** 추가 질문 때 함께 보내는 최근 대화 수 (서버에서도 같은 수로 한 번 더 제한합니다) */
@@ -83,18 +86,31 @@ function StepNumber({ index }: { index: number }) {
   );
 }
 
-/** 답변 안의 칸 제목. 권리와 할 일은 더 크게 보여줍니다. */
-function SectionTitle({ icon, children, strong = false }: { icon?: 'shield' | 'check'; children: string; strong?: boolean }) {
-  if (!strong) return <h3 className="text-base font-bold text-ink-900">{children}</h3>;
+/** 답변 칸 제목. 칸 번호(①②…)를 함께 보여줍니다. */
+function PartHeading({
+  n,
+  title,
+  strong = false,
+  level = 'h3',
+}: {
+  n: number;
+  title: string;
+  strong?: boolean;
+  level?: 'h2' | 'h3';
+}) {
+  const Tag = level;
   return (
-    <h3 className="flex items-center gap-2.5 text-lg font-extrabold text-ink-900 sm:text-xl">
-      {icon && (
-        <span className="lr-icon-badge h-9 w-9">
-          <Icon name={icon} size={18} />
-        </span>
-      )}{' '}
-      {children}
-    </h3>
+    <Tag
+      className={`flex items-center gap-2.5 text-ink-900 ${strong ? 'text-lg font-extrabold sm:text-xl' : 'text-base font-bold'}`}
+    >
+      <span
+        aria-hidden="true"
+        className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-navy-900 text-[13px] font-bold text-white"
+      >
+        {n}
+      </span>{' '}
+      {title}
+    </Tag>
   );
 }
 
@@ -104,52 +120,80 @@ function ResultView({
   locale,
   t,
   onNewQuestion,
+  onRetry,
   onAnswerFollowUp,
   glossaryTerms = [],
+  generalHelp = [],
+  categoryNames = {},
 }: {
   result: AskApiResponse;
   locale: Locale;
   t: Messages;
   onNewQuestion: () => void;
+  /** 자료를 찾지 못했거나 답변을 만들지 못했을 때: 적었던 질문을 남겨 두고 고쳐 쓰게 합니다. */
+  onRetry: () => void;
   /** 가장 최근 답변에만 넘깁니다. AI의 확인 질문에 바로 답할 수 있게 추가 질문 입력창으로 이동합니다. */
   onAnswerFollowUp?: () => void;
   /** 쉬운 말 풀이 용어 (content/glossary.json). 답변에 나온 용어만 골라 옆에 보여주며, 답변 내용은 바꾸지 않습니다. */
   glossaryTerms?: GlossaryTerm[];
+  /** 누구나 이용할 수 있는 청소년 상담 기관 (등록 기관, 자료가 없을 때만 보여줌) */
+  generalHelp?: Organization[];
+  /** 분야 id → 이름 (자료가 없을 때 분야 링크에 사용) */
+  categoryNames?: Record<string, string>;
 }) {
   const errorMessage = errorMessageOf(result, t);
-  const glossary =
-    result.ok && result.mode === 'ai' && result.answer
-      ? matchGlossary(
-          glossaryTerms,
-          [
-            result.answer.summary,
-            ...result.answer.rights.flatMap((item) => [item.title, item.body]),
-            ...result.answer.actions.flatMap((item) => [item.title, item.body]),
-            result.answer.limitations,
-          ],
-          locale,
-          locale,
-        )
-      : [];
+  const a = t.answerUi;
+  const answer = result.ok && result.mode === 'ai' ? result.answer : null;
+  const glossary = answer
+    ? matchGlossary(
+        glossaryTerms,
+        [
+          answer.summary,
+          ...(answer.checks ?? []),
+          ...answer.rights.flatMap((item) => [item.title, item.body]),
+          ...answer.actions.flatMap((item) => [item.title, item.body]),
+          answer.limitations,
+        ],
+        locale,
+        locale,
+      )
+    : [];
+
+  // 보이는 칸끼리 번호를 매깁니다.
+  const parts: string[] = [];
+  if (answer && result.ok) {
+    parts.push('situation');
+    if ((answer.checks ?? []).length > 0) parts.push('checks');
+    if (answer.rights.length > 0) parts.push('rights');
+    if (answer.actions.length > 0) parts.push('actions');
+    if (result.organizations.length > 0) parts.push('orgs');
+    if (answer.follow_up_question) parts.push('followUp');
+    parts.push('references');
+  }
+  const n = (key: string) => parts.indexOf(key) + 1;
+  const noEvidence = result.ok && result.evidence === 'none';
+  const category =
+    answer && categoryNames[answer.category]
+      ? { href: `/${locale}/rights/${answer.category}`, name: categoryNames[answer.category] }
+      : undefined;
 
   return (
     <>
       {errorMessage && (
-        <div className="lr-card lr-appear border-[var(--color-warm-500)] bg-warm-100 p-5 sm:p-6">
-          <p className="text-base font-semibold text-ink-900">{errorMessage}</p>
-          {!result.ok && result.fallback && result.fallback.length > 0 && (
-            <>
-              <p className="mt-4 text-sm font-bold text-ink-900">{t.ask.fallbackTitle}</p>
-              <ul className="mt-2 space-y-1.5">
-                {result.fallback.map((item) => (
-                  <li key={item.id}>
-                    <Link href={item.href} className="lr-link text-[15px]">
-                      {item.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </>
+        <div className="lr-appear space-y-4">
+          <div className="lr-card border-[var(--color-warm-500)] bg-warm-100 p-5 sm:p-6">
+            <p className="text-base font-semibold text-ink-900">{errorMessage}</p>
+          </div>
+          {/* 답변을 만들지 못했을 때도 다음에 할 수 있는 일을 보여줍니다. (입력 오류는 제외) */}
+          {!result.ok && result.error !== 'too_long' && result.error !== 'empty' && (
+            <NoResultHelp
+              t={t}
+              locale={locale}
+              title={a.errorTitle}
+              links={result.fallback ?? []}
+              generalHelp={generalHelp}
+              onRetry={onRetry}
+            />
           )}
         </div>
       )}
@@ -165,25 +209,44 @@ function ResultView({
         />
       )}
 
-      {result.ok && result.mode === 'ai' && result.answer && (
+      {result.ok && answer && (
         <article className="lr-card lr-appear overflow-hidden">
-          {/* 지금 상황을 보면 */}
+          {/* ① 지금 상황 */}
           <div className="border-b border-[var(--color-line)] bg-surface-soft px-5 py-5 sm:px-7 sm:py-6">
-            <h2 className="flex items-center gap-2 text-sm font-bold text-brand-700">
-              <Icon name="sparkles" size={16} /> {t.ask.resultSituation}
-            </h2>{' '}
-            <p className="mt-2 text-[17px] leading-relaxed text-ink-900">{result.answer.summary}</p>
+            <PartHeading n={n('situation')} title={a.situation} level="h2" />
+            <p className="mt-2.5 text-[17px] leading-relaxed text-ink-900">{answer.summary}</p>
+            {result.evidence === 'possible' && (
+              <p className="mt-3 flex items-start gap-2 text-sm leading-relaxed text-ink-500">
+                <Icon name="shield" size={16} className="mt-0.5 shrink-0 text-brand-600" />{' '}
+                <span>{t.ask.evidencePossibleNote}</span>
+              </p>
+            )}
           </div>
 
           <div className="space-y-9 px-5 py-6 sm:px-7 sm:py-8">
-            {/* 내가 알아야 할 권리 (근거 자료가 있을 때만) */}
-            {result.answer.rights.length > 0 && (
+            {/* ② 먼저 확인할 것 */}
+            {(answer.checks ?? []).length > 0 && (
               <section>
-                <SectionTitle icon="shield" strong>
-                  {t.ask.resultRights}
-                </SectionTitle>
+                <PartHeading n={n('checks')} title={a.checks} />
+                <ul className="mt-3 space-y-2">
+                  {(answer.checks ?? []).map((item, index) => (
+                    <li
+                      key={index}
+                      className="flex gap-2.5 rounded-[var(--radius-control)] border border-[var(--color-line)] bg-white px-4 py-3 text-[15px] leading-relaxed text-ink-900"
+                    >
+                      <Icon name="check" size={18} className="mt-0.5 shrink-0 text-brand-600" /> <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* ③ 내가 알아야 할 권리 (근거 자료가 있을 때만) */}
+            {answer.rights.length > 0 && (
+              <section>
+                <PartHeading n={n('rights')} title={a.rights} />
                 <ul className="mt-4 space-y-3">
-                  {result.answer.rights.map((item, index) => (
+                  {answer.rights.map((item, index) => (
                     <li key={index} className="lr-callout">
                       <p className="text-base font-bold text-ink-900">{item.title}</p>{' '}
                       <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{item.body}</p>
@@ -193,14 +256,13 @@ function ResultView({
               </section>
             )}
 
-            {/* 지금 할 수 있는 일 */}
-            {result.answer.actions.length > 0 && (
-              <section>
-                <SectionTitle icon="check" strong>
-                  {t.ask.resultActions}
-                </SectionTitle>
+            {/* ④ 지금 할 수 있는 일: 답변에서 가장 중요한 칸이므로 가장 눈에 띄게 */}
+            {answer.actions.length > 0 && (
+              <section className="rounded-[var(--radius-card)] border-2 border-navy-900 bg-white p-5 sm:p-6">
+                <PartHeading n={n('actions')} title={a.actions} strong />
+                <p className="mt-1.5 text-sm text-ink-500">{a.actionsNote}</p>
                 <ol className="mt-4 space-y-4">
-                  {result.answer.actions.map((item, index) => (
+                  {answer.actions.map((item, index) => (
                     <li key={index} className="flex gap-3.5">
                       <StepNumber index={index} />{' '}
                       <span className="min-w-0 pt-0.5">
@@ -216,10 +278,24 @@ function ResultView({
             {/* 어려운 말 풀이: 답변에 나온 전문 용어 옆에 쉬운 설명 (등록 용어만, 새로운 근거나 내용은 더하지 않습니다) */}
             <Glossary items={glossary} title={t.glossary.title} />
 
-            {/* 도움받을 곳 (근거 자료와 연결된 기관이 있을 때만) */}
+            {/* 등록 자료를 찾지 못했을 때: 비슷한 권리정보·분야·지역별 도움받을 곳·청소년 상담·다시 묻기 */}
+            {noEvidence && (
+              <NoResultHelp
+                t={t}
+                locale={locale}
+                title={a.noEvidenceTitle}
+                body={a.noEvidenceBody}
+                links={result.related ?? []}
+                category={category}
+                generalHelp={generalHelp}
+                onRetry={onRetry}
+              />
+            )}
+
+            {/* ⑤ 도움받을 수 있는 곳 (근거 자료와 연결된 기관이 있을 때만) */}
             {result.organizations.length > 0 && (
               <section>
-                <SectionTitle>{t.ask.resultOrgs}</SectionTitle>
+                <PartHeading n={n('orgs')} title={a.orgs} />
                 <div className="mt-3 grid gap-3 sm:grid-cols-2">
                   {result.organizations.map((org) => (
                     <OrgCard key={org.id} org={org} locale={locale} compact />
@@ -228,46 +304,12 @@ function ResultView({
               </section>
             )}
 
-            {/* 자료 상태 안내
-                - none: 등록된 권리정보 중 이 상황에 맞는 자료가 없을 때 (권리·기관 없이 할 수 있는 일만)
-                - possible: 짧은 설명만으로는 확실하지 않아, 조건이 맞을 때만 해당되는 자료로 안내했을 때 */}
-            {result.evidence === 'none' && (
-              <section className="lr-callout border-l-[var(--color-ink-300)] bg-surface-soft">
-                <h3 className="text-[15px] font-bold text-ink-900">{t.ask.evidenceNoneTitle}</h3>{' '}
-                <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{t.ask.evidenceNoneBody}</p>{' '}
-                <Link href={`/${locale}/rights`} className="lr-link mt-2 inline-flex items-center gap-1 text-[15px] font-semibold">
-                  {t.ask.searchRightsCta} <Icon name="arrow-right" size={16} />
-                </Link>
-              </section>
-            )}
-            {result.evidence === 'possible' && (
-              <p className="flex items-start gap-2 text-sm leading-relaxed text-ink-500">
-                <Icon name="shield" size={16} className="mt-0.5 shrink-0 text-brand-600" />{' '}
-                <span>{t.ask.evidencePossibleNote}</span>
-              </p>
-            )}
-
-            {/* 상황에 따라 함께 볼 수 있는 권리정보 (등록 페이지 링크만) */}
-            {result.related && result.related.length > 0 && (
-              <section>
-                <SectionTitle>{t.ask.relatedTitle}</SectionTitle>
-                <ul className="mt-3 space-y-2">
-                  {result.related.map((item) => (
-                    <li key={item.id}>
-                      <Link href={item.href} className="lr-link inline-flex items-center gap-1.5 text-[15px] font-semibold">
-                        {item.title} <Icon name="arrow-right" size={16} />
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-
-            {/* 더 정확히 알고 싶다면: 안내를 모두 한 뒤, 정말 필요할 때만 질문 하나 */}
-            {result.answer.follow_up_question && (
-              <section className="rounded-[var(--radius-control)] border border-brand-200 bg-brand-50 p-4">
-                <h3 className="text-[15px] font-bold text-ink-900">{t.ask.resultFollowUp}</h3>{' '}
-                <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{result.answer.follow_up_question}</p>
+            {/* ⑥ 한 가지 확인 질문: 안내를 모두 한 뒤, 정말 필요할 때만 질문 하나 */}
+            {answer.follow_up_question && (
+              <section className="rounded-[var(--radius-control)] border border-brand-200 bg-brand-50 p-4 sm:p-5">
+                <PartHeading n={n('followUp')} title={a.followUp} />
+                <p className="mt-2 text-base font-semibold leading-relaxed text-ink-900">{answer.follow_up_question}</p>
+                <p className="mt-1 text-sm text-ink-500">{a.followUpNote}</p>
                 {onAnswerFollowUp && (
                   <button type="button" onClick={onAnswerFollowUp} className="lr-btn lr-btn-ghost lr-btn-sm mt-3">
                     {t.ask.answerFollowUp} <Icon name="arrow-right" size={16} />
@@ -276,54 +318,73 @@ function ResultView({
               </section>
             )}
 
-            {/* 참고해 주세요 */}
-            {result.answer.limitations && (
-              <section className="rounded-[var(--radius-control)] border border-[var(--color-warm-500)] bg-warm-100 p-4">
-                <h3 className="text-[15px] font-bold text-ink-900">{t.ask.resultLimitations}</h3>{' '}
-                <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{result.answer.limitations}</p>
-              </section>
-            )}
+            {/* ⑦ 참고 자료 */}
+            <section className="space-y-5 border-t border-[var(--color-line)] pt-6">
+              <PartHeading n={n('references')} title={a.references} />
 
-            {/* 확인한 정보: 실제로 사용한 등록 자료의 제목, 검토일, 발행기관과 공식 링크 */}
-            {result.sources.length > 0 && (
-              <section className="border-t border-[var(--color-line)] pt-6">
-                <SectionTitle>{t.ask.resultSources}</SectionTitle>
-                <ul className="mt-3 space-y-3">
-                  {result.sources.map((source) => (
-                    <li key={source.id} className="text-[15px]">
-                      <Link href={source.href} className="lr-link font-semibold">
-                        {source.title}
-                      </Link>{' '}
-                      <p className="mt-0.5 text-[13px] text-ink-500">
-                        {t.common.reviewedAt} {formatDate(source.reviewed_at, locale)}
-                      </p>
-                      {source.sources.length > 0 && (
-                        <ul className="mt-1 space-y-0.5">
-                          {source.sources.map((official) => (
-                            <li key={official.url} className="text-[13px] leading-relaxed text-ink-500">
-                              {official.publisher && <span>{official.publisher} · </span>}
-                              <a
-                                href={official.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label={`${official.title} (${t.common.openInNew})`}
-                                className="underline underline-offset-2 hover:text-brand-700"
-                              >
-                                {official.title}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
+              {/* 상황에 따라 함께 볼 수 있는 권리정보 (등록 페이지 링크만) */}
+              {!noEvidence && result.related && result.related.length > 0 && (
+                <div>
+                  <p className="text-[15px] font-bold text-ink-900">{t.ask.relatedTitle}</p>
+                  <ul className="mt-2 space-y-2">
+                    {result.related.map((item) => (
+                      <li key={item.id}>
+                        <Link href={item.href} className="lr-link inline-flex items-center gap-1.5 text-[15px] font-semibold">
+                          {item.title} <Icon name="arrow-right" size={16} />
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
-            <p className="border-t border-[var(--color-line)] pt-5 text-[13px] leading-relaxed text-ink-500">
-              {t.ask.disclaimer}
-            </p>
+              {/* 참고해 주세요 */}
+              {answer.limitations && (
+                <div className="rounded-[var(--radius-control)] border border-[var(--color-warm-500)] bg-warm-100 p-4">
+                  <p className="text-[15px] font-bold text-ink-900">{t.ask.resultLimitations}</p>{' '}
+                  <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{answer.limitations}</p>
+                </div>
+              )}
+
+              {/* 확인한 정보: 실제로 사용한 등록 자료의 제목, 검토일, 발행기관과 공식 링크 */}
+              {result.sources.length > 0 && (
+                <div>
+                  <p className="text-[15px] font-bold text-ink-900">{t.ask.resultSources}</p>
+                  <ul className="mt-2 space-y-3">
+                    {result.sources.map((source) => (
+                      <li key={source.id} className="text-[15px]">
+                        <Link href={source.href} className="lr-link font-semibold">
+                          {source.title}
+                        </Link>{' '}
+                        <p className="mt-0.5 text-[13px] text-ink-500">
+                          {t.common.reviewedAt} {formatDate(source.reviewed_at, locale)}
+                        </p>
+                        {source.sources.length > 0 && (
+                          <ul className="mt-1 space-y-0.5">
+                            {source.sources.map((official) => (
+                              <li key={official.url} className="text-[13px] leading-relaxed text-ink-500">
+                                {official.publisher && <span>{official.publisher} · </span>}
+                                <a
+                                  href={official.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  aria-label={`${official.title} (${t.common.openInNew})`}
+                                  className="underline underline-offset-2 hover:text-brand-700"
+                                >
+                                  {official.title}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <p className="text-[13px] leading-relaxed text-ink-500">{t.ask.disclaimer}</p>
+            </section>
           </div>
         </article>
       )}
@@ -346,6 +407,8 @@ export function AskClient({
   initialQuestion,
   fallbackLinks,
   glossaryTerms = [],
+  generalHelp = [],
+  categoryNames = {},
 }: {
   locale: Locale;
   examples: string[];
@@ -353,6 +416,10 @@ export function AskClient({
   fallbackLinks: FallbackLink[];
   /** 쉬운 말 풀이 용어 (content/glossary.json) */
   glossaryTerms?: GlossaryTerm[];
+  /** 누구나 이용할 수 있는 청소년 상담 기관 (content/organizations.json 의 청소년 상담 기관) */
+  generalHelp?: Organization[];
+  /** 분야 id → 이름 */
+  categoryNames?: Record<string, string>;
 }) {
   const t = getMessages(locale);
   const [question, setQuestion] = useState(initialQuestion);
@@ -412,7 +479,17 @@ export function AskClient({
     setTurns([]);
     setQuestion('');
     setFollowUp('');
-    questionRef.current?.focus();
+    questionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    questionRef.current?.focus({ preventScroll: true });
+  }
+
+  /** 답을 찾지 못했을 때: 결과만 지우고 적었던 질문은 남겨 둔 채 입력창으로 이동해 고쳐 쓸 수 있게 합니다. */
+  function retryQuestion() {
+    setTurns([]);
+    setFollowUp('');
+    questionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    questionRef.current?.focus({ preventScroll: true });
+    questionRef.current?.select();
   }
 
   /** AI의 확인 질문에 답할 수 있도록 추가 질문 입력창으로 이동합니다. */
@@ -587,10 +664,13 @@ export function AskClient({
             )}
             <ResultView
               glossaryTerms={glossaryTerms}
+              generalHelp={generalHelp}
+              categoryNames={categoryNames}
               result={turn.result}
               locale={locale}
               t={t}
               onNewQuestion={startNewQuestion}
+              onRetry={retryQuestion}
               onAnswerFollowUp={index === turns.length - 1 && canFollowUp && !loading ? focusFollowUp : undefined}
             />
           </div>

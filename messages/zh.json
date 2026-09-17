@@ -208,6 +208,90 @@
     "nationwide": "全国",
     "map": "查看地图"
   },
+  "answerUi": {
+    "situation": "现在的情况",
+    "checks": "请先确认",
+    "rights": "我应该知道的权利",
+    "actions": "现在可以做的事",
+    "actionsNote": "请从上往下一步一步来。",
+    "orgs": "可以求助的地方",
+    "followUp": "一个确认问题",
+    "followUpNote": "回答后，我们可以给出更具体的指引。",
+    "references": "参考资料",
+    "noEvidenceTitle": "关于这个情况的资料还不够",
+    "noEvidenceBody": "在 LINKRIGHTS 登记的权利信息中，没有找到正好符合这个情况的资料。我们不会介绍未经确认的权利或机构。请在下面找找下一步可以做什么。",
+    "errorTitle": "现在暂时无法生成回答",
+    "nextTitle": "你可以这样做",
+    "similar": "查看类似的权利信息",
+    "categoryAll": "查看“{category}”的全部信息",
+    "browseRights": "按领域查看权利信息",
+    "region": "选择地区，查找求助机构",
+    "generalTitle": "任何烦恼都可以咨询的青少年咨询",
+    "retry": "换个说法再问一次",
+    "ask": "询问我的情况"
+  },
+  "orgFinder": {
+    "title": "选择我的地区",
+    "hint": "选择地区后，会同时显示该地区的机构和全国都能使用的机构。不选择也可以查看全部机构。",
+    "all": "全部",
+    "countAll": "已登记机构 {n} 家",
+    "countRegion": "{region}地区机构 {local} 家 · 全国机构 {nationwide} 家",
+    "noRegional": "目前还没有登记为{region}地区的机构。下面的全国机构在任何地区都可以使用。附近的家庭中心可以在“本地家庭中心”卡片的网站上选择市/道查找。",
+    "groupsLabel": "机构分类"
+  },
+  "checklist": {
+    "navLabel": "清单",
+    "listTitle": "不同情况的确认清单",
+    "listSubtitle": "开始工作或申请之前，逐项勾选需要确认的内容吧。",
+    "itemCount": "需要确认 {n} 项",
+    "open": "打开清单",
+    "progress": "{total} 项中已确认 {done} 项",
+    "reset": "全部取消勾选",
+    "noticeTitle": "勾选内容只保存在此浏览器中",
+    "notice": "无需登录，只保存在你现在使用的浏览器中，不会发送到服务器。在其他设备上看不到，清除浏览器记录（网站数据）后会消失。",
+    "basedOnTitle": "这份清单依据的权利信息",
+    "orgsTitle": "可以求助的地方",
+    "more": "查看详情",
+    "orgLink": "查看求助机构",
+    "emergencyLink": "查看紧急求助",
+    "relatedTitle": "与这条信息一起使用的清单",
+    "homeTitle": "动手试试：不同情况的确认清单",
+    "homeSubtitle": "开始打工或延长签证之前，逐项勾选需要确认的内容。"
+  },
+  "homeAsk": {
+    "subtitle": "我们会帮你一起找出可能相关的权利，以及现在需要确认什么。",
+    "getsTitle": "回答中会告诉你这些",
+    "gets": [
+      { "title": "现在的情况", "body": "简单整理你说的内容。" },
+      { "title": "请先确认", "body": "告诉你会影响下一步的事实。" },
+      { "title": "我应该知道的权利", "body": "根据已登记的权利信息进行说明。" },
+      { "title": "现在可以做的事", "body": "按顺序告诉你要确认什么、准备什么、问谁。" },
+      { "title": "可以求助的地方", "body": "只连接已登记的机构。" }
+    ],
+    "trust": "只以 LINKRIGHTS 审核登记的资料为依据回答，不会代替你做出法律、签证或医疗方面的判断。"
+  },
+  "footerNav": {
+    "aboutTitle": "关于",
+    "aboutLink": "关于 LINKRIGHTS",
+    "rights": "保留所有权利。",
+    "operatorLabel": "运营",
+    "locationLabel": "地点",
+    "emailLabel": "邮箱",
+    "socialLabel": "LINKRIGHTS 频道",
+    "feedback": "发送意见或内容建议",
+    "feedbackSubject": "[LINKRIGHTS 意见·内容建议]",
+    "youtube": "YouTube",
+    "kakaoChannel": "KakaoTalk 频道",
+    "kakaoCta": "添加 KakaoTalk 频道"
+  },
+  "rightsMeta": {
+    "sourceLabel": "出处",
+    "sourcesMore": "查看出处详情",
+    "feedbackTitle": "信息有误或已经过时？",
+    "feedbackBody": "告诉我们，我们会审核并修改。邮件中不需要写姓名或联系方式等个人信息。",
+    "feedbackCta": "提出修改建议",
+    "feedbackSubject": "[信息修改建议] {title}"
+  },
   "heroVideo": {
     "label": "LINKRIGHTS 介绍视频",
     "caption": "我们正在打造一个平台：写下自己的情况，就能一起看到相关权利和可以求助的地方。",
@@ -384,7 +468,7 @@
     ]
   },
   "footer": {
-    "aboutSite": "LINKRIGHTS 是面向移民背景青少年的权利信息平台。",
+    "aboutSite": "面向移民背景青少年的权利信息平台",
     "notAdvice": "本站信息仅供参考，不构成法律或医疗建议。最终判断请向官方机构确认。",
     "contact": "联系",
     "instagram": "Instagram",

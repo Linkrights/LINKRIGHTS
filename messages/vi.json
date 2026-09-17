@@ -208,6 +208,90 @@
     "nationwide": "Toàn quốc",
     "map": "Xem bản đồ"
   },
+  "answerUi": {
+    "situation": "Tình huống hiện tại",
+    "checks": "Cần kiểm tra trước",
+    "rights": "Quyền bạn cần biết",
+    "actions": "Việc bạn có thể làm ngay",
+    "actionsNote": "Hãy làm lần lượt từ trên xuống.",
+    "orgs": "Nơi bạn có thể nhận trợ giúp",
+    "followUp": "Một câu hỏi để xác nhận",
+    "followUpNote": "Nếu bạn trả lời, chúng tôi có thể hướng dẫn cụ thể hơn.",
+    "references": "Tài liệu tham khảo",
+    "noEvidenceTitle": "Chưa có đủ thông tin về tình huống này",
+    "noEvidenceBody": "Chúng tôi chưa tìm thấy thông tin quyền đã đăng ký trên LINKRIGHTS phù hợp đúng với tình huống này, nên sẽ không giới thiệu quyền hay cơ quan chưa được kiểm tra. Hãy xem các bước tiếp theo bên dưới.",
+    "errorTitle": "Hiện chưa thể tạo câu trả lời",
+    "nextTitle": "Bạn có thể làm như sau",
+    "similar": "Xem thông tin quyền tương tự",
+    "categoryAll": "Xem tất cả thông tin ‘{category}’",
+    "browseRights": "Xem thông tin quyền theo lĩnh vực",
+    "region": "Chọn khu vực để tìm nơi trợ giúp",
+    "generalTitle": "Tư vấn cho thanh thiếu niên về mọi nỗi lo",
+    "retry": "Hỏi lại bằng cách nói khác",
+    "ask": "Hỏi về tình huống của tôi"
+  },
+  "orgFinder": {
+    "title": "Chọn khu vực của tôi",
+    "hint": "Khi chọn khu vực, trang sẽ hiện các cơ quan ở khu vực đó cùng các cơ quan dùng được ở mọi nơi. Không chọn cũng có thể xem tất cả cơ quan.",
+    "all": "Tất cả",
+    "countAll": "{n} cơ quan đã đăng ký",
+    "countRegion": "{local} cơ quan ở {region} · {nationwide} cơ quan toàn quốc",
+    "noRegional": "Chưa có cơ quan nào đăng ký cho khu vực {region}. Các cơ quan toàn quốc bên dưới có thể dùng ở mọi khu vực. Để tìm Trung tâm Gia đình gần bạn, hãy chọn tỉnh/thành phố trên trang web trong thẻ ‘Trung tâm Gia đình địa phương’.",
+    "groupsLabel": "Loại cơ quan"
+  },
+  "checklist": {
+    "navLabel": "Danh sách kiểm tra",
+    "listTitle": "Danh sách kiểm tra theo tình huống",
+    "listSubtitle": "Trước khi bắt đầu làm việc hoặc nộp đơn, hãy đánh dấu từng điều cần kiểm tra.",
+    "itemCount": "{n} điều cần kiểm tra",
+    "open": "Mở danh sách",
+    "progress": "Đã kiểm tra {done}/{total}",
+    "reset": "Bỏ tất cả dấu",
+    "noticeTitle": "Dấu kiểm tra chỉ được lưu trên trình duyệt này",
+    "notice": "Lưu mà không cần đăng nhập, chỉ trên trình duyệt bạn đang dùng và không gửi lên máy chủ. Sẽ không hiện trên thiết bị khác và sẽ mất nếu bạn xóa dữ liệu duyệt web.",
+    "basedOnTitle": "Thông tin quyền làm cơ sở cho danh sách này",
+    "orgsTitle": "Nơi bạn có thể nhận trợ giúp",
+    "more": "Xem chi tiết",
+    "orgLink": "Xem nơi nhận trợ giúp",
+    "emergencyLink": "Xem trợ giúp khẩn cấp",
+    "relatedTitle": "Danh sách kiểm tra dùng cùng thông tin này",
+    "homeTitle": "Thử làm: danh sách kiểm tra theo tình huống",
+    "homeSubtitle": "Trước khi đi làm thêm hoặc gia hạn visa, hãy đánh dấu từng điều cần kiểm tra."
+  },
+  "homeAsk": {
+    "subtitle": "Chúng tôi sẽ cùng bạn tìm xem quyền nào có thể liên quan và bây giờ cần kiểm tra điều gì.",
+    "getsTitle": "Câu trả lời sẽ cho bạn biết",
+    "gets": [
+      { "title": "Tình huống hiện tại", "body": "Tóm tắt ngắn những gì bạn đã kể." },
+      { "title": "Cần kiểm tra trước", "body": "Những điều làm thay đổi bước tiếp theo." },
+      { "title": "Quyền bạn cần biết", "body": "Giải thích dựa trên thông tin quyền đã đăng ký." },
+      { "title": "Việc bạn có thể làm ngay", "body": "Cần kiểm tra, chuẩn bị gì và hỏi ai, theo thứ tự." },
+      { "title": "Nơi bạn có thể nhận trợ giúp", "body": "Chỉ kết nối với cơ quan đã đăng ký." }
+    ],
+    "trust": "Câu trả lời chỉ dựa trên tài liệu LINKRIGHTS đã kiểm tra và đăng ký, và không thay bạn đưa ra quyết định về pháp luật, visa hay y tế."
+  },
+  "footerNav": {
+    "aboutTitle": "Giới thiệu",
+    "aboutLink": "Giới thiệu LINKRIGHTS",
+    "rights": "Bảo lưu mọi quyền.",
+    "operatorLabel": "Đơn vị vận hành",
+    "locationLabel": "Địa điểm",
+    "emailLabel": "Email",
+    "socialLabel": "Kênh của LINKRIGHTS",
+    "feedback": "Gửi ý kiến hoặc đề xuất nội dung",
+    "feedbackSubject": "[Ý kiến / đề xuất nội dung LINKRIGHTS]",
+    "youtube": "YouTube",
+    "kakaoChannel": "Kênh KakaoTalk",
+    "kakaoCta": "Thêm kênh KakaoTalk"
+  },
+  "rightsMeta": {
+    "sourceLabel": "Nguồn",
+    "sourcesMore": "Xem chi tiết nguồn",
+    "feedbackTitle": "Thông tin này sai hoặc đã cũ?",
+    "feedbackBody": "Hãy cho chúng tôi biết để kiểm tra và sửa. Bạn không cần ghi thông tin cá nhân như tên hay số liên lạc trong email.",
+    "feedbackCta": "Đề xuất sửa thông tin",
+    "feedbackSubject": "[Đề xuất sửa thông tin] {title}"
+  },
   "heroVideo": {
     "label": "Video giới thiệu LINKRIGHTS",
     "caption": "Chúng tôi đang xây dựng nền tảng: mô tả tình huống là thấy ngay các quyền liên quan và nơi có thể giúp bạn.",
@@ -384,7 +468,7 @@
     ]
   },
   "footer": {
-    "aboutSite": "LINKRIGHTS là nền tảng thông tin về quyền dành cho thanh thiếu niên có nền tảng di trú.",
+    "aboutSite": "Nền tảng thông tin về quyền dành cho thanh thiếu niên có nền tảng di trú",
     "notAdvice": "Thông tin ở đây mang tính tham khảo, không phải tư vấn pháp lý hay y tế. Hãy xác nhận với cơ quan chính thức.",
     "contact": "Liên hệ",
     "instagram": "Instagram",

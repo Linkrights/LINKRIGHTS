@@ -4,8 +4,15 @@
 //
 // 중요: 점수가 있다는 것과 관련 자료라는 것은 다릅니다.
 // AI의 근거 자료로는 "등록된 키워드가 질문에 실제로 들어 있는 글"(keywordHits 가 있는 글)만 씁니다. (route.ts 참고)
+//
+// 검색 단계
+//  1) 조사·어미 정리 (stem)
+//  2) 유사 표현 넓히기 (content/search-synonyms.json: "주급" → "월급"·"급여" 등) — 검색용일 뿐 근거가 아닙니다.
+//  3) 등록 키워드 일치 (findRelevantArticles)
+//  4) 상황 사전 (content/search-intents.json: 구어체·짧은 표현 → 등록 글, direct / possible)
+//  5) 자료를 못 찾았을 때만: 제목·요약·상황·권리·할 일 제목에 비슷한 낱말이 있는 글을 "링크로만" 제안 (findSimilarArticles)
 
-import { getGroundingArticles, getSearchIntents, resolveArticle } from './content';
+import { getGroundingArticles, getSearchIntents, getSearchSynonyms, resolveArticle } from './content';
 import { LOCALES, type EvidenceTier, type Locale, type RightsArticle, type SearchIntent } from './types';
 
 function normalize(text: string): string {
@@ -162,6 +169,46 @@ function articleText(article: RightsArticle): { title: string; summary: string }
   return { title: normalize(titles.join(' ')), summary: normalize(summaries.join(' ')) };
 }
 
+// ---------------------------------------------------------------------------
+// 유사 표현 넓히기 (content/search-synonyms.json)
+// 질문에 묶음의 낱말 하나가 낱말 단위로 들어 있으면, 같은 묶음의 다른 낱말로도 등록 키워드를 찾습니다.
+// ("페이스북"의 "페이"처럼 다른 낱말의 일부분은 맞은 것으로 보지 않습니다)
+// 넓힌 낱말은 검색에만 쓰며, AI의 근거는 언제나 등록된 권리정보입니다.
+// ---------------------------------------------------------------------------
+
+/** 표현(한 낱말 또는 여러 낱말)이 질문에 낱말 단위로 들어 있는지 확인합니다. */
+function termInQuery(term: string, q: string, tokens: string[]): boolean {
+  const normalized = normalize(term);
+  if (!normalized) return false;
+  // 띄어쓰기가 없는 중국어는 글자 그대로 찾습니다.
+  if (/\p{Script=Han}/u.test(normalized)) return q.includes(normalized);
+  const parts = normalized.split(' ').filter(Boolean);
+  if (parts.length === 1) return tokens.some((token) => sameWord(token, parts[0]));
+  let from = 0;
+  for (const part of parts) {
+    const index = tokens.findIndex((token, i) => i >= from && partMatches(token, part));
+    if (index === -1) return false;
+    from = index + 1;
+  }
+  return true;
+}
+
+/** 질문에 들어 있는 표현과 같은 묶음의 다른 표현들을 돌려줍니다. (검색용) */
+export function expandQuery(query: string): string[] {
+  const q = normalize(query);
+  if (!q) return [];
+  const tokens = q.split(' ').filter(Boolean);
+  const added = new Set<string>();
+  for (const group of getSearchSynonyms()) {
+    const present = group.terms.filter((term) => termInQuery(term, q, tokens));
+    if (present.length === 0) continue;
+    for (const term of group.terms) {
+      if (!present.includes(term)) added.add(term);
+    }
+  }
+  return [...added];
+}
+
 export interface ScoredArticle {
   article: RightsArticle;
   score: number;
@@ -204,6 +251,41 @@ export function findRelevantArticles(query: string, limit = 4): ScoredArticle[] 
     .filter((s) => s.score > 0)
     .sort((a, b) => b.score - a.score || a.article.id.localeCompare(b.article.id))
     .slice(0, limit);
+}
+
+/**
+ * 근거 자료를 하나도 찾지 못했을 때 보여줄 "비슷한 권리정보"를 찾습니다.
+ * 제목·요약·상황·권리 제목·할 일 제목에서 질문의 (흔하지 않은) 낱말을 찾습니다.
+ * 결과는 등록 페이지 링크로만 보여주며 AI의 근거로 쓰지 않습니다.
+ */
+export function findSimilarArticles(query: string, limit = 3): RightsArticle[] {
+  const q = normalize([query, ...expandQuery(query)].join(' '));
+  const tokens = [...new Set(q.split(' ').map((token) => stem(token)))].filter(
+    (token) => token.length > 1 && !isCommon(token),
+  );
+  if (tokens.length === 0) return [];
+  return getGroundingArticles()
+    .map((article) => {
+      const parts: string[] = [];
+      for (const locale of LOCALES) {
+        const body = article.i18n[locale];
+        if (!body) continue;
+        parts.push(
+          body.title,
+          body.summary,
+          ...body.situations,
+          ...body.rights.map((item) => item.title),
+          ...body.actions.map((item) => item.title),
+        );
+      }
+      const text = normalize(parts.join(' '));
+      const score = tokens.filter((token) => text.includes(token)).length;
+      return { article, score };
+    })
+    .filter((item) => item.score >= 1)
+    .sort((a, b) => b.score - a.score || a.article.id.localeCompare(b.article.id))
+    .slice(0, limit)
+    .map((item) => item.article);
 }
 
 // ---------------------------------------------------------------------------
@@ -318,19 +400,28 @@ export function findEvidence(query: string, limits = { direct: 3, possible: 2, t
   const byId = new Map<string, EvidenceMatch>();
   const grounding = new Map(getGroundingArticles().map((article) => [article.id, article]));
 
-  // 1) 기존 방식: 등록 키워드가 질문에 실제로 들어 있는 글
-  for (const match of findRelevantArticles(query, 20)) {
+  // 1) 등록 키워드가 질문(+ 유사 표현)에 들어 있는 글
+  const synonyms = expandQuery(query);
+  const searchQuery = synonyms.length > 0 ? `${query}\n${synonyms.join('\n')}` : query;
+  const q = normalize(query);
+  const tokens = q.split(' ').filter(Boolean);
+  for (const match of findRelevantArticles(searchQuery, 20)) {
     if (match.keywordHits.length === 0) continue;
+    const viaSynonym = match.keywordHits.filter((keyword) => !keywordMatches(keyword, q, tokens));
     byId.set(match.article.id, {
       article: match.article,
       tier: 'direct',
       score: match.score,
       keywordHits: match.keywordHits,
-      reasons: [`등록 키워드: ${match.keywordHits.join(', ')}`],
+      reasons: [
+        viaSynonym.length > 0
+          ? `등록 키워드: ${match.keywordHits.join(', ')} (유사 표현으로 찾음: ${viaSynonym.join(', ')})`
+          : `등록 키워드: ${match.keywordHits.join(', ')}`,
+      ],
     });
   }
 
-  // 2) 상황 사전: 짧은 표현·구어체를 등록된 글과 연결
+  // 2) 상황 사전: 짧은 표현·구어체를 등록된 글과 연결 (사용자가 실제로 쓴 말로만 찾습니다)
   const intents = matchIntents(query);
   for (const { intent, trigger } of intents) {
     for (const ref of intent.articles) {

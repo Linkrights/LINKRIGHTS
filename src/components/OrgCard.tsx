@@ -6,6 +6,7 @@
 
 import { Icon } from './Icon';
 import { formatDate, getMessages, localeNames, pick, type Locale } from '@/lib/i18n';
+import { organizationArea, regionName } from '@/lib/regions';
 import type { Organization } from '@/lib/types';
 
 const languageLabel: Record<string, string> = {
@@ -14,11 +15,6 @@ const languageLabel: Record<string, string> = {
   zh: localeNames.zh,
   vi: localeNames.vi,
   other: '+',
-};
-
-/** 지역 이름 표시 (organizations.json 의 region 은 한국어로 적습니다) */
-const regionNames: Record<string, Partial<Record<Locale, string>>> = {
-  서울: { en: 'Seoul', zh: '首尔', vi: 'Seoul' },
 };
 
 export function OrgCard({
@@ -33,8 +29,10 @@ export function OrgCard({
   const t = getMessages(locale);
   const name = pick(org.name, locale);
   const address = org.address ? pick(org.address, locale) : '';
-  const region =
-    org.region === '전국' ? t.orgInfo.nationwide : org.region ? (regionNames[org.region]?.[locale] ?? org.region) : '';
+  const area = organizationArea(org);
+  const region = area.nationwide
+    ? t.orgInfo.nationwide
+    : area.regions.map((key) => regionName(key, locale)).join(' · ');
   // 지도는 등록된 한국어 주소가 있을 때만 네이버 지도 검색으로 연결합니다. (지도 API·비용 없음)
   const mapHref = org.address?.ko ? `https://map.naver.com/p/search/${encodeURIComponent(org.address.ko)}` : '';
 

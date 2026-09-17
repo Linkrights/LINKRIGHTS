@@ -208,6 +208,90 @@
     "nationwide": "전국",
     "map": "지도 보기"
   },
+  "answerUi": {
+    "situation": "지금 상황",
+    "checks": "먼저 확인할 것",
+    "rights": "내가 알아야 할 권리",
+    "actions": "지금 할 수 있는 일",
+    "actionsNote": "위에서부터 하나씩 해보세요.",
+    "orgs": "도움받을 수 있는 곳",
+    "followUp": "한 가지 확인 질문",
+    "followUpNote": "답해 주시면 더 구체적으로 안내할 수 있어요.",
+    "references": "참고 자료",
+    "noEvidenceTitle": "아직 이 상황에 대한 자료가 충분하지 않아요",
+    "noEvidenceBody": "LINKRIGHTS에 등록된 권리정보 중에서 이 상황에 딱 맞는 자료를 찾지 못했어요. 확인되지 않은 권리나 기관은 안내하지 않아요. 대신 아래에서 다음 단계를 찾아보세요.",
+    "errorTitle": "지금은 답변을 만들지 못했어요",
+    "nextTitle": "이렇게 해볼 수 있어요",
+    "similar": "비슷한 권리정보 보기",
+    "categoryAll": "‘{category}’ 권리정보 모두 보기",
+    "browseRights": "분야별 권리정보 보기",
+    "region": "지역을 골라 도움받을 곳 찾기",
+    "generalTitle": "어떤 고민이든 상담할 수 있는 청소년 상담",
+    "retry": "질문을 바꿔서 다시 물어보기",
+    "ask": "내 상황 물어보기"
+  },
+  "orgFinder": {
+    "title": "내 지역 선택하기",
+    "hint": "지역을 고르면 그 지역 기관과 전국 어디서나 이용할 수 있는 기관을 함께 보여줘요. 고르지 않아도 모든 기관을 볼 수 있어요.",
+    "all": "전체",
+    "countAll": "등록된 기관 {n}곳",
+    "countRegion": "{region} 지역 기관 {local}곳 · 전국 기관 {nationwide}곳",
+    "noRegional": "아직 {region} 지역으로 등록된 기관은 없어요. 아래 전국 기관은 어느 지역에서나 이용할 수 있어요. 가까운 가족센터는 ‘우리 동네 가족센터’ 카드의 홈페이지에서 시·도를 골라 찾을 수 있어요.",
+    "groupsLabel": "기관 분류"
+  },
+  "checklist": {
+    "navLabel": "체크리스트",
+    "listTitle": "상황별 체크리스트",
+    "listSubtitle": "일을 시작하거나 신청하기 전에 확인할 것을 하나씩 체크해 보세요.",
+    "itemCount": "확인할 것 {n}개",
+    "open": "체크리스트 열기",
+    "progress": "{total}개 중 {done}개 확인했어요",
+    "reset": "체크 모두 해제",
+    "noticeTitle": "체크한 내용은 이 브라우저에만 저장돼요",
+    "notice": "로그인 없이 지금 쓰는 브라우저에만 저장되고, 서버로 보내지 않아요. 다른 기기에서는 보이지 않고, 브라우저 기록(사이트 데이터)을 지우면 사라져요.",
+    "basedOnTitle": "이 체크리스트의 바탕이 된 권리정보",
+    "orgsTitle": "도움받을 수 있는 곳",
+    "more": "자세히 보기",
+    "orgLink": "도움받을 곳 보기",
+    "emergencyLink": "긴급 도움 보기",
+    "relatedTitle": "이 정보와 함께 쓰는 체크리스트",
+    "homeTitle": "해보기: 상황별 체크리스트",
+    "homeSubtitle": "알바를 시작하거나 비자를 연장하기 전에, 확인할 것을 하나씩 체크해 보세요."
+  },
+  "homeAsk": {
+    "subtitle": "어떤 권리와 관련되는지, 지금 무엇을 확인하면 되는지 함께 찾아드릴게요.",
+    "getsTitle": "답변에서 이런 걸 알려드려요",
+    "gets": [
+      { "title": "지금 상황", "body": "말씀하신 내용을 짧게 정리해요." },
+      { "title": "먼저 확인할 것", "body": "다음 단계가 달라지는 사실을 알려드려요." },
+      { "title": "내가 알아야 할 권리", "body": "등록된 권리정보를 바탕으로 설명해요." },
+      { "title": "지금 할 수 있는 일", "body": "무엇을 확인하고, 준비하고, 누구에게 물어볼지 순서대로 알려드려요." },
+      { "title": "도움받을 수 있는 곳", "body": "등록된 기관만 연결해요." }
+    ],
+    "trust": "LINKRIGHTS가 검토해 등록한 자료만 근거로 답하고, 법률·비자·의료 판단을 대신 내리지 않아요."
+  },
+  "footerNav": {
+    "aboutTitle": "소개",
+    "aboutLink": "LINKRIGHTS 소개",
+    "rights": "All rights reserved.",
+    "operatorLabel": "운영",
+    "locationLabel": "위치",
+    "emailLabel": "이메일",
+    "socialLabel": "LINKRIGHTS 채널",
+    "feedback": "의견·콘텐츠 제안 보내기",
+    "feedbackSubject": "[LINKRIGHTS 의견·콘텐츠 제안]",
+    "youtube": "유튜브",
+    "kakaoChannel": "카카오톡 채널",
+    "kakaoCta": "카카오톡 채널 추가하기"
+  },
+  "rightsMeta": {
+    "sourceLabel": "출처",
+    "sourcesMore": "출처 자세히 보기",
+    "feedbackTitle": "정보가 틀렸거나 오래됐나요?",
+    "feedbackBody": "알려주시면 검토해서 고칠게요. 이메일에 이름이나 연락처 같은 개인정보는 적지 않아도 돼요.",
+    "feedbackCta": "정보 수정 제안하기",
+    "feedbackSubject": "[정보 수정 제안] {title}"
+  },
   "heroVideo": {
     "label": "LINKRIGHTS 소개 영상",
     "caption": "상황을 적으면 관련 권리와 도움받을 곳을 함께 보여주는 플랫폼을 만들고 있어요.",
@@ -384,7 +468,7 @@
     ]
   },
   "footer": {
-    "aboutSite": "LINKRIGHTS는 이주배경청소년을 위한 권리정보 플랫폼입니다.",
+    "aboutSite": "이주배경청소년을 위한 권리정보 플랫폼",
     "notAdvice": "이 사이트의 정보는 참고용 안내이며 법률·의료 자문이 아닙니다. 최종 판단은 공식기관에서 확인하세요.",
     "contact": "문의",
     "instagram": "인스타그램",

@@ -35,7 +35,12 @@ export interface Organization {
   /** 점심시간 등 상담하지 않는 시간. 확인되지 않았으면 넣지 않습니다. */
   break_time?: OptionalLocalizedText;
   languages: string[];
+  /** 대표 지역. "전국" 또는 content/regions.json 의 key (예: "서울") */
   region: string;
+  /** 전국 어디서나 이용할 수 있으면 true. 적지 않으면 region 이 "전국"인지로 판단합니다. (src/lib/regions.ts) */
+  nationwide?: boolean;
+  /** 이용할 수 있는 지역 목록 (content/regions.json 의 key). 적지 않으면 region 값을 씁니다. */
+  regions?: string[];
   status: ContentStatus;
   owner: string;
   reviewed_at: string;
@@ -140,13 +145,56 @@ export interface SiteConfig {
   tagline: LocalizedText;
   description: LocalizedText;
   exampleQuestions: { ko: string[] } & Partial<Record<Locale, string[]>>;
-  /** 하단에 보여줄 SNS·블로그 링크 (없으면 표시하지 않습니다) */
-  social?: { instagram?: SocialLink; blog?: SocialLink };
+  /** 하단에 보여줄 SNS·블로그·카카오톡 채널 링크 (url 이 비어 있으면 표시하지 않습니다) */
+  social?: { instagram?: SocialLink; blog?: SocialLink; youtube?: SocialLink; kakaoChannel?: SocialLink };
+  /** 하단 '위치'에 보여줄 곳 (순서대로 표시) */
+  locations?: SiteLocation[];
+}
+
+export interface SiteLocation {
+  name: LocalizedText;
+  address: LocalizedText;
 }
 
 export interface SocialLink {
   url: string;
   label: string;
+}
+
+/** 검색용 유사 표현 묶음 (content/search-synonyms.json). 검색에만 쓰며 AI의 근거가 아닙니다. */
+export interface SynonymGroup {
+  id: string;
+  terms: string[];
+}
+
+/** 체크리스트 한 항목. article(등록 권리정보) 또는 link(사이트 안의 도움 페이지)로 더 알아볼 곳을 연결합니다. */
+export interface ChecklistItem {
+  id: string;
+  text: LocalizedText;
+  article?: string;
+  link?: 'organizations' | 'emergency';
+}
+
+export interface ChecklistBody {
+  title: string;
+  summary: string;
+  note?: string;
+}
+
+/** 체크리스트 (content/checklists/*.json). 체크 상태는 이용자의 브라우저에만 저장합니다. */
+export interface Checklist {
+  id: string;
+  status: ContentStatus;
+  owner: string;
+  reviewed_at: string;
+  /** 관련 분야 id (categories.json) */
+  category: string;
+  /** 이 체크리스트의 바탕이 된 등록 권리정보 id */
+  based_on: string[];
+  /** 함께 보여줄 등록 기관 id */
+  organizations: string[];
+  i18n: { ko: ChecklistBody } & Partial<Record<Locale, ChecklistBody>>;
+  items: ChecklistItem[];
 }
 
 export interface AboutBody {
@@ -161,15 +209,23 @@ export interface AboutBody {
   what_title: string;
   what_we_do: RightsBlock[];
   sdg_title: string;
-  sdgs: { code: string; name: string; body: string }[];
+  /** goal: 목표를 한 줄로 쉽게 풀어 쓴 말 (선택) */
+  sdgs: { code: string; name: string; goal?: string; body: string }[];
+  /** 두 목표가 LINKRIGHTS와 어떻게 이어지는지 한 문장 (선택) */
+  sdg_link?: string;
   team_title: string;
   team_body: string;
   future_title: string;
   future_body: string;
-  /** SDG 10(불평등 감소)과 LINKRIGHTS의 목적이 어떻게 이어지는지 (없으면 표시하지 않습니다) */
-  sdg10_title?: string;
-  sdg10_body?: string;
-  sdg10_points?: RightsBlock[];
+  /** 각 SDG 목표와 LINKRIGHTS의 목적이 어떻게 이어지는지 (code 는 sdgs 의 code 와 같게. 없으면 표시하지 않습니다) */
+  sdg_details?: SdgDetail[];
+}
+
+export interface SdgDetail {
+  code: string;
+  title: string;
+  body?: string;
+  points?: RightsBlock[];
 }
 
 export interface AboutFile {
@@ -249,6 +305,8 @@ export interface AiAnswer {
   category: string;
   urgency: 'normal' | 'urgent';
   summary: string;
+  /** 먼저 확인할 것: 다음 행동이 달라지는 사실 (최대 3개, 질문이 아닌 문장). 등록 자료·상황 힌트에서만 가져옵니다. */
+  checks: string[];
   rights: AiRight[];
   actions: RightsBlock[];
   organizations: string[];

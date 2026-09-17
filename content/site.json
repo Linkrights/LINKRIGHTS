@@ -1,12 +1,45 @@
 {
-  "_readme": "사이트 전체에 쓰이는 기본 정보입니다. 이메일, 운영주체, 대표 문구를 여기서 한 번에 바꿀 수 있습니다.",
+  "_readme": "사이트 전체에 쓰이는 기본 정보입니다. 이메일, 운영주체, 대표 문구를 여기서 한 번에 바꿀 수 있습니다. social 의 url 이 비어 있으면 하단에 표시하지 않습니다. 유튜브·카카오톡 채널을 열면 실제 주소(https://...)와 표시할 이름(label)을 넣으세요.",
   "siteName": "LINKRIGHTS",
   "siteNameKo": "링크라이츠",
   "contactEmail": "linkrights2026@gmail.com",
   "social": {
     "instagram": { "url": "https://www.instagram.com/link_rights/", "label": "@link_rights" },
-    "blog": { "url": "https://blog.naver.com/linkrights", "label": "blog.naver.com/linkrights" }
+    "blog": { "url": "https://blog.naver.com/linkrights", "label": "blog.naver.com/linkrights" },
+    "youtube": { "url": "", "label": "" },
+    "kakaoChannel": { "url": "", "label": "" }
   },
+  "_locations_readme": "하단 '위치'에 보여줄 곳입니다. 순서대로 표시합니다. 주소는 각 학교 공식 홈페이지의 '찾아오시는 길'에서 확인한 캠퍼스 주소입니다.",
+  "locations": [
+    {
+      "name": {
+        "ko": "경희대학교 정경대학",
+        "en": "College of Politics and Economics, Kyung Hee University",
+        "zh": "庆熙大学 政治经济学院",
+        "vi": "Trường Chính trị và Kinh tế, Đại học Kyung Hee"
+      },
+      "address": {
+        "ko": "서울특별시 동대문구 경희대로 26",
+        "en": "26 Kyungheedae-ro, Dongdaemun-gu, Seoul",
+        "zh": "首尔特别市 东大门区 庆熙大路 26",
+        "vi": "26 Kyungheedae-ro, Dongdaemun-gu, Seoul"
+      }
+    },
+    {
+      "name": {
+        "ko": "서강대학교 사회과학대학 (정치외교학과)",
+        "en": "School of Social Sciences (Political Science and International Relations), Sogang University",
+        "zh": "西江大学 社会科学学院（政治外交学系）",
+        "vi": "Trường Khoa học Xã hội (Khoa Chính trị và Ngoại giao), Đại học Sogang"
+      },
+      "address": {
+        "ko": "서울특별시 마포구 백범로 35",
+        "en": "35 Baekbeom-ro, Mapo-gu, Seoul",
+        "zh": "首尔特别市 麻浦区 白凡路 35",
+        "vi": "35 Baekbeom-ro, Mapo-gu, Seoul"
+      }
+    }
+  ],
   "operator": {
     "ko": "LINKRIGHTS 프로젝트팀",
     "en": "LINKRIGHTS Project Team",
@@ -27,28 +60,28 @@
   },
   "exampleQuestions": {
     "ko": [
-      "알바를 했는데 사장님이 돈을 안 줘요",
-      "외국인도 건강보험에 가입할 수 있나요?",
-      "비자를 연장하려면 어떻게 해야 하나요?",
-      "학교에서 차별을 받았어요"
+      "알바를 했는데 돈을 못 받았어요.",
+      "학교에서 계속 놀림을 받아요.",
+      "비자가 곧 끝나는데 무엇을 확인해야 하나요?",
+      "병원에 가고 싶은데 어떤 도움을 받을 수 있나요?"
     ],
     "en": [
-      "I worked part-time but my boss did not pay me",
-      "Can foreign residents join the health insurance?",
-      "How do I extend my visa?",
-      "I was discriminated against at school"
+      "I worked part-time but haven't been paid.",
+      "Other students keep teasing me at school.",
+      "My visa ends soon. What should I check?",
+      "I want to see a doctor. What help can I get?"
     ],
     "zh": [
-      "我打工了但老板不给工资",
-      "外国人也可以参加健康保险吗？",
-      "签证延期需要怎么做？",
-      "我在学校受到了歧视"
+      "我打工了，但没拿到工资。",
+      "同学们在学校一直取笑我。",
+      "签证快到期了，我应该确认什么？",
+      "我想去医院看病，能得到什么帮助？"
     ],
     "vi": [
-      "Tôi làm thêm nhưng chủ không trả lương",
-      "Người nước ngoài có tham gia bảo hiểm y tế được không?",
-      "Làm sao để gia hạn visa?",
-      "Tôi bị phân biệt đối xử ở trường"
+      "Tôi đi làm thêm nhưng chưa được trả lương.",
+      "Ở trường các bạn cứ trêu chọc tôi.",
+      "Visa của tôi sắp hết hạn, tôi cần kiểm tra gì?",
+      "Tôi muốn đi bệnh viện, tôi có thể nhận được giúp đỡ gì?"
     ]
   }
 }

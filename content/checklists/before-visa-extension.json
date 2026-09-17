@@ -1,0 +1,82 @@
+{
+  "_readme": "등록 권리정보 visa-extension(체류기간 연장)의 '이렇게 해보세요'와 참고 문구를 체크리스트로 옮긴 파일입니다. 권리정보 내용이 바뀌면 이 파일도 함께 확인하세요.",
+  "id": "before-visa-extension",
+  "status": "published",
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-17",
+  "category": "visa",
+  "based_on": ["visa-extension"],
+  "organizations": ["hikorea-1345"],
+  "i18n": {
+    "ko": {
+      "title": "체류기간(비자) 연장 전 확인할 것",
+      "summary": "‘체류기간(비자)을 연장하려면 어떻게 하나요?’ 권리정보의 할 일을 체크리스트로 정리했어요.",
+      "note": "LINKRIGHTS는 비자 승인 여부를 판단하거나 보장할 수 없습니다. 신청 자격과 서류는 반드시 하이코리아 또는 1345에서 확인하세요."
+    },
+    "en": {
+      "title": "Before extending your stay (visa)",
+      "summary": "The steps from ‘How do I extend my period of stay (visa)?’ as a checklist.",
+      "note": "LINKRIGHTS cannot judge or guarantee whether a visa will be approved. Always confirm eligibility and documents with HiKorea or 1345."
+    },
+    "zh": {
+      "title": "延长居留期限（签证）前要确认的事",
+      "summary": "把关于延长居留期限（签证）的权利信息中的步骤整理成了清单。",
+      "note": "LINKRIGHTS 无法判断或保证签证是否获批。申请资格和材料请务必在 HiKorea 或 1345 确认。"
+    },
+    "vi": {
+      "title": "Những điều cần kiểm tra trước khi gia hạn lưu trú (visa)",
+      "summary": "Các bước trong thông tin quyền về gia hạn thời gian lưu trú (visa) được sắp xếp thành danh sách kiểm tra.",
+      "note": "LINKRIGHTS không thể đánh giá hay bảo đảm việc visa có được chấp thuận hay không. Hãy luôn kiểm tra điều kiện và giấy tờ tại HiKorea hoặc 1345."
+    }
+  },
+  "items": [
+    {
+      "id": "expiry",
+      "text": {
+        "ko": "외국인등록증 뒷면이나 하이코리아에서 체류기간 만료일을 확인했나요?",
+        "en": "Have you checked your expiry date on the back of your alien registration card or on HiKorea?",
+        "zh": "在外国人登录证背面或 HiKorea 上确认过居留期限的到期日了吗？",
+        "vi": "Bạn đã kiểm tra ngày hết hạn lưu trú ở mặt sau thẻ đăng ký người nước ngoài hoặc trên HiKorea chưa?"
+      },
+      "article": "visa-extension"
+    },
+    {
+      "id": "reminder",
+      "text": {
+        "ko": "휴대폰 달력에 만료일 알림을 설정했나요?",
+        "en": "Have you set a reminder in your phone calendar?",
+        "zh": "在手机日历里设置到期日提醒了吗？",
+        "vi": "Bạn đã đặt lời nhắc ngày hết hạn trong lịch điện thoại chưa?"
+      }
+    },
+    {
+      "id": "booking",
+      "text": {
+        "ko": "하이코리아에서 출입국·외국인관서 방문을 예약했나요?",
+        "en": "Have you booked a visit to the immigration office on HiKorea?",
+        "zh": "在 HiKorea 上预约前往出入境·外国人管理机关了吗？",
+        "vi": "Bạn đã đặt lịch đến cơ quan xuất nhập cảnh trên HiKorea chưa?"
+      }
+    },
+    {
+      "id": "documents",
+      "text": {
+        "ko": "내 체류자격에 필요한 서류를 1345에 물어보고 준비했나요?",
+        "en": "Have you asked 1345 which documents your visa type needs, and prepared them?",
+        "zh": "向 1345 询问过自己的居留资格需要哪些材料并准备好了吗？",
+        "vi": "Bạn đã hỏi 1345 về giấy tờ cần cho tư cách lưu trú của mình và chuẩn bị chưa?"
+      },
+      "article": "visa-extension"
+    },
+    {
+      "id": "companion",
+      "text": {
+        "ko": "혼자 가기 어렵다면 함께 갈 사람(보호자, 학교 선생님, 이주민 지원기관 담당자)을 정했나요?",
+        "en": "If going alone feels hard, have you found someone to go with you (a guardian, a teacher or a migrant support worker)?",
+        "zh": "如果一个人去有困难，决定好陪同的人（监护人、学校老师、移民支援机构工作人员）了吗？",
+        "vi": "Nếu đi một mình thấy khó, bạn đã tìm được người đi cùng (người giám hộ, giáo viên hoặc nhân viên hỗ trợ người di trú) chưa?"
+      },
+      "link": "organizations"
+    }
+  ]
+}

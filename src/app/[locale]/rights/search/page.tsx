@@ -11,12 +11,13 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArticleCard } from '@/components/ArticleCard';
 import { Icon } from '@/components/Icon';
+import { NoResultHelp } from '@/components/NoResultHelp';
 import { MAX_SEARCH_LENGTH, RightsSearchForm } from '@/components/RightsSearchForm';
 import { PageHeader, Section } from '@/components/Section';
-import { getRightsCategories } from '@/lib/content';
+import { articleHref, getOrganizations, getRightsCategories, resolveArticle } from '@/lib/content';
 import { detectEmergency } from '@/lib/emergency';
 import { getMessages, pick, toLocale } from '@/lib/i18n';
-import { findEvidence, findRelevantArticles } from '@/lib/search';
+import { findEvidence, findRelevantArticles, findSimilarArticles } from '@/lib/search';
 import type { RightsArticle } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
@@ -67,6 +68,16 @@ export default async function RightsSearchPage({
           .map((match) => match.article)
       : [];
   const total = direct.length + possible.length + similar.length;
+  // 결과가 없을 때: 제목·상황·할 일에 비슷한 낱말이 있는 등록 권리정보(링크만)와, 누구나 이용할 수 있는 청소년 상담 기관(등록 기관)
+  const similarLinks =
+    q && total === 0
+      ? findSimilarArticles(q, 3).map((article) => ({
+          id: article.id,
+          title: resolveArticle(article, locale).body.title,
+          href: articleHref(locale, article),
+        }))
+      : [];
+  const generalHelp = q && total === 0 ? getOrganizations().filter((org) => org.category === 'youth') : [];
 
   // 검색어가 분야 이름과 겹치면 그 분야로 가는 링크를 함께 보여줍니다.
   const lowered = q.toLowerCase();
@@ -154,12 +165,18 @@ export default async function RightsSearchPage({
                 </section>
               )}
 
+              {/* 결과가 없을 때: "자료 없음"으로 끝내지 않고 다음에 할 수 있는 일을 보여줍니다. (등록 자료·기관만) */}
               {total === 0 && (
-                <div className="lr-card mt-6 max-w-3xl p-6 text-center">
-                  <p className="text-[15px] leading-relaxed text-ink-700">{t.search.empty}</p>
-                  <Link href={`/${locale}/rights`} className="lr-btn lr-btn-ghost lr-press mt-4">
-                    {t.search.browseAll} <Icon name="arrow-right" size={16} />
-                  </Link>
+                <div className="mt-6 max-w-4xl">
+                  <NoResultHelp
+                    t={t}
+                    locale={locale}
+                    title={t.answerUi.noEvidenceTitle}
+                    body={t.search.empty}
+                    links={similarLinks}
+                    generalHelp={generalHelp}
+                    askHref={`/${locale}/ask`}
+                  />
                 </div>
               )}
             </>
