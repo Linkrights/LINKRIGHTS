@@ -147,12 +147,11 @@ export interface SiteConfig {
   exampleQuestions: { ko: string[] } & Partial<Record<Locale, string[]>>;
   /** 하단에 보여줄 SNS·블로그·카카오톡 채널 링크 (url 이 비어 있으면 표시하지 않습니다) */
   social?: { instagram?: SocialLink; blog?: SocialLink; youtube?: SocialLink; kakaoChannel?: SocialLink };
-  /** 하단 '위치'에 보여줄 곳 (순서대로 표시) */
+  /** 하단 '위치'에 보여줄 주소 (순서대로 표시) */
   locations?: SiteLocation[];
 }
 
 export interface SiteLocation {
-  name: LocalizedText;
   address: LocalizedText;
 }
 

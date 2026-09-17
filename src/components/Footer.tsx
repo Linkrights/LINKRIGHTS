@@ -243,9 +243,7 @@ export function Footer({ locale }: { locale: Locale }) {
               <span className="shrink-0">{t.footerNav.locationLabel}:</span>
               <ul className="space-y-1.5">
                 {locations.map((place) => (
-                  <li key={place.name.ko}>
-                    {pick(place.name, locale)} ({pick(place.address, locale)})
-                  </li>
+                  <li key={place.address.ko}>{pick(place.address, locale)}</li>
                 ))}
               </ul>
             </div>

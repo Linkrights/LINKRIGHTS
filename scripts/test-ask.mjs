@@ -781,6 +781,60 @@ async function runDeterministic() {
     check('체크리스트: 4개 언어 제목과 항목', checklists.every((c) => ['ko', 'en', 'zh', 'vi'].every((l) => c.i18n[l]?.title && c.items.every((i) => i.text[l]))));
   }
 
+  // 6-6) 모델 설정: 새 모델(gpt-5, o 계열)은 max_tokens·temperature 를 거절합니다. (가짜 OpenAI로 확인)
+  {
+    const answer = {
+      category: 'other', urgency: 'normal', summary: '요약', checks: [], rights: [], actions: [],
+      organizations: [], sources: [], follow_up_question: '', limitations: '',
+    };
+    const runModel = async (modelName, rejects) => {
+      const bodies = [];
+      const fetchImpl = async (url, init) => {
+        const body = JSON.parse(init.body);
+        bodies.push(body);
+        const bad = rejects.find((param) => param in body);
+        if (bad) {
+          const code = bad === 'max_tokens' ? 'unsupported_parameter' : 'unsupported_value';
+          return { ok: false, status: 400, text: async () => JSON.stringify({ error: { message: 'unsupported', param: bad, code } }) };
+        }
+        return { ok: true, status: 200, text: async () => '', json: async () => ({ choices: [{ message: { content: JSON.stringify(answer) } }] }) };
+      };
+      const saved = { model: process.env.OPENAI_MODEL, key: process.env.OPENAI_API_KEY };
+      process.env.OPENAI_MODEL = modelName;
+      if (!process.env.OPENAI_API_KEY) process.env.OPENAI_API_KEY = 'test-key';
+      try {
+        const result = await createRuntime(fetchImpl).load('src/lib/openai.ts').askOpenAi({ question: '질문', context: '' });
+        return { result, bodies };
+      } finally {
+        if (saved.model === undefined) delete process.env.OPENAI_MODEL;
+        else process.env.OPENAI_MODEL = saved.model;
+        if (saved.key === undefined) delete process.env.OPENAI_API_KEY;
+      }
+    };
+
+    const mini = await runModel('gpt-4o-mini', ['max_tokens']);
+    check(
+      '모델 설정: gpt-4o-mini 는 max_completion_tokens + temperature 로 한 번에 성공',
+      mini.result?.summary === '요약' && mini.bodies.length === 1 && !('max_tokens' in mini.bodies[0]) && mini.bodies[0].max_completion_tokens > 0 && mini.bodies[0].temperature === 0.2,
+    );
+    const reasoning = await runModel('gpt-5-mini', ['max_tokens', 'temperature']);
+    check(
+      '모델 설정: gpt-5 계열은 temperature 없이 보내고 성공',
+      reasoning.result?.summary === '요약' && reasoning.bodies.length === 1 && !('temperature' in reasoning.bodies[0]) && reasoning.bodies[0].reasoning_effort === 'low',
+    );
+    const unknown = await runModel('custom-reasoning-model', ['max_tokens', 'temperature']);
+    check(
+      '모델 설정: 이름으로 모르는 모델이 temperature 를 거절하면 빼고 한 번 더 보내 성공',
+      unknown.result?.summary === '요약' && unknown.bodies.length === 2 && !('temperature' in unknown.bodies[1]),
+    );
+    const broken = await runModel('gpt-4o-mini', ['messages']);
+    check('모델 설정: 다른 오류는 다시 보내지 않고 실패 처리', broken.result === null && broken.bodies.length === 1);
+    check(
+      '모델 설정: 답변 형식(json_schema strict)과 규칙은 모든 모델에 그대로',
+      [mini, reasoning, unknown].every(({ bodies }) => bodies.every((b) => b.response_format?.json_schema?.strict === true && b.messages?.[0]?.role === 'system')),
+    );
+  }
+
   // 7) 화면 문구 4개 언어
   {
     const load = (locale) => JSON.parse(fs.readFileSync(path.join(ROOT, 'messages', `${locale}.json`), 'utf8'));

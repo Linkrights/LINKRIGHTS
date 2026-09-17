@@ -59,6 +59,8 @@ import type {
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+// 추론형 모델은 답이 늦을 수 있어 서버 함수가 기다리는 시간을 넉넉히 둡니다. (openai.ts 의 45초 제한보다 길게)
+export const maxDuration = 60;
 
 /** 질문 최대 길이. 길수록 비용이 늘어나므로 제한합니다. */
 const MAX_QUESTION_LENGTH = 500;

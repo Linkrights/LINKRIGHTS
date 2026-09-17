@@ -7,10 +7,39 @@
 import type { AiAnswer, AskHistoryTurn, EvidenceTier, Locale, Organization, RightsArticle } from './types';
 
 const API_URL = 'https://api.openai.com/v1/chat/completions';
-const TIMEOUT_MS = 25000;
+const TIMEOUT_MS = 45000;
 
 function model(): string {
   return process.env.OPENAI_MODEL?.trim() || 'gpt-4o-mini';
+}
+
+/**
+ * 추론형 모델(o1·o3·o4-mini, gpt-5 계열)인지 이름으로 짐작합니다.
+ * 이런 모델은 temperature 를 바꿀 수 없고, 답변 길이 한도에 "생각하는 데 쓴 분량"도 포함됩니다.
+ * 짐작이 틀려도 아래 askOpenAi 가 OpenAI의 안내에 따라 한 번 고쳐서 다시 보냅니다.
+ */
+function isReasoningModel(name: string): boolean {
+  return /^(o\d|gpt-5)/i.test(name) && !/chat/i.test(name);
+}
+
+/** 모델 종류에 맞춘 요청 설정. (max_tokens 는 새 모델에서 거절되므로 max_completion_tokens 를 씁니다) */
+function modelSettings(name: string): Record<string, unknown> {
+  // 답변이 잘리면 JSON이 깨져 오류 화면이 뜨므로 여유를 둡니다.
+  return isReasoningModel(name)
+    ? { max_completion_tokens: 8000, reasoning_effort: 'low' }
+    : { max_completion_tokens: 2000, temperature: 0.2 };
+}
+
+/** OpenAI가 "이 모델은 이 설정을 지원하지 않는다"(400)고 답했을 때, 그 설정 이름을 돌려줍니다. */
+function unsupportedParam(status: number, detail: string): string | null {
+  if (status !== 400) return null;
+  try {
+    const error = (JSON.parse(detail) as { error?: { code?: string; param?: string } }).error;
+    if (error?.param && /unsupported/i.test(error.code ?? '')) return error.param;
+  } catch {
+    // 형식이 다르면 다시 보내지 않습니다.
+  }
+  return null;
 }
 
 /**
@@ -349,47 +378,63 @@ export async function askOpenAi(params: {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
-  try {
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      signal: controller.signal,
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: model(),
-        temperature: 0.2,
-        // 답변이 잘리면 JSON이 깨져 오류 화면이 뜨므로 여유를 둡니다.
-        max_tokens: 2000,
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          // 추가 질문이면 이전 질문과 그때의 AI 답변을 순서대로 넣습니다. (상황 이해용이며 근거가 아닙니다)
-          // 최초 질문에는 history 가 없으므로 system + user 두 개만 보냅니다.
-          ...(params.history ?? []).flatMap((turn) => [
-            { role: 'user', content: `<earlier_user_question>\n${escapeXml(turn.question)}\n</earlier_user_question>` },
-            { role: 'assistant', content: JSON.stringify(turn.answer) },
-          ]),
-          { role: 'user', content: `${params.context}\n\n<user_question>\n${escapeXml(params.question)}\n</user_question>` },
-        ],
-        response_format: {
-          type: 'json_schema',
-          json_schema: { name: 'linkrights_answer', strict: true, schema: RESPONSE_SCHEMA },
-        },
-      }),
-    });
+  const name = model();
+  const settings = modelSettings(name);
+  const request = {
+    model: name,
+    messages: [
+      { role: 'system', content: SYSTEM_PROMPT },
+      // 추가 질문이면 이전 질문과 그때의 AI 답변을 순서대로 넣습니다. (상황 이해용이며 근거가 아닙니다)
+      // 최초 질문에는 history 가 없으므로 system + user 두 개만 보냅니다.
+      ...(params.history ?? []).flatMap((turn) => [
+        { role: 'user', content: `<earlier_user_question>\n${escapeXml(turn.question)}\n</earlier_user_question>` },
+        { role: 'assistant', content: JSON.stringify(turn.answer) },
+      ]),
+      { role: 'user', content: `${params.context}\n\n<user_question>\n${escapeXml(params.question)}\n</user_question>` },
+    ],
+    response_format: {
+      type: 'json_schema',
+      json_schema: { name: 'linkrights_answer', strict: true, schema: RESPONSE_SCHEMA },
+    },
+  };
 
-    if (!response.ok) {
+  try {
+    let response: Response | null = null;
+    // 모델이 temperature 같은 설정을 지원하지 않는다고 답하면, 그 설정만 빼고 한 번 더 보냅니다.
+    // (답변 형식·규칙·근거 자료는 그대로입니다)
+    for (let attempt = 0; attempt < 2; attempt++) {
+      response = await fetch(API_URL, {
+        method: 'POST',
+        signal: controller.signal,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({ ...request, ...settings }),
+      });
+      if (response.ok) break;
+
       const detail = await response.text();
+      const param = unsupportedParam(response.status, detail);
+      if (attempt === 0 && param && param !== 'max_completion_tokens' && param in settings) {
+        console.warn(`[linkrights] 모델 ${name} 이(가) ${param} 설정을 지원하지 않아 빼고 다시 보냅니다.`);
+        delete settings[param];
+        continue;
+      }
       console.error('[linkrights] OpenAI 응답 오류', response.status, detail.slice(0, 500));
       return null;
     }
+    if (!response?.ok) return null;
 
     const data = (await response.json()) as {
-      choices?: { message?: { content?: string } }[];
+      choices?: { message?: { content?: string | null }; finish_reason?: string }[];
     };
-    const content = data.choices?.[0]?.message?.content;
-    if (!content) return null;
+    const choice = data.choices?.[0];
+    const content = choice?.message?.content;
+    if (!content) {
+      console.error('[linkrights] OpenAI 답변이 비어 있습니다', choice?.finish_reason ?? '');
+      return null;
+    }
 
     const parsed = JSON.parse(content) as AiAnswer;
     return parsed;

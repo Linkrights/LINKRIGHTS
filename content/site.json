@@ -9,15 +9,9 @@
     "youtube": { "url": "", "label": "" },
     "kakaoChannel": { "url": "", "label": "" }
   },
-  "_locations_readme": "하단 '위치'에 보여줄 곳입니다. 순서대로 표시합니다. 주소는 각 학교 공식 홈페이지의 '찾아오시는 길'에서 확인한 캠퍼스 주소입니다.",
+  "_locations_readme": "하단 '위치'에 보여줄 주소입니다. 순서대로 표시합니다. (각 학교 공식 홈페이지의 '찾아오시는 길'에서 확인한 캠퍼스 주소)",
   "locations": [
     {
-      "name": {
-        "ko": "경희대학교 정경대학",
-        "en": "College of Politics and Economics, Kyung Hee University",
-        "zh": "庆熙大学 政治经济学院",
-        "vi": "Trường Chính trị và Kinh tế, Đại học Kyung Hee"
-      },
       "address": {
         "ko": "서울특별시 동대문구 경희대로 26",
         "en": "26 Kyungheedae-ro, Dongdaemun-gu, Seoul",
@@ -26,12 +20,6 @@
       }
     },
     {
-      "name": {
-        "ko": "서강대학교 사회과학대학 (정치외교학과)",
-        "en": "School of Social Sciences (Political Science and International Relations), Sogang University",
-        "zh": "西江大学 社会科学学院（政治外交学系）",
-        "vi": "Trường Khoa học Xã hội (Khoa Chính trị và Ngoại giao), Đại học Sogang"
-      },
       "address": {
         "ko": "서울특별시 마포구 백범로 35",
         "en": "35 Baekbeom-ro, Mapo-gu, Seoul",

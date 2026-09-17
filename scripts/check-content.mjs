@@ -405,7 +405,6 @@ if (fs.existsSync(checklistDir)) {
   }
   if (site?.locations !== undefined && !Array.isArray(site.locations)) fail('content/site.json', 'locations 는 목록이어야 합니다.');
   for (const [i, place] of (Array.isArray(site?.locations) ? site.locations : []).entries()) {
-    if (!place?.name?.ko) fail('content/site.json', `locations[${i}] 에 한국어 이름(name.ko)이 필요합니다.`);
     if (!place?.address?.ko) fail('content/site.json', `locations[${i}] 에 한국어 주소(address.ko)가 필요합니다.`);
   }
 }
