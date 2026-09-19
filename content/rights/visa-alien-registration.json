@@ -6,22 +6,60 @@
   "created_at": "2026-09-20",
   "reviewed_at": "2026-09-20",
   "keywords": [
-    "외국인등록", "외국인등록증", "등록증", "체류지", "입국", "90일", "출입국사무소", "출입국·외국인관서", "방문 예약",
-    "alien registration", "residence card", "register as a foreigner", "immigration office",
-    "外国人登录", "外国人登录证", "登录", "出入境事务所",
-    "đăng ký người nước ngoài", "thẻ đăng ký người nước ngoài", "văn phòng xuất nhập cảnh"
+    "외국인등록",
+    "외국인등록증",
+    "등록증",
+    "체류지",
+    "입국",
+    "90일",
+    "출입국사무소",
+    "출입국·외국인관서",
+    "방문 예약",
+    "alien registration",
+    "residence card",
+    "register as a foreigner",
+    "immigration office",
+    "外国人登录",
+    "外国人登录证",
+    "登录",
+    "出入境事务所",
+    "đăng ký người nước ngoài",
+    "thẻ đăng ký người nước ngoài",
+    "văn phòng xuất nhập cảnh",
+    "외국인 등록",
+    "등록 기한",
+    "90일 안에",
+    "입국한 날",
+    "체류지 신고"
   ],
-  "organizations": ["hikorea-1345", "danuri-1577-1366", "rainbowyouth"],
-  "related": ["visa-status-basics", "visa-extension", "life-bank-and-phone"],
+  "organizations": [
+    "hikorea-1345",
+    "danuri-1577-1366",
+    "rainbowyouth"
+  ],
+  "related": [
+    "visa-status-basics",
+    "visa-extension",
+    "life-bank-and-phone"
+  ],
   "sources": [
     {
       "title": "하이코리아 (출입국·외국인정책본부)",
       "url": "https://www.hikorea.go.kr",
       "publisher": "법무부",
       "i18n": {
-        "en": { "title": "HiKorea (Korea Immigration Service)", "publisher": "Ministry of Justice" },
-        "zh": { "title": "HiKorea（出入境·外国人政策本部）", "publisher": "法务部" },
-        "vi": { "title": "HiKorea (Cục Xuất nhập cảnh và Chính sách người nước ngoài)", "publisher": "Bộ Tư pháp" }
+        "en": {
+          "title": "HiKorea (Korea Immigration Service)",
+          "publisher": "Ministry of Justice"
+        },
+        "zh": {
+          "title": "HiKorea（出入境·外国人政策本部）",
+          "publisher": "法务部"
+        },
+        "vi": {
+          "title": "HiKorea (Cục Xuất nhập cảnh và Chính sách người nước ngoài)",
+          "publisher": "Bộ Tư pháp"
+        }
       }
     },
     {
@@ -29,13 +67,26 @@
       "url": "https://www.easylaw.go.kr",
       "publisher": "법제처",
       "i18n": {
-        "en": { "title": "Easy Law (alien registration)", "publisher": "Ministry of Government Legislation" },
-        "zh": { "title": "生活法令信息（外国人登录）", "publisher": "法制处" },
-        "vi": { "title": "Thông tin pháp luật đời sống (đăng ký người nước ngoài)", "publisher": "Bộ Pháp chế" }
+        "en": {
+          "title": "Easy Law (alien registration)",
+          "publisher": "Ministry of Government Legislation"
+        },
+        "zh": {
+          "title": "生活法令信息（外国人登录）",
+          "publisher": "法制处"
+        },
+        "vi": {
+          "title": "Thông tin pháp luật đời sống (đăng ký người nước ngoài)",
+          "publisher": "Bộ Pháp chế"
+        }
       }
     }
   ],
-  "translation_review": { "en": "pending", "zh": "pending", "vi": "pending" },
+  "translation_review": {
+    "en": "pending",
+    "zh": "pending",
+    "vi": "pending"
+  },
   "i18n": {
     "ko": {
       "title": "한국에 오래 머무는데 외국인등록을 해야 하나요?",

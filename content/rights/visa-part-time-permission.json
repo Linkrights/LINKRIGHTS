@@ -6,22 +6,59 @@
   "created_at": "2026-09-20",
   "reviewed_at": "2026-09-20",
   "keywords": [
-    "시간제취업", "시간제취업 허가", "체류자격 외 활동", "체류자격외활동허가", "유학생 알바", "유학생 아르바이트", "D-2", "D-4", "학교 확인",
-    "part-time work permission", "work permit for students", "out-of-status activity",
-    "时间制就业", "打工许可", "留学生打工", "滞留资格外活动",
-    "giấy phép làm thêm", "du học sinh làm thêm", "hoạt động ngoài tư cách lưu trú"
+    "시간제취업",
+    "시간제취업 허가",
+    "체류자격 외 활동",
+    "체류자격외활동허가",
+    "유학생 알바",
+    "유학생 아르바이트",
+    "D-2",
+    "D-4",
+    "학교 확인",
+    "part-time work permission",
+    "work permit for students",
+    "out-of-status activity",
+    "时间制就业",
+    "打工许可",
+    "留学生打工",
+    "滞留资格外活动",
+    "giấy phép làm thêm",
+    "du học sinh làm thêm",
+    "hoạt động ngoài tư cách lưu trú",
+    "유학생인데 알바",
+    "학생 비자",
+    "유학 비자",
+    "알바 허가",
+    "취업 허가"
   ],
-  "organizations": ["hikorea-1345", "moel-1350", "danuri-1577-1366"],
-  "related": ["visa-status-basics", "labor-contract", "labor-youth-work-rules"],
+  "organizations": [
+    "hikorea-1345",
+    "moel-1350",
+    "danuri-1577-1366"
+  ],
+  "related": [
+    "visa-status-basics",
+    "labor-contract",
+    "labor-youth-work-rules"
+  ],
   "sources": [
     {
       "title": "하이코리아 (출입국·외국인정책본부)",
       "url": "https://www.hikorea.go.kr",
       "publisher": "법무부",
       "i18n": {
-        "en": { "title": "HiKorea (Korea Immigration Service)", "publisher": "Ministry of Justice" },
-        "zh": { "title": "HiKorea（出入境·外国人政策本部）", "publisher": "法务部" },
-        "vi": { "title": "HiKorea (Cục Xuất nhập cảnh và Chính sách người nước ngoài)", "publisher": "Bộ Tư pháp" }
+        "en": {
+          "title": "HiKorea (Korea Immigration Service)",
+          "publisher": "Ministry of Justice"
+        },
+        "zh": {
+          "title": "HiKorea（出入境·外国人政策本部）",
+          "publisher": "法务部"
+        },
+        "vi": {
+          "title": "HiKorea (Cục Xuất nhập cảnh và Chính sách người nước ngoài)",
+          "publisher": "Bộ Tư pháp"
+        }
       }
     },
     {
@@ -29,13 +66,26 @@
       "url": "https://www.easylaw.go.kr",
       "publisher": "법제처",
       "i18n": {
-        "en": { "title": "Easy Law (part-time work for foreign students)", "publisher": "Ministry of Government Legislation" },
-        "zh": { "title": "生活法令信息（外国留学生时间制就业）", "publisher": "法制处" },
-        "vi": { "title": "Thông tin pháp luật đời sống (làm thêm của du học sinh)", "publisher": "Bộ Pháp chế" }
+        "en": {
+          "title": "Easy Law (part-time work for foreign students)",
+          "publisher": "Ministry of Government Legislation"
+        },
+        "zh": {
+          "title": "生活法令信息（外国留学生时间制就业）",
+          "publisher": "法制处"
+        },
+        "vi": {
+          "title": "Thông tin pháp luật đời sống (làm thêm của du học sinh)",
+          "publisher": "Bộ Pháp chế"
+        }
       }
     }
   ],
-  "translation_review": { "en": "pending", "zh": "pending", "vi": "pending" },
+  "translation_review": {
+    "en": "pending",
+    "zh": "pending",
+    "vi": "pending"
+  },
   "i18n": {
     "ko": {
       "title": "유학생인데 아르바이트를 해도 되나요? (시간제취업 허가)",
