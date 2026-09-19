@@ -1,0 +1,84 @@
+{
+  "_readme": "체류자격 '변경' 전 확인할 것. '연장'(before-visa-extension)과 역할이 다릅니다: 자격 자체가 바뀔 때 씁니다.",
+  "id": "before-visa-change",
+  "status": "published",
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-20",
+  "category": "visa",
+  "based_on": ["visa-status-basics", "visa-extension"],
+  "organizations": ["hikorea-1345", "danuri-1577-1366"],
+  "i18n": {
+    "ko": {
+      "title": "체류자격 변경 전 확인할 것",
+      "summary": "학교를 졸업하거나 취업하는 것처럼 하는 일이 바뀌면 체류자격 자체를 바꿔야 할 수 있어요. 기간만 늘리는 '연장'과는 다릅니다.",
+      "note": "변경 대상과 서류, 신청 시기는 체류자격과 상황에 따라 다릅니다. 반드시 1345 또는 하이코리아에서 확인하세요."
+    },
+    "en": {
+      "title": "Before you change your residence status",
+      "summary": "If what you do changes — for example you graduate or start a job — you may need to change your residence status itself. This is different from extending the period you already have.",
+      "note": "Who can change, which documents are needed and when to apply depend on your status and situation. Always check with 1345 or on HiKorea."
+    },
+    "zh": {
+      "title": "变更滞留资格前确认的事",
+      "summary": "毕业或就业等所做的事情发生变化时，可能需要变更滞留资格本身。这与只延长期限的“延长”不同。",
+      "note": "可否变更、需要哪些材料、何时申请，都因滞留资格和情况而不同。请务必向1345或 HiKorea 确认。"
+    },
+    "vi": {
+      "title": "Những điều cần kiểm tra trước khi thay đổi tư cách lưu trú",
+      "summary": "Khi công việc bạn làm thay đổi — ví dụ tốt nghiệp hoặc đi làm — bạn có thể phải thay đổi chính tư cách lưu trú. Điều này khác với việc chỉ gia hạn thời gian đang có.",
+      "note": "Đối tượng, giấy tờ và thời điểm nộp khác nhau tùy tư cách lưu trú và hoàn cảnh. Hãy nhất định kiểm tra với 1345 hoặc HiKorea."
+    }
+  },
+  "items": [
+    {
+      "id": "current",
+      "text": {
+        "ko": "지금 내 체류자격과 체류기간을 확인했나요?",
+        "en": "Have you checked your current residence status and period of stay?",
+        "zh": "确认了自己现在的滞留资格和滞留期限吗？",
+        "vi": "Bạn đã kiểm tra tư cách lưu trú và thời hạn lưu trú hiện tại chưa?"
+      },
+      "article": "visa-status-basics"
+    },
+    {
+      "id": "change-or-extend",
+      "text": {
+        "ko": "내 상황이 '변경'인지 '연장'인지 구분했나요? (하는 일이 바뀌면 변경, 같은 자격을 더 쓰면 연장)",
+        "en": "Do you know whether your case is a change or an extension? (Change if what you do changes, extension if you keep the same status for longer.)",
+        "zh": "分清自己的情况是“变更”还是“延长”了吗？（所做的事变了是变更，继续用同一资格是延长）",
+        "vi": "Bạn đã phân biệt trường hợp của mình là “thay đổi” hay “gia hạn” chưa? (Thay đổi khi việc bạn làm thay đổi, gia hạn khi giữ nguyên tư cách lâu hơn.)"
+      },
+      "article": "visa-extension"
+    },
+    {
+      "id": "timing",
+      "text": {
+        "ko": "언제까지 신청해야 하는지 1345에 물어봤나요?",
+        "en": "Have you asked 1345 by when you have to apply?",
+        "zh": "向1345询问过最晚什么时候要申请吗？",
+        "vi": "Bạn đã hỏi 1345 về thời hạn phải nộp hồ sơ chưa?"
+      },
+      "article": "visa-status-basics"
+    },
+    {
+      "id": "documents",
+      "text": {
+        "ko": "바꾸려는 자격에 필요한 서류를 확인했나요?",
+        "en": "Have you checked which documents the new status needs?",
+        "zh": "确认了想变更的资格需要哪些材料吗？",
+        "vi": "Bạn đã kiểm tra giấy tờ cần cho tư cách mới chưa?"
+      },
+      "article": "visa-status-basics"
+    },
+    {
+      "id": "booking",
+      "text": {
+        "ko": "하이코리아에서 방문 예약을 했나요?",
+        "en": "Have you booked a visit on HiKorea?",
+        "zh": "在 HiKorea 预约到访了吗？",
+        "vi": "Bạn đã đặt lịch đến làm thủ tục trên HiKorea chưa?"
+      },
+      "article": "visa-extension"
+    }
+  ]
+}

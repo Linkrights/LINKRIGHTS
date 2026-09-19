@@ -6,15 +6,54 @@
   "owner": "운영팀",
   "reviewed_at": "2026-09-06",
   "keywords": [
-    "근로계약서", "계약서", "알바 시작", "일 시작", "근로 계약", "알바 계약", "일 계약", "구두계약", "서명",
-    "employment contract", "work contract", "sign a contract",
-    "劳动合同", "合同", "签合同",
-    "hợp đồng lao động", "ký hợp đồng"
+    "근로계약서",
+    "계약서",
+    "알바 시작",
+    "일 시작",
+    "근로 계약",
+    "알바 계약",
+    "일 계약",
+    "구두계약",
+    "서명",
+    "employment contract",
+    "work contract",
+    "sign a contract",
+    "劳动合同",
+    "合同",
+    "签合同",
+    "hợp đồng lao động",
+    "ký hợp đồng"
   ],
-  "organizations": ["moel-1350", "klac-132", "danuri-1577-1366"],
-  "related": ["labor-unpaid-wages", "labor-minimum-wage", "labor-youth-work-rules"],
+  "organizations": [
+    "moel-1350",
+    "klac-132",
+    "danuri-1577-1366"
+  ],
+  "related": [
+    "labor-unpaid-wages",
+    "labor-minimum-wage",
+    "labor-youth-work-rules"
+  ],
   "sources": [
-    { "title": "고용노동부 공식 누리집", "url": "https://www.moel.go.kr", "publisher": "고용노동부" }
+    {
+      "title": "고용노동부 공식 누리집",
+      "url": "https://www.moel.go.kr",
+      "publisher": "고용노동부",
+      "i18n": {
+        "en": {
+          "title": "Ministry of Employment and Labor website",
+          "publisher": "Ministry of Employment and Labor"
+        },
+        "zh": {
+          "title": "雇佣劳动部官方网站",
+          "publisher": "雇佣劳动部"
+        },
+        "vi": {
+          "title": "Trang web chính thức của Bộ Việc làm và Lao động",
+          "publisher": "Bộ Việc làm và Lao động"
+        }
+      }
+    }
   ],
   "i18n": {
     "ko": {
@@ -102,6 +141,96 @@
         }
       ],
       "note": "For a final decision on whether a contract term is lawful, check with the Ministry of Employment and Labor or a legal advice service."
+    },
+    "zh": {
+      "title": "开始打工时一定要签劳动合同吗？",
+      "summary": "是的，一定要签。合同是保护自己最确实的证据。请拿到一份并自己保管。",
+      "situations": [
+        "有人对我说“我们这里不签合同”。",
+        "虽然签了合同，但老板拿走了，我没有拿到。",
+        "只是口头约定了时薪和工作时间。",
+        "合同内容太难，我看不懂是什么意思。"
+      ],
+      "rights": [
+        {
+          "title": "拿到合同是你的权利",
+          "body": "开始工作时，应当拿到写明工资、工作时间、工作内容和休息日的书面合同。老板必须给你一份。"
+        },
+        {
+          "title": "未满18周岁需要更多材料",
+          "body": "未满18周岁的青少年工作时，工作单位必须备有能够确认年龄的材料和监护人（亲权人·监护人）的同意书。"
+        },
+        {
+          "title": "写入不利条件也可能无效",
+          "body": "像“迟到就扣一天工资”这样低于法律标准的条件，可能不会被原样认可。签字前请先咨询。"
+        }
+      ],
+      "actions": [
+        {
+          "title": "签字前确认四点",
+          "body": "① 时薪多少 ② 哪天发工资 ③ 从几点到几点工作 ④ 做什么工作。先看看这四点是否都写清楚了。"
+        },
+        {
+          "title": "一定要拿到属于自己的那份合同",
+          "body": "如果没有拿到纸质合同，可以拍照保存，或者通过短信、通讯软件收到也可以。"
+        },
+        {
+          "title": "看不懂就不要签，先问清楚",
+          "body": "不必当场就签字。你可以说“我回家看看，明天给您”。"
+        },
+        {
+          "title": "不给合同时，请拨打1350咨询",
+          "body": "拨打雇佣劳动部客户咨询中心1350说明情况，可以得到该怎么做的指导。"
+        }
+      ],
+      "note": "合同内容是否符合法律，最终判断请向雇佣劳动部或法律咨询机构确认。"
+    },
+    "vi": {
+      "title": "Khi bắt đầu làm thêm, nhất định phải ký hợp đồng lao động không?",
+      "summary": "Có, nhất định phải ký. Hợp đồng là bằng chứng chắc chắn nhất bảo vệ bạn. Hãy nhận một bản và tự mình giữ.",
+      "situations": [
+        "Tôi được nói rằng “chỗ chúng tôi không viết hợp đồng”.",
+        "Tôi có ký hợp đồng nhưng chủ giữ mất, tôi không nhận được bản nào.",
+        "Tiền công theo giờ và thời gian làm chỉ được thỏa thuận bằng miệng.",
+        "Nội dung hợp đồng khó quá nên tôi không hiểu nghĩa là gì."
+      ],
+      "rights": [
+        {
+          "title": "Nhận hợp đồng là quyền của bạn",
+          "body": "Khi bắt đầu làm việc, bạn phải nhận được văn bản ghi rõ tiền lương, thời gian làm việc, công việc phải làm và ngày nghỉ. Chủ sử dụng lao động phải đưa cho bạn một bản."
+        },
+        {
+          "title": "Dưới 18 tuổi cần thêm giấy tờ",
+          "body": "Khi thanh thiếu niên dưới 18 tuổi làm việc, nơi làm việc phải lưu giữ giấy tờ xác nhận tuổi và giấy đồng ý của người giám hộ (người có quyền nuôi dưỡng hoặc người giám hộ)."
+        },
+        {
+          "title": "Điều khoản bất lợi có thể không có hiệu lực",
+          "body": "Những điều kiện tệ hơn tiêu chuẩn pháp luật, ví dụ “đi muộn thì trừ một ngày lương”, có thể không được công nhận như đã ghi. Hãy hỏi tư vấn trước khi ký."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Kiểm tra bốn điều trước khi ký",
+          "body": "① tiền công một giờ là bao nhiêu ② trả lương ngày nào ③ làm từ mấy giờ đến mấy giờ ④ làm công việc gì. Trước hết hãy xem bốn điều này có được ghi rõ không."
+        },
+        {
+          "title": "Nhất định phải nhận bản hợp đồng của mình",
+          "body": "Nếu không nhận được bản giấy, hãy chụp ảnh lại, hoặc nhận qua tin nhắn hay ứng dụng nhắn tin cũng được."
+        },
+        {
+          "title": "Không hiểu thì đừng ký, hãy hỏi lại",
+          "body": "Bạn không bắt buộc phải ký ngay tại chỗ. Bạn có thể nói “Tôi sẽ đọc ở nhà rồi mai đưa lại”."
+        },
+        {
+          "title": "Nếu không được đưa hợp đồng, hãy gọi 1350",
+          "body": "Gọi đến Tổng đài Bộ Việc làm và Lao động 1350 và trình bày tình huống, bạn sẽ được hướng dẫn nên làm gì."
+        }
+      ],
+      "note": "Việc đánh giá cuối cùng xem nội dung hợp đồng có đúng luật hay không, hãy xác nhận tại Bộ Việc làm và Lao động hoặc cơ quan tư vấn pháp lý."
     }
+  },
+  "translation_review": {
+    "zh": "pending",
+    "vi": "pending"
   }
 }

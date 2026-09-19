@@ -5,8 +5,18 @@
   "owner": "운영팀",
   "reviewed_at": "2026-09-17",
   "category": "labor",
-  "based_on": ["visa-status-basics", "labor-contract", "labor-minimum-wage", "labor-youth-work-rules", "labor-unpaid-wages"],
-  "organizations": ["moel-1350", "youth-1388"],
+  "based_on": [
+    "visa-part-time-permission",
+    "visa-status-basics",
+    "labor-contract",
+    "labor-minimum-wage",
+    "labor-youth-work-rules",
+    "labor-unpaid-wages"
+  ],
+  "organizations": [
+    "moel-1350",
+    "youth-1388"
+  ],
   "i18n": {
     "ko": {
       "title": "알바 시작 전 확인할 것",
@@ -38,7 +48,7 @@
         "zh": "确认过自己的居留资格是否可以打工了吗？",
         "vi": "Bạn đã kiểm tra tư cách lưu trú của mình có được làm thêm không?"
       },
-      "article": "visa-status-basics"
+      "article": "visa-part-time-permission"
     },
     {
       "id": "conditions",

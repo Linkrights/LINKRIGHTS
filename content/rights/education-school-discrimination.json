@@ -6,17 +6,77 @@
   "owner": "운영팀",
   "reviewed_at": "2026-09-06",
   "keywords": [
-    "학교에서 차별", "놀림", "따돌림", "왕따", "선생님이 무시", "외국인이라고", "피부색",
-    "발음", "이름 때문에", "학교폭력",
-    "discrimination at school", "bullying", "teased", "made fun of my accent",
-    "在学校被歧视", "被欺负", "霸凌",
-    "bị phân biệt ở trường", "bị bắt nạt"
+    "학교에서 차별",
+    "놀림",
+    "따돌림",
+    "왕따",
+    "선생님이 무시",
+    "외국인이라고",
+    "피부색",
+    "발음",
+    "이름 때문에",
+    "학교폭력",
+    "discrimination at school",
+    "bullying",
+    "teased",
+    "made fun of my accent",
+    "在学校被歧视",
+    "被欺负",
+    "霸凌",
+    "bị phân biệt ở trường",
+    "bị bắt nạt"
   ],
-  "organizations": ["school-violence-117", "nhrck-1331", "youth-1388", "cyber1388", "rainbowyouth"],
-  "related": ["human-rights-discrimination", "education-school-enrollment", "human-rights-violence-and-safety"],
+  "organizations": [
+    "school-violence-117",
+    "nhrck-1331",
+    "youth-1388",
+    "cyber1388",
+    "rainbowyouth"
+  ],
+  "related": [
+    "human-rights-discrimination",
+    "education-school-enrollment",
+    "human-rights-violence-and-safety"
+  ],
   "sources": [
-    { "title": "국가인권위원회", "url": "https://www.humanrights.go.kr", "publisher": "국가인권위원회" },
-    { "title": "교육부 공식 누리집", "url": "https://www.moe.go.kr", "publisher": "교육부" }
+    {
+      "title": "국가인권위원회",
+      "url": "https://www.humanrights.go.kr",
+      "publisher": "국가인권위원회",
+      "i18n": {
+        "en": {
+          "title": "National Human Rights Commission of Korea",
+          "publisher": "National Human Rights Commission of Korea"
+        },
+        "zh": {
+          "title": "国家人权委员会",
+          "publisher": "国家人权委员会"
+        },
+        "vi": {
+          "title": "Ủy ban Nhân quyền Quốc gia Hàn Quốc",
+          "publisher": "Ủy ban Nhân quyền Quốc gia Hàn Quốc"
+        }
+      }
+    },
+    {
+      "title": "교육부 공식 누리집",
+      "url": "https://www.moe.go.kr",
+      "publisher": "교육부",
+      "i18n": {
+        "en": {
+          "title": "Ministry of Education website",
+          "publisher": "Ministry of Education"
+        },
+        "zh": {
+          "title": "教育部官方网站",
+          "publisher": "教育部"
+        },
+        "vi": {
+          "title": "Trang web chính thức của Bộ Giáo dục",
+          "publisher": "Bộ Giáo dục"
+        }
+      }
+    }
   ],
   "i18n": {
     "ko": {
@@ -112,6 +172,104 @@
         }
       ],
       "note": "Whether a specific incident counts as discrimination must be assessed by an official body such as the National Human Rights Commission."
+    },
+    "zh": {
+      "title": "我在学校遭到了歧视或欺凌",
+      "summary": "因为出身国家、肤色、口音而被取笑或受到不利对待，这就是歧视。这不是必须忍耐的事。",
+      "situations": [
+        "同学们拿我的国家或发音取笑我。",
+        "有人对我说“你是外国人，没办法”。",
+        "老师好像只对我不一样。",
+        "我被欺负，却不知道该向谁说。"
+      ],
+      "rights": [
+        {
+          "title": "你有不受歧视的权利",
+          "body": "你有权不因国籍、肤色、语言、出身地区而受到不利对待。这在学校里同样适用。"
+        },
+        {
+          "title": "学校有保护你的责任",
+          "body": "学校有责任采取措施，防止学生受到欺凌。如果不方便找班主任，可以告诉心理咨询老师、教导主任或校长。"
+        },
+        {
+          "title": "可以向国家人权委员会提出申诉",
+          "body": "如果遭受歧视，可以向国家人权委员会（1331）提出申诉。外国国籍也可以申诉。"
+        },
+        {
+          "title": "说出来不是打小报告",
+          "body": "寻求帮助是正当的权利。因为求助而受到不利对待，本身也是问题。"
+        }
+      ],
+      "actions": [
+        {
+          "title": "记录发生了什么",
+          "body": "把日期、地点、谁、说了什么，哪怕简短地记下来。如果有信息或照片，请保存好。"
+        },
+        {
+          "title": "先告诉可以信任的成年人",
+          "body": "班主任、心理咨询老师、父母、当地青少年机构的老师，从最容易开口的人开始。"
+        },
+        {
+          "title": "如果是校园暴力，可以拨打117举报",
+          "body": "如果是暴力或持续的欺凌，可以拨打117或发短信举报并接受咨询。"
+        },
+        {
+          "title": "歧视问题请拨打1331咨询",
+          "body": "拨打国家人权委员会1331，可以得到申诉程序的指导。"
+        }
+      ],
+      "note": "具体事件是否构成歧视，需要由国家人权委员会等官方机构判断。"
+    },
+    "vi": {
+      "title": "Tôi bị phân biệt đối xử hoặc bị bắt nạt ở trường",
+      "summary": "Bị trêu chọc hay bị đối xử bất lợi vì quốc gia xuất thân, màu da hay giọng nói là phân biệt đối xử. Đó không phải là điều bạn phải chịu đựng.",
+      "situations": [
+        "Các bạn lấy đất nước hay cách phát âm của tôi ra để trêu chọc.",
+        "Tôi bị nói rằng “là người nước ngoài nên đành chịu thôi”.",
+        "Hình như thầy cô chỉ đối xử khác với riêng tôi.",
+        "Tôi bị bắt nạt nhưng không biết nên nói với ai."
+      ],
+      "rights": [
+        {
+          "title": "Bạn có quyền không bị phân biệt đối xử",
+          "body": "Bạn có quyền không bị đối xử bất lợi vì quốc tịch, màu da, ngôn ngữ hay vùng xuất thân. Điều này cũng được áp dụng như nhau ở trong trường."
+        },
+        {
+          "title": "Nhà trường có trách nhiệm bảo vệ bạn",
+          "body": "Nhà trường có trách nhiệm có biện pháp để học sinh không bị bắt nạt. Nếu khó nói với giáo viên chủ nhiệm, bạn có thể nói với giáo viên tư vấn, hiệu phó hoặc hiệu trưởng."
+        },
+        {
+          "title": "Bạn có thể khiếu nại lên Ủy ban Nhân quyền Quốc gia",
+          "body": "Nếu bị phân biệt đối xử, bạn có thể gửi đơn khiếu nại đến Ủy ban Nhân quyền Quốc gia (1331). Người mang quốc tịch nước ngoài cũng có thể khiếu nại."
+        },
+        {
+          "title": "Nói ra không phải là mách lẻo",
+          "body": "Yêu cầu giúp đỡ là quyền chính đáng. Việc gây bất lợi cho bạn vì bạn đã yêu cầu giúp đỡ cũng là một vấn đề."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Hãy ghi lại những gì đã xảy ra",
+          "body": "Hãy ghi lại dù ngắn gọn: ngày, nơi chốn, ai, đã nói gì. Nếu có tin nhắn hay ảnh, hãy lưu lại."
+        },
+        {
+          "title": "Trước hết hãy nói với một người lớn đáng tin cậy",
+          "body": "Hãy bắt đầu từ người dễ nói nhất: giáo viên chủ nhiệm, giáo viên tư vấn, bố mẹ, hoặc thầy cô ở cơ quan thanh thiếu niên địa phương."
+        },
+        {
+          "title": "Nếu là bạo lực học đường, bạn có thể báo 117",
+          "body": "Nếu là bạo lực hoặc bị bắt nạt kéo dài, bạn có thể gọi hoặc nhắn tin đến 117 để tố giác và được tư vấn."
+        },
+        {
+          "title": "Vấn đề phân biệt đối xử hãy gọi 1331 để được tư vấn",
+          "body": "Gọi đến Ủy ban Nhân quyền Quốc gia 1331, bạn sẽ được hướng dẫn thủ tục khiếu nại."
+        }
+      ],
+      "note": "Việc đánh giá một sự việc cụ thể có phải là phân biệt đối xử hay không cần được xác nhận bởi cơ quan chính thức như Ủy ban Nhân quyền Quốc gia."
     }
+  },
+  "translation_review": {
+    "zh": "pending",
+    "vi": "pending"
   }
 }

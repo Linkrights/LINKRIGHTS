@@ -19,6 +19,8 @@ import type {
   QnaPost,
   ResolvedArticle,
   RightsArticle,
+  RightsBody,
+  RightsSource,
   SearchIntent,
   SearchIntentsFile,
   SiteConfig,
@@ -158,6 +160,31 @@ export function resolveArticle(article: RightsArticle, locale: Locale): Resolved
   const body = article.i18n[locale];
   if (body) return { article, body, fallback: false };
   return { article, body: article.i18n.ko, fallback: locale !== 'ko' };
+}
+
+/** 이 언어의 번역이 팀이 옮긴 뒤 아직 검토 전인지 (화면에 작은 안내를 붙입니다) */
+export function isTranslationPending(article: RightsArticle, locale: Locale): boolean {
+  return locale !== 'ko' && Boolean(article.i18n[locale]) && article.translation_review?.[locale] === 'pending';
+}
+
+/**
+ * AI에게 근거로 보낼 본문입니다.
+ * 검토를 마친 번역만 그 언어로 보내고, 검토 전 번역이거나 번역이 없으면 한국어 원문을 보냅니다.
+ * (AI는 어느 경우에도 질문한 언어로 답합니다)
+ */
+export function groundingBody(article: RightsArticle, locale: Locale): RightsBody {
+  const body = article.i18n[locale];
+  return body && !isTranslationPending(article, locale) ? body : article.i18n.ko;
+}
+
+/** 출처 제목·발행기관을 화면 언어로 꺼냅니다. (번역이 없으면 한국어 원문) */
+export function localizeSource(source: RightsSource, locale: Locale): RightsSource {
+  const text = locale === 'ko' ? undefined : source.i18n?.[locale];
+  return {
+    title: text?.title || source.title,
+    url: source.url,
+    publisher: text?.publisher || source.publisher,
+  };
 }
 
 /** 마지막 검토일이 오래되었는지 확인합니다. */

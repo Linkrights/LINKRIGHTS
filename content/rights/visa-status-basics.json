@@ -6,16 +6,58 @@
   "owner": "운영팀",
   "reviewed_at": "2026-09-06",
   "keywords": [
-    "체류자격", "외국인등록증", "비자 종류", "F-4", "F-2", "D-4", "H-2", "체류자격이 뭔지",
-    "외국인등록", "체류자격 변경", "아르바이트 가능한 비자", "체류자격 외 활동",
-    "visa status", "alien registration card", "what visa do I have", "change of status",
-    "居留资格", "外国人登录证", "签证种类",
-    "tư cách lưu trú", "thẻ đăng ký người nước ngoài"
+    "체류자격",
+    "외국인등록증",
+    "비자 종류",
+    "F-4",
+    "F-2",
+    "D-4",
+    "H-2",
+    "체류자격이 뭔지",
+    "외국인등록",
+    "체류자격 변경",
+    "아르바이트 가능한 비자",
+    "체류자격 외 활동",
+    "visa status",
+    "alien registration card",
+    "what visa do I have",
+    "change of status",
+    "居留资格",
+    "外国人登录证",
+    "签证种类",
+    "tư cách lưu trú",
+    "thẻ đăng ký người nước ngoài"
   ],
-  "organizations": ["hikorea-1345", "danuri-1577-1366", "klac-132"],
-  "related": ["visa-extension", "labor-contract", "health-insurance"],
+  "organizations": [
+    "hikorea-1345",
+    "danuri-1577-1366",
+    "klac-132"
+  ],
+  "related": [
+    "visa-extension",
+    "labor-contract",
+    "health-insurance"
+  ],
   "sources": [
-    { "title": "하이코리아 (출입국·외국인정책본부)", "url": "https://www.hikorea.go.kr", "publisher": "법무부" }
+    {
+      "title": "하이코리아 (출입국·외국인정책본부)",
+      "url": "https://www.hikorea.go.kr",
+      "publisher": "법무부",
+      "i18n": {
+        "en": {
+          "title": "HiKorea (Korea Immigration Service)",
+          "publisher": "Ministry of Justice"
+        },
+        "zh": {
+          "title": "HiKorea（出入境·外国人政策本部）",
+          "publisher": "法务部"
+        },
+        "vi": {
+          "title": "HiKorea (Cục Xuất nhập cảnh và Chính sách người nước ngoài)",
+          "publisher": "Bộ Tư pháp"
+        }
+      }
+    }
   ],
   "i18n": {
     "ko": {
@@ -56,6 +98,128 @@
         }
       ],
       "note": "체류자격에 대한 판단은 출입국 당국만 할 수 있습니다. LINKRIGHTS의 설명은 참고용이며, 반드시 1345 또는 하이코리아에서 확인하세요."
+    },
+    "en": {
+      "title": "I want to know what my residence status is and what I'm allowed to do",
+      "summary": "Your residence status (visa type) sets out what you are allowed to do in Korea. Knowing your status exactly is the first step for every procedure.",
+      "situations": [
+        "I don't understand what the letters on my residence card mean.",
+        "I wonder whether my visa allows me to work part-time.",
+        "Do I need to change my status if I change schools or get a job?",
+        "My parents' visa seems to be different from mine."
+      ],
+      "rights": [
+        {
+          "title": "You have the right to check your residence status",
+          "body": "Your residence card shows your residence status and period of stay. If it is hard to understand, you can ask 1345."
+        },
+        {
+          "title": "What you can do depends on your status",
+          "body": "Each residence status allows a different range of work or part-time jobs. Doing an activity that is not allowed can cause problems, so check in advance."
+        },
+        {
+          "title": "If your situation changes, you may need to report it or change your status",
+          "body": "When your address, school or workplace changes, you may have to report it within a set period. Ask 1345 which report you need."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Save a photo of your residence card",
+          "body": "Taking photos of the front and back and keeping them somewhere safe helps if you lose the card. Don't send them to other people carelessly."
+        },
+        {
+          "title": "Call 1345 and ask what your status allows",
+          "body": "Asking a specific question such as \"My residence status is XX. Can I work part-time?\" will get you an accurate answer."
+        },
+        {
+          "title": "Get guidance on changing your status if needed",
+          "body": "If you have changed schools or jobs, check on HiKorea which application you need and make an appointment."
+        }
+      ],
+      "note": "Only the immigration authorities can make decisions about residence status. LINKRIGHTS's explanation is for reference only, so always check with 1345 or HiKorea."
+    },
+    "zh": {
+      "title": "我想知道自己的滞留资格是什么、可以做什么",
+      "summary": "滞留资格是规定你在韩国可以做什么的标准。准确了解自己的资格，是办理所有手续的第一步。",
+      "situations": [
+        "我看不懂外国人登录证上写的字是什么意思。",
+        "我想知道我的签证能不能打工。",
+        "转学或者就业的话，需要变更资格吗？",
+        "父母的签证和我的签证好像不一样。"
+      ],
+      "rights": [
+        {
+          "title": "你有权确认自己的滞留资格",
+          "body": "外国人登录证上写有滞留资格和滞留期限。如果很难看懂，可以向1345咨询。"
+        },
+        {
+          "title": "不同资格可以做的事情不同",
+          "body": "每种滞留资格允许就业或打工的范围都不一样。从事不被允许的活动可能会带来不利后果，所以要提前确认。"
+        },
+        {
+          "title": "情况发生变化时，可能需要申报或变更",
+          "body": "地址、学校或工作单位发生变化时，有些情况需要在规定期限内申报。需要哪些申报，请向1345确认。"
+        }
+      ],
+      "actions": [
+        {
+          "title": "把外国人登录证拍照保存",
+          "body": "把正反两面拍照并保存在安全的地方，丢失时会有帮助。不要随便发给别人。"
+        },
+        {
+          "title": "拨打1345，询问自己的资格可以做哪些活动",
+          "body": "像“我的滞留资格是XX，可以打工吗？”这样具体地问，就能得到准确的回答。"
+        },
+        {
+          "title": "必要时了解资格变更手续",
+          "body": "如果转学或换了工作，请在 HiKorea 上确认需要办理哪些申请并进行预约。"
+        }
+      ],
+      "note": "关于滞留资格的判断只能由出入境管理部门作出。LINKRIGHTS 的说明仅供参考，请务必向1345或 HiKorea 确认。"
+    },
+    "vi": {
+      "title": "Tôi muốn biết tư cách lưu trú của mình là gì và mình được làm gì",
+      "summary": "Tư cách lưu trú là tiêu chuẩn quy định bạn được làm gì ở Hàn Quốc. Biết chính xác tư cách của mình là bước đầu tiên của mọi thủ tục.",
+      "situations": [
+        "Tôi không hiểu các chữ ghi trên thẻ đăng ký người nước ngoài có nghĩa là gì.",
+        "Tôi muốn biết với visa của mình thì có được làm thêm không.",
+        "Nếu chuyển trường hoặc đi làm thì có phải thay đổi tư cách không?",
+        "Visa của bố mẹ và visa của tôi hình như khác nhau."
+      ],
+      "rights": [
+        {
+          "title": "Bạn có quyền kiểm tra tư cách lưu trú của mình",
+          "body": "Trên thẻ đăng ký người nước ngoài có ghi tư cách lưu trú và thời hạn lưu trú. Nếu khó hiểu, bạn có thể hỏi số 1345."
+        },
+        {
+          "title": "Việc được làm khác nhau tùy tư cách",
+          "body": "Mỗi tư cách lưu trú cho phép đi làm hoặc làm thêm trong phạm vi khác nhau. Nếu làm những việc không được phép có thể gặp bất lợi, vì vậy cần kiểm tra trước."
+        },
+        {
+          "title": "Khi hoàn cảnh thay đổi, có thể cần khai báo hoặc thay đổi tư cách",
+          "body": "Khi địa chỉ, trường học hoặc nơi làm việc thay đổi, có trường hợp phải khai báo trong thời hạn quy định. Hãy hỏi số 1345 xem cần khai báo gì."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Chụp ảnh thẻ đăng ký người nước ngoài và lưu lại",
+          "body": "Chụp cả mặt trước và mặt sau rồi lưu ở nơi an toàn sẽ có ích khi bị mất thẻ. Đừng tùy tiện gửi cho người khác."
+        },
+        {
+          "title": "Gọi 1345 để hỏi tư cách của mình được làm những gì",
+          "body": "Nếu hỏi cụ thể như “Tư cách lưu trú của tôi là XX, tôi có được làm thêm không?”, bạn sẽ nhận được câu trả lời chính xác."
+        },
+        {
+          "title": "Nếu cần, hãy tìm hiểu thủ tục thay đổi tư cách",
+          "body": "Nếu đã chuyển trường hoặc đổi nơi làm việc, hãy kiểm tra trên HiKorea xem cần nộp đơn gì và đặt lịch hẹn."
+        }
+      ],
+      "note": "Chỉ cơ quan xuất nhập cảnh mới có thể đưa ra quyết định về tư cách lưu trú. Giải thích của LINKRIGHTS chỉ để tham khảo, hãy luôn kiểm tra lại với số 1345 hoặc HiKorea."
     }
+  },
+  "translation_review": {
+    "en": "pending",
+    "zh": "pending",
+    "vi": "pending"
   }
 }

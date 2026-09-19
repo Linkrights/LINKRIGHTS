@@ -1,6 +1,7 @@
 // 모든 페이지를 감싸는 기본 틀입니다. 위쪽 메뉴와 아래쪽 정보가 여기에 들어갑니다.
 
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 import type { ReactNode } from 'react';
 import '../globals.css';
 import { Footer } from '@/components/Footer';
@@ -60,6 +61,11 @@ export async function generateMetadata({
   };
 }
 
+/**
+ * 방문 통계(Vercel Web Analytics).
+ * 쿠키를 쓰지 않고, 누가 봤는지 알 수 없는 익명 집계만 남깁니다. (개인정보 처리방침의 '방문 통계' 항목 참고)
+ * Vercel 프로젝트 설정에서 Web Analytics 를 켜 두어야 기록됩니다.
+ */
 export default async function LocaleLayout({
   children,
   params,
@@ -104,6 +110,7 @@ export default async function LocaleLayout({
           {children}
         </main>
         <Footer locale={locale} />
+        <Analytics />
         <script
           type="application/ld+json"
           // 검색엔진이 사이트를 이해하도록 돕는 정보입니다.

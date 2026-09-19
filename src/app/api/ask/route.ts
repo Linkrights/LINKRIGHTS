@@ -26,6 +26,7 @@ import {
   getCategories,
   getGroundingArticles,
   getOrganizations,
+  localizeSource,
   resolveArticle,
   resolveOrganizations,
 } from '@/lib/content';
@@ -82,6 +83,9 @@ const MAX_POSSIBLE_ORGANIZATIONS = 1;
 const MAX_POSSIBLE_RIGHTS = 2;
 /** 답변에 쓰지 않았지만 함께 볼 수 있는 등록 권리정보 링크 수 */
 const MAX_RELATED = 3;
+/** 답변 아래에 보여줄 "이런 것도 물어볼 수 있어요" 문장 수와 길이 */
+const MAX_SUGGESTIONS = 3;
+const MAX_SUGGESTION_LENGTH = 60;
 /** "먼저 확인할 것" 최대 개수와 한 항목의 최대 길이 */
 const MAX_CHECKS = 3;
 const MAX_CHECK_LENGTH = 200;
@@ -357,7 +361,7 @@ export async function POST(request: Request) {
       title: body.title,
       href: `/${locale}/rights/${article.category}/${article.id}`,
       reviewed_at: article.reviewed_at,
-      sources: article.sources ?? [],
+      sources: (article.sources ?? []).map((source) => localizeSource(source, locale)),
     };
   });
 
@@ -387,12 +391,31 @@ export async function POST(request: Request) {
     }
   }
 
+  // 이어서 물어볼 수 있는 질문: AI가 새로 지어내지 않고, 등록된 권리정보에 실제로 적혀 있는 문장만 씁니다.
+  //  ① 이번에 쓴 자료의 "이런 상황인가요?"(situations) 문장 — 이용자가 말하듯 적힌 문장입니다.
+  //  ② 함께 볼 수 있는 권리정보의 제목 — 대부분 질문 형태입니다.
+  // 이미 물어본 것과 같은 문장은 빼고, 최대 MAX_SUGGESTIONS 개만 보냅니다.
+  const askedBefore = [question, ...history.map((turn) => turn.question)].map((text) => text.replace(/\s+/g, ''));
+  const suggestions: string[] = [];
+  const addSuggestion = (text: string) => {
+    const clean = text.trim();
+    if (!clean || clean.length > MAX_SUGGESTION_LENGTH || suggestions.length >= MAX_SUGGESTIONS) return;
+    const compact = clean.replace(/\s+/g, '');
+    if (askedBefore.some((asked) => asked === compact) || suggestions.some((item) => item.replace(/\s+/g, '') === compact)) return;
+    suggestions.push(clean);
+  };
+  for (const article of usedArticles) {
+    for (const situation of resolveArticle(article, locale).body.situations) addSuggestion(situation);
+  }
+  for (const item of related) addSuggestion(item.title);
+
   return json({
     ok: true,
     mode: 'ai',
     answer,
     evidence: usedArticles.length === 0 ? 'none' : usedDirect.length > 0 ? 'found' : 'possible',
     related,
+    suggestions,
     organizations: shownOrganizations,
     sources,
     emergency: emergency

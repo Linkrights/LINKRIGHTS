@@ -6,16 +6,63 @@
   "owner": "운영팀",
   "reviewed_at": "2026-09-06",
   "keywords": [
-    "차별", "무시당했", "외국인이라서", "인종차별", "혐오", "받아주지 않", "거절당했",
-    "국적 때문에", "인권침해", "진정", "신고",
-    "discrimination", "racism", "refused because I am foreign", "hate speech", "file a complaint",
-    "歧视", "种族歧视", "因为是外国人", "投诉",
-    "phân biệt đối xử", "kỳ thị", "vì là người nước ngoài", "khiếu nại"
+    "차별",
+    "무시당했",
+    "외국인이라서",
+    "인종차별",
+    "혐오",
+    "받아주지 않",
+    "거절당했",
+    "국적 때문에",
+    "인권침해",
+    "진정",
+    "신고",
+    "discrimination",
+    "racism",
+    "refused because I am foreign",
+    "hate speech",
+    "file a complaint",
+    "歧视",
+    "种族歧视",
+    "因为是外国人",
+    "投诉",
+    "phân biệt đối xử",
+    "kỳ thị",
+    "vì là người nước ngoài",
+    "khiếu nại"
   ],
-  "organizations": ["nhrck-1331", "klac-132", "danuri-1577-1366", "epeople-110", "rainbowyouth"],
-  "related": ["education-school-discrimination", "human-rights-violence-and-safety", "labor-unpaid-wages"],
+  "organizations": [
+    "nhrck-1331",
+    "klac-132",
+    "danuri-1577-1366",
+    "epeople-110",
+    "rainbowyouth"
+  ],
+  "related": [
+    "education-school-discrimination",
+    "human-rights-violence-and-safety",
+    "labor-unpaid-wages"
+  ],
   "sources": [
-    { "title": "국가인권위원회", "url": "https://www.humanrights.go.kr", "publisher": "국가인권위원회" }
+    {
+      "title": "국가인권위원회",
+      "url": "https://www.humanrights.go.kr",
+      "publisher": "국가인권위원회",
+      "i18n": {
+        "en": {
+          "title": "National Human Rights Commission of Korea",
+          "publisher": "National Human Rights Commission of Korea"
+        },
+        "zh": {
+          "title": "国家人权委员会",
+          "publisher": "国家人权委员会"
+        },
+        "vi": {
+          "title": "Ủy ban Nhân quyền Quốc gia Hàn Quốc",
+          "publisher": "Ủy ban Nhân quyền Quốc gia Hàn Quốc"
+        }
+      }
+    }
   ],
   "i18n": {
     "ko": {
@@ -111,6 +158,104 @@
         }
       ],
       "note": "Whether an act legally counts as discrimination is decided by official bodies such as the National Human Rights Commission."
+    },
+    "zh": {
+      "title": "我因为是外国人而受到歧视",
+      "summary": "因为国籍、肤色、语言、宗教而受到不利对待，这就是歧视。你不必忍耐，可以提出申诉。",
+      "situations": [
+        "在商店或健身房被拒绝，说“外国人不行”。",
+        "打工面试时被告知因为国籍而没被录用。",
+        "找房子时，对方说因为是外国人所以不行。",
+        "在网上一直看到辱骂我们国家的人的言论。"
+      ],
+      "rights": [
+        {
+          "title": "你有不受歧视的权利",
+          "body": "没有合理理由，因国籍、种族、肤色、语言、宗教而给予不利对待，可能构成歧视。"
+        },
+        {
+          "title": "外国人也可以提出申诉",
+          "body": "无论国籍如何，都可以向国家人权委员会提出申诉，并且不需要费用。"
+        },
+        {
+          "title": "不能因为提出申诉而给予不利对待",
+          "body": "因为举报歧视而再次给予不利对待，同样可能成为问题。"
+        },
+        {
+          "title": "不必一个人判断",
+          "body": "即使不确定是不是歧视，也可以接受咨询。咨询不等于举报，可以放心询问。"
+        }
+      ],
+      "actions": [
+        {
+          "title": "马上记录发生了什么",
+          "body": "把日期、地点、对方、听到的话原样记下来。如果有照片、录音、短信或帖子截图，请一并保存。"
+        },
+        {
+          "title": "向国家人权委员会1331咨询",
+          "body": "通过电话说明情况，可以了解是否属于可以申诉的事项，以及如何提交。"
+        },
+        {
+          "title": "也可以在网上提出申诉",
+          "body": "可以在 humanrights.go.kr 确认申诉受理方法。如果填写有困难，可以请支援机构帮忙。"
+        },
+        {
+          "title": "语言有困难时可以申请翻译",
+          "body": "可以通过 Danuri 呼叫中心（1577-1366）用多种语言接受咨询。"
+        }
+      ],
+      "note": "某一行为在法律上是否构成歧视，由国家人权委员会等官方机构判断。"
+    },
+    "vi": {
+      "title": "Tôi bị phân biệt đối xử vì là người nước ngoài",
+      "summary": "Bị đối xử bất lợi vì quốc tịch, màu da, ngôn ngữ hay tôn giáo là phân biệt đối xử. Bạn không cần phải chịu đựng và có thể gửi đơn khiếu nại.",
+      "situations": [
+        "Tôi bị cửa hàng hoặc phòng tập từ chối với lý do “không nhận người nước ngoài”.",
+        "Khi phỏng vấn làm thêm, tôi được nói là bị loại vì quốc tịch.",
+        "Khi tìm nhà, họ nói vì tôi là người nước ngoài nên không được.",
+        "Trên mạng tôi liên tục thấy những lời chửi bới người nước tôi."
+      ],
+      "rights": [
+        {
+          "title": "Bạn có quyền không bị phân biệt đối xử",
+          "body": "Việc đối xử bất lợi vì quốc tịch, chủng tộc, màu da, ngôn ngữ hay tôn giáo mà không có lý do hợp lý có thể bị coi là phân biệt đối xử."
+        },
+        {
+          "title": "Người nước ngoài cũng có thể khiếu nại",
+          "body": "Bạn có thể gửi đơn khiếu nại đến Ủy ban Nhân quyền Quốc gia bất kể quốc tịch, và không mất phí."
+        },
+        {
+          "title": "Không được gây bất lợi vì bạn đã khiếu nại",
+          "body": "Việc gây bất lợi thêm cho người đã tố giác phân biệt đối xử cũng có thể trở thành vấn đề."
+        },
+        {
+          "title": "Bạn không cần tự mình phán đoán",
+          "body": "Ngay cả khi chưa rõ có phải phân biệt đối xử hay không, bạn vẫn có thể được tư vấn. Tư vấn không phải là tố giác nên bạn có thể hỏi thoải mái."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Hãy ghi lại ngay những gì đã xảy ra",
+          "body": "Hãy ghi đúng nguyên văn ngày, nơi chốn, đối phương và những lời bạn đã nghe. Nếu có ảnh, ghi âm, tin nhắn hay ảnh chụp bài đăng, hãy lưu lại cùng."
+        },
+        {
+          "title": "Hãy gọi Ủy ban Nhân quyền Quốc gia 1331 để được tư vấn",
+          "body": "Trình bày tình huống qua điện thoại, bạn sẽ được hướng dẫn xem đây có phải việc có thể khiếu nại không và cách nộp đơn."
+        },
+        {
+          "title": "Bạn cũng có thể khiếu nại trực tuyến",
+          "body": "Bạn có thể xem cách nộp đơn khiếu nại tại humanrights.go.kr. Nếu khó viết, hãy nhờ cơ quan hỗ trợ giúp đỡ."
+        },
+        {
+          "title": "Nếu gặp khó khăn về ngôn ngữ, hãy yêu cầu phiên dịch",
+          "body": "Bạn có thể được tư vấn bằng nhiều ngôn ngữ qua Tổng đài Danuri (1577-1366)."
+        }
+      ],
+      "note": "Việc một hành vi có bị coi là phân biệt đối xử theo pháp luật hay không do các cơ quan chính thức như Ủy ban Nhân quyền Quốc gia quyết định."
     }
+  },
+  "translation_review": {
+    "zh": "pending",
+    "vi": "pending"
   }
 }

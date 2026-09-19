@@ -1,0 +1,84 @@
+{
+  "_readme": "외국인등록을 처음 할 때 확인할 것. 항목은 content/rights/visa-alien-registration.json 의 내용에서만 가져왔습니다.",
+  "id": "before-alien-registration",
+  "status": "published",
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-20",
+  "category": "visa",
+  "based_on": ["visa-alien-registration", "visa-status-basics"],
+  "organizations": ["hikorea-1345", "danuri-1577-1366"],
+  "i18n": {
+    "ko": {
+      "title": "외국인등록 처음 할 때 확인할 것",
+      "summary": "한국에 90일을 넘게 머물 예정이라면 아래 항목을 하나씩 확인해 보세요.",
+      "note": "필요한 서류와 절차는 체류자격에 따라 다릅니다. 신청 전에 1345 또는 하이코리아에서 내 기준을 확인하세요."
+    },
+    "en": {
+      "title": "Before you register as a foreign resident",
+      "summary": "If you will stay in Korea for more than 90 days, check these one by one.",
+      "note": "Documents and steps differ by residence status. Check what applies to you with 1345 or on HiKorea before you apply."
+    },
+    "zh": {
+      "title": "第一次办外国人登录前确认的事",
+      "summary": "如果要在韩国停留超过90天，请逐项确认下面的内容。",
+      "note": "所需材料和手续因滞留资格而不同。申请前请通过1345或 HiKorea 确认适用于自己的标准。"
+    },
+    "vi": {
+      "title": "Những điều cần kiểm tra khi đăng ký người nước ngoài lần đầu",
+      "summary": "Nếu bạn sẽ ở Hàn Quốc quá 90 ngày, hãy kiểm tra lần lượt các mục dưới đây.",
+      "note": "Giấy tờ và thủ tục khác nhau tùy tư cách lưu trú. Hãy kiểm tra tiêu chuẩn áp dụng cho mình với 1345 hoặc HiKorea trước khi nộp."
+    }
+  },
+  "items": [
+    {
+      "id": "deadline",
+      "text": {
+        "ko": "입국한 날부터 90일이 되는 날을 확인했나요?",
+        "en": "Have you worked out the 90th day after you entered Korea?",
+        "zh": "确认了入境之日起第90天是哪一天吗？",
+        "vi": "Bạn đã xác định ngày thứ 90 kể từ ngày nhập cảnh chưa?"
+      },
+      "article": "visa-alien-registration"
+    },
+    {
+      "id": "status",
+      "text": {
+        "ko": "외국인등록증에 적을 내 체류자격을 확인했나요?",
+        "en": "Do you know which residence status you hold?",
+        "zh": "确认了自己的滞留资格是什么吗？",
+        "vi": "Bạn đã biết tư cách lưu trú của mình là gì chưa?"
+      },
+      "article": "visa-status-basics"
+    },
+    {
+      "id": "documents",
+      "text": {
+        "ko": "내 체류자격에 필요한 서류를 1345에 물어봤나요?",
+        "en": "Have you asked 1345 which documents your status needs?",
+        "zh": "向1345询问过自己的滞留资格需要哪些材料吗？",
+        "vi": "Bạn đã hỏi 1345 về giấy tờ cần cho tư cách lưu trú của mình chưa?"
+      },
+      "article": "visa-alien-registration"
+    },
+    {
+      "id": "booking",
+      "text": {
+        "ko": "하이코리아에서 방문 예약을 했나요?",
+        "en": "Have you booked a visit on HiKorea?",
+        "zh": "在 HiKorea 预约到访了吗？",
+        "vi": "Bạn đã đặt lịch đến làm thủ tục trên HiKorea chưa?"
+      },
+      "article": "visa-alien-registration"
+    },
+    {
+      "id": "companion",
+      "text": {
+        "ko": "혼자 가기 어렵다면 함께 갈 사람이나 통역 도움을 알아봤나요?",
+        "en": "If going alone is hard, have you found someone to come with you or help interpret?",
+        "zh": "如果一个人去有困难，找好陪同或翻译帮助了吗？",
+        "vi": "Nếu khó đi một mình, bạn đã tìm người đi cùng hoặc hỗ trợ phiên dịch chưa?"
+      },
+      "link": "organizations"
+    }
+  ]
+}

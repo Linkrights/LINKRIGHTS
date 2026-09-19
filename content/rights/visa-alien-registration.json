@@ -1,0 +1,229 @@
+{
+  "id": "visa-alien-registration",
+  "category": "visa",
+  "status": "published",
+  "owner": "운영팀",
+  "created_at": "2026-09-20",
+  "reviewed_at": "2026-09-20",
+  "keywords": [
+    "외국인등록", "외국인등록증", "등록증", "체류지", "입국", "90일", "출입국사무소", "출입국·외국인관서", "방문 예약",
+    "alien registration", "residence card", "register as a foreigner", "immigration office",
+    "外国人登录", "外国人登录证", "登录", "出入境事务所",
+    "đăng ký người nước ngoài", "thẻ đăng ký người nước ngoài", "văn phòng xuất nhập cảnh"
+  ],
+  "organizations": ["hikorea-1345", "danuri-1577-1366", "rainbowyouth"],
+  "related": ["visa-status-basics", "visa-extension", "life-bank-and-phone"],
+  "sources": [
+    {
+      "title": "하이코리아 (출입국·외국인정책본부)",
+      "url": "https://www.hikorea.go.kr",
+      "publisher": "법무부",
+      "i18n": {
+        "en": { "title": "HiKorea (Korea Immigration Service)", "publisher": "Ministry of Justice" },
+        "zh": { "title": "HiKorea（出入境·外国人政策本部）", "publisher": "法务部" },
+        "vi": { "title": "HiKorea (Cục Xuất nhập cảnh và Chính sách người nước ngoài)", "publisher": "Bộ Tư pháp" }
+      }
+    },
+    {
+      "title": "찾기 쉬운 생활법령정보 (외국인등록)",
+      "url": "https://www.easylaw.go.kr",
+      "publisher": "법제처",
+      "i18n": {
+        "en": { "title": "Easy Law (alien registration)", "publisher": "Ministry of Government Legislation" },
+        "zh": { "title": "生活法令信息（外国人登录）", "publisher": "法制处" },
+        "vi": { "title": "Thông tin pháp luật đời sống (đăng ký người nước ngoài)", "publisher": "Bộ Pháp chế" }
+      }
+    }
+  ],
+  "translation_review": { "en": "pending", "zh": "pending", "vi": "pending" },
+  "i18n": {
+    "ko": {
+      "title": "한국에 오래 머무는데 외국인등록을 해야 하나요?",
+      "summary": "입국한 날부터 90일을 넘게 머물 예정이라면, 90일 안에 사는 곳을 담당하는 출입국·외국인관서에서 외국인등록을 해야 합니다.",
+      "situations": [
+        "한국에 온 지 얼마 안 됐는데 무엇부터 해야 할지 모르겠어요.",
+        "외국인등록을 언제까지 해야 하는지 모르겠어요.",
+        "어떤 서류가 필요한지 몰라 걱정돼요.",
+        "혼자 출입국사무소에 가는 것이 어려워요."
+      ],
+      "rights": [
+        {
+          "title": "90일을 넘게 머물면 외국인등록을 합니다",
+          "body": "입국한 날부터 90일을 넘겨 한국에 머물려면 입국일로부터 90일 안에 외국인등록을 해야 합니다. (출입국관리법 제31조)"
+        },
+        {
+          "title": "사는 곳을 담당하는 출입국·외국인관서에서 합니다",
+          "body": "체류지를 담당하는 출입국·외국인관서에 신청합니다. 하이코리아에서 방문 예약을 한 뒤 가면 기다리지 않고 진행할 수 있습니다."
+        },
+        {
+          "title": "필요한 서류는 체류자격에 따라 다릅니다",
+          "body": "여권과 사진처럼 공통으로 필요한 것이 있고, 체류자격에 따라 더 필요한 서류가 다릅니다. 가기 전에 1345나 하이코리아에서 내 체류자격 기준으로 확인하세요."
+        },
+        {
+          "title": "등록하지 않으면 불이익이 생길 수 있습니다",
+          "body": "기한 안에 등록하지 않으면 법에 따라 불이익을 받을 수 있습니다. 기한이 지난 것 같다면 혼자 판단하지 말고 1345에 먼저 물어보세요."
+        }
+      ],
+      "actions": [
+        {
+          "title": "입국한 날부터 90일이 되는 날을 달력에 표시하세요",
+          "body": "입국일을 기준으로 세고, 휴대폰 달력에 미리 알림을 설정해 두면 잊지 않습니다."
+        },
+        {
+          "title": "하이코리아에서 방문 예약을 하세요",
+          "body": "hikorea.go.kr 에서 체류지 관할 출입국·외국인관서 방문을 예약합니다. 예약이 빨리 마감될 수 있으니 미리 하세요."
+        },
+        {
+          "title": "1345에 내 체류자격으로 필요한 서류를 물어보세요",
+          "body": "\"제 체류자격으로 외국인등록을 하려면 어떤 서류가 필요한가요?\"처럼 구체적으로 물어보면 정확한 안내를 받을 수 있습니다. 여러 언어로 상담할 수 있습니다."
+        },
+        {
+          "title": "혼자 가기 어렵다면 함께 갈 사람을 찾으세요",
+          "body": "보호자, 학교 선생님, 지역 가족센터나 이주배경청소년 지원기관에 동행이나 통역 도움을 요청할 수 있습니다."
+        }
+      ],
+      "note": "외국인등록 대상과 서류는 체류자격에 따라 다르고 제도가 바뀔 수 있습니다. 신청 전에 하이코리아 또는 1345에서 최신 기준을 확인하세요."
+    },
+    "en": {
+      "title": "Do I need to register as a foreign resident if I stay in Korea for a long time?",
+      "summary": "If you plan to stay more than 90 days from the day you entered, you must register as a foreign resident within 90 days at the immigration office for the area where you live.",
+      "situations": [
+        "I arrived in Korea recently and don't know what to do first.",
+        "I don't know by when I have to register.",
+        "I'm worried because I don't know which documents I need.",
+        "It's hard for me to go to the immigration office alone."
+      ],
+      "rights": [
+        {
+          "title": "Staying over 90 days means registering",
+          "body": "If you will stay in Korea for more than 90 days from the day you entered, you must register as a foreign resident within 90 days of entry. (Immigration Act, Article 31)"
+        },
+        {
+          "title": "You register at the immigration office for the area where you live",
+          "body": "Apply at the immigration office that covers your place of residence. Booking a visit on HiKorea first means you will not have to wait."
+        },
+        {
+          "title": "The documents you need depend on your residence status",
+          "body": "Some documents, such as your passport and a photo, are always needed, and others differ by residence status. Before you go, check what applies to your status with 1345 or on HiKorea."
+        },
+        {
+          "title": "Not registering can cause problems",
+          "body": "If you do not register within the deadline, you can face penalties under the law. If you think the deadline has passed, do not decide alone: call 1345 first."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Mark the 90th day after your entry on your calendar",
+          "body": "Count from the day you entered Korea and set a reminder in your phone calendar so you do not forget."
+        },
+        {
+          "title": "Book a visit on HiKorea",
+          "body": "Reserve an appointment at the immigration office for your area at hikorea.go.kr. Slots fill up, so book early."
+        },
+        {
+          "title": "Ask 1345 which documents your status needs",
+          "body": "Asking a specific question such as \"Which documents do I need to register with my residence status?\" gets you an accurate answer. Advice is available in several languages."
+        },
+        {
+          "title": "Find someone to go with you if it feels hard",
+          "body": "You can ask a guardian, a teacher, your local family center or a migrant youth support organisation to come with you or to help with interpretation."
+        }
+      ],
+      "note": "Who must register and which documents are needed depend on your residence status, and the rules can change. Check the current requirements on HiKorea or with 1345 before you apply."
+    },
+    "zh": {
+      "title": "在韩国长期居留需要办外国人登录吗？",
+      "summary": "如果从入境当天起要停留超过90天，必须在90天内到居住地管辖的出入境·外国人管理机关办理外国人登录。",
+      "situations": [
+        "刚来韩国不久，不知道该先做什么。",
+        "不知道外国人登录最晚要在什么时候办。",
+        "不知道需要哪些材料，很担心。",
+        "一个人去出入境事务所有困难。"
+      ],
+      "rights": [
+        {
+          "title": "停留超过90天就要办理登录",
+          "body": "如果从入境之日起要在韩国停留超过90天，必须在入境之日起90天内办理外国人登录。（《出入境管理法》第31条）"
+        },
+        {
+          "title": "在居住地管辖的出入境·外国人管理机关办理",
+          "body": "向管辖居住地的出入境·外国人管理机关申请。先在 HiKorea 预约到访，就不用长时间等待。"
+        },
+        {
+          "title": "所需材料因滞留资格而不同",
+          "body": "护照和照片等是共同需要的，除此之外根据滞留资格所需材料也不同。去之前请通过1345或 HiKorea 按自己的滞留资格确认。"
+        },
+        {
+          "title": "不登录可能会带来不利后果",
+          "body": "如果没有在期限内登录，可能会依法受到不利处理。如果觉得期限已经过了，不要自己判断，请先拨打1345咨询。"
+        }
+      ],
+      "actions": [
+        {
+          "title": "把入境之日起第90天标在日历上",
+          "body": "以入境日为准计算，并在手机日历上提前设置提醒，就不会忘记。"
+        },
+        {
+          "title": "在 HiKorea 预约到访",
+          "body": "在 hikorea.go.kr 预约居住地管辖的出入境·外国人管理机关。预约可能很快约满，请提前办理。"
+        },
+        {
+          "title": "拨打1345询问自己的滞留资格需要哪些材料",
+          "body": "像“我用这个滞留资格办外国人登录需要哪些材料？”这样具体地问，就能得到准确的指导。可以用多种语言咨询。"
+        },
+        {
+          "title": "一个人去有困难时，找人陪同",
+          "body": "可以请监护人、学校老师、当地家庭中心或移民背景青少年支援机构陪同或提供翻译帮助。"
+        }
+      ],
+      "note": "登录对象和所需材料因滞留资格而异，制度也可能变化。申请前请在 HiKorea 或1345确认最新标准。"
+    },
+    "vi": {
+      "title": "Ở Hàn Quốc lâu dài thì có phải đăng ký người nước ngoài không?",
+      "summary": "Nếu bạn định ở lại quá 90 ngày kể từ ngày nhập cảnh, bạn phải đăng ký người nước ngoài trong vòng 90 ngày tại cơ quan xuất nhập cảnh phụ trách nơi bạn sống.",
+      "situations": [
+        "Tôi mới đến Hàn Quốc và không biết phải làm gì trước.",
+        "Tôi không biết hạn cuối phải đăng ký là khi nào.",
+        "Tôi lo vì không biết cần những giấy tờ gì.",
+        "Tôi thấy khó khi phải đi một mình đến văn phòng xuất nhập cảnh."
+      ],
+      "rights": [
+        {
+          "title": "Ở quá 90 ngày thì phải đăng ký",
+          "body": "Nếu bạn ở lại Hàn Quốc quá 90 ngày kể từ ngày nhập cảnh, bạn phải đăng ký người nước ngoài trong vòng 90 ngày kể từ ngày nhập cảnh. (Luật Quản lý xuất nhập cảnh, Điều 31)"
+        },
+        {
+          "title": "Đăng ký tại cơ quan xuất nhập cảnh phụ trách nơi bạn sống",
+          "body": "Bạn nộp hồ sơ tại cơ quan xuất nhập cảnh quản lý nơi cư trú. Đặt lịch trước trên HiKorea sẽ giúp bạn không phải chờ lâu."
+        },
+        {
+          "title": "Giấy tờ cần thiết khác nhau tùy tư cách lưu trú",
+          "body": "Có những giấy tờ luôn cần như hộ chiếu và ảnh, ngoài ra tùy tư cách lưu trú lại cần thêm giấy tờ khác. Trước khi đi, hãy hỏi số 1345 hoặc xem HiKorea theo tư cách lưu trú của mình."
+        },
+        {
+          "title": "Không đăng ký có thể gặp bất lợi",
+          "body": "Nếu không đăng ký trong thời hạn, bạn có thể chịu bất lợi theo quy định của pháp luật. Nếu nghĩ rằng đã quá hạn, đừng tự phán đoán mà hãy gọi 1345 trước."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Đánh dấu ngày thứ 90 kể từ ngày nhập cảnh trên lịch",
+          "body": "Hãy tính từ ngày nhập cảnh và đặt nhắc nhở trước trên lịch điện thoại để không quên."
+        },
+        {
+          "title": "Đặt lịch đến làm thủ tục trên HiKorea",
+          "body": "Đặt lịch tại cơ quan xuất nhập cảnh phụ trách nơi cư trú ở hikorea.go.kr. Lịch hẹn có thể hết nhanh nên hãy đặt sớm."
+        },
+        {
+          "title": "Gọi 1345 để hỏi giấy tờ cần cho tư cách lưu trú của mình",
+          "body": "Hỏi cụ thể như “Với tư cách lưu trú của tôi thì cần giấy tờ gì để đăng ký người nước ngoài?” sẽ nhận được câu trả lời chính xác. Có tư vấn bằng nhiều ngôn ngữ."
+        },
+        {
+          "title": "Nếu khó đi một mình, hãy tìm người đi cùng",
+          "body": "Bạn có thể nhờ người giám hộ, thầy cô ở trường, Trung tâm Gia đình địa phương hoặc cơ quan hỗ trợ thanh thiếu niên có nền tảng di trú đi cùng hoặc hỗ trợ phiên dịch."
+        }
+      ],
+      "note": "Đối tượng phải đăng ký và giấy tờ cần thiết khác nhau tùy tư cách lưu trú và quy định có thể thay đổi. Hãy kiểm tra tiêu chuẩn mới nhất trên HiKorea hoặc số 1345 trước khi nộp hồ sơ."
+    }
+  }
+}

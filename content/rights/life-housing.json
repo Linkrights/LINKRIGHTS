@@ -6,17 +6,87 @@
   "owner": "운영팀",
   "reviewed_at": "2026-09-06",
   "keywords": [
-    "집", "월세", "전세", "보증금", "집 계약", "월세 계약", "전세 계약", "임대차 계약", "집주인", "방을 구해", "이사", "전입신고",
-    "보증금을 안 줘", "고시원", "쉼터", "갈 곳이 없",
-    "housing", "rent", "deposit", "landlord", "move in report", "shelter",
-    "租房", "押金", "房东", "搬家",
-    "thuê nhà", "tiền đặt cọc", "chủ nhà", "chuyển nhà"
+    "집",
+    "월세",
+    "전세",
+    "보증금",
+    "집 계약",
+    "월세 계약",
+    "전세 계약",
+    "임대차 계약",
+    "집주인",
+    "방을 구해",
+    "이사",
+    "전입신고",
+    "보증금을 안 줘",
+    "고시원",
+    "쉼터",
+    "갈 곳이 없",
+    "housing",
+    "rent",
+    "deposit",
+    "landlord",
+    "move in report",
+    "shelter",
+    "租房",
+    "押金",
+    "房东",
+    "搬家",
+    "thuê nhà",
+    "tiền đặt cọc",
+    "chủ nhà",
+    "chuyển nhà"
   ],
-  "organizations": ["klac-132", "epeople-110", "local-family-center", "danuri-1577-1366", "youth-1388"],
-  "related": ["life-bank-and-phone", "human-rights-violence-and-safety"],
+  "organizations": [
+    "klac-132",
+    "epeople-110",
+    "local-family-center",
+    "danuri-1577-1366",
+    "youth-1388"
+  ],
+  "related": [
+    "life-bank-and-phone",
+    "human-rights-violence-and-safety"
+  ],
   "sources": [
-    { "title": "대한법률구조공단", "url": "https://www.klac.or.kr", "publisher": "대한법률구조공단" },
-    { "title": "국민신문고 (e-People)", "url": "https://www.epeople.go.kr", "publisher": "국민권익위원회" }
+    {
+      "title": "대한법률구조공단",
+      "url": "https://www.klac.or.kr",
+      "publisher": "대한법률구조공단",
+      "i18n": {
+        "en": {
+          "title": "Korea Legal Aid Corporation",
+          "publisher": "Korea Legal Aid Corporation"
+        },
+        "zh": {
+          "title": "大韩法律救助公团",
+          "publisher": "大韩法律救助公团"
+        },
+        "vi": {
+          "title": "Tổng công ty Trợ giúp Pháp lý Hàn Quốc",
+          "publisher": "Tổng công ty Trợ giúp Pháp lý Hàn Quốc"
+        }
+      }
+    },
+    {
+      "title": "국민신문고 (e-People)",
+      "url": "https://www.epeople.go.kr",
+      "publisher": "국민권익위원회",
+      "i18n": {
+        "en": {
+          "title": "e-People (government petition portal)",
+          "publisher": "Anti-Corruption and Civil Rights Commission"
+        },
+        "zh": {
+          "title": "国民申闻鼓（e-People）",
+          "publisher": "国民权益委员会"
+        },
+        "vi": {
+          "title": "e-People (cổng tiếp nhận kiến nghị của chính phủ)",
+          "publisher": "Ủy ban Chống tham nhũng và Quyền dân sự"
+        }
+      }
+    }
   ],
   "i18n": {
     "ko": {
@@ -65,6 +135,152 @@
         }
       ],
       "note": "주택 계약과 보증금에 대한 법적 판단은 법률 전문기관에서 확인해야 합니다."
+    },
+    "en": {
+      "title": "I'm looking for a place to live, or I have a problem with my deposit",
+      "summary": "Renting a home involves a lot of money. Always sign a written contract, keep a copy, and report your move-in after you move.",
+      "situations": [
+        "I want to rent a room with monthly rent but don't know what to check.",
+        "My landlord won't return my deposit.",
+        "I'm living there without a written contract.",
+        "I have nowhere to stay right now."
+      ],
+      "rights": [
+        {
+          "title": "You have the right to a written contract and your own copy",
+          "body": "A housing contract should also be in writing, and you should get your own copy. Check that the deposit, monthly rent, contract period and landlord's name are written correctly."
+        },
+        {
+          "title": "Reporting your move-in protects you",
+          "body": "Reporting your move-in at the community service center after you move often helps protect your deposit. Ask the community service center which steps are needed."
+        },
+        {
+          "title": "You can get legal advice about deposit problems",
+          "body": "If your deposit has not been returned, you can get free advice from the Korea Legal Aid Corporation (132)."
+        },
+        {
+          "title": "You can ask for help if you have nowhere to stay",
+          "body": "If you have nowhere to sleep right now or it is dangerous to stay at home, call the Youth Helpline 1388 to be told about safe places such as youth shelters."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Check the home and the documents before signing",
+          "body": "See the room in person, and check the person's ID to make sure they are the real landlord. Don't decide alone: it is safer to go with a trusted adult."
+        },
+        {
+          "title": "Pay by bank transfer and keep records",
+          "body": "Pay the deposit and rent by bank transfer if possible, and save the transfer records. If you paid in cash, always get a receipt."
+        },
+        {
+          "title": "Report your move-in at the community service center after you move",
+          "body": "If you have completed foreigner registration, you may also need to report a change of residence, so check this with 1345 as well."
+        },
+        {
+          "title": "If a problem comes up, call 132",
+          "body": "For getting your deposit back or contract disputes, you can get free legal advice from the Korea Legal Aid Corporation (132)."
+        }
+      ],
+      "note": "Legal decisions about housing contracts and deposits must be confirmed with a professional legal organisation."
+    },
+    "zh": {
+      "title": "我要找房子，或者押金出了问题",
+      "summary": "租房涉及大笔金钱。一定要签书面合同、保管好副本，搬家后要办理迁入申报。",
+      "situations": [
+        "我想租月租房，但不知道要确认什么。",
+        "房东不退还押金。",
+        "我没签合同就住进来了。",
+        "我现在没有地方住。"
+      ],
+      "rights": [
+        {
+          "title": "你有权签书面合同并拿到副本",
+          "body": "租房合同也要以书面形式签订，并拿到属于自己的那份合同。请确认合同上正确写明了押金、月租、租期和房东姓名。"
+        },
+        {
+          "title": "迁入申报可以保护你",
+          "body": "搬家后到居民中心办理迁入申报，很多情况下有助于保护押金。具体需要哪些手续，请向居民中心咨询。"
+        },
+        {
+          "title": "押金问题可以接受法律咨询",
+          "body": "如果押金没有退还，可以向大韩法律救助公团（132）免费咨询。"
+        },
+        {
+          "title": "没有地方住时可以求助",
+          "body": "如果现在没有地方睡觉，或者待在家里很危险，可以拨打青少年热线1388，了解青少年庇护所等安全的地方。"
+        }
+      ],
+      "actions": [
+        {
+          "title": "签约前确认房子和材料",
+          "body": "亲自去看房，并通过身份证件确认签约人是否是真正的房东。不要一个人做决定，和可以信任的成年人一起去更安全。"
+        },
+        {
+          "title": "通过银行转账付款并保留记录",
+          "body": "押金和月租尽量通过银行转账支付，并保存转账记录。如果用现金支付，一定要拿收据。"
+        },
+        {
+          "title": "搬家后到居民中心办理迁入申报",
+          "body": "如果已经办理了外国人登录，可能还需要申报居住地变更，请同时向1345确认。"
+        },
+        {
+          "title": "出现问题时拨打132咨询",
+          "body": "押金返还、合同纠纷等问题，可以在大韩法律救助公团（132）接受免费法律咨询。"
+        }
+      ],
+      "note": "关于租房合同和押金的法律判断，需要向法律专业机构确认。"
+    },
+    "vi": {
+      "title": "Tôi đang tìm nhà hoặc gặp vấn đề về tiền đặt cọc",
+      "summary": "Thuê nhà là việc liên quan đến số tiền lớn. Hãy luôn ký hợp đồng bằng văn bản, giữ bản sao và khai báo chuyển đến sau khi chuyển nhà.",
+      "situations": [
+        "Tôi muốn thuê phòng trả tiền hằng tháng nhưng không biết cần kiểm tra gì.",
+        "Chủ nhà không trả lại tiền đặt cọc cho tôi.",
+        "Tôi đang ở mà không ký hợp đồng.",
+        "Hiện giờ tôi không có chỗ ở."
+      ],
+      "rights": [
+        {
+          "title": "Bạn có quyền ký hợp đồng bằng văn bản và nhận bản sao",
+          "body": "Hợp đồng thuê nhà cũng phải lập bằng văn bản và bạn phải nhận một bản của mình. Hãy kiểm tra hợp đồng ghi đúng tiền đặt cọc, tiền thuê hằng tháng, thời hạn và tên chủ nhà."
+        },
+        {
+          "title": "Khai báo chuyển đến giúp bảo vệ bạn",
+          "body": "Sau khi chuyển nhà, việc khai báo chuyển đến tại trung tâm hành chính địa phương thường giúp bảo vệ tiền đặt cọc. Hãy hỏi trung tâm hành chính địa phương cần những thủ tục gì."
+        },
+        {
+          "title": "Có thể được tư vấn pháp lý về tiền đặt cọc",
+          "body": "Nếu không được trả lại tiền đặt cọc, bạn có thể được tư vấn miễn phí tại Tổng công ty Trợ giúp Pháp lý Hàn Quốc (132)."
+        },
+        {
+          "title": "Nếu không có chỗ ở, bạn có thể xin giúp đỡ",
+          "body": "Nếu hiện không có chỗ ngủ hoặc ở nhà là nguy hiểm, hãy gọi Đường dây thanh thiếu niên 1388 để được giới thiệu nơi an toàn như nhà tạm lánh cho thanh thiếu niên."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Kiểm tra nhà và giấy tờ trước khi ký",
+          "body": "Hãy trực tiếp xem phòng và kiểm tra giấy tờ tùy thân để chắc chắn người ký hợp đồng là chủ nhà thật. Đừng tự quyết định một mình; đi cùng một người lớn đáng tin cậy sẽ an toàn hơn."
+        },
+        {
+          "title": "Chuyển tiền qua tài khoản và giữ lại bằng chứng",
+          "body": "Nếu có thể, hãy chuyển tiền đặt cọc và tiền thuê qua tài khoản ngân hàng và lưu lại lịch sử chuyển khoản. Nếu trả bằng tiền mặt, nhất định phải lấy biên lai."
+        },
+        {
+          "title": "Khai báo chuyển đến tại trung tâm hành chính địa phương sau khi chuyển nhà",
+          "body": "Nếu đã đăng ký người nước ngoài, bạn có thể cũng cần khai báo thay đổi nơi cư trú, vì vậy hãy hỏi thêm số 1345."
+        },
+        {
+          "title": "Nếu có vấn đề, hãy gọi 132",
+          "body": "Về việc đòi lại tiền đặt cọc hoặc tranh chấp hợp đồng, bạn có thể được tư vấn pháp lý miễn phí tại Tổng công ty Trợ giúp Pháp lý Hàn Quốc (132)."
+        }
+      ],
+      "note": "Các đánh giá pháp lý về hợp đồng thuê nhà và tiền đặt cọc cần được xác nhận tại cơ quan pháp lý chuyên môn."
     }
+  },
+  "translation_review": {
+    "en": "pending",
+    "zh": "pending",
+    "vi": "pending"
   }
 }

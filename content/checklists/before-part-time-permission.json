@@ -1,0 +1,84 @@
+{
+  "_readme": "시간제취업 허가 전 확인할 것. '알바 시작 전'(before-part-time-job)이 일자리 조건을 본다면, 이 체크리스트는 체류자격·허가를 봅니다.",
+  "id": "before-part-time-permission",
+  "status": "published",
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-20",
+  "category": "visa",
+  "based_on": ["visa-part-time-permission", "visa-status-basics", "labor-contract"],
+  "organizations": ["hikorea-1345", "moel-1350"],
+  "i18n": {
+    "ko": {
+      "title": "시간제취업 허가 신청 전 확인할 것",
+      "summary": "유학·연수 체류자격으로 아르바이트를 하려면 먼저 허가가 필요합니다. 일자리 조건은 '알바 시작 전' 체크리스트에서 확인하세요.",
+      "note": "허용 조건과 시간은 체류자격과 학교 상황에 따라 다릅니다. 신청 전에 학교 담당자와 1345에서 확인하세요."
+    },
+    "en": {
+      "title": "Before you apply for part-time work permission",
+      "summary": "On a study or training status you need permission before working part-time. For the job conditions themselves, use the \"Before you start a part-time job\" checklist.",
+      "note": "The conditions and hours depend on your residence status and your school. Check with your school officer and 1345 before you apply."
+    },
+    "zh": {
+      "title": "申请时间制就业许可前确认的事",
+      "summary": "以留学或研修滞留资格打工，必须先取得许可。工作条件本身请用“开始打工前”的清单确认。",
+      "note": "许可条件和时间因滞留资格和学校情况而不同。申请前请向学校负责老师和1345确认。"
+    },
+    "vi": {
+      "title": "Những điều cần kiểm tra trước khi xin giấy phép làm thêm",
+      "summary": "Với tư cách du học hoặc tu nghiệp, bạn cần được cấp phép trước khi làm thêm. Về điều kiện công việc, hãy dùng danh sách “Trước khi bắt đầu làm thêm”.",
+      "note": "Điều kiện và số giờ khác nhau tùy tư cách lưu trú và trường học. Hãy kiểm tra với cán bộ của trường và 1345 trước khi nộp hồ sơ."
+    }
+  },
+  "items": [
+    {
+      "id": "need-permission",
+      "text": {
+        "ko": "내 체류자격으로 일하려면 허가가 필요한지 확인했나요?",
+        "en": "Have you checked whether your residence status needs permission to work?",
+        "zh": "确认了以自己的滞留资格工作是否需要许可吗？",
+        "vi": "Bạn đã kiểm tra tư cách lưu trú của mình có cần giấy phép để đi làm không?"
+      },
+      "article": "visa-part-time-permission"
+    },
+    {
+      "id": "school",
+      "text": {
+        "ko": "학교 유학생 담당 선생님에게 확인을 받을 수 있는지 물어봤나요?",
+        "en": "Have you asked your school's international student officer whether you can get their confirmation?",
+        "zh": "问过学校留学生负责老师能否给你确认了吗？",
+        "vi": "Bạn đã hỏi cán bộ phụ trách du học sinh của trường xem có được xác nhận không?"
+      },
+      "article": "visa-part-time-permission"
+    },
+    {
+      "id": "hours",
+      "text": {
+        "ko": "학기 중 일할 수 있는 시간을 1345나 하이코리아에서 확인했나요?",
+        "en": "Have you checked with 1345 or HiKorea how many hours you may work during term?",
+        "zh": "向1345或 HiKorea 确认了学期中可以工作的时间吗？",
+        "vi": "Bạn đã hỏi 1345 hoặc xem HiKorea về số giờ được làm trong học kỳ chưa?"
+      },
+      "article": "visa-part-time-permission"
+    },
+    {
+      "id": "apply",
+      "text": {
+        "ko": "신청 방법(전자민원 또는 방문 예약)을 확인했나요?",
+        "en": "Have you checked how to apply (online service or a booked visit)?",
+        "zh": "确认了申请方法（电子民愿或预约到访）吗？",
+        "vi": "Bạn đã kiểm tra cách nộp hồ sơ (dịch vụ trực tuyến hoặc đặt lịch đến nộp) chưa?"
+      },
+      "article": "visa-part-time-permission"
+    },
+    {
+      "id": "contract",
+      "text": {
+        "ko": "허가를 받은 뒤 근로계약서를 받기로 했나요?",
+        "en": "Have you made sure you will get a written work contract once you have permission?",
+        "zh": "取得许可后，确定会拿到劳动合同了吗？",
+        "vi": "Bạn đã chắc chắn sẽ nhận hợp đồng lao động sau khi được cấp phép chưa?"
+      },
+      "article": "labor-contract"
+    }
+  ]
+}

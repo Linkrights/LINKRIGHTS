@@ -6,16 +6,73 @@
   "owner": "운영팀",
   "reviewed_at": "2026-09-06",
   "keywords": [
-    "건강보험", "의료보험", "보험 가입", "외국인 건강보험", "보험료", "지역가입자", "직장가입자",
-    "병원비가 비싸", "보험증",
-    "health insurance", "can foreigners get health insurance", "insurance premium",
-    "健康保险", "医疗保险", "参保",
-    "bảo hiểm y tế", "người nước ngoài có bảo hiểm"
+    "건강보험",
+    "의료보험",
+    "보험 가입",
+    "외국인 건강보험",
+    "보험료",
+    "지역가입자",
+    "직장가입자",
+    "병원비가 비싸",
+    "보험증",
+    "health insurance",
+    "can foreigners get health insurance",
+    "insurance premium",
+    "健康保险",
+    "医疗保险",
+    "参保",
+    "bảo hiểm y tế",
+    "người nước ngoài có bảo hiểm"
   ],
-  "organizations": ["nhis-1577-1000", "danuri-1577-1366", "local-family-center", "hikorea-1345"],
-  "related": ["health-hospital-visit", "visa-status-basics"],
+  "organizations": [
+    "nhis-1577-1000",
+    "danuri-1577-1366",
+    "local-family-center",
+    "hikorea-1345"
+  ],
+  "related": [
+    "health-hospital-visit",
+    "visa-status-basics"
+  ],
   "sources": [
-    { "title": "국민건강보험공단", "url": "https://www.nhis.or.kr", "publisher": "국민건강보험공단" }
+    {
+      "title": "국민건강보험공단",
+      "url": "https://www.nhis.or.kr",
+      "publisher": "국민건강보험공단",
+      "i18n": {
+        "en": {
+          "title": "National Health Insurance Service",
+          "publisher": "National Health Insurance Service"
+        },
+        "zh": {
+          "title": "国民健康保险公团",
+          "publisher": "国民健康保险公团"
+        },
+        "vi": {
+          "title": "Cơ quan Bảo hiểm Y tế Quốc gia",
+          "publisher": "Cơ quan Bảo hiểm Y tế Quốc gia"
+        }
+      }
+    },
+    {
+      "title": "건강보험심사평가원",
+      "url": "https://www.hira.or.kr",
+      "publisher": "건강보험심사평가원",
+      "i18n": {
+        "en": {
+          "title": "Health Insurance Review & Assessment Service",
+          "publisher": "Health Insurance Review & Assessment Service"
+        },
+        "zh": {
+          "title": "健康保险审查评价院",
+          "publisher": "健康保险审查评价院"
+        },
+        "vi": {
+          "title": "Cơ quan Thẩm định và Đánh giá Bảo hiểm Y tế",
+          "publisher": "Cơ quan Thẩm định và Đánh giá Bảo hiểm Y tế"
+        }
+      }
+    }
   ],
   "i18n": {
     "ko": {
@@ -111,6 +168,104 @@
         }
       ],
       "note": "Eligibility and premiums depend on your visa status and income. Always confirm your own case with the National Health Insurance Service (1577-1000)."
+    },
+    "zh": {
+      "title": "外国人也可以加入健康保险吗？",
+      "summary": "可以，只要符合条件就能加入。有健康保险，医药费可以大大减少。",
+      "situations": [
+        "去医院看病时因为没有保险，花了很多钱。",
+        "父母有保险，但不知道我是不是也可以。",
+        "我来韩国没多久，可以加入吗？",
+        "担心保险费会有多少。"
+      ],
+      "rights": [
+        {
+          "title": "上班的人成为职场投保人",
+          "body": "在公司就业工作的情况下，无论国籍如何，都会作为职场投保人加入健康保险。"
+        },
+        {
+          "title": "在韩国居住一定时间以上，可以成为地区投保对象",
+          "body": "在韩国滞留6个月以上的外国人，会作为地区投保人加入健康保险。根据滞留资格，条件可能不同，请向公团确认。"
+        },
+        {
+          "title": "有些情况可以与家人一起加入",
+          "body": "如果父母是职场投保人，子女根据条件可以作为受抚养人一起获得保障。具体资格要求需要向公团确认。"
+        },
+        {
+          "title": "有保险的话医药费会大大减少",
+          "body": "适用健康保险后，诊疗费的相当一部分由公团承担，本人支付的金额会少很多。"
+        }
+      ],
+      "actions": [
+        {
+          "title": "拨打1577-1000确认自己的资格",
+          "body": "拨打国民健康保险公团电话，说出外国人登录号码和滞留资格，就能知道自己是否属于加入对象。"
+        },
+        {
+          "title": "到附近的健康保险公团分部办理",
+          "body": "带上护照和外国人登录证，可以得到加入手续的指导。"
+        },
+        {
+          "title": "需要翻译时请提前申请",
+          "body": "可以使用 Danuri 呼叫中心（1577-1366），或向当地家庭中心申请翻译支援。"
+        },
+        {
+          "title": "保险费负担大时，可以询问支援制度",
+          "body": "根据地区不同，可能有医疗费支援项目。可以向家庭中心或居民中心咨询。"
+        }
+      ],
+      "note": "加入条件和保险费根据滞留资格、收入而不同。请务必向国民健康保险公团（1577-1000）确认适用于自己的标准。"
+    },
+    "vi": {
+      "title": "Người nước ngoài có thể tham gia bảo hiểm y tế không?",
+      "summary": "Có, nếu đáp ứng điều kiện thì có thể tham gia. Có bảo hiểm y tế, viện phí sẽ giảm đi rất nhiều.",
+      "situations": [
+        "Tôi đi bệnh viện nhưng vì không có bảo hiểm nên tốn rất nhiều tiền.",
+        "Bố mẹ tôi có bảo hiểm nhưng tôi không biết mình có được không.",
+        "Tôi mới đến Hàn Quốc chưa lâu, tôi có thể tham gia không?",
+        "Tôi lo không biết phí bảo hiểm là bao nhiêu."
+      ],
+      "rights": [
+        {
+          "title": "Người đi làm tham gia theo diện nơi làm việc",
+          "body": "Nếu làm việc cho công ty, bạn sẽ tham gia bảo hiểm y tế theo diện người lao động, bất kể quốc tịch."
+        },
+        {
+          "title": "Sống ở Hàn Quốc đủ thời gian sẽ thuộc diện tham gia theo khu vực",
+          "body": "Người nước ngoài lưu trú tại Hàn Quốc từ 6 tháng trở lên sẽ tham gia bảo hiểm y tế theo diện khu vực. Điều kiện có thể khác nhau tùy tư cách lưu trú, hãy xác nhận với cơ quan bảo hiểm."
+        },
+        {
+          "title": "Có trường hợp có thể tham gia cùng gia đình",
+          "body": "Nếu bố hoặc mẹ tham gia theo diện nơi làm việc, con cái có thể được bảo vệ cùng với tư cách người phụ thuộc tùy theo điều kiện. Điều kiện cụ thể phải xác nhận tại cơ quan bảo hiểm."
+        },
+        {
+          "title": "Có bảo hiểm thì viện phí giảm đáng kể",
+          "body": "Khi được áp dụng bảo hiểm y tế, cơ quan bảo hiểm chi trả phần lớn chi phí khám chữa bệnh nên số tiền bạn phải trả ít hơn nhiều."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Gọi 1577-1000 để kiểm tra tư cách của mình",
+          "body": "Gọi cho Cơ quan Bảo hiểm Y tế Quốc gia và nói số đăng ký người nước ngoài cùng tư cách lưu trú, họ sẽ cho biết bạn có thuộc diện tham gia hay không."
+        },
+        {
+          "title": "Đến chi nhánh Cơ quan Bảo hiểm Y tế gần nhất",
+          "body": "Mang theo hộ chiếu và thẻ đăng ký người nước ngoài, bạn sẽ được hướng dẫn thủ tục tham gia."
+        },
+        {
+          "title": "Nếu cần phiên dịch, hãy yêu cầu trước",
+          "body": "Bạn có thể dùng Tổng đài Danuri (1577-1366) hoặc nhờ Trung tâm Gia đình địa phương hỗ trợ phiên dịch."
+        },
+        {
+          "title": "Nếu phí bảo hiểm là gánh nặng, hãy hỏi về chế độ hỗ trợ",
+          "body": "Tùy địa phương có thể có chương trình hỗ trợ chi phí y tế. Hãy hỏi Trung tâm Gia đình hoặc trung tâm hành chính địa phương."
+        }
+      ],
+      "note": "Điều kiện tham gia và phí bảo hiểm khác nhau tùy tư cách lưu trú và thu nhập. Hãy nhất định xác nhận tiêu chuẩn của bản thân tại Cơ quan Bảo hiểm Y tế Quốc gia (1577-1000)."
     }
+  },
+  "translation_review": {
+    "zh": "pending",
+    "vi": "pending"
   }
 }

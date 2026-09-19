@@ -10,6 +10,7 @@
     "test:ask": "node scripts/test-ask.mjs"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "framer-motion": "^13.2.0",
     "next": "^15.5.0",
     "react": "^19.1.0",

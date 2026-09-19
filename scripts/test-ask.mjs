@@ -365,6 +365,23 @@ function verifyAnswer(label, res) {
     related.map((r) => r.id).join(', '),
   );
 
+  // 이어서 물어볼 수 있는 질문: AI가 만든 문장이 아니라 등록된 권리정보에 적혀 있는 문장만 써야 합니다.
+  const suggestions = body.suggestions ?? [];
+  const registeredLines = new Set(
+    [...articleById.values()].flatMap((article) =>
+      Object.values(article.i18n).flatMap((localeBody) => [localeBody.title, ...localeBody.situations]),
+    ),
+  );
+  check(
+    `${label}: 이어서 물어볼 질문은 등록된 문장만, 최대 3개`,
+    suggestions.length <= 3 && suggestions.every((text) => registeredLines.has(text)),
+    suggestions.join(' / '),
+  );
+  check(
+    `${label}: 이어서 물어볼 질문에 방금 한 질문을 다시 넣지 않음`,
+    suggestions.every((text) => text.replace(/\s+/g, '') !== label.replace(/^\[\d+\]\s*/, '').replace(/\s+/g, '')),
+  );
+
   const texts = [a.summary, a.follow_up_question, a.limitations, ...a.checks, ...a.rights.flatMap((r) => [r.title, r.body]), ...a.actions.flatMap((x) => [x.title, x.body])].join('\n');
   check(`${label}: 등록되지 않은 링크·번호가 답변에 없음`, !texts.includes('evil.example') && !texts.includes('1234-5678'));
   check(
@@ -401,10 +418,21 @@ function verifyAnswer(label, res) {
   check(`${label}: 할 일은 최대 4개`, a.actions.length <= 4);
   check(`${label}: 권리는 최대 3개`, a.rights.length <= 3);
   check(
-    `${label}: 출처의 검토일·발행기관·주소가 등록 자료와 같음`,
+    `${label}: 출처의 검토일·발행기관·주소가 등록 자료와 같음 (번역된 이름 포함)`,
     body.sources.every((s) => {
       const article = articleById.get(s.id);
-      return article && s.reviewed_at === article.reviewed_at && JSON.stringify(s.sources) === JSON.stringify(article.sources ?? []);
+      if (!article || s.reviewed_at !== article.reviewed_at) return false;
+      const registered = article.sources ?? [];
+      if (s.sources.length !== registered.length) return false;
+      // 화면에 보이는 출처는 등록된 한국어 이름이거나 등록된 번역 이름이어야 하고, 주소는 그대로여야 합니다.
+      return s.sources.every((shown, index) => {
+        const source = registered[index];
+        const titles = new Set([source.title, ...Object.values(source.i18n ?? {}).map((text) => text.title)]);
+        const publishers = new Set(
+          [source.publisher, ...Object.values(source.i18n ?? {}).map((text) => text.publisher)].filter(Boolean),
+        );
+        return shown.url === source.url && titles.has(shown.title) && (!shown.publisher || publishers.has(shown.publisher));
+      });
     }),
   );
 }
@@ -832,6 +860,49 @@ async function runDeterministic() {
     check(
       '모델 설정: 답변 형식(json_schema strict)과 규칙은 모든 모델에 그대로',
       [mini, reasoning, unknown].every(({ bodies }) => bodies.every((b) => b.response_format?.json_schema?.strict === true && b.messages?.[0]?.role === 'system')),
+    );
+  }
+
+  // 6-7) 권리정보 번역 (4개 언어, 원문과 같은 구조, 검토 전 번역은 AI 근거로 쓰지 않음)
+  {
+    const LANGS = ['ko', 'en', 'zh', 'vi'];
+    const HANGUL = /[가-힣]/;
+    const articles = content.getArticles();
+    const missing = articles.flatMap((a) => LANGS.filter((l) => !a.i18n[l]).map((l) => `${a.id}:${l}`));
+    check('번역: 모든 권리정보가 4개 언어로 있음', missing.length === 0, missing.join(', '));
+    const shapeProblems = articles.flatMap((a) =>
+      LANGS.filter((l) => l !== 'ko' && a.i18n[l]).filter((l) => {
+        const body = a.i18n[l];
+        const ko = a.i18n.ko;
+        return (
+          body.situations.length !== ko.situations.length ||
+          body.rights.length !== ko.rights.length ||
+          body.actions.length !== ko.actions.length ||
+          Boolean(body.note) !== Boolean(ko.note)
+        );
+      }).map((l) => `${a.id}:${l}`),
+    );
+    check('번역: 항목 수가 한국어 원문과 같음', shapeProblems.length === 0, shapeProblems.join(', '));
+    const leftovers = articles.flatMap((a) =>
+      ['en', 'zh', 'vi'].filter((l) => a.i18n[l] && HANGUL.test(JSON.stringify(a.i18n[l]))).map((l) => `${a.id}:${l}`),
+    );
+    check('번역: 다른 언어 본문에 한국어가 섞이지 않음', leftovers.length === 0, leftovers.join(', '));
+    const sourceProblems = articles.flatMap((a) =>
+      (a.sources ?? []).filter((s) => ['en', 'zh', 'vi'].some((l) => !s.i18n?.[l]?.title)).map((s) => `${a.id}:${s.title}`),
+    );
+    check('번역: 출처 이름도 4개 언어로 있음', sourceProblems.length === 0, sourceProblems.join(', '));
+    // 검토 전(pending) 번역은 화면에만 쓰고, AI 근거로는 한국어 원문을 보냅니다.
+    const pending = articles.filter((a) => content.isTranslationPending(a, 'zh'));
+    check('번역: 검토 전 번역이 있는 글이 있음 (안내 문구 표시 대상)', pending.length > 0, `${pending.length}개`);
+    check(
+      '번역: 검토 전 번역은 AI 근거로 한국어 원문을 보냄',
+      pending.every((a) => content.groundingBody(a, 'zh') === a.i18n.ko),
+    );
+    const reviewed = articles.filter((a) => a.i18n.zh && !content.isTranslationPending(a, 'zh'));
+    check(
+      '번역: 검토를 마친 번역은 그 언어 그대로 AI 근거가 됨',
+      reviewed.every((a) => content.groundingBody(a, 'zh') === a.i18n.zh),
+      `${reviewed.length}개`,
     );
   }
 

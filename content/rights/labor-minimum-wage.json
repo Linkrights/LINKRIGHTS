@@ -6,16 +6,69 @@
   "owner": "운영팀",
   "reviewed_at": "2026-09-06",
   "keywords": [
-    "최저임금", "시급", "시급이 낮", "얼마 받아야", "주휴수당", "수습",
-    "minimum wage", "hourly rate", "how much should I be paid",
-    "最低工资", "时薪",
-    "lương tối thiểu", "lương theo giờ"
+    "최저임금",
+    "시급",
+    "시급이 낮",
+    "얼마 받아야",
+    "주휴수당",
+    "수습",
+    "minimum wage",
+    "hourly rate",
+    "how much should I be paid",
+    "最低工资",
+    "时薪",
+    "lương tối thiểu",
+    "lương theo giờ"
   ],
-  "organizations": ["moel-1350", "klac-132", "danuri-1577-1366"],
-  "related": ["labor-unpaid-wages", "labor-contract", "labor-youth-work-rules"],
+  "organizations": [
+    "moel-1350",
+    "klac-132",
+    "danuri-1577-1366"
+  ],
+  "related": [
+    "labor-unpaid-wages",
+    "labor-contract",
+    "labor-youth-work-rules"
+  ],
   "sources": [
-    { "title": "최저임금위원회", "url": "https://www.minimumwage.go.kr", "publisher": "최저임금위원회" },
-    { "title": "고용노동부 공식 누리집", "url": "https://www.moel.go.kr", "publisher": "고용노동부" }
+    {
+      "title": "최저임금위원회",
+      "url": "https://www.minimumwage.go.kr",
+      "publisher": "최저임금위원회",
+      "i18n": {
+        "en": {
+          "title": "Minimum Wage Commission",
+          "publisher": "Minimum Wage Commission"
+        },
+        "zh": {
+          "title": "最低工资委员会",
+          "publisher": "最低工资委员会"
+        },
+        "vi": {
+          "title": "Ủy ban Lương tối thiểu",
+          "publisher": "Ủy ban Lương tối thiểu"
+        }
+      }
+    },
+    {
+      "title": "고용노동부 공식 누리집",
+      "url": "https://www.moel.go.kr",
+      "publisher": "고용노동부",
+      "i18n": {
+        "en": {
+          "title": "Ministry of Employment and Labor website",
+          "publisher": "Ministry of Employment and Labor"
+        },
+        "zh": {
+          "title": "雇佣劳动部官方网站",
+          "publisher": "雇佣劳动部"
+        },
+        "vi": {
+          "title": "Trang web chính thức của Bộ Việc làm và Lao động",
+          "publisher": "Bộ Việc làm và Lao động"
+        }
+      }
+    }
   ],
   "i18n": {
     "ko": {
@@ -95,6 +148,88 @@
         }
       ],
       "note": "The minimum wage amount and holiday pay rules change every year. Always confirm this year's figures with the Minimum Wage Commission or 1350."
+    },
+    "zh": {
+      "title": "时薪应该拿多少？（最低工资）",
+      "summary": "国家规定了最低时薪。即使年纪小、是外国国籍，也不能拿低于最低工资的钱。",
+      "situations": [
+        "说给我时薪7,000韩元，感觉太少了。",
+        "有人说“你是学生，所以只给一点”。",
+        "他们说“前3个月是试用期，所以给得少”。",
+        "工作时间很多，但不知道拿到的钱对不对。"
+      ],
+      "rights": [
+        {
+          "title": "最低工资对所有人一样适用",
+          "body": "无论年龄、国籍，也无论是不是学生，支付低于最低工资的工资都是不允许的。"
+        },
+        {
+          "title": "最低工资金额每年都会变",
+          "body": "以2026年为准，每小时最低工资为10,320韩元。金额每年1月1日调整，请务必在最低工资委员会网站（minimumwage.go.kr）确认今年的金额。"
+        },
+        {
+          "title": "工作达到一定时间可能有周休津贴",
+          "body": "如果每周工作达到规定时间且没有缺勤，可能还能额外获得休息日的津贴。有一定条件，请向1350确认。"
+        }
+      ],
+      "actions": [
+        {
+          "title": "自己算一算时薪",
+          "body": "拿到的钱 ÷ 工作的时间 = 实际时薪。如果这个数值低于今年的最低工资，就有问题。"
+        },
+        {
+          "title": "每天记录工作时间",
+          "body": "在手机备忘录里记下日期和上下班时间，以后会成为最有力的证据。"
+        },
+        {
+          "title": "如果拿少了，请拨打1350咨询",
+          "body": "拨打雇佣劳动部客户咨询中心1350说明情况，可以了解能否拿回差额。"
+        }
+      ],
+      "note": "最低工资金额和周休津贴条件每年都会变化。请务必向最低工资委员会或1350确认今年的标准。"
+    },
+    "vi": {
+      "title": "Tôi phải được trả bao nhiêu một giờ? (Lương tối thiểu)",
+      "summary": "Nhà nước quy định mức lương tối thiểu theo giờ. Dù còn ít tuổi hay mang quốc tịch nước ngoài, bạn cũng không thể bị trả thấp hơn mức lương tối thiểu.",
+      "situations": [
+        "Họ nói trả tôi 7.000 won một giờ, tôi thấy quá thấp.",
+        "Tôi bị nói rằng “em là học sinh nên chỉ trả ít thôi”.",
+        "Họ nói “3 tháng đầu là thử việc nên trả ít hơn”.",
+        "Tôi làm nhiều giờ nhưng không biết số tiền nhận được có đúng không."
+      ],
+      "rights": [
+        {
+          "title": "Lương tối thiểu áp dụng như nhau cho tất cả mọi người",
+          "body": "Bất kể tuổi tác, quốc tịch hay có phải học sinh hay không, việc trả thấp hơn lương tối thiểu đều không được phép."
+        },
+        {
+          "title": "Mức lương tối thiểu thay đổi hằng năm",
+          "body": "Theo mức năm 2026, lương tối thiểu là 10.320 won một giờ. Mức này thay đổi vào ngày 1 tháng 1 hằng năm, vì vậy hãy nhất định kiểm tra mức của năm nay trên trang của Ủy ban Lương tối thiểu (minimumwage.go.kr)."
+        },
+        {
+          "title": "Làm đủ số giờ quy định có thể được phụ cấp ngày nghỉ hằng tuần",
+          "body": "Nếu mỗi tuần làm đủ số giờ quy định mà không nghỉ buổi nào, bạn có thể được nhận thêm phụ cấp cho ngày nghỉ. Có điều kiện kèm theo, hãy hỏi 1350."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Hãy tự tính tiền công theo giờ của mình",
+          "body": "Số tiền nhận được ÷ số giờ đã làm = tiền công thực tế mỗi giờ. Nếu con số này thấp hơn lương tối thiểu năm nay thì có vấn đề."
+        },
+        {
+          "title": "Ghi lại số giờ làm việc mỗi ngày",
+          "body": "Ghi ngày tháng và giờ vào ca, tan ca trong ghi chú điện thoại sẽ trở thành bằng chứng mạnh nhất sau này."
+        },
+        {
+          "title": "Nếu bị trả thiếu, hãy gọi 1350 để được tư vấn",
+          "body": "Gọi đến Tổng đài Bộ Việc làm và Lao động 1350 và trình bày tình huống, bạn sẽ được hướng dẫn xem có thể nhận phần chênh lệch không."
+        }
+      ],
+      "note": "Mức lương tối thiểu và điều kiện phụ cấp ngày nghỉ thay đổi hằng năm. Hãy nhất định kiểm tra tiêu chuẩn của năm nay tại Ủy ban Lương tối thiểu hoặc số 1350."
     }
+  },
+  "translation_review": {
+    "zh": "pending",
+    "vi": "pending"
   }
 }

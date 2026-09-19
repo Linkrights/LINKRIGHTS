@@ -67,10 +67,16 @@ export interface RightsBody {
   note?: string;
 }
 
+/** 번역 검토 상태. pending = 팀이 옮겼지만 아직 검토 전 (화면에 안내가 붙고, AI 근거로는 한국어 원문을 씁니다) */
+export type TranslationReview = 'pending' | 'reviewed';
+
 export interface RightsSource {
+  /** 한국어 제목·발행기관 (원문) */
   title: string;
   url: string;
   publisher?: string;
+  /** 다른 언어로 보여줄 제목·발행기관. 없으면 한국어를 보여줍니다. */
+  i18n?: Partial<Record<Locale, { title: string; publisher?: string }>>;
 }
 
 export interface RightsArticle {
@@ -91,6 +97,8 @@ export interface RightsArticle {
   organizations: string[];
   related: string[];
   sources: RightsSource[];
+  /** 언어별 번역 검토 상태. 적지 않은 언어는 검토된 번역으로 봅니다. */
+  translation_review?: Partial<Record<Locale, TranslationReview>>;
   i18n: { ko: RightsBody } & Partial<Record<Locale, RightsBody>>;
 }
 
@@ -379,6 +387,11 @@ export interface AskApiSuccess {
   evidence?: 'found' | 'possible' | 'none';
   /** 답변에 쓰지 않았지만 상황에 따라 함께 볼 수 있는 등록 권리정보 (제목과 링크만) */
   related?: { id: string; title: string; href: string }[];
+  /**
+   * 이어서 물어볼 수 있는 질문 (최대 3개).
+   * AI가 새로 만든 문장이 아니라, 등록된 권리정보에 적혀 있는 '이런 상황인가요?' 문장과 관련 글 제목만 씁니다.
+   */
+  suggestions?: string[];
   /** 화면에 그대로 그릴 수 있도록 서버가 채워 넣은 기관 정보 */
   organizations: Organization[];
   /** 근거로 사용한 권리정보 (제목, 링크, 검토일) */

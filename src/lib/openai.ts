@@ -4,6 +4,7 @@
 // 중요: API 키(OPENAI_API_KEY)는 이 파일에서만 사용하며,
 // 이 코드는 서버에서만 실행되므로 브라우저로 키가 전달되지 않습니다.
 
+import { groundingBody } from './content';
 import type { AiAnswer, AskHistoryTurn, EvidenceTier, Locale, Organization, RightsArticle } from './types';
 
 const API_URL = 'https://api.openai.com/v1/chat/completions';
@@ -279,7 +280,8 @@ function clip(text: string, max = MAX_TEXT_LENGTH): string {
 }
 
 function documentBlock({ article, matchedKeywords, relevance = 'direct', reasons = [] }: ContextArticle, locale: Locale): string {
-  const body = article.i18n[locale] ?? article.i18n.ko;
+  // 검토 전 번역은 근거로 쓰지 않고 한국어 원문을 보냅니다.
+  const body = groundingBody(article, locale);
   const pairs = (items: { title: string; body: string }[]) =>
     items
       .slice(0, MAX_ITEMS_PER_LIST)

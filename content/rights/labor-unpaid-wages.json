@@ -6,16 +6,80 @@
   "owner": "운영팀",
   "reviewed_at": "2026-09-06",
   "keywords": [
-    "임금체불", "월급", "알바비", "돈을 못 받", "돈 안 줘", "월급 안 줘", "급여", "밀린 임금", "사장님이 돈",
-    "unpaid", "wages", "salary", "did not pay", "not paid", "owe me money",
-    "拖欠", "工资", "没给钱", "薪水",
-    "nợ lương", "chưa trả lương", "tiền lương", "không trả tiền"
+    "임금체불",
+    "월급",
+    "알바비",
+    "돈을 못 받",
+    "돈 안 줘",
+    "월급 안 줘",
+    "급여",
+    "밀린 임금",
+    "사장님이 돈",
+    "unpaid",
+    "wages",
+    "salary",
+    "did not pay",
+    "not paid",
+    "owe me money",
+    "拖欠",
+    "工资",
+    "没给钱",
+    "薪水",
+    "nợ lương",
+    "chưa trả lương",
+    "tiền lương",
+    "không trả tiền"
   ],
-  "organizations": ["moel-1350", "klac-132", "danuri-1577-1366", "youth-1388"],
-  "related": ["labor-contract", "labor-minimum-wage", "labor-youth-work-rules"],
+  "organizations": [
+    "moel-1350",
+    "klac-132",
+    "danuri-1577-1366",
+    "youth-1388"
+  ],
+  "related": [
+    "labor-contract",
+    "labor-minimum-wage",
+    "labor-youth-work-rules"
+  ],
   "sources": [
-    { "title": "고용노동부 공식 누리집", "url": "https://www.moel.go.kr", "publisher": "고용노동부" },
-    { "title": "고용노동부 노동포털 (임금체불 진정 접수)", "url": "https://labor.moel.go.kr", "publisher": "고용노동부" }
+    {
+      "title": "고용노동부 공식 누리집",
+      "url": "https://www.moel.go.kr",
+      "publisher": "고용노동부",
+      "i18n": {
+        "en": {
+          "title": "Ministry of Employment and Labor website",
+          "publisher": "Ministry of Employment and Labor"
+        },
+        "zh": {
+          "title": "雇佣劳动部官方网站",
+          "publisher": "雇佣劳动部"
+        },
+        "vi": {
+          "title": "Trang web chính thức của Bộ Việc làm và Lao động",
+          "publisher": "Bộ Việc làm và Lao động"
+        }
+      }
+    },
+    {
+      "title": "고용노동부 노동포털 (임금체불 진정 접수)",
+      "url": "https://labor.moel.go.kr",
+      "publisher": "고용노동부",
+      "i18n": {
+        "en": {
+          "title": "Ministry of Employment and Labor labour portal (unpaid wage complaints)",
+          "publisher": "Ministry of Employment and Labor"
+        },
+        "zh": {
+          "title": "雇佣劳动部劳动门户（拖欠工资申诉受理）",
+          "publisher": "雇佣劳动部"
+        },
+        "vi": {
+          "title": "Cổng thông tin lao động của Bộ Việc làm và Lao động (tiếp nhận khiếu nại nợ lương)",
+          "publisher": "Bộ Việc làm và Lao động"
+        }
+      }
+    }
   ],
   "i18n": {
     "ko": {

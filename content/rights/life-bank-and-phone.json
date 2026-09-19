@@ -6,16 +6,59 @@
   "owner": "운영팀",
   "reviewed_at": "2026-09-06",
   "keywords": [
-    "통장", "은행 계좌", "계좌 개설", "체크카드", "휴대폰 개통", "핸드폰", "유심", "요금제",
-    "교통카드", "본인인증", "명의",
-    "bank account", "open an account", "mobile phone", "sim card", "transport card",
-    "开户", "银行账户", "手机开通",
-    "mở tài khoản ngân hàng", "đăng ký điện thoại"
+    "통장",
+    "은행 계좌",
+    "계좌 개설",
+    "체크카드",
+    "휴대폰 개통",
+    "핸드폰",
+    "유심",
+    "요금제",
+    "교통카드",
+    "본인인증",
+    "명의",
+    "bank account",
+    "open an account",
+    "mobile phone",
+    "sim card",
+    "transport card",
+    "开户",
+    "银行账户",
+    "手机开通",
+    "mở tài khoản ngân hàng",
+    "đăng ký điện thoại"
   ],
-  "organizations": ["local-family-center", "danuri-1577-1366", "epeople-110", "youth-1388"],
-  "related": ["life-housing", "visa-status-basics", "labor-unpaid-wages"],
+  "organizations": [
+    "local-family-center",
+    "danuri-1577-1366",
+    "epeople-110",
+    "youth-1388"
+  ],
+  "related": [
+    "life-housing",
+    "visa-status-basics",
+    "labor-unpaid-wages"
+  ],
   "sources": [
-    { "title": "다누리 포털", "url": "https://www.liveinkorea.kr", "publisher": "여성가족부" }
+    {
+      "title": "다누리 포털",
+      "url": "https://www.liveinkorea.kr",
+      "publisher": "여성가족부",
+      "i18n": {
+        "en": {
+          "title": "Danuri portal",
+          "publisher": "Ministry of Gender Equality and Family"
+        },
+        "zh": {
+          "title": "Danuri 门户网站",
+          "publisher": "女性家族部"
+        },
+        "vi": {
+          "title": "Cổng thông tin Danuri",
+          "publisher": "Bộ Bình đẳng giới và Gia đình"
+        }
+      }
+    }
   ],
   "i18n": {
     "ko": {
@@ -60,6 +103,140 @@
         }
       ],
       "note": "은행과 통신사마다 요구 서류와 조건이 다릅니다. 방문 전에 해당 지점이나 대리점에 확인하세요."
+    },
+    "en": {
+      "title": "I want to open a bank account and get a mobile phone",
+      "summary": "A bank account and a phone are basics for life in Korea. With a residence card you can usually get both, but if you are a minor you may need a guardian's consent.",
+      "situations": [
+        "I need to get paid for my part-time job, but I don't have a bank account.",
+        "I went to the bank but was sent away because I didn't have enough documents.",
+        "I want to get a mobile phone line but don't know how.",
+        "Someone asked me to open a bank account in my name for them."
+      ],
+      "rights": [
+        {
+          "title": "Foreigners can open bank accounts too",
+          "body": "If you have a residence card, you can open an account at a bank. The documents each bank asks for may differ slightly."
+        },
+        {
+          "title": "Minors may need a guardian's consent",
+          "body": "If you are under 19, the bank may ask for a guardian's consent form or a document that shows your family relationship. It helps to prepare these before you go."
+        },
+        {
+          "title": "Lending your name is very dangerous",
+          "body": "If you let someone else use a bank account or phone in your name, it can be used for crime and you may be held responsible. Never lend them, for any reason."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Take your documents to the bank",
+          "body": "Bring your residence card (or passport) and, if needed, a certificate of enrolment or a guardian's consent form. Calling the bank first to ask which documents you need can save you a wasted trip."
+        },
+        {
+          "title": "Compare budget phone plans",
+          "body": "If you want to save on phone bills, compare budget (MVNO) plans. To open a line you usually need an ID and a bank account or card."
+        },
+        {
+          "title": "Ask for interpretation if the explanation is hard to follow",
+          "body": "You can ask the Danuri Call Center (1577-1366) or your local family center for interpretation support."
+        },
+        {
+          "title": "Refuse offers to borrow your name, and get advice",
+          "body": "If someone offers you money to borrow your bank account or SIM card, do not agree. Talk to the Youth Helpline 1388 or the police (112)."
+        }
+      ],
+      "note": "Required documents and conditions differ by bank and phone company. Check with the branch or store before you visit."
+    },
+    "zh": {
+      "title": "我想开银行账户、办手机",
+      "summary": "银行账户和手机是在韩国生活的基本条件。有外国人登录证的话，大多可以办理；未成年人可能需要监护人同意。",
+      "situations": [
+        "要领打工工资，但我没有银行账户。",
+        "去了银行，却因为材料不够被打发回来了。",
+        "想开通手机，但不知道怎么办。",
+        "有人让我用自己的名字给他开银行账户。"
+      ],
+      "rights": [
+        {
+          "title": "外国人也可以开银行账户",
+          "body": "有外国人登录证就可以在银行开户。各银行要求的材料可能略有不同。"
+        },
+        {
+          "title": "未成年人可能需要监护人同意",
+          "body": "如果未满19周岁，银行可能会要求监护人同意书或能够确认家庭关系的材料。最好提前准备好。"
+        },
+        {
+          "title": "出借自己的名义非常危险",
+          "body": "把银行账户或手机的名义借给别人，可能会被用于犯罪，责任也可能落到自己身上。无论什么理由都不要出借。"
+        }
+      ],
+      "actions": [
+        {
+          "title": "带齐材料去银行",
+          "body": "请准备外国人登录证（或护照），必要时再准备在学证明或监护人同意书。提前打电话问银行需要哪些材料，可以避免白跑一趟。"
+        },
+        {
+          "title": "比较一下廉价手机套餐",
+          "body": "如果想节省通信费，可以比较廉价（MVNO）套餐。开通手机通常需要身份证件，以及银行账户或银行卡。"
+        },
+        {
+          "title": "听不懂说明时，可以请求翻译帮助",
+          "body": "可以向 Danuri 呼叫中心（1577-1366）或当地家庭中心申请翻译支援。"
+        },
+        {
+          "title": "拒绝出借名义的提议，并进行咨询",
+          "body": "如果有人说给钱、让你借出银行账户或SIM卡，请不要答应，并向青少年热线1388或警察（112）咨询。"
+        }
+      ],
+      "note": "各银行和通信公司要求的材料和条件不同。去之前请先向相应网点或代理店确认。"
+    },
+    "vi": {
+      "title": "Tôi muốn mở tài khoản ngân hàng và đăng ký điện thoại di động",
+      "summary": "Tài khoản ngân hàng và điện thoại là những thứ cơ bản khi sống ở Hàn Quốc. Nếu có thẻ đăng ký người nước ngoài thì phần lớn đều làm được; người chưa thành niên có thể cần sự đồng ý của người giám hộ.",
+      "situations": [
+        "Tôi cần nhận lương làm thêm nhưng không có tài khoản ngân hàng.",
+        "Tôi đến ngân hàng nhưng bị trả về vì thiếu giấy tờ.",
+        "Tôi muốn đăng ký điện thoại nhưng không biết làm thế nào.",
+        "Có người nhờ tôi mở tài khoản ngân hàng đứng tên mình cho họ."
+      ],
+      "rights": [
+        {
+          "title": "Người nước ngoài cũng có thể mở tài khoản",
+          "body": "Nếu có thẻ đăng ký người nước ngoài, bạn có thể mở tài khoản tại ngân hàng. Giấy tờ mỗi ngân hàng yêu cầu có thể hơi khác nhau."
+        },
+        {
+          "title": "Người chưa thành niên có thể cần sự đồng ý của người giám hộ",
+          "body": "Nếu dưới 19 tuổi, ngân hàng có thể yêu cầu giấy đồng ý của người giám hộ hoặc giấy tờ xác nhận quan hệ gia đình. Nên chuẩn bị trước khi đi."
+        },
+        {
+          "title": "Cho người khác mượn tên mình là rất nguy hiểm",
+          "body": "Nếu cho người khác dùng tài khoản ngân hàng hoặc điện thoại đứng tên mình, chúng có thể bị dùng vào việc phạm tội và bạn có thể phải chịu trách nhiệm. Dù vì lý do gì cũng đừng cho mượn."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Mang đủ giấy tờ đến ngân hàng",
+          "body": "Hãy chuẩn bị thẻ đăng ký người nước ngoài (hoặc hộ chiếu), và nếu cần thì giấy xác nhận đang đi học hoặc giấy đồng ý của người giám hộ. Gọi điện hỏi ngân hàng trước cần giấy tờ gì sẽ giúp bạn không phải đi lại vô ích."
+        },
+        {
+          "title": "So sánh các gói cước điện thoại giá rẻ",
+          "body": "Nếu muốn tiết kiệm cước điện thoại, hãy so sánh các gói cước giá rẻ (MVNO). Để đăng ký thường cần giấy tờ tùy thân và tài khoản ngân hàng hoặc thẻ."
+        },
+        {
+          "title": "Nếu khó hiểu lời giải thích, hãy nhờ hỗ trợ phiên dịch",
+          "body": "Bạn có thể nhờ Tổng đài Danuri (1577-1366) hoặc Trung tâm Gia đình địa phương hỗ trợ phiên dịch."
+        },
+        {
+          "title": "Từ chối lời đề nghị mượn tên và tìm tư vấn",
+          "body": "Nếu có người hứa trả tiền để mượn tài khoản ngân hàng hoặc SIM của bạn, đừng đồng ý và hãy tư vấn với Đường dây thanh thiếu niên 1388 hoặc cảnh sát (112)."
+        }
+      ],
+      "note": "Giấy tờ và điều kiện khác nhau tùy ngân hàng và nhà mạng. Hãy hỏi chi nhánh hoặc đại lý trước khi đến."
     }
+  },
+  "translation_review": {
+    "en": "pending",
+    "zh": "pending",
+    "vi": "pending"
   }
 }

@@ -5,17 +5,9 @@
 // 순서: 기관 이름 → "이럴 때 도움을 받을 수 있어요"(설명) → 운영시간·쉬는 날·휴게시간 → 지역·주소(지도 보기) → 지원 언어 → 연락처
 
 import { Icon } from './Icon';
-import { formatDate, getMessages, localeNames, pick, type Locale } from '@/lib/i18n';
+import { formatDate, getMessages, pick, type Locale } from '@/lib/i18n';
 import { organizationArea, regionName } from '@/lib/regions';
 import type { Organization } from '@/lib/types';
-
-const languageLabel: Record<string, string> = {
-  ko: localeNames.ko,
-  en: localeNames.en,
-  zh: localeNames.zh,
-  vi: localeNames.vi,
-  other: '+',
-};
 
 export function OrgCard({
   org,
@@ -44,7 +36,8 @@ export function OrgCard({
     {
       key: 'languages',
       label: t.common.languages,
-      value: (org.languages ?? []).map((code) => languageLabel[code] ?? code).join(' · '),
+      // 지원 언어 이름은 화면 언어로 보여줍니다. (영어 화면이면 Korean · English)
+      value: (org.languages ?? []).map((code) => (t.languageNames as Record<string, string>)[code] ?? code).join(' · '),
     },
   ].filter((row) => row.value);
 

@@ -17,6 +17,7 @@
     "getInvolved": "Get involved",
     "menu": "Open menu",
     "close": "Close",
+    "mainMenu": "Main menu",
     "language": "Choose language"
   },
   "common": {
@@ -31,6 +32,7 @@
     "languages": "Languages",
     "region": "Area",
     "reviewedAt": "Last reviewed",
+    "koreanOnly": "Korean only",
     "createdAt": "First written",
     "sources": "Sources",
     "call": "Call",
@@ -133,6 +135,7 @@
     "evidenceNoneBody": "We could not find rights information registered on LINKRIGHTS that fits this situation exactly. So we don't list unconfirmed rights or organisations, and start with things you can do right now.",
     "evidencePossibleNote": "Some things are still unclear from a short description, so information that may apply is explained together with its conditions.",
     "relatedTitle": "Rights information that may also help, depending on your situation",
+    "suggestTitle": "You can also ask about this",
     "searchRightsCta": "Search rights information yourself",
     "relatedPages": "Related rights pages",
     "privacyDetectedTitle": "This looks like personal information",
@@ -386,6 +389,12 @@
     "orgsTitle": "Where you can get help",
     "more": "Read more",
     "orgLink": "See where to get help",
+    "articleLink": "Read the related rights information",
+    "askLink": "Ask AI about my situation",
+    "requestTitle": "Is something missing?",
+    "requestBody": "Tell us what you think should be on this checklist and we will review it.",
+    "requestCta": "Suggest something for this checklist",
+    "requestSubject": "[Checklist suggestion] {title}",
     "emergencyLink": "See emergency help",
     "relatedTitle": "Checklists to use with this information",
     "homeTitle": "Try it: checklists for your situation",
@@ -438,7 +447,15 @@
     "feedbackTitle": "Is this information wrong or out of date?",
     "feedbackBody": "Let us know and we will review and fix it. You don't need to include personal details such as your name or contact in the email.",
     "feedbackCta": "Suggest a correction",
-    "feedbackSubject": "[Correction suggestion] {title}"
+    "feedbackSubject": "[Correction suggestion] {title}",
+    "translationPending": "This translation was prepared by the LINKRIGHTS team and is still being checked. If anything is unclear, ask one of the organisations below."
+  },
+  "languageNames": {
+    "ko": "Korean",
+    "en": "English",
+    "zh": "Chinese",
+    "vi": "Vietnamese",
+    "other": "other languages"
   },
   "heroVideo": {
     "label": "LINKRIGHTS introduction video",
@@ -639,8 +656,8 @@
         "body": "Do not enter your name, contact details, address, passport number, alien registration number, visa number or medical records. Describing the situation is enough. We check for such details before sending and warn you, but we cannot catch every case."
       },
       {
-        "title": "No cookies, no advertising",
-        "body": "This site carries no advertising and uses no tracking cookies or analytics tools. Search words and the area you pick appear in the address bar only and are not stored on our server."
+        "title": "No cookies: visits are counted anonymously",
+        "body": "This site carries no advertising and uses no tracking cookies. To see how many people use which pages, we use a visit-counting tool (Vercel Web Analytics). It sets no cookies and discards the temporary marker it builds from the incoming request after 24 hours. What remains is the page address, how you arrived, a rough country or city level location, and the device and browser type — it cannot tell who you are. Search words and the area you pick appear only in the address bar and are not stored on the server."
       },
       {
         "title": "External links",

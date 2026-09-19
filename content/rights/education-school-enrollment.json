@@ -6,17 +6,78 @@
   "owner": "운영팀",
   "reviewed_at": "2026-09-06",
   "keywords": [
-    "학교 입학", "학교 가고 싶", "편입학", "전학", "중도입국", "학력 인정", "한국어를 못해서 학교",
-    "학교에 못 다", "검정고시", "학교 등록",
-    "school admission", "enroll in school", "transfer school", "go to school in Korea",
-    "入学", "转学", "上学", "学历认定",
-    "nhập học", "chuyển trường", "đi học ở Hàn Quốc"
+    "학교 입학",
+    "학교 가고 싶",
+    "편입학",
+    "전학",
+    "중도입국",
+    "학력 인정",
+    "한국어를 못해서 학교",
+    "학교에 못 다",
+    "검정고시",
+    "학교 등록",
+    "school admission",
+    "enroll in school",
+    "transfer school",
+    "go to school in Korea",
+    "入学",
+    "转学",
+    "上学",
+    "学历认定",
+    "nhập học",
+    "chuyển trường",
+    "đi học ở Hàn Quốc"
   ],
-  "organizations": ["moe", "rainbowyouth", "local-family-center", "danuri-1577-1366", "epeople-110"],
-  "related": ["education-school-discrimination", "life-bank-and-phone"],
+  "organizations": [
+    "moe",
+    "rainbowyouth",
+    "local-family-center",
+    "danuri-1577-1366",
+    "epeople-110"
+  ],
+  "related": [
+    "education-school-discrimination",
+    "life-bank-and-phone"
+  ],
   "sources": [
-    { "title": "교육부 공식 누리집", "url": "https://www.moe.go.kr", "publisher": "교육부" },
-    { "title": "다누리 포털 (다문화가족 지원 정보)", "url": "https://www.liveinkorea.kr", "publisher": "여성가족부" }
+    {
+      "title": "교육부 공식 누리집",
+      "url": "https://www.moe.go.kr",
+      "publisher": "교육부",
+      "i18n": {
+        "en": {
+          "title": "Ministry of Education website",
+          "publisher": "Ministry of Education"
+        },
+        "zh": {
+          "title": "教育部官方网站",
+          "publisher": "教育部"
+        },
+        "vi": {
+          "title": "Trang web chính thức của Bộ Giáo dục",
+          "publisher": "Bộ Giáo dục"
+        }
+      }
+    },
+    {
+      "title": "다누리 포털 (다문화가족 지원 정보)",
+      "url": "https://www.liveinkorea.kr",
+      "publisher": "여성가족부",
+      "i18n": {
+        "en": {
+          "title": "Danuri portal (support information for multicultural families)",
+          "publisher": "Ministry of Gender Equality and Family"
+        },
+        "zh": {
+          "title": "Danuri 门户网站（多文化家庭支援信息）",
+          "publisher": "女性家族部"
+        },
+        "vi": {
+          "title": "Cổng thông tin Danuri (thông tin hỗ trợ gia đình đa văn hóa)",
+          "publisher": "Bộ Bình đẳng giới và Gia đình"
+        }
+      }
+    }
   ],
   "i18n": {
     "ko": {
@@ -112,6 +173,104 @@
         }
       ],
       "note": "Grade placement and required documents vary by region and school. Confirm with your district education office or the Ministry of Education."
+    },
+    "zh": {
+      "title": "我想进入韩国的学校",
+      "summary": "住在韩国的青少年，无论国籍或滞留资格如何，都可以上学。根据年龄和以前的学历，入学方式有所不同。",
+      "situations": [
+        "我最近才来韩国，不知道怎么进学校。",
+        "我在国外上过学，不知道应该读几年级。",
+        "我韩语不太好，担心跟不上课。",
+        "有人说因为滞留资格的关系，我不能上学。"
+      ],
+      "rights": [
+        {
+          "title": "受教育的权利与国籍无关",
+          "body": "住在韩国的青少年即使是外国国籍也可以上学。即使滞留资格不稳定，受教育的权利本身也不会消失。"
+        },
+        {
+          "title": "有承认以前学历的程序",
+          "body": "在国外学习的经历会经过学校的审议程序来确定年级。有成绩单、在学证明等材料会很有帮助。"
+        },
+        {
+          "title": "可以获得韩语支援",
+          "body": "很多地区开设韩语班、预备学校或课后韩语课程。可以向学校或当地教育厅咨询。"
+        },
+        {
+          "title": "在学校之外也可以取得学历",
+          "body": "如果进入正规学校有困难，也可以通过学历鉴定考试或替代教育机构获得学历认证。"
+        }
+      ],
+      "actions": [
+        {
+          "title": "尽量收集齐材料",
+          "body": "请准备护照、外国人登录证、以前学校的成绩单或在学·毕业证明。需要翻译时，可以向家庭中心寻求帮助。"
+        },
+        {
+          "title": "向居住地的教育支援厅咨询",
+          "body": "该去哪所学校、需要哪些材料，居住地管辖的教育支援厅了解得最准确。"
+        },
+        {
+          "title": "向移民背景青少年支援财团咨询",
+          "body": "在彩虹青少年中心（02-733-7587）可以一起获得入学、韩语和升学方面的咨询。"
+        },
+        {
+          "title": "需要翻译时请使用 Danuri 呼叫中心",
+          "body": "拨打1577-1366，可以获得多种语言的指导。"
+        }
+      ],
+      "note": "年级分配和所需材料可能因地区和学校而异。请最终向居住地教育支援厅或教育部确认。"
+    },
+    "vi": {
+      "title": "Tôi muốn vào học trường ở Hàn Quốc",
+      "summary": "Thanh thiếu niên đang sống ở Hàn Quốc đều có thể đi học, bất kể quốc tịch hay tư cách lưu trú. Cách nhập học khác nhau tùy theo tuổi và học vấn trước đó.",
+      "situations": [
+        "Tôi mới sang Hàn Quốc và không biết làm thế nào để vào trường.",
+        "Tôi từng học ở nước ngoài nên không biết mình nên vào lớp mấy.",
+        "Tôi chưa giỏi tiếng Hàn nên lo không theo kịp bài.",
+        "Tôi được nói rằng vì tư cách lưu trú nên không thể đi học."
+      ],
+      "rights": [
+        {
+          "title": "Quyền được học không phụ thuộc vào quốc tịch",
+          "body": "Thanh thiếu niên đang sống ở Hàn Quốc dù mang quốc tịch nước ngoài vẫn có thể đi học. Ngay cả khi tư cách lưu trú không ổn định, quyền được giáo dục cũng không mất đi."
+        },
+        {
+          "title": "Có thủ tục công nhận học vấn trước đây",
+          "body": "Thời gian học ở nước ngoài sẽ được nhà trường xét duyệt để xác định lớp học. Có các giấy tờ như bảng điểm, giấy xác nhận đang học sẽ giúp ích."
+        },
+        {
+          "title": "Bạn có thể được hỗ trợ tiếng Hàn",
+          "body": "Nhiều địa phương tổ chức lớp tiếng Hàn, trường dự bị hoặc lớp tiếng Hàn sau giờ học. Bạn có thể hỏi nhà trường hoặc phòng giáo dục địa phương."
+        },
+        {
+          "title": "Cũng có thể lấy bằng ngoài trường chính quy",
+          "body": "Nếu vào trường chính quy khó khăn, bạn vẫn có thể được công nhận học vấn qua kỳ thi lấy bằng hoặc các cơ sở giáo dục thay thế."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Hãy thu thập giấy tờ nhiều nhất có thể",
+          "body": "Hãy chuẩn bị hộ chiếu, thẻ đăng ký người nước ngoài, bảng điểm hoặc giấy xác nhận đang học/tốt nghiệp của trường cũ. Nếu cần dịch, bạn có thể nhờ Trung tâm Gia đình giúp đỡ."
+        },
+        {
+          "title": "Hãy hỏi phòng hỗ trợ giáo dục nơi bạn sống",
+          "body": "Phòng hỗ trợ giáo dục quản lý nơi cư trú sẽ cho bạn biết chính xác nhất nên vào trường nào và cần giấy tờ gì."
+        },
+        {
+          "title": "Hãy tư vấn với Quỹ hỗ trợ thanh thiếu niên có nền tảng di trú",
+          "body": "Tại Trung tâm Rainbow Youth (02-733-7587), bạn có thể được tư vấn cùng lúc về nhập học, tiếng Hàn và hướng đi tương lai."
+        },
+        {
+          "title": "Nếu cần phiên dịch, hãy dùng Tổng đài Danuri",
+          "body": "Gọi 1577-1366, bạn sẽ được hướng dẫn bằng nhiều ngôn ngữ."
+        }
+      ],
+      "note": "Việc xếp lớp và giấy tờ cần thiết có thể khác nhau tùy địa phương và trường học. Hãy xác nhận cuối cùng với phòng hỗ trợ giáo dục nơi cư trú hoặc Bộ Giáo dục."
     }
+  },
+  "translation_review": {
+    "zh": "pending",
+    "vi": "pending"
   }
 }

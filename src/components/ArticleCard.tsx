@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Icon } from './Icon';
 import { SaveButton } from './SaveButton';
 import { articleHref, getCategory, isStale, resolveArticle } from '@/lib/content';
-import { formatDate, getMessages, pick, type Locale } from '@/lib/i18n';
+import { getMessages, pick, type Locale } from '@/lib/i18n';
 import type { RightsArticle } from '@/lib/types';
 
 export function ArticleCard({ article, locale }: { article: RightsArticle; locale: Locale }) {
@@ -39,17 +39,17 @@ export function ArticleCard({ article, locale }: { article: RightsArticle; local
         </div>
       </div>
       <p className="mt-2 line-clamp-3 text-[15px] leading-relaxed text-ink-500">{body.summary}</p>
-      <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-4 text-[13px] text-ink-500">
-        <span>
-          {t.common.reviewedAt} {formatDate(article.reviewed_at, locale)}
-        </span>
-        {fallback && (
-          <span className="inline-flex items-center gap-1 font-semibold text-brand-600">
-            <Icon name="globe" size={12} /> 한국어
-          </span>
-        )}
-        {stale && <span className="font-semibold text-warm-500">{t.common.staleTitle}</span>}
-      </div>
+      {/* 검토일은 카드에서는 빼고 상세 페이지에만 보여줍니다. 한국어로만 된 글·오래된 글 표시는 필요할 때만 나옵니다. */}
+      {(fallback || stale) && (
+        <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-4 text-[13px] text-ink-500">
+          {fallback && (
+            <span className="inline-flex items-center gap-1 font-semibold text-brand-600">
+              <Icon name="globe" size={12} /> {t.common.koreanOnly}
+            </span>
+          )}
+          {stale && <span className="font-semibold text-warm-500">{t.common.staleTitle}</span>}
+        </div>
+      )}
     </div>
   );
 }

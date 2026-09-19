@@ -1,0 +1,84 @@
+{
+  "_readme": "병원에 가기 전 확인할 것. 항목은 content/rights/health-hospital-visit.json, health-insurance.json 의 내용에서만 가져왔습니다.",
+  "id": "before-hospital-visit",
+  "status": "published",
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-20",
+  "category": "health",
+  "based_on": ["health-hospital-visit", "health-insurance"],
+  "organizations": ["nhis-1577-1000", "danuri-1577-1366"],
+  "i18n": {
+    "ko": {
+      "title": "병원에 가기 전 확인할 것",
+      "summary": "아파서 병원에 가기 전에 아래 항목을 확인해 보세요. 많이 아프거나 다쳤다면 확인보다 119가 먼저입니다.",
+      "note": "진단과 치료 방법은 의료진만 판단할 수 있습니다. LINKRIGHTS는 의료 상담을 제공하지 않습니다."
+    },
+    "en": {
+      "title": "Before you go to a hospital",
+      "summary": "Check these before you go to see a doctor. If you are badly sick or hurt, call 119 first instead of checking a list.",
+      "note": "Only medical staff can make a diagnosis or decide on treatment. LINKRIGHTS does not give medical advice."
+    },
+    "zh": {
+      "title": "去医院前确认的事",
+      "summary": "生病去医院之前，请确认下面的内容。如果病得很重或受了重伤，请先拨打119。",
+      "note": "诊断和治疗方法只能由医务人员判断。LINKRIGHTS 不提供医疗咨询。"
+    },
+    "vi": {
+      "title": "Những điều cần kiểm tra trước khi đến bệnh viện",
+      "summary": "Trước khi đi khám, hãy kiểm tra các mục dưới đây. Nếu ốm nặng hoặc bị thương nặng, hãy gọi 119 trước.",
+      "note": "Chỉ nhân viên y tế mới có thể chẩn đoán và quyết định cách điều trị. LINKRIGHTS không cung cấp tư vấn y tế."
+    }
+  },
+  "items": [
+    {
+      "id": "urgency",
+      "text": {
+        "ko": "지금 급하게 치료가 필요한 상태인지 확인했나요? (위급하면 119)",
+        "en": "Have you checked whether you need urgent treatment right now? (Call 119 in an emergency.)",
+        "zh": "确认了现在是否需要紧急治疗吗？（危急时请拨119）",
+        "vi": "Bạn đã kiểm tra xem có cần điều trị khẩn cấp ngay không? (Gọi 119 khi nguy cấp.)"
+      },
+      "link": "emergency"
+    },
+    {
+      "id": "where",
+      "text": {
+        "ko": "먼저 갈 동네 의원을 정했나요?",
+        "en": "Have you decided which local clinic to go to first?",
+        "zh": "决定好先去哪家附近的诊所了吗？",
+        "vi": "Bạn đã chọn phòng khám gần nhà để đến trước chưa?"
+      },
+      "article": "health-hospital-visit"
+    },
+    {
+      "id": "id",
+      "text": {
+        "ko": "신분증(외국인등록증)을 챙겼나요?",
+        "en": "Have you brought your ID (residence card)?",
+        "zh": "带上身份证件（外国人登录证）了吗？",
+        "vi": "Bạn đã mang theo giấy tờ tùy thân (thẻ đăng ký người nước ngoài) chưa?"
+      },
+      "article": "health-hospital-visit"
+    },
+    {
+      "id": "symptoms",
+      "text": {
+        "ko": "언제부터, 어디가, 어떻게 아픈지 적어 두었나요?",
+        "en": "Have you written down when it started, where it hurts and how?",
+        "zh": "写下从什么时候开始、哪里、怎样不舒服了吗？",
+        "vi": "Bạn đã ghi lại đau từ khi nào, ở đâu và đau thế nào chưa?"
+      },
+      "article": "health-hospital-visit"
+    },
+    {
+      "id": "insurance",
+      "text": {
+        "ko": "건강보험 가입 여부를 1577-1000에서 확인했나요?",
+        "en": "Have you checked with 1577-1000 whether you have health insurance?",
+        "zh": "向1577-1000确认了是否已加入健康保险吗？",
+        "vi": "Bạn đã hỏi 1577-1000 xem mình đã tham gia bảo hiểm y tế chưa?"
+      },
+      "article": "health-insurance"
+    }
+  ]
+}

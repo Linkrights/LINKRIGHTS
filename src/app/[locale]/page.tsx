@@ -23,6 +23,7 @@ import { HomeHero } from '@/components/HomeHero';
 import { Icon, type IconName } from '@/components/Icon';
 import { OrgCard } from '@/components/OrgCard';
 import { Reveal } from '@/components/Reveal';
+import { RightsSearchForm } from '@/components/RightsSearchForm';
 import { Section } from '@/components/Section';
 import { Testimonials } from '@/components/Testimonials';
 import {
@@ -42,6 +43,7 @@ import {
   resolveOrganizations,
 } from '@/lib/content';
 import { LOCALES, formatDate, getMessages, pick, toLocale } from '@/lib/i18n';
+import { searchSuggestions } from '@/lib/search';
 import impact from '../../../content/impact.json';
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
@@ -58,6 +60,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   // 홈에는 content/faq.json 에서 featured 로 표시한 핵심 질문(최대 4개)만 보여주고, 나머지는 FAQ 페이지에서 봅니다.
   const faq = getFaq().items.filter((item) => item.featured).slice(0, 4);
   const examples = site.exampleQuestions[locale] ?? site.exampleQuestions.ko;
+  // 검색창 자동완성: 등록된 권리정보의 키워드에서만 가져옵니다.
+  const suggestions = searchSuggestions(locale);
 
   // 소개 영상: 팀이 만든 LINKRIGHTS 소개 영상 전체(144초, 자르지 않은 웹용 압축본, 소리 없음).
   // public 폴더에 파일이 있을 때만 씁니다. (없으면 대표 이미지 또는 네이비 배경만)
@@ -422,6 +426,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </li>
           ))}
         </ul>
+
+        {/* 낱말로 바로 찾기: AI 질문과 역할이 다르다는 것을 검색창 안내 문구로 구분합니다. */}
+        <div className="mt-8">
+          <RightsSearchForm locale={locale} suggestions={suggestions} />
+        </div>
       </Section>
 
       {/* 6. 내 상황을 말해 보세요: 무엇을 얻을 수 있는지 함께 보여줍니다 (AI는 권리를 알아가는 도구) */}

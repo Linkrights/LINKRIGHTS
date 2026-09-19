@@ -6,17 +6,119 @@
   "owner": "운영팀",
   "reviewed_at": "2026-09-06",
   "keywords": [
-    "병원", "아파요", "진료", "약국", "응급실", "통역", "병원 가는 법", "몸이 아픈데",
-    "치과", "정신건강", "상담",
-    "hospital", "see a doctor", "pharmacy", "emergency room", "interpreter at hospital",
-    "医院", "看病", "药店", "急诊",
-    "bệnh viện", "khám bệnh", "nhà thuốc", "cấp cứu"
+    "병원",
+    "아파요",
+    "진료",
+    "약국",
+    "응급실",
+    "통역",
+    "병원 가는 법",
+    "몸이 아픈데",
+    "치과",
+    "정신건강",
+    "상담",
+    "hospital",
+    "see a doctor",
+    "pharmacy",
+    "emergency room",
+    "interpreter at hospital",
+    "医院",
+    "看病",
+    "药店",
+    "急诊",
+    "bệnh viện",
+    "khám bệnh",
+    "nhà thuốc",
+    "cấp cứu"
   ],
-  "organizations": ["fire-119", "nhis-1577-1000", "danuri-1577-1366", "local-family-center", "youth-1388"],
-  "related": ["health-insurance", "life-bank-and-phone"],
+  "organizations": [
+    "fire-119",
+    "nhis-1577-1000",
+    "danuri-1577-1366",
+    "local-family-center",
+    "youth-1388"
+  ],
+  "related": [
+    "health-insurance",
+    "life-bank-and-phone"
+  ],
   "sources": [
-    { "title": "국민건강보험공단", "url": "https://www.nhis.or.kr", "publisher": "국민건강보험공단" },
-    { "title": "다누리 포털", "url": "https://www.liveinkorea.kr", "publisher": "여성가족부" }
+    {
+      "title": "국민건강보험공단",
+      "url": "https://www.nhis.or.kr",
+      "publisher": "국민건강보험공단",
+      "i18n": {
+        "en": {
+          "title": "National Health Insurance Service",
+          "publisher": "National Health Insurance Service"
+        },
+        "zh": {
+          "title": "国民健康保险公团",
+          "publisher": "国民健康保险公团"
+        },
+        "vi": {
+          "title": "Cơ quan Bảo hiểm Y tế Quốc gia",
+          "publisher": "Cơ quan Bảo hiểm Y tế Quốc gia"
+        }
+      }
+    },
+    {
+      "title": "다누리 포털",
+      "url": "https://www.liveinkorea.kr",
+      "publisher": "여성가족부",
+      "i18n": {
+        "en": {
+          "title": "Danuri portal",
+          "publisher": "Ministry of Gender Equality and Family"
+        },
+        "zh": {
+          "title": "Danuri 门户网站",
+          "publisher": "女性家族部"
+        },
+        "vi": {
+          "title": "Cổng thông tin Danuri",
+          "publisher": "Bộ Bình đẳng giới và Gia đình"
+        }
+      }
+    },
+    {
+      "title": "국가건강정보포털",
+      "url": "https://health.kdca.go.kr",
+      "publisher": "질병관리청",
+      "i18n": {
+        "en": {
+          "title": "National Health Information Portal",
+          "publisher": "Korea Disease Control and Prevention Agency"
+        },
+        "zh": {
+          "title": "国家健康信息门户",
+          "publisher": "疾病管理厅"
+        },
+        "vi": {
+          "title": "Cổng thông tin sức khỏe quốc gia",
+          "publisher": "Cơ quan Kiểm soát và Phòng ngừa dịch bệnh Hàn Quốc"
+        }
+      }
+    },
+    {
+      "title": "건강보험심사평가원",
+      "url": "https://www.hira.or.kr",
+      "publisher": "건강보험심사평가원",
+      "i18n": {
+        "en": {
+          "title": "Health Insurance Review & Assessment Service",
+          "publisher": "Health Insurance Review & Assessment Service"
+        },
+        "zh": {
+          "title": "健康保险审查评价院",
+          "publisher": "健康保险审查评价院"
+        },
+        "vi": {
+          "title": "Cơ quan Thẩm định và Đánh giá Bảo hiểm Y tế",
+          "publisher": "Cơ quan Thẩm định và Đánh giá Bảo hiểm Y tế"
+        }
+      }
+    }
   ],
   "i18n": {
     "ko": {
@@ -61,6 +163,140 @@
         }
       ],
       "note": "진단과 치료 방법은 의료진만 판단할 수 있습니다. LINKRIGHTS는 의료 상담을 제공하지 않습니다."
+    },
+    "en": {
+      "title": "I'm sick. How do I go to a hospital?",
+      "summary": "In Korea, people usually go to a local clinic first and then to a larger hospital if needed. If you are worried about language, you can get interpretation help.",
+      "situations": [
+        "I don't know which hospital to go to.",
+        "It's hard to explain my symptoms in Korean.",
+        "I suddenly feel sick at night and no clinic is open.",
+        "I'm scared because I don't know how much it will cost."
+      ],
+      "rights": [
+        {
+          "title": "Everyone can receive treatment",
+          "body": "Getting medical care when you are sick is a basic right. In an emergency especially, getting treatment first is what matters."
+        },
+        {
+          "title": "You can ask for interpretation help",
+          "body": "In some cases you can ask the Danuri Call Center or your local family center for someone to go with you to the hospital or for phone interpretation."
+        },
+        {
+          "title": "Emotional difficulties can be treated too",
+          "body": "Being unable to sleep, or feeling anxious or depressed all the time, is also something you can get help with. You can start by talking to the Youth Helpline 1388."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Go to a local clinic first",
+          "body": "Colds, stomach upsets and minor injuries can be treated at a clinic near your home, and it costs less. Bring your ID (residence card)."
+        },
+        {
+          "title": "If you are badly sick or hurt, call 119",
+          "body": "In an emergency, such as someone being unconscious or bleeding heavily, call 119 and ask for an ambulance."
+        },
+        {
+          "title": "Write down your symptoms before you go",
+          "body": "If you note on your phone when it started, where it hurts and how, it is easier to explain even in simple Korean. You can also use a translation app."
+        },
+        {
+          "title": "If you are worried about the cost, ask first",
+          "body": "At the reception desk you can ask, \"I don't have insurance. How much will it cost?\" Check whether you have health insurance by calling 1577-1000."
+        }
+      ],
+      "note": "Only medical staff can make a diagnosis or decide on treatment. LINKRIGHTS does not give medical advice."
+    },
+    "zh": {
+      "title": "我生病了，该怎么去医院？",
+      "summary": "在韩国，一般先去附近的诊所（医院），需要时再去大医院。如果担心语言问题，可以获得翻译帮助。",
+      "situations": [
+        "不知道该去哪家医院。",
+        "很难用韩语说明自己的症状。",
+        "晚上突然不舒服，附近没有开门的医院。",
+        "不知道医药费会有多少，很害怕。"
+      ],
+      "rights": [
+        {
+          "title": "任何人都可以接受治疗",
+          "body": "生病时接受诊疗是基本权利。特别是在紧急情况下，先接受治疗最重要。"
+        },
+        {
+          "title": "可以请求翻译帮助",
+          "body": "有些情况下，可以通过 Danuri 呼叫中心或当地家庭中心，申请陪同就医或电话翻译支援。"
+        },
+        {
+          "title": "心理上的困难也可以治疗",
+          "body": "失眠、持续焦虑或抑郁，也是可以获得帮助的问题。可以先拨打青少年热线1388咨询。"
+        }
+      ],
+      "actions": [
+        {
+          "title": "先去附近的诊所",
+          "body": "感冒、肠胃不适、轻伤等可以在家附近的诊所就诊，费用也更低。请带上身份证件（外国人登录证）。"
+        },
+        {
+          "title": "病得很重或受了重伤，请拨打119",
+          "body": "在失去意识、大量出血等危急情况下，请拨打119叫救护车。"
+        },
+        {
+          "title": "提前写下症状",
+          "body": "把从什么时候开始、哪里、怎样不舒服记在手机上，即使只会简单的韩语也更容易说明。也可以同时使用翻译软件。"
+        },
+        {
+          "title": "担心费用时，可以先问清楚",
+          "body": "挂号时可以问：“我没有保险，需要多少钱？”是否加入了健康保险，可以拨打1577-1000确认。"
+        }
+      ],
+      "note": "诊断和治疗方法只能由医务人员判断。LINKRIGHTS 不提供医疗咨询。"
+    },
+    "vi": {
+      "title": "Tôi bị ốm. Đi bệnh viện như thế nào?",
+      "summary": "Ở Hàn Quốc, thường người ta đến phòng khám gần nhà trước, khi cần mới chuyển lên bệnh viện lớn. Nếu lo lắng về ngôn ngữ, bạn có thể được hỗ trợ phiên dịch.",
+      "situations": [
+        "Tôi không biết nên đến bệnh viện nào.",
+        "Tôi khó giải thích triệu chứng bằng tiếng Hàn.",
+        "Ban đêm tôi đột nhiên bị ốm mà không có bệnh viện nào mở cửa.",
+        "Tôi sợ vì không biết viện phí sẽ hết bao nhiêu."
+      ],
+      "rights": [
+        {
+          "title": "Ai cũng có thể được điều trị",
+          "body": "Được khám chữa bệnh khi bị ốm là quyền cơ bản. Đặc biệt trong trường hợp khẩn cấp, việc được điều trị trước là quan trọng nhất."
+        },
+        {
+          "title": "Bạn có thể yêu cầu hỗ trợ phiên dịch",
+          "body": "Trong một số trường hợp, bạn có thể nhờ Tổng đài Danuri hoặc Trung tâm Gia đình địa phương hỗ trợ người đi cùng đến bệnh viện hoặc phiên dịch qua điện thoại."
+        },
+        {
+          "title": "Khó khăn về tâm lý cũng cần được điều trị",
+          "body": "Mất ngủ, luôn lo âu hay trầm cảm cũng là những vấn đề có thể được giúp đỡ. Bạn có thể bắt đầu bằng việc tư vấn với Đường dây thanh thiếu niên 1388."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Hãy đến phòng khám gần nhà trước",
+          "body": "Cảm cúm, đau bụng hay vết thương nhẹ có thể khám ở phòng khám gần nhà và chi phí cũng thấp hơn. Hãy mang theo giấy tờ tùy thân (thẻ đăng ký người nước ngoài)."
+        },
+        {
+          "title": "Nếu ốm nặng hoặc bị thương nặng, hãy gọi 119",
+          "body": "Trong tình huống nguy cấp như bất tỉnh hoặc chảy nhiều máu, hãy gọi 119 để yêu cầu xe cấp cứu."
+        },
+        {
+          "title": "Ghi lại triệu chứng trước khi đi",
+          "body": "Nếu ghi vào điện thoại đau từ khi nào, ở đâu và đau như thế nào, bạn sẽ dễ giải thích hơn dù chỉ biết chút tiếng Hàn. Có thể dùng thêm ứng dụng dịch."
+        },
+        {
+          "title": "Nếu lo về chi phí, hãy hỏi trước",
+          "body": "Khi đăng ký khám, bạn có thể hỏi: “Tôi không có bảo hiểm, hết bao nhiêu tiền?” Hãy gọi 1577-1000 để kiểm tra mình đã tham gia bảo hiểm y tế chưa."
+        }
+      ],
+      "note": "Chỉ nhân viên y tế mới có thể chẩn đoán và quyết định cách điều trị. LINKRIGHTS không cung cấp tư vấn y tế."
     }
+  },
+  "translation_review": {
+    "en": "pending",
+    "zh": "pending",
+    "vi": "pending"
   }
 }

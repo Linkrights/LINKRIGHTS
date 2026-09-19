@@ -6,17 +6,89 @@
   "owner": "운영팀",
   "reviewed_at": "2026-09-06",
   "keywords": [
-    "폭력", "맞았", "때렸", "학대", "가정폭력", "성폭력", "협박", "무서워", "안전",
-    "신고하는 법", "쉼터", "보호",
-    "violence", "abuse", "domestic violence", "sexual violence", "threat", "safe", "shelter",
-    "暴力", "虐待", "家暴", "性暴力", "威胁", "庇护所",
-    "bạo lực", "ngược đãi", "bạo lực gia đình", "đe dọa", "nơi trú ẩn"
+    "폭력",
+    "맞았",
+    "때렸",
+    "학대",
+    "가정폭력",
+    "성폭력",
+    "협박",
+    "무서워",
+    "안전",
+    "신고하는 법",
+    "쉼터",
+    "보호",
+    "violence",
+    "abuse",
+    "domestic violence",
+    "sexual violence",
+    "threat",
+    "safe",
+    "shelter",
+    "暴力",
+    "虐待",
+    "家暴",
+    "性暴力",
+    "威胁",
+    "庇护所",
+    "bạo lực",
+    "ngược đãi",
+    "bạo lực gia đình",
+    "đe dọa",
+    "nơi trú ẩn"
   ],
-  "organizations": ["police-112", "women-1366", "youth-1388", "danuri-1577-1366", "school-violence-117", "klac-132"],
-  "related": ["education-school-discrimination", "human-rights-discrimination", "life-housing"],
+  "organizations": [
+    "police-112",
+    "women-1366",
+    "youth-1388",
+    "danuri-1577-1366",
+    "school-violence-117",
+    "klac-132"
+  ],
+  "related": [
+    "education-school-discrimination",
+    "human-rights-discrimination",
+    "life-housing"
+  ],
   "sources": [
-    { "title": "여성긴급전화 1366", "url": "https://www.women1366.kr", "publisher": "여성가족부" },
-    { "title": "한국청소년상담복지개발원", "url": "https://www.kyci.or.kr", "publisher": "여성가족부" }
+    {
+      "title": "여성긴급전화 1366",
+      "url": "https://www.women1366.kr",
+      "publisher": "여성가족부",
+      "i18n": {
+        "en": {
+          "title": "Women Emergency Hotline 1366",
+          "publisher": "Ministry of Gender Equality and Family"
+        },
+        "zh": {
+          "title": "女性紧急电话 1366",
+          "publisher": "女性家族部"
+        },
+        "vi": {
+          "title": "Đường dây khẩn cấp cho phụ nữ 1366",
+          "publisher": "Bộ Bình đẳng giới và Gia đình"
+        }
+      }
+    },
+    {
+      "title": "한국청소년상담복지개발원",
+      "url": "https://www.kyci.or.kr",
+      "publisher": "여성가족부",
+      "i18n": {
+        "en": {
+          "title": "Korea Youth Counseling & Welfare Institute",
+          "publisher": "Ministry of Gender Equality and Family"
+        },
+        "zh": {
+          "title": "韩国青少年咨询福利开发院",
+          "publisher": "女性家族部"
+        },
+        "vi": {
+          "title": "Viện Tư vấn và Phúc lợi Thanh thiếu niên Hàn Quốc",
+          "publisher": "Bộ Bình đẳng giới và Gia đình"
+        }
+      }
+    }
   ],
   "i18n": {
     "ko": {
@@ -65,6 +137,152 @@
         }
       ],
       "note": "LINKRIGHTS는 상담기관이 아니며 상황을 대신 판단할 수 없습니다. 위험하다고 느껴지면 위 공식 연락처로 바로 연락하세요."
+    },
+    "en": {
+      "title": "I'm experiencing violence or threats",
+      "summary": "No one has the right to hit or threaten you. If you are in danger now, call 112. If it is not urgent, you can first talk to 1388 or 1366.",
+      "situations": [
+        "I'm being hurt at home.",
+        "Someone keeps threatening me and scaring me.",
+        "I'm worried that reporting it will cause problems for me or my family.",
+        "I have nowhere to go right now."
+      ],
+      "rights": [
+        {
+          "title": "Everyone has the right to be safe",
+          "body": "Whatever your nationality, age or residence status, you have the right to be protected from violence."
+        },
+        {
+          "title": "Getting advice is not the same as reporting",
+          "body": "Calling 1388 or 1366 does not automatically mean a report is made. You can ask questions first and hear what options you have."
+        },
+        {
+          "title": "There are places you can stay in an emergency",
+          "body": "If it is dangerous to stay at home, you can be told about youth shelters or protection facilities. Call 1388 and explain your situation."
+        },
+        {
+          "title": "You can get interpretation support",
+          "body": "If Korean is difficult, you can get advice in several languages from the Danuri Call Center (1577-1366)."
+        }
+      ],
+      "actions": [
+        {
+          "title": "If you are in danger now, call 112",
+          "body": "If you cannot speak, you can stay on the line and make a sound, or move to a safe place and call again."
+        },
+        {
+          "title": "Keep evidence if you can",
+          "body": "Photos of injuries, hospital records and screenshots of threatening messages can help protect you later."
+        },
+        {
+          "title": "Tell an adult you trust",
+          "body": "Tell a teacher, a school counsellor or a staff member at a local youth organisation about your situation. You don't have to cope alone."
+        },
+        {
+          "title": "Decide your next steps with a counselling service",
+          "body": "If you don't know whether to contact 1388, 1366 or 112, you can call 1388 first and ask."
+        }
+      ],
+      "note": "LINKRIGHTS is not a counselling service and cannot judge your situation for you. If you feel in danger, contact the official numbers above straight away."
+    },
+    "zh": {
+      "title": "我正在遭受暴力或威胁",
+      "summary": "任何人都没有权利打你或威胁你。如果现在有危险，请拨打112；如果不紧急，可以先向1388或1366咨询。",
+      "situations": [
+        "我在家里遭受暴力。",
+        "有人一直威胁我，让我很害怕。",
+        "担心举报后会给我或家人带来不利影响。",
+        "我现在没有地方可去。"
+      ],
+      "rights": [
+        {
+          "title": "每个人都有安全的权利",
+          "body": "无论国籍、年龄或滞留资格如何，你都有免受暴力、受到保护的权利。"
+        },
+        {
+          "title": "咨询和举报不一样",
+          "body": "拨打1388或1366并不意味着马上就会举报。你可以先询问，了解有哪些选择。"
+        },
+        {
+          "title": "有可以紧急居住的地方",
+          "body": "如果待在家里有危险，可以获得青少年庇护所或保护设施的介绍。请拨打1388说明情况。"
+        },
+        {
+          "title": "可以获得翻译支援",
+          "body": "如果韩语有困难，可以通过 Danuri 呼叫中心（1577-1366）用多种语言进行咨询。"
+        }
+      ],
+      "actions": [
+        {
+          "title": "现在有危险，请拨打112",
+          "body": "如果不方便说话，可以不挂断电话、发出声音，或者转移到安全的地方后再打。"
+        },
+        {
+          "title": "尽量保留证据",
+          "body": "受伤部位的照片、医院就诊记录、威胁信息的截图，以后都有助于保护自己。"
+        },
+        {
+          "title": "告诉可以信任的成年人",
+          "body": "把情况告诉老师、心理咨询老师或当地青少年机构的工作人员中的一位。你不必一个人承受。"
+        },
+        {
+          "title": "和咨询机构一起决定下一步",
+          "body": "如果不知道该联系1388、1366还是112，可以先拨打1388询问。"
+        }
+      ],
+      "note": "LINKRIGHTS 不是咨询机构，不能代替你判断情况。如果感到危险，请立即联系上面的官方电话。"
+    },
+    "vi": {
+      "title": "Tôi đang bị bạo lực hoặc đe dọa",
+      "summary": "Không ai có quyền đánh hay đe dọa bạn. Nếu đang gặp nguy hiểm, hãy gọi 112. Nếu chưa khẩn cấp, bạn có thể tư vấn trước với 1388 hoặc 1366.",
+      "situations": [
+        "Tôi đang bị bạo lực ở nhà.",
+        "Có người liên tục đe dọa và làm tôi sợ hãi.",
+        "Tôi lo rằng nếu tố giác thì tôi hoặc gia đình sẽ gặp bất lợi.",
+        "Ngay bây giờ tôi không có nơi nào để đi."
+      ],
+      "rights": [
+        {
+          "title": "Ai cũng có quyền được an toàn",
+          "body": "Bất kể quốc tịch, tuổi tác hay tư cách lưu trú, bạn đều có quyền được bảo vệ khỏi bạo lực."
+        },
+        {
+          "title": "Tư vấn khác với tố giác",
+          "body": "Gọi 1388 hoặc 1366 không có nghĩa là sẽ bị tố giác ngay. Bạn có thể hỏi trước và nghe xem mình có những lựa chọn nào."
+        },
+        {
+          "title": "Có nơi để ở tạm trong trường hợp khẩn cấp",
+          "body": "Nếu ở nhà là nguy hiểm, bạn có thể được giới thiệu nhà tạm lánh cho thanh thiếu niên hoặc cơ sở bảo vệ. Hãy gọi 1388 và nói về tình hình của mình."
+        },
+        {
+          "title": "Bạn có thể được hỗ trợ phiên dịch",
+          "body": "Nếu tiếng Hàn khó, bạn có thể được tư vấn bằng nhiều ngôn ngữ tại Tổng đài Danuri (1577-1366)."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Nếu đang gặp nguy hiểm, hãy gọi 112",
+          "body": "Nếu khó nói chuyện, bạn có thể giữ máy và phát ra tiếng động, hoặc di chuyển đến nơi an toàn rồi gọi lại."
+        },
+        {
+          "title": "Nếu có thể, hãy giữ lại bằng chứng",
+          "body": "Ảnh chụp vết thương, hồ sơ khám bệnh, ảnh chụp màn hình tin nhắn đe dọa sẽ giúp bảo vệ bạn sau này."
+        },
+        {
+          "title": "Hãy nói với một người lớn đáng tin cậy",
+          "body": "Hãy kể tình hình cho một người như thầy cô, giáo viên tư vấn hoặc nhân viên của cơ quan thanh thiếu niên địa phương. Bạn không cần phải chịu đựng một mình."
+        },
+        {
+          "title": "Quyết định bước tiếp theo cùng cơ quan tư vấn",
+          "body": "Nếu không biết nên liên hệ 1388, 1366 hay 112, bạn có thể gọi 1388 trước để hỏi."
+        }
+      ],
+      "note": "LINKRIGHTS không phải là cơ quan tư vấn và không thể thay bạn đánh giá tình hình. Nếu cảm thấy nguy hiểm, hãy liên hệ ngay các số điện thoại chính thức ở trên."
     }
+  },
+  "translation_review": {
+    "en": "pending",
+    "zh": "pending",
+    "vi": "pending"
   }
 }

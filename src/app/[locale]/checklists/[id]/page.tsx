@@ -15,6 +15,7 @@ import {
   getArticle,
   getChecklist,
   getChecklists,
+  getSite,
   resolveArticle,
   resolveOrganizations,
 } from '@/lib/content';
@@ -52,6 +53,12 @@ export default async function ChecklistPage({ params }: { params: Promise<{ loca
   const fallback = locale !== 'ko' && !checklist.i18n[locale];
   const basedOn = checklist.based_on.map((articleId) => getArticle(articleId)).filter((a): a is RightsArticle => Boolean(a));
   const orgs = resolveOrganizations(checklist.organizations);
+  // 다 확인한 뒤 이어서 할 수 있는 일 (이 체크리스트와 실제로 연결된 것만)
+  const firstArticle = basedOn[0];
+  // 빠진 내용 제안: 서버에 저장하지 않고 운영팀 이메일로 바로 보냅니다.
+  const requestHref = `mailto:${getSite().contactEmail}?subject=${encodeURIComponent(
+    t.checklist.requestSubject.replace('{title}', body.title),
+  )}`;
 
   const items: ChecklistBoxItem[] = checklist.items.map((item) => {
     const article = item.article ? getArticle(item.article) : undefined;
@@ -111,9 +118,19 @@ export default async function ChecklistPage({ params }: { params: Promise<{ loca
               doneBody: t.checklist.doneBody,
             }}
             done={
-              <Link href={`/${locale}/organizations`} className="lr-btn lr-btn-primary lr-btn-sm lr-press">
-                {t.checklist.orgLink} <Icon name="arrow-right" size={16} />
-              </Link>
+              <div className="flex flex-wrap gap-2">
+                <Link href={`/${locale}/organizations`} className="lr-btn lr-btn-primary lr-btn-sm lr-press">
+                  {t.checklist.orgLink} <Icon name="arrow-right" size={16} />
+                </Link>
+                {firstArticle && (
+                  <Link href={articleHref(locale, firstArticle)} className="lr-btn lr-btn-ghost lr-btn-sm lr-press">
+                    {t.checklist.articleLink} <Icon name="arrow-right" size={16} />
+                  </Link>
+                )}
+                <Link href={`/${locale}/ask`} className="lr-btn lr-btn-ghost lr-btn-sm lr-press">
+                  {t.checklist.askLink} <Icon name="arrow-right" size={16} />
+                </Link>
+              </div>
             }
           />
           {body.note && <p className="text-[15px] leading-relaxed text-ink-500">{body.note}</p>}
@@ -150,6 +167,14 @@ export default async function ChecklistPage({ params }: { params: Promise<{ loca
             </Link>
           </section>
         )}
+        {/* 빠진 내용 제안 (운영팀 이메일). content/site.json 의 문의 이메일로 갑니다. */}
+        <section className="rounded-[var(--radius-card)] border border-[var(--color-line)] bg-surface-soft p-5 sm:p-6">
+          <h2 className="text-[17px] font-bold text-ink-900">{t.checklist.requestTitle}</h2>
+          <p className="mt-2 text-[15px] leading-relaxed text-ink-700">{t.checklist.requestBody}</p>
+          <a href={requestHref} className="lr-btn lr-btn-ghost lr-btn-sm lr-press mt-4">
+            {t.checklist.requestCta} <Icon name="arrow-right" size={16} />
+          </a>
+        </section>
       </article>
     </>
   );

@@ -1,0 +1,229 @@
+{
+  "id": "visa-part-time-permission",
+  "category": "visa",
+  "status": "published",
+  "owner": "운영팀",
+  "created_at": "2026-09-20",
+  "reviewed_at": "2026-09-20",
+  "keywords": [
+    "시간제취업", "시간제취업 허가", "체류자격 외 활동", "체류자격외활동허가", "유학생 알바", "유학생 아르바이트", "D-2", "D-4", "학교 확인",
+    "part-time work permission", "work permit for students", "out-of-status activity",
+    "时间制就业", "打工许可", "留学生打工", "滞留资格外活动",
+    "giấy phép làm thêm", "du học sinh làm thêm", "hoạt động ngoài tư cách lưu trú"
+  ],
+  "organizations": ["hikorea-1345", "moel-1350", "danuri-1577-1366"],
+  "related": ["visa-status-basics", "labor-contract", "labor-youth-work-rules"],
+  "sources": [
+    {
+      "title": "하이코리아 (출입국·외국인정책본부)",
+      "url": "https://www.hikorea.go.kr",
+      "publisher": "법무부",
+      "i18n": {
+        "en": { "title": "HiKorea (Korea Immigration Service)", "publisher": "Ministry of Justice" },
+        "zh": { "title": "HiKorea（出入境·外国人政策本部）", "publisher": "法务部" },
+        "vi": { "title": "HiKorea (Cục Xuất nhập cảnh và Chính sách người nước ngoài)", "publisher": "Bộ Tư pháp" }
+      }
+    },
+    {
+      "title": "찾기 쉬운 생활법령정보 (외국인유학생 시간제취업)",
+      "url": "https://www.easylaw.go.kr",
+      "publisher": "법제처",
+      "i18n": {
+        "en": { "title": "Easy Law (part-time work for foreign students)", "publisher": "Ministry of Government Legislation" },
+        "zh": { "title": "生活法令信息（外国留学生时间制就业）", "publisher": "法制处" },
+        "vi": { "title": "Thông tin pháp luật đời sống (làm thêm của du học sinh)", "publisher": "Bộ Pháp chế" }
+      }
+    }
+  ],
+  "translation_review": { "en": "pending", "zh": "pending", "vi": "pending" },
+  "i18n": {
+    "ko": {
+      "title": "유학생인데 아르바이트를 해도 되나요? (시간제취업 허가)",
+      "summary": "유학(D-2)이나 일반연수(D-4) 체류자격으로 아르바이트를 하려면 먼저 체류자격 외 활동허가(시간제취업 허가)를 받아야 합니다.",
+      "situations": [
+        "유학생인데 아르바이트를 시작해도 되는지 모르겠어요.",
+        "친구는 그냥 일하던데 저도 괜찮을까요?",
+        "허가를 어디서 어떻게 받는지 모르겠어요.",
+        "일할 수 있는 시간이 정해져 있는지 궁금해요."
+      ],
+      "rights": [
+        {
+          "title": "일을 시작하기 전에 허가를 받아야 합니다",
+          "body": "유학(D-2)이나 일반연수(D-4) 체류자격으로 아르바이트를 하려면 미리 체류자격 외 활동허가(시간제취업 허가)를 받아야 합니다."
+        },
+        {
+          "title": "학교 확인과 한국어 능력 같은 조건이 있습니다",
+          "body": "학교 유학생 담당자의 확인을 받고 일정한 조건을 갖춘 학생에게 허용됩니다. 내가 조건에 맞는지는 학교 담당자와 1345에서 확인하세요."
+        },
+        {
+          "title": "일할 수 있는 시간이 정해져 있습니다",
+          "body": "학기 중에 일할 수 있는 시간은 과정과 한국어 능력 등에 따라 다르게 정해져 있고, 기준이 바뀌기도 합니다. 정확한 시간은 신청 전에 1345나 하이코리아에서 확인하세요."
+        },
+        {
+          "title": "허가 없이 일하면 불이익이 생길 수 있습니다",
+          "body": "허가를 받지 않고 일하면 법에 따라 불이익을 받을 수 있습니다. 이미 일을 시작했다면 혼자 판단하지 말고 1345에 먼저 상담하세요."
+        }
+      ],
+      "actions": [
+        {
+          "title": "학교 유학생 담당 선생님에게 먼저 물어보세요",
+          "body": "확인을 받을 수 있는지, 학교에서 먼저 해야 하는 절차가 있는지 물어보세요. 학교마다 안내가 조금씩 다릅니다."
+        },
+        {
+          "title": "하이코리아에서 신청 방법을 확인하세요",
+          "body": "hikorea.go.kr 전자민원으로 신청하거나, 관할 출입국·외국인관서 방문을 예약해 신청할 수 있습니다."
+        },
+        {
+          "title": "어디에서 몇 시간 일할지 적어 두세요",
+          "body": "일하려는 곳, 하는 일, 주당 예상 시간을 적어 두면 학교와 1345에 물어보기 쉽고 신청도 빨라집니다."
+        },
+        {
+          "title": "허가를 받은 뒤에는 근로계약서도 꼭 받으세요",
+          "body": "허가는 체류에 관한 절차이고, 시급과 일하는 시간은 근로계약서로 지켜집니다. 두 가지를 모두 챙기세요."
+        }
+      ],
+      "note": "허용 조건과 시간은 체류자격·학교·학기 상황에 따라 다르고 제도가 바뀔 수 있습니다. 신청 전에 하이코리아 또는 1345(외국인종합안내센터)에서 확인하세요."
+    },
+    "en": {
+      "title": "I'm an international student. Can I work part-time? (Part-time work permission)",
+      "summary": "To work part-time on a study (D-2) or general training (D-4) status, you must first get permission for activities outside your residence status (part-time work permission).",
+      "situations": [
+        "I'm an international student and don't know whether I can start a part-time job.",
+        "My friend just works. Is that OK for me too?",
+        "I don't know where or how to get permission.",
+        "I want to know whether there is a limit on my working hours."
+      ],
+      "rights": [
+        {
+          "title": "You need permission before you start working",
+          "body": "To work part-time on a study (D-2) or general training (D-4) status, you must get permission for activities outside your residence status (part-time work permission) in advance."
+        },
+        {
+          "title": "There are conditions, such as school confirmation and Korean ability",
+          "body": "It is allowed for students who get confirmation from the school's international student officer and meet certain conditions. Check whether you meet them with your school officer and 1345."
+        },
+        {
+          "title": "There is a limit on the hours you may work",
+          "body": "The hours allowed during term depend on your programme, your Korean ability and other conditions, and the rules change from time to time. Check the exact hours with 1345 or on HiKorea before you apply."
+        },
+        {
+          "title": "Working without permission can cause problems",
+          "body": "If you work without permission, you can face penalties under the law. If you have already started working, do not decide alone: talk to 1345 first."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Ask your school's international student officer first",
+          "body": "Ask whether you can get their confirmation and what the school needs you to do first. Each school explains it slightly differently."
+        },
+        {
+          "title": "Check how to apply on HiKorea",
+          "body": "You can apply through the online service at hikorea.go.kr, or book a visit to your local immigration office."
+        },
+        {
+          "title": "Write down where and how many hours you plan to work",
+          "body": "Noting the workplace, the work and the expected weekly hours makes it easier to ask your school and 1345, and speeds up the application."
+        },
+        {
+          "title": "After you get permission, also get a written work contract",
+          "body": "Permission is about your residence status; your hourly pay and working hours are protected by the work contract. Take care of both."
+        }
+      ],
+      "note": "The conditions and hours depend on your residence status, your school and the term, and the rules can change. Check with HiKorea or the Immigration Contact Center (1345) before you apply."
+    },
+    "zh": {
+      "title": "留学生可以打工吗？（时间制就业许可）",
+      "summary": "以留学（D-2）或一般研修（D-4）滞留资格打工，必须先取得滞留资格外活动许可（时间制就业许可）。",
+      "situations": [
+        "我是留学生，不知道能不能开始打工。",
+        "朋友就直接打工了，我这样也可以吗？",
+        "不知道在哪里、怎么申请许可。",
+        "想知道可以工作的时间是不是有规定。"
+      ],
+      "rights": [
+        {
+          "title": "开始工作前必须取得许可",
+          "body": "以留学（D-2）或一般研修（D-4）滞留资格打工，必须事先取得滞留资格外活动许可（时间制就业许可）。"
+        },
+        {
+          "title": "有学校确认、韩语能力等条件",
+          "body": "需要获得学校留学生负责老师的确认并满足一定条件才被允许。自己是否符合条件，请向学校负责老师和1345确认。"
+        },
+        {
+          "title": "可以工作的时间有规定",
+          "body": "学期中可以工作的时间根据课程、韩语能力等有不同规定，标准也会变化。申请前请向1345或 HiKorea 确认准确的时间。"
+        },
+        {
+          "title": "未经许可工作可能带来不利后果",
+          "body": "未取得许可就工作，可能会依法受到不利处理。如果已经开始工作，不要自己判断，请先向1345咨询。"
+        }
+      ],
+      "actions": [
+        {
+          "title": "先问学校的留学生负责老师",
+          "body": "询问能否获得确认、学校需要先办哪些手续。每所学校的指导略有不同。"
+        },
+        {
+          "title": "在 HiKorea 确认申请方法",
+          "body": "可以通过 hikorea.go.kr 的电子民愿申请，或预约到管辖出入境·外国人管理机关申请。"
+        },
+        {
+          "title": "写下打算在哪里工作、每周几小时",
+          "body": "把工作地点、工作内容和预计每周时间写下来，向学校和1345询问时更方便，申请也更快。"
+        },
+        {
+          "title": "取得许可后也一定要拿到劳动合同",
+          "body": "许可是滞留方面的手续，而时薪和工作时间由劳动合同来保障。两样都要准备好。"
+        }
+      ],
+      "note": "许可条件和时间因滞留资格、学校和学期情况而不同，制度也可能变化。申请前请向 HiKorea 或1345（外国人综合咨询中心）确认。"
+    },
+    "vi": {
+      "title": "Tôi là du học sinh, có được làm thêm không? (Giấy phép làm thêm)",
+      "summary": "Để làm thêm với tư cách du học (D-2) hoặc tu nghiệp chung (D-4), trước tiên bạn phải xin phép hoạt động ngoài tư cách lưu trú (giấy phép làm thêm).",
+      "situations": [
+        "Tôi là du học sinh và không biết có được bắt đầu làm thêm không.",
+        "Bạn tôi cứ thế đi làm, tôi làm vậy có được không?",
+        "Tôi không biết xin phép ở đâu và như thế nào.",
+        "Tôi muốn biết thời gian được làm việc có bị giới hạn không."
+      ],
+      "rights": [
+        {
+          "title": "Phải xin phép trước khi bắt đầu làm",
+          "body": "Để làm thêm với tư cách du học (D-2) hoặc tu nghiệp chung (D-4), bạn phải xin phép hoạt động ngoài tư cách lưu trú (giấy phép làm thêm) từ trước."
+        },
+        {
+          "title": "Có các điều kiện như xác nhận của trường và năng lực tiếng Hàn",
+          "body": "Chỉ những sinh viên có xác nhận của cán bộ phụ trách du học sinh và đáp ứng một số điều kiện mới được phép. Hãy hỏi cán bộ của trường và số 1345 xem bạn có đủ điều kiện không."
+        },
+        {
+          "title": "Thời gian được làm việc có giới hạn",
+          "body": "Số giờ được làm trong học kỳ khác nhau tùy chương trình học, năng lực tiếng Hàn và các điều kiện khác, và quy định cũng có thể thay đổi. Hãy hỏi 1345 hoặc xem HiKorea để biết số giờ chính xác trước khi nộp hồ sơ."
+        },
+        {
+          "title": "Làm việc khi chưa được phép có thể gặp bất lợi",
+          "body": "Nếu làm việc mà không có giấy phép, bạn có thể chịu bất lợi theo quy định của pháp luật. Nếu đã bắt đầu làm, đừng tự phán đoán mà hãy tư vấn với 1345 trước."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Trước hết hãy hỏi cán bộ phụ trách du học sinh của trường",
+          "body": "Hãy hỏi xem bạn có được xác nhận không và trường yêu cầu làm thủ tục gì trước. Mỗi trường hướng dẫn hơi khác nhau."
+        },
+        {
+          "title": "Xem cách nộp hồ sơ trên HiKorea",
+          "body": "Bạn có thể nộp qua dịch vụ trực tuyến tại hikorea.go.kr, hoặc đặt lịch đến cơ quan xuất nhập cảnh phụ trách để nộp."
+        },
+        {
+          "title": "Ghi lại nơi làm việc và số giờ dự định làm",
+          "body": "Ghi rõ nơi làm việc, công việc và số giờ dự kiến mỗi tuần sẽ giúp bạn dễ hỏi trường và 1345, đồng thời nộp hồ sơ nhanh hơn."
+        },
+        {
+          "title": "Sau khi được cấp phép, cũng phải nhận hợp đồng lao động",
+          "body": "Giấy phép là thủ tục về lưu trú, còn tiền công theo giờ và thời gian làm việc được bảo vệ bằng hợp đồng lao động. Hãy chuẩn bị cả hai."
+        }
+      ],
+      "note": "Điều kiện và số giờ được phép khác nhau tùy tư cách lưu trú, trường học và học kỳ, và quy định có thể thay đổi. Hãy kiểm tra với HiKorea hoặc số 1345 (Trung tâm tư vấn cho người nước ngoài) trước khi nộp hồ sơ."
+    }
+  }
+}

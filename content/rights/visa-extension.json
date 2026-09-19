@@ -6,17 +6,75 @@
   "owner": "운영팀",
   "reviewed_at": "2026-09-06",
   "keywords": [
-    "비자 연장", "체류기간 연장", "비자가 곧 끝나", "체류기간 만료", "하이코리아", "출입국사무소",
-    "체류자격 변경", "방문 예약", "비자 신청",
-    "visa extension", "extend my stay", "immigration office", "visa expires",
-    "签证延期", "延长居留", "出入境",
-    "gia hạn visa", "gia hạn lưu trú", "cục xuất nhập cảnh"
+    "비자 연장",
+    "체류기간 연장",
+    "비자가 곧 끝나",
+    "체류기간 만료",
+    "하이코리아",
+    "출입국사무소",
+    "체류자격 변경",
+    "방문 예약",
+    "비자 신청",
+    "visa extension",
+    "extend my stay",
+    "immigration office",
+    "visa expires",
+    "签证延期",
+    "延长居留",
+    "出入境",
+    "gia hạn visa",
+    "gia hạn lưu trú",
+    "cục xuất nhập cảnh"
   ],
-  "organizations": ["hikorea-1345", "danuri-1577-1366", "klac-132", "epeople-110"],
-  "related": ["visa-status-basics", "health-insurance"],
+  "organizations": [
+    "hikorea-1345",
+    "danuri-1577-1366",
+    "klac-132",
+    "epeople-110"
+  ],
+  "related": [
+    "visa-status-basics",
+    "health-insurance"
+  ],
   "sources": [
-    { "title": "하이코리아 (출입국·외국인정책본부)", "url": "https://www.hikorea.go.kr", "publisher": "법무부" },
-    { "title": "법무부 출입국·외국인정책본부", "url": "https://www.immigration.go.kr", "publisher": "법무부" }
+    {
+      "title": "하이코리아 (출입국·외국인정책본부)",
+      "url": "https://www.hikorea.go.kr",
+      "publisher": "법무부",
+      "i18n": {
+        "en": {
+          "title": "HiKorea (Korea Immigration Service)",
+          "publisher": "Ministry of Justice"
+        },
+        "zh": {
+          "title": "HiKorea（出入境·外国人政策本部）",
+          "publisher": "法务部"
+        },
+        "vi": {
+          "title": "HiKorea (Cục Xuất nhập cảnh và Chính sách người nước ngoài)",
+          "publisher": "Bộ Tư pháp"
+        }
+      }
+    },
+    {
+      "title": "법무부 출입국·외국인정책본부",
+      "url": "https://www.immigration.go.kr",
+      "publisher": "법무부",
+      "i18n": {
+        "en": {
+          "title": "Korea Immigration Service, Ministry of Justice",
+          "publisher": "Ministry of Justice"
+        },
+        "zh": {
+          "title": "法务部出入境·外国人政策本部",
+          "publisher": "法务部"
+        },
+        "vi": {
+          "title": "Cục Xuất nhập cảnh và Chính sách người nước ngoài, Bộ Tư pháp",
+          "publisher": "Bộ Tư pháp"
+        }
+      }
+    }
   ],
   "i18n": {
     "ko": {
@@ -104,6 +162,96 @@
         }
       ],
       "note": "LINKRIGHTS cannot judge or guarantee whether a visa will be approved. Always confirm eligibility and documents with HiKorea or 1345."
+    },
+    "zh": {
+      "title": "怎样延长滞留期限（签证）？",
+      "summary": "必须在滞留期限结束前提前申请延长。申请要先在 HiKorea 预约，然后到出入境·外国人管理机关办理。",
+      "situations": [
+        "外国人登录证上写的滞留期限快要到了。",
+        "听说要去出入境事务所，但不知道怎么预约。",
+        "不知道需要哪些材料。",
+        "期限已经过了，不知道该怎么办。"
+      ],
+      "rights": [
+        {
+          "title": "可以提前申请",
+          "body": "可以在滞留期限到期日之前申请延长。在期限结束很早之前就可以申请，所以尽早办理更安全。"
+        },
+        {
+          "title": "可以获得多种语言的指导",
+          "body": "外国人综合咨询中心1345提供多种语言咨询。可以打电话询问想了解的问题。"
+        },
+        {
+          "title": "如果期限已过，要尽快咨询",
+          "body": "放任滞留期限已过的状态，不利后果可能会变大。不要自己判断，请先向1345或法律咨询机构咨询。"
+        }
+      ],
+      "actions": [
+        {
+          "title": "先确认滞留期限的到期日",
+          "body": "在外国人登录证背面或 HiKorea 上确认到期日，并在手机日历上设置提醒。"
+        },
+        {
+          "title": "在 HiKorea 预约到访",
+          "body": "在 hikorea.go.kr 预约管辖出入境·外国人管理机关的到访。预约可能很快约满，请提前办理。"
+        },
+        {
+          "title": "向1345询问需要的材料",
+          "body": "每种滞留资格需要的材料不同。请告诉1345自己的滞留资格，确认需要哪些材料后再准备。"
+        },
+        {
+          "title": "觉得困难就和监护人或支援机构一起去",
+          "body": "如果一个人去有困难，可以和监护人、学校老师或移民支援机构的负责人一起前往。"
+        }
+      ],
+      "note": "LINKRIGHTS 无法判断或保证签证是否会获批。申请资格和材料请务必向 HiKorea 或1345确认。"
+    },
+    "vi": {
+      "title": "Làm thế nào để gia hạn thời gian lưu trú (visa)?",
+      "summary": "Bạn phải xin gia hạn trước khi thời gian lưu trú kết thúc. Hãy đặt lịch trên HiKorea rồi đến cơ quan xuất nhập cảnh để làm thủ tục.",
+      "situations": [
+        "Thời gian lưu trú ghi trên thẻ đăng ký người nước ngoài sắp hết.",
+        "Nghe nói phải đến văn phòng xuất nhập cảnh nhưng tôi không biết đặt lịch thế nào.",
+        "Tôi không biết cần những giấy tờ gì.",
+        "Thời hạn đã qua rồi mà tôi không biết phải làm sao."
+      ],
+      "rights": [
+        {
+          "title": "Bạn có thể xin trước",
+          "body": "Bạn có thể xin gia hạn trước ngày hết hạn lưu trú. Có thể nộp từ rất sớm trước khi hết hạn, nên làm sớm sẽ an toàn hơn."
+        },
+        {
+          "title": "Bạn có thể được hướng dẫn bằng nhiều ngôn ngữ",
+          "body": "Trung tâm tư vấn cho người nước ngoài 1345 tư vấn bằng nhiều ngôn ngữ. Bạn có thể gọi điện để hỏi những điều mình thắc mắc."
+        },
+        {
+          "title": "Nếu đã quá hạn, phải tư vấn càng sớm càng tốt",
+          "body": "Để nguyên tình trạng quá hạn lưu trú có thể khiến bất lợi lớn hơn. Đừng tự phán đoán một mình, hãy hỏi số 1345 hoặc cơ quan tư vấn pháp lý trước."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Trước hết hãy kiểm tra ngày hết hạn lưu trú",
+          "body": "Kiểm tra ngày hết hạn ở mặt sau thẻ đăng ký người nước ngoài hoặc trên HiKorea, rồi đặt nhắc nhở trên lịch điện thoại."
+        },
+        {
+          "title": "Đặt lịch đến làm thủ tục trên HiKorea",
+          "body": "Hãy đặt lịch đến cơ quan xuất nhập cảnh phụ trách tại hikorea.go.kr. Lịch hẹn có thể hết nhanh nên hãy đặt sớm."
+        },
+        {
+          "title": "Hỏi số 1345 về giấy tờ cần thiết",
+          "body": "Mỗi tư cách lưu trú cần giấy tờ khác nhau. Hãy nói tư cách lưu trú của mình với 1345, xác nhận cần những giấy tờ gì rồi chuẩn bị."
+        },
+        {
+          "title": "Nếu thấy khó, hãy đi cùng người giám hộ hoặc cơ quan hỗ trợ",
+          "body": "Nếu khó đi một mình, bạn có thể đến cùng người giám hộ, thầy cô ở trường hoặc người phụ trách của cơ quan hỗ trợ người di trú."
+        }
+      ],
+      "note": "LINKRIGHTS không thể đánh giá hay bảo đảm việc visa có được chấp thuận hay không. Hãy nhất định xác nhận điều kiện nộp hồ sơ và giấy tờ tại HiKorea hoặc số 1345."
     }
+  },
+  "translation_review": {
+    "zh": "pending",
+    "vi": "pending"
   }
 }

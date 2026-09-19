@@ -31,12 +31,30 @@
       "change_body": "이주배경청소년이 \"도움을 받는 대상\"이 아니라 \"자신의 권리를 알고 선택하는 주체\"가 되는 것. LINKRIGHTS의 모든 화면은 이 문장을 기준으로 만들어졌습니다.",
       "what_title": "LINKRIGHTS가 하는 일",
       "what_we_do": [
-        { "title": "권리교육", "body": "청소년이 자기 권리를 이해할 수 있도록 쉬운 언어로 설명하는 교육을 진행합니다." },
-        { "title": "대학생 멘토링", "body": "가까운 나이의 대학생 멘토가 학업과 진로에 대한 이야기를 함께 나눕니다." },
-        { "title": "생활·문화 체험", "body": "함께 경험하고 관계를 만들 수 있는 문화·생활 활동을 운영합니다." },
-        { "title": "권리정보 제공", "body": "검토를 거친 권리정보를 쉬운 언어와 단계별 안내로 정리해 제공합니다." },
-        { "title": "AI 정보 안내", "body": "자신의 상황을 자유롭게 적으면 관련 권리정보와 기관을 찾아 안내합니다." },
-        { "title": "기관 연결", "body": "실제로 도움을 받을 수 있는 공식기관의 연락처와 지원 언어를 함께 안내합니다." }
+        {
+          "title": "권리교육",
+          "body": "청소년이 자기 권리를 이해할 수 있도록 쉬운 언어로 설명하는 교육을 진행합니다."
+        },
+        {
+          "title": "대학생 멘토링",
+          "body": "가까운 나이의 대학생 멘토가 학업과 진로에 대한 이야기를 함께 나눕니다."
+        },
+        {
+          "title": "생활·문화 체험",
+          "body": "함께 경험하고 관계를 만들 수 있는 문화·생활 활동을 운영합니다."
+        },
+        {
+          "title": "권리정보 제공",
+          "body": "검토를 거친 권리정보를 쉬운 언어와 단계별 안내로 정리해 제공합니다."
+        },
+        {
+          "title": "AI 정보 안내",
+          "body": "자신의 상황을 자유롭게 적으면 관련 권리정보와 기관을 찾아 안내합니다."
+        },
+        {
+          "title": "기관 연결",
+          "body": "실제로 도움을 받을 수 있는 공식기관의 연락처와 지원 언어를 함께 안내합니다."
+        }
       ],
       "sdg_title": "SDGs와 LINKRIGHTS",
       "sdgs": [
@@ -127,12 +145,30 @@
       "change_body": "That migrant-background young people are not \"people who receive help\" but \"people who know their rights and make their own choices\". Every screen in LINKRIGHTS is built around that sentence.",
       "what_title": "What LINKRIGHTS does",
       "what_we_do": [
-        { "title": "Rights education", "body": "Sessions that explain rights in plain language young people can actually use." },
-        { "title": "University mentoring", "body": "Mentors close in age share their experience of study and career paths." },
-        { "title": "Culture and daily life activities", "body": "Shared experiences that build confidence and relationships." },
-        { "title": "Reviewed rights information", "body": "Checked information written in plain language with step-by-step guidance." },
-        { "title": "AI information guide", "body": "Describe your situation and get pointed to relevant rights information and organisations." },
-        { "title": "Connection to organisations", "body": "Official contacts, with the languages each organisation supports." }
+        {
+          "title": "Rights education",
+          "body": "Sessions that explain rights in plain language young people can actually use."
+        },
+        {
+          "title": "University mentoring",
+          "body": "Mentors close in age share their experience of study and career paths."
+        },
+        {
+          "title": "Culture and daily life activities",
+          "body": "Shared experiences that build confidence and relationships."
+        },
+        {
+          "title": "Reviewed rights information",
+          "body": "Checked information written in plain language with step-by-step guidance."
+        },
+        {
+          "title": "AI information guide",
+          "body": "Describe your situation and get pointed to relevant rights information and organisations."
+        },
+        {
+          "title": "Connection to organisations",
+          "body": "Official contacts, with the languages each organisation supports."
+        }
       ],
       "sdg_title": "SDGs and LINKRIGHTS",
       "sdgs": [
@@ -194,6 +230,234 @@
       "team_body": "LINKRIGHTS is built together by migrant-background youth, university mentors and field practitioners. Content is written from official sources, reviewed before publication, and shown with its source and review date.",
       "future_title": "Where we are going",
       "future_body": "Our goal is to remain a usable rights platform after the programme ends. We will keep adding languages and topics, and re-check organisation details regularly to keep them current."
+    },
+    "zh": {
+      "hero_title": "从了解权利开始",
+      "hero_body": "LINKRIGHTS 是一个权利信息平台，帮助移民背景青少年了解自己的权利、自己找到需要的信息，并连接到真正能够提供帮助的地方。",
+      "why_title": "我们为什么开始这个项目",
+      "why_body": "在与生活在韩国的移民背景青少年见面的过程中，我们反复听到同样的话：“我不知道自己有哪些权利。”“我不知道该去问谁。”并不是没有信息，而是信息太分散、太难懂。LINKRIGHTS 就是为了连接这中间的距离而开始的。",
+      "problems_title": "我们关注的问题",
+      "problems": [
+        {
+          "title": "信息分散在很多地方",
+          "body": "劳动、教育、医疗、滞留方面的信息分别放在不同机构的网站上，需要一个一个去找。"
+        },
+        {
+          "title": "很难知道该去哪个机构",
+          "body": "问题已经发生了，但要知道处理这个问题的地方在哪里，本身就是一道很大的墙。"
+        },
+        {
+          "title": "专业术语太难",
+          "body": "“根据劳动基准法，使用者……”这样的句子，对成年人来说也很难。如果还在学习韩语，就更难了。"
+        },
+        {
+          "title": "很难把自己的处境和权利联系起来",
+          "body": "法律和制度是存在的，但没有人说明它在我现在的处境中该怎么适用。"
+        }
+      ],
+      "change_title": "我们想带来的改变",
+      "change_body": "让移民背景青少年不是“接受帮助的对象”，而是“了解自己的权利并自己做出选择的主体”。LINKRIGHTS 的每一个页面都以这句话为标准来制作。",
+      "what_title": "LINKRIGHTS 做的事",
+      "what_we_do": [
+        {
+          "title": "权利教育",
+          "body": "用简单的语言进行讲解，帮助青少年理解自己的权利。"
+        },
+        {
+          "title": "大学生辅导",
+          "body": "年龄相近的大学生导师，一起聊学业和未来出路。"
+        },
+        {
+          "title": "生活·文化体验",
+          "body": "开展可以一起体验、建立关系的文化和生活活动。"
+        },
+        {
+          "title": "提供权利信息",
+          "body": "把经过审核的权利信息，用简单的语言和分步骤的指引整理后提供。"
+        },
+        {
+          "title": "AI 信息指引",
+          "body": "自由写下自己的处境，就会为你找到并介绍相关的权利信息和机构。"
+        },
+        {
+          "title": "连接机构",
+          "body": "一并提供可以真正获得帮助的官方机构的联系方式和支持语言。"
+        }
+      ],
+      "sdg_title": "SDGs 与 LINKRIGHTS",
+      "sdgs": [
+        {
+          "code": "SDG 4",
+          "name": "优质教育",
+          "goal": "包容、公平的教育机会",
+          "body": "帮助移民背景青少年不被排除在学校和学习之外，了解并使用与教育有关的权利。"
+        },
+        {
+          "code": "SDG 10",
+          "name": "减少不平等",
+          "goal": "减少国家内部和国家之间的不平等",
+          "body": "以缩小信息获取差距为目标，让任何人都不因国籍和语言而被排除在信息之外。"
+        }
+      ],
+      "sdg_link": "LINKRIGHTS 帮助移民背景青少年获取所需的信息和权利，在这一点上与这两个目标相连。",
+      "sdg_details": [
+        {
+          "code": "SDG 4",
+          "title": "LINKRIGHTS 为什么谈 SDG 4（优质教育）",
+          "body": "SDG 4 的目标是让所有人都能不受歧视地接受优质教育，并拥有终身学习的机会。住在韩国的青少年无论国籍或滞留资格如何都可以上学，但如果不知道入学方法、韩语还不熟练，或者在学校遭遇歧视，就容易远离学习。LINKRIGHTS 从帮助学习不中断开始。",
+          "points": [
+            {
+              "title": "教育机会：告诉你进入学校的路",
+              "body": "我们用简单的语言整理开始并持续学习所需要的信息：随年龄和以前学历而不同的入学方式、承认以前学历的程序、韩语支援，以及在学校之外取得学历的途径。"
+            },
+            {
+              "title": "安全地学习：在学校遭遇歧视或欺凌时",
+              "body": "因为出身国家、肤色、口音而被取笑或受到不利对待，这就是歧视。我们会一并告诉你在学校遇到这种情况时可以做什么、可以向哪里求助。"
+            },
+            {
+              "title": "学习的机会：权利教育和大学生辅导",
+              "body": "通过用简单语言学习自身权利的权利教育，以及与年龄相近的大学生导师交流学业和未来出路的辅导，培养自己学习和选择的力量。"
+            }
+          ]
+        },
+        {
+          "code": "SDG 10",
+          "title": "LINKRIGHTS 为什么谈 SDG 10（减少不平等）",
+          "body": "SDG 10 的目标是减少不平等、不让任何人被落下。法律和制度已经存在，但对移民背景青少年来说，因为国籍、语言和分散的信息，从知道权利到实际使用权利的距离很远。LINKRIGHTS 就从缩短这段距离开始。",
+          "points": [
+            {
+              "title": "减少不平等：缩小信息差距",
+              "body": "劳动、教育、医疗、滞留的信息分散在多个机构，专业术语也很难。我们把经过审核的权利信息，用简单的语言和分步骤的指引整理在一个地方。"
+            },
+            {
+              "title": "减少歧视：告诉你遭遇歧视时可以做什么",
+              "body": "例如因国籍、肤色、语言等原因遭受歧视时可以向国家人权委员会提出申诉，我们会一并说明在歧视情况下可以做的事和可以联系的地方。"
+            },
+            {
+              "title": "包容：帮助你成为自己做选择的主体",
+              "body": "我们用韩语、英语、中文、越南语提供信息，帮助移民背景青少年不是“接受帮助的对象”，而是“了解自己的权利并自己做出选择的主体”。"
+            }
+          ]
+        }
+      ],
+      "team_title": "一起创造的人们",
+      "team_body": "LINKRIGHTS 由移民背景青少年、大学生导师和一线工作者共同打造。内容以官方资料为基础撰写，经过审核后公开，每条信息都会同时标注出处和审核日期。",
+      "future_title": "今后的方向",
+      "future_body": "我们的目标是，即使项目结束之后，也能作为可以继续使用的权利信息平台留存下来。我们会逐步增加支持的语言和权利信息，并定期重新确认机构信息，保持最新状态。"
+    },
+    "vi": {
+      "hero_title": "Bắt đầu từ việc biết quyền của mình",
+      "hero_body": "LINKRIGHTS là nền tảng thông tin về quyền, giúp thanh thiếu niên có nền tảng di trú biết quyền của mình, tự tìm thông tin cần thiết và kết nối đến nơi thực sự có thể giúp đỡ.",
+      "why_title": "Vì sao chúng tôi bắt đầu dự án này",
+      "why_body": "Khi gặp gỡ thanh thiếu niên có nền tảng di trú đang sống ở Hàn Quốc, chúng tôi liên tục nghe những câu giống nhau: “Em không biết mình có những quyền gì.” “Em không biết phải hỏi ở đâu.” Không phải là không có thông tin, mà thông tin quá phân tán và quá khó. LINKRIGHTS ra đời để nối khoảng cách đó.",
+      "problems_title": "Những vấn đề chúng tôi nhìn thấy",
+      "problems": [
+        {
+          "title": "Thông tin nằm rải rác ở nhiều nơi",
+          "body": "Thông tin về lao động, giáo dục, y tế và lưu trú nằm trên trang web của những cơ quan khác nhau, nên phải tìm từng nơi một."
+        },
+        {
+          "title": "Khó biết phải đến cơ quan nào",
+          "body": "Vấn đề đã xảy ra rồi, nhưng chỉ riêng việc biết nơi nào phụ trách vấn đề đó cũng đã là một bức tường lớn."
+        },
+        {
+          "title": "Thuật ngữ chuyên môn quá khó",
+          "body": "Những câu như “người sử dụng lao động theo Luật Tiêu chuẩn Lao động…” khó cả với người lớn. Nếu đang học tiếng Hàn thì càng khó hơn."
+        },
+        {
+          "title": "Khó nối hoàn cảnh của mình với quyền của mình",
+          "body": "Luật và chế độ thì có, nhưng không ai giải thích nó được áp dụng thế nào cho hoàn cảnh của tôi lúc này."
+        }
+      ],
+      "change_title": "Thay đổi mà chúng tôi muốn tạo ra",
+      "change_body": "Đó là để thanh thiếu niên có nền tảng di trú không phải là “người được giúp đỡ” mà là “người biết quyền của mình và tự lựa chọn”. Mọi màn hình của LINKRIGHTS đều được làm dựa trên câu này.",
+      "what_title": "Những việc LINKRIGHTS làm",
+      "what_we_do": [
+        {
+          "title": "Giáo dục về quyền",
+          "body": "Chúng tôi tổ chức các buổi học giải thích bằng ngôn ngữ dễ hiểu để thanh thiếu niên hiểu được quyền của mình."
+        },
+        {
+          "title": "Cố vấn sinh viên đại học",
+          "body": "Những anh chị sinh viên gần tuổi cùng trò chuyện về học tập và hướng đi tương lai."
+        },
+        {
+          "title": "Trải nghiệm đời sống và văn hóa",
+          "body": "Chúng tôi tổ chức các hoạt động văn hóa, đời sống để cùng trải nghiệm và xây dựng mối quan hệ."
+        },
+        {
+          "title": "Cung cấp thông tin về quyền",
+          "body": "Thông tin về quyền đã được rà soát, được trình bày bằng ngôn ngữ dễ hiểu và hướng dẫn theo từng bước."
+        },
+        {
+          "title": "Hướng dẫn thông tin bằng AI",
+          "body": "Bạn chỉ cần viết tự do về hoàn cảnh của mình, chúng tôi sẽ tìm và giới thiệu thông tin về quyền và các cơ quan liên quan."
+        },
+        {
+          "title": "Kết nối với các cơ quan",
+          "body": "Chúng tôi cung cấp cả số liên hệ của cơ quan chính thức có thể giúp bạn và những ngôn ngữ mà cơ quan đó hỗ trợ."
+        }
+      ],
+      "sdg_title": "SDGs và LINKRIGHTS",
+      "sdgs": [
+        {
+          "code": "SDG 4",
+          "name": "Giáo dục có chất lượng",
+          "goal": "Cơ hội giáo dục bao trùm và công bằng",
+          "body": "Giúp thanh thiếu niên có nền tảng di trú không bị loại khỏi trường học và việc học, biết và sử dụng được các quyền liên quan đến giáo dục."
+        },
+        {
+          "code": "SDG 10",
+          "name": "Giảm bất bình đẳng",
+          "goal": "Giảm bất bình đẳng trong mỗi quốc gia và giữa các quốc gia",
+          "body": "Mục tiêu là thu hẹp khoảng cách tiếp cận thông tin để không ai bị bỏ lại vì quốc tịch hay ngôn ngữ."
+        }
+      ],
+      "sdg_link": "LINKRIGHTS gắn với hai mục tiêu này ở chỗ giúp thanh thiếu niên có nền tảng di trú tiếp cận được thông tin và quyền mà họ cần.",
+      "sdg_details": [
+        {
+          "code": "SDG 4",
+          "title": "Vì sao LINKRIGHTS nói về SDG 4 (Giáo dục có chất lượng)",
+          "body": "SDG 4 là mục tiêu để mọi người đều được học hành có chất lượng mà không bị phân biệt đối xử và có cơ hội học tập suốt đời. Thanh thiếu niên sống ở Hàn Quốc có thể đi học bất kể quốc tịch hay tư cách lưu trú, nhưng nếu không biết cách nhập học, chưa thạo tiếng Hàn hoặc bị phân biệt đối xử ở trường thì rất dễ rời xa việc học. LINKRIGHTS bắt đầu từ việc giúp việc học không bị đứt quãng.",
+          "points": [
+            {
+              "title": "Tiếp cận giáo dục: chỉ cho bạn con đường vào trường",
+              "body": "Chúng tôi trình bày bằng ngôn ngữ dễ hiểu những thông tin cần để bắt đầu và tiếp tục việc học: cách nhập học khác nhau theo tuổi và học vấn trước đó, thủ tục công nhận học vấn cũ, hỗ trợ tiếng Hàn và con đường lấy bằng ngoài trường chính quy."
+            },
+            {
+              "title": "Học tập an toàn: khi bị phân biệt đối xử hoặc bắt nạt ở trường",
+              "body": "Bị trêu chọc hay bị đối xử bất lợi vì quốc gia xuất thân, màu da hay giọng nói là phân biệt đối xử. Chúng tôi hướng dẫn bạn có thể làm gì và tìm giúp đỡ ở đâu khi gặp chuyện đó ở trường."
+            },
+            {
+              "title": "Cơ hội học tập: giáo dục về quyền và cố vấn sinh viên",
+              "body": "Qua các buổi giáo dục về quyền bằng ngôn ngữ dễ hiểu và việc trò chuyện với các anh chị sinh viên gần tuổi về học tập, hướng đi tương lai, bạn sẽ có thêm sức để tự học và tự lựa chọn."
+            }
+          ]
+        },
+        {
+          "code": "SDG 10",
+          "title": "Vì sao LINKRIGHTS nói về SDG 10 (Giảm bất bình đẳng)",
+          "body": "SDG 10 là mục tiêu giảm bất bình đẳng và không để ai bị bỏ lại phía sau. Luật và chế độ đã có sẵn, nhưng với thanh thiếu niên có nền tảng di trú, quốc tịch, ngôn ngữ và thông tin phân tán khiến khoảng cách từ chỗ có quyền đến chỗ dùng được quyền đó rất xa. LINKRIGHTS bắt đầu từ việc rút ngắn khoảng cách này.",
+          "points": [
+            {
+              "title": "Giảm bất bình đẳng: thu hẹp khoảng cách thông tin",
+              "body": "Thông tin về lao động, giáo dục, y tế và lưu trú nằm rải rác ở nhiều cơ quan và có nhiều thuật ngữ khó. Chúng tôi tập hợp thông tin về quyền đã được rà soát vào một nơi, bằng ngôn ngữ dễ hiểu và hướng dẫn theo từng bước."
+            },
+            {
+              "title": "Giảm phân biệt đối xử: cho bạn biết có thể làm gì khi bị phân biệt đối xử",
+              "body": "Ví dụ như thông tin rằng bạn có thể khiếu nại lên Ủy ban Nhân quyền Quốc gia khi bị phân biệt đối xử vì quốc tịch, màu da hay ngôn ngữ, chúng tôi hướng dẫn cả việc bạn có thể làm và nơi bạn có thể liên hệ trong tình huống bị phân biệt đối xử."
+            },
+            {
+              "title": "Bao trùm: giúp bạn trở thành người tự lựa chọn",
+              "body": "Chúng tôi cung cấp thông tin bằng tiếng Hàn, tiếng Anh, tiếng Trung và tiếng Việt, giúp thanh thiếu niên có nền tảng di trú trở thành “người biết quyền của mình và tự lựa chọn” thay vì “người được giúp đỡ”."
+            }
+          ]
+        }
+      ],
+      "team_title": "Những người cùng tạo nên LINKRIGHTS",
+      "team_body": "LINKRIGHTS được xây dựng cùng nhau bởi thanh thiếu niên có nền tảng di trú, các cố vấn sinh viên và những người hoạt động thực địa. Nội dung được viết dựa trên tài liệu chính thức, được rà soát trước khi công bố, và mỗi thông tin đều ghi kèm nguồn và ngày rà soát.",
+      "future_title": "Hướng đi sắp tới",
+      "future_body": "Mục tiêu của chúng tôi là vẫn còn lại như một nền tảng thông tin về quyền có thể tiếp tục sử dụng ngay cả sau khi chương trình kết thúc. Chúng tôi sẽ dần bổ sung thêm ngôn ngữ và thông tin về quyền, đồng thời định kỳ kiểm tra lại thông tin của các cơ quan để luôn cập nhật."
     }
   }
 }

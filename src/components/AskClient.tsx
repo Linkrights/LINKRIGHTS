@@ -164,6 +164,7 @@ function ResultView({
   onNewQuestion,
   onRetry,
   onAnswerFollowUp,
+  onSuggestion,
   glossaryTerms = [],
   generalHelp = [],
   categoryNames = {},
@@ -178,6 +179,8 @@ function ResultView({
   onRetry: () => void;
   /** 가장 최근 답변에만 넘깁니다. AI의 확인 질문에 바로 답할 수 있게 추가 질문 입력창으로 이동합니다. */
   onAnswerFollowUp?: () => void;
+  /** 가장 최근 답변에만 넘깁니다. '이런 것도 물어볼 수 있어요'를 누르면 그 문장으로 이어서 물어봅니다. */
+  onSuggestion?: (text: string) => void;
   /** 쉬운 말 풀이 용어 (content/glossary.json). 답변에 나온 용어만 골라 옆에 보여주며, 답변 내용은 바꾸지 않습니다. */
   glossaryTerms?: GlossaryTerm[];
   /** 누구나 이용할 수 있는 청소년 상담 기관 (등록 기관, 자료가 없을 때만 보여줌) */
@@ -359,6 +362,26 @@ function ResultView({
                     {t.ask.answerFollowUp} <Icon name="arrow-right" size={16} />
                   </button>
                 )}
+              </section>
+            )}
+
+            {/* 이어서 물어볼 수 있는 질문: 등록된 권리정보에 적혀 있는 문장만 보여주고, 누르면 그대로 추가 질문이 됩니다. */}
+            {onSuggestion && result.suggestions && result.suggestions.length > 0 && (
+              <section>
+                <p className="text-[15px] font-bold text-ink-900">{t.ask.suggestTitle}</p>
+                <ul className="mt-3 flex flex-wrap gap-2">
+                  {result.suggestions.map((text) => (
+                    <li key={text}>
+                      <button
+                        type="button"
+                        onClick={() => onSuggestion(text)}
+                        className="lr-press rounded-full border border-[var(--color-line)] bg-white px-4 py-2 text-left text-[15px] text-ink-700 transition hover:border-brand-600 hover:text-brand-700"
+                      >
+                        {text}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
               </section>
             )}
 
@@ -560,6 +583,12 @@ export function AskClient({
     questionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     questionRef.current?.focus({ preventScroll: true });
     questionRef.current?.select();
+  }
+
+  /** '이런 것도 물어볼 수 있어요'를 누르면 그 문장을 추가 질문으로 바로 보냅니다. */
+  function askSuggestion(text: string) {
+    setFollowUp(text);
+    void ask(text, true);
   }
 
   /** AI의 확인 질문에 답할 수 있도록 추가 질문 입력창으로 이동합니다. */
@@ -768,6 +797,7 @@ export function AskClient({
               onNewQuestion={startNewQuestion}
               onRetry={retryQuestion}
               onAnswerFollowUp={index === turns.length - 1 && canFollowUp && !loading ? focusFollowUp : undefined}
+              onSuggestion={index === turns.length - 1 && canFollowUp && !loading ? askSuggestion : undefined}
             />
           </div>
         ))}

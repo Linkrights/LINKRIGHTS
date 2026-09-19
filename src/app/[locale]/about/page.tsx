@@ -145,19 +145,29 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
       {/* 8. SDGs */}
       <Section tone={hasPartners ? 'soft' : 'default'} title={about.sdg_title}>
-        <ul className="grid gap-8 sm:grid-cols-2">
-          {about.sdgs.map((sdg) => (
-            <li key={sdg.code} className="flex gap-4">
-              <SdgIcon code={sdg.code} />{' '}
-              <div>
-                <h3 className="lr-h3">
-                  {sdg.code} · {sdg.name}
-                </h3>{' '}
-                {sdg.goal && <p className="mt-0.5 text-sm font-semibold text-brand-700">{sdg.goal}</p>}{' '}
-                <p className="lr-body mt-1">{sdg.body}</p>
-              </div>
-            </li>
-          ))}
+        {/* 목표는 아이콘 + 한 줄 목표를 먼저 크게 보여주고, 설명은 그 아래 작은 글씨로 둡니다.
+            자세한 이야기는 아래의 "왜 이 목표를 이야기하는지" 부분에서 이어집니다. */}
+        <ul className="grid gap-5 sm:grid-cols-2">
+          {about.sdgs.map((sdg) => {
+            const detail = about.sdg_details?.find((item) => item.code === sdg.code);
+            return (
+              <li key={sdg.code} className="lr-card flex gap-4 p-5 sm:p-6">
+                <SdgIcon code={sdg.code} />{' '}
+                <div className="min-w-0">
+                  <p className="text-sm font-bold tracking-[0.04em] text-brand-700">
+                    {sdg.code} · {sdg.name}
+                  </p>{' '}
+                  {sdg.goal && <p className="mt-1 text-lg font-extrabold leading-snug text-ink-900">{sdg.goal}</p>}{' '}
+                  <p className="mt-2 text-[15px] leading-relaxed text-ink-500">{sdg.body}</p>
+                  {detail && (
+                    <a href={`#${sdgAnchor(sdg.code)}`} className="lr-link mt-3 inline-flex items-center gap-1 text-[15px] font-semibold">
+                      {detail.title} <Icon name="arrow-right" size={16} />
+                    </a>
+                  )}
+                </div>
+              </li>
+            );
+          })}
         </ul>
         {about.sdg_link && <p className="lr-lead mt-8 max-w-3xl font-semibold text-ink-900">{about.sdg_link}</p>}
 

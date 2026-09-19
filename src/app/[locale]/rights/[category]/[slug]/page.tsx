@@ -25,6 +25,8 @@ import {
   getGlossary,
   getSite,
   isStale,
+  isTranslationPending,
+  localizeSource,
   resolveArticle,
   resolveOrganizations,
 } from '@/lib/content';
@@ -96,7 +98,10 @@ export default async function ArticlePage({
   const stale = isStale(article.reviewed_at);
   const checklists = getChecklists().filter((checklist) => checklist.based_on.includes(article.id));
   // 제목 아래에 보여줄 출처 기관 (등록된 출처의 발행기관, 없으면 출처 제목)
-  const publishers = [...new Set(article.sources.map((source) => source.publisher || source.title))];
+  const translationPending = isTranslationPending(article, locale);
+  // 출처는 화면 언어로 보여줍니다. (번역이 없으면 한국어 원문)
+  const sources = article.sources.map((source) => localizeSource(source, locale));
+  const publishers = [...new Set(sources.map((source) => source.publisher || source.title))];
   const feedbackHref = `mailto:${site.contactEmail}?subject=${encodeURIComponent(
     t.rightsMeta.feedbackSubject.replace('{title}', body.title),
   )}`;
@@ -184,6 +189,12 @@ export default async function ArticlePage({
             )}
             <dt className="font-bold text-ink-900">{t.common.reviewedAt}</dt>
             <dd className="text-ink-700">{formatDate(article.reviewed_at, locale)}</dd>
+            {/* 팀이 옮긴 뒤 아직 검토 전인 번역 (content/rights 의 translation_review) */}
+            {translationPending && (
+              <dd className="col-span-2 mt-1 border-t border-[var(--color-line)] pt-2 text-sm text-ink-500">
+                {t.rightsMeta.translationPending}
+              </dd>
+            )}
           </dl>
 
           {/* 읽어주기 · 저장 */}
@@ -321,11 +332,11 @@ export default async function ArticlePage({
         )}
 
         {/* 출처: 발행기관 · 제목(공식 링크) · 검토일 */}
-        {article.sources.length > 0 && (
+        {sources.length > 0 && (
           <section id="sources" className="scroll-mt-24 border-t border-[var(--color-line)] pt-8">
             <h2 className="text-lg font-extrabold text-ink-900 sm:text-xl">{t.rights.sourcesHeading}</h2>
             <ul className="mt-4 space-y-3">
-              {article.sources.map((source) => (
+              {sources.map((source) => (
                 <li key={source.url} className="text-[15px] leading-relaxed text-ink-700">
                   {source.publisher && <span className="font-bold text-ink-900">{source.publisher}</span>}{' '}
                   {source.publisher && <span className="text-ink-300">·</span>}{' '}

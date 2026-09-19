@@ -166,7 +166,7 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
           />
         </Link>
 
-        <nav aria-label="주요 메뉴" className="ml-4 hidden flex-1 items-center gap-0.5 lg:flex xl:ml-8 xl:gap-1">
+        <nav aria-label={t.nav.mainMenu} className="ml-4 hidden flex-1 items-center gap-0.5 lg:flex xl:ml-8 xl:gap-1">
           {links.filter((link) => !('mobileOnly' in link)).map((link) => (
             <Link
               key={link.href}
@@ -277,7 +277,7 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
       </div>
 
       {open && (
-        <nav id="mobile-menu" aria-label="주요 메뉴" className="border-t border-[var(--color-line)] bg-white lg:hidden">
+        <nav id="mobile-menu" aria-label={t.nav.mainMenu} className="border-t border-[var(--color-line)] bg-white lg:hidden">
           <div className="lr-container space-y-4 py-4">
             <Link href={askHref} className="lr-btn lr-btn-primary lr-press w-full">
               {t.nav.askShort}

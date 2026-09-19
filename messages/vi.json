@@ -17,6 +17,7 @@
     "getInvolved": "Tham gia",
     "menu": "Mở menu",
     "close": "Đóng",
+    "mainMenu": "Menu chính",
     "language": "Chọn ngôn ngữ"
   },
   "common": {
@@ -31,6 +32,7 @@
     "languages": "Ngôn ngữ hỗ trợ",
     "region": "Khu vực",
     "reviewedAt": "Lần kiểm tra gần nhất",
+    "koreanOnly": "Chỉ có tiếng Hàn",
     "createdAt": "Ngày viết đầu tiên",
     "sources": "Nguồn",
     "call": "Gọi điện",
@@ -133,6 +135,7 @@
     "evidenceNoneBody": "Chúng tôi chưa tìm thấy thông tin quyền đã đăng ký trên LINKRIGHTS phù hợp chính xác với tình huống này. Vì vậy ở đây không nêu quyền hay cơ quan chưa được xác nhận, mà trước hết gợi ý những việc bạn có thể làm ngay.",
     "evidencePossibleNote": "Chỉ với mô tả ngắn thì vẫn còn điều chưa rõ, nên thông tin có thể áp dụng được giải thích kèm theo điều kiện.",
     "relatedTitle": "Thông tin quyền có thể tham khảo thêm tùy tình huống",
+    "suggestTitle": "Bạn cũng có thể hỏi những điều này",
     "searchRightsCta": "Tự tìm thông tin quyền",
     "relatedPages": "Trang thông tin quyền liên quan",
     "privacyDetectedTitle": "Có vẻ như đây là thông tin cá nhân",
@@ -386,6 +389,12 @@
     "orgsTitle": "Nơi bạn có thể nhận trợ giúp",
     "more": "Xem chi tiết",
     "orgLink": "Xem nơi nhận trợ giúp",
+    "articleLink": "Xem thông tin quyền liên quan",
+    "askLink": "Hỏi AI về tình huống của tôi",
+    "requestTitle": "Có nội dung nào còn thiếu không?",
+    "requestBody": "Hãy cho chúng tôi biết mục bạn nghĩ nên có trong danh sách này, chúng tôi sẽ xem xét và bổ sung.",
+    "requestCta": "Đề xuất nội dung cho danh sách này",
+    "requestSubject": "[Đề xuất danh sách] {title}",
     "emergencyLink": "Xem trợ giúp khẩn cấp",
     "relatedTitle": "Danh sách kiểm tra dùng cùng thông tin này",
     "homeTitle": "Thử làm: danh sách kiểm tra theo tình huống",
@@ -438,7 +447,15 @@
     "feedbackTitle": "Thông tin này sai hoặc đã cũ?",
     "feedbackBody": "Hãy cho chúng tôi biết để kiểm tra và sửa. Bạn không cần ghi thông tin cá nhân như tên hay số liên lạc trong email.",
     "feedbackCta": "Đề xuất sửa thông tin",
-    "feedbackSubject": "[Đề xuất sửa thông tin] {title}"
+    "feedbackSubject": "[Đề xuất sửa thông tin] {title}",
+    "translationPending": "Bản dịch này do nhóm LINKRIGHTS thực hiện và đang được rà soát. Nếu có điều gì chưa rõ, hãy hỏi các tổ chức được giới thiệu bên dưới."
+  },
+  "languageNames": {
+    "ko": "Tiếng Hàn",
+    "en": "Tiếng Anh",
+    "zh": "Tiếng Trung",
+    "vi": "Tiếng Việt",
+    "other": "ngôn ngữ khác"
   },
   "heroVideo": {
     "label": "Video giới thiệu LINKRIGHTS",
@@ -639,8 +656,8 @@
         "body": "Đừng nhập tên, thông tin liên lạc, địa chỉ, số hộ chiếu, số đăng ký người nước ngoài, số visa hay hồ sơ bệnh án. Chỉ cần kể tình huống là đủ để được hướng dẫn. Trước khi gửi, nếu thấy những nội dung như vậy chúng tôi sẽ nhắc bạn một lần nữa, nhưng không thể phát hiện mọi trường hợp."
       },
       {
-        "title": "Không dùng cookie và quảng cáo",
-        "body": "Trang này không đăng quảng cáo và không dùng cookie theo dõi hay công cụ phân tích truy cập. Từ khóa tìm kiếm và khu vực bạn chọn chỉ nằm trên thanh địa chỉ, không được lưu trên máy chủ."
+        "title": "Không dùng cookie, chỉ đếm lượt truy cập ẩn danh",
+        "body": "Trang này không đăng quảng cáo và không dùng cookie theo dõi. Để biết có bao nhiêu người xem những trang nào, chúng tôi dùng công cụ đếm lượt truy cập (Vercel Web Analytics). Công cụ này không tạo cookie và sẽ hủy dấu tạm thời tạo từ yêu cầu truy cập sau 24 giờ. Chỉ còn lại địa chỉ trang đã xem, đường dẫn đến trang, khu vực ở mức quốc gia hoặc thành phố, loại thiết bị và trình duyệt; không thể biết ai đã xem. Từ khóa tìm kiếm và khu vực bạn chọn chỉ xuất hiện trên thanh địa chỉ và không được lưu trên máy chủ."
       },
       {
         "title": "Liên kết bên ngoài",

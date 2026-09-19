@@ -6,16 +6,56 @@
   "owner": "운영팀",
   "reviewed_at": "2026-09-06",
   "keywords": [
-    "청소년 알바", "미성년자 알바", "나이", "몇 살부터", "야간 근무", "밤에 일", "근로시간",
-    "부모님 동의", "취직인허증", "18세 미만",
-    "under 18", "how old to work", "night shift", "working hours for teenagers",
-    "未成年打工", "几岁可以打工", "夜班",
-    "làm thêm dưới 18 tuổi", "bao nhiêu tuổi được làm"
+    "청소년 알바",
+    "미성년자 알바",
+    "나이",
+    "몇 살부터",
+    "야간 근무",
+    "밤에 일",
+    "근로시간",
+    "부모님 동의",
+    "취직인허증",
+    "18세 미만",
+    "under 18",
+    "how old to work",
+    "night shift",
+    "working hours for teenagers",
+    "未成年打工",
+    "几岁可以打工",
+    "夜班",
+    "làm thêm dưới 18 tuổi",
+    "bao nhiêu tuổi được làm"
   ],
-  "organizations": ["moel-1350", "youth-1388", "rainbowyouth"],
-  "related": ["labor-contract", "labor-minimum-wage", "labor-unpaid-wages"],
+  "organizations": [
+    "moel-1350",
+    "youth-1388",
+    "rainbowyouth"
+  ],
+  "related": [
+    "labor-contract",
+    "labor-minimum-wage",
+    "labor-unpaid-wages"
+  ],
   "sources": [
-    { "title": "고용노동부 공식 누리집", "url": "https://www.moel.go.kr", "publisher": "고용노동부" }
+    {
+      "title": "고용노동부 공식 누리집",
+      "url": "https://www.moel.go.kr",
+      "publisher": "고용노동부",
+      "i18n": {
+        "en": {
+          "title": "Ministry of Employment and Labor website",
+          "publisher": "Ministry of Employment and Labor"
+        },
+        "zh": {
+          "title": "雇佣劳动部官方网站",
+          "publisher": "雇佣劳动部"
+        },
+        "vi": {
+          "title": "Trang web chính thức của Bộ Việc làm và Lao động",
+          "publisher": "Bộ Việc làm và Lao động"
+        }
+      }
+    }
   ],
   "i18n": {
     "ko": {
@@ -64,6 +104,152 @@
         }
       ],
       "note": "취직인허증 발급이나 야간근로 인가처럼 개별 절차가 필요한 경우에는 고용노동부(1350)에서 정확한 조건을 확인하세요."
+    },
+    "en": {
+      "title": "How old do I need to be to work? Rules for young workers",
+      "summary": "Young people can work, but the documents you need and the hours you may work depend on your age. These rules exist to protect young people.",
+      "situations": [
+        "I want a part-time job, but I was told I'm too young.",
+        "I was told to work until midnight. Is that OK?",
+        "I'm not sure whether I really need my parents' consent form.",
+        "I keep working without any breaks."
+      ],
+      "rights": [
+        {
+          "title": "You can work from age 15",
+          "body": "As a rule, you can work if you are 15 or older. If you are 13 or 14, you need an employment permit issued by the Ministry of Employment and Labor."
+        },
+        {
+          "title": "Under 18, you need a guardian's consent and proof of age",
+          "body": "The workplace must keep a consent form from your guardian (a parent with parental authority or a legal guardian) and a document that shows your age."
+        },
+        {
+          "title": "Under 18, your working hours are limited",
+          "body": "If you are under 18, you can work up to 7 hours a day and 35 hours a week. Only if you agree can this be extended by up to 1 hour a day and 5 hours a week."
+        },
+        {
+          "title": "Night work is not allowed as a rule",
+          "body": "If you are under 18, you cannot work between 10 p.m. and 6 a.m. the next day. An exception needs both your own consent and approval from the Ministry of Employment and Labor."
+        },
+        {
+          "title": "You have the right to breaks",
+          "body": "When you work long hours, you must get a break in between. Being told \"we're busy, so no breaks\" is not acceptable."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Prepare your documents before you start",
+          "body": "If you are under 18, you need a guardian's consent form and a document that shows your family relationship. Preparing them in advance makes it less likely you will be turned away."
+        },
+        {
+          "title": "Take a photo of your work schedule",
+          "body": "If you work late at night or for very long hours, keep a record of your schedule and the time you actually finished."
+        },
+        {
+          "title": "If the rules are not followed, call 1350 or 1388",
+          "body": "You can get advice on work rules from the Ministry of Employment and Labor (1350) and youth counselling from the Youth Helpline (1388)."
+        }
+      ],
+      "note": "When you need an individual procedure, such as an employment permit or approval for night work, check the exact conditions with the Ministry of Employment and Labor (1350)."
+    },
+    "zh": {
+      "title": "几岁可以打工？青少年需要遵守的规则",
+      "summary": "青少年也可以工作，但根据年龄，需要准备的材料和可以工作的时间都有规定。这些规则是为了保护青少年。",
+      "situations": [
+        "我想打工，但对方说我年纪太小不行。",
+        "让我工作到晚上12点，这样可以吗？",
+        "不知道是否一定需要父母的同意书。",
+        "我一直在工作，没有休息时间。"
+      ],
+      "rights": [
+        {
+          "title": "年满15周岁可以工作",
+          "body": "原则上，年满15周岁就可以工作。13～14周岁的人需要持有雇佣劳动部签发的就业许可证。"
+        },
+        {
+          "title": "未满18周岁需要监护人同意书和年龄证明",
+          "body": "工作单位必须备有监护人（父母等亲权人或法定监护人）出具的同意书，以及能够确认年龄的材料。"
+        },
+        {
+          "title": "未满18周岁的工作时间有限制",
+          "body": "未满18周岁的青少年每天最多工作7小时、每周最多35小时。只有在本人同意的情况下，才可以每天最多再多工作1小时、每周最多再多工作5小时。"
+        },
+        {
+          "title": "原则上禁止夜间工作",
+          "body": "未满18周岁的青少年不能在晚上10点到次日早上6点之间工作。如需例外，必须同时有本人的同意和雇佣劳动部的批准。"
+        },
+        {
+          "title": "你有权获得休息时间",
+          "body": "工作时间较长时，中间必须给你休息时间。“太忙了，不许休息”这样的要求是不正当的。"
+        }
+      ],
+      "actions": [
+        {
+          "title": "开始工作前准备好材料",
+          "body": "如果未满18周岁，需要监护人同意书和能够确认家庭关系的材料。提前准备好，可以减少被拒绝的情况。"
+        },
+        {
+          "title": "把排班表拍照保存",
+          "body": "如果工作到深夜或工作时间过长，请记录排班表和实际下班时间。"
+        },
+        {
+          "title": "规则没有被遵守时，拨打1350或1388咨询",
+          "body": "可以向雇佣劳动部（1350）咨询劳动规则，向青少年热线（1388）进行青少年咨询。"
+        }
+      ],
+      "note": "如需办理就业许可证、夜间工作批准等个别手续，请向雇佣劳动部（1350）确认具体条件。"
+    },
+    "vi": {
+      "title": "Bao nhiêu tuổi thì được đi làm? Quy định dành cho thanh thiếu niên đi làm",
+      "summary": "Thanh thiếu niên cũng có thể đi làm, nhưng giấy tờ cần có và số giờ được làm việc được quy định theo độ tuổi. Đây là những quy định để bảo vệ thanh thiếu niên.",
+      "situations": [
+        "Tôi muốn đi làm thêm nhưng bị từ chối vì tuổi.",
+        "Tôi bị bảo làm đến 12 giờ đêm. Như vậy có được không?",
+        "Tôi không biết có nhất thiết cần giấy đồng ý của bố mẹ không.",
+        "Tôi phải làm liên tục mà không có giờ nghỉ."
+      ],
+      "rights": [
+        {
+          "title": "Từ đủ 15 tuổi có thể đi làm",
+          "body": "Về nguyên tắc, người từ đủ 15 tuổi trở lên có thể đi làm. Người 13–14 tuổi phải có giấy phép lao động do Bộ Việc làm và Lao động cấp."
+        },
+        {
+          "title": "Dưới 18 tuổi cần giấy đồng ý của người giám hộ và giấy tờ chứng minh tuổi",
+          "body": "Nơi làm việc phải lưu giữ giấy đồng ý của người giám hộ (cha mẹ có quyền nuôi dưỡng hoặc người giám hộ hợp pháp) và giấy tờ xác nhận tuổi."
+        },
+        {
+          "title": "Dưới 18 tuổi bị giới hạn thời gian làm việc",
+          "body": "Thanh thiếu niên dưới 18 tuổi được làm tối đa 7 giờ mỗi ngày và 35 giờ mỗi tuần. Chỉ khi bản thân đồng ý mới có thể làm thêm tối đa 1 giờ mỗi ngày và 5 giờ mỗi tuần."
+        },
+        {
+          "title": "Về nguyên tắc không được làm việc ban đêm",
+          "body": "Thanh thiếu niên dưới 18 tuổi không được làm việc từ 10 giờ tối đến 6 giờ sáng hôm sau. Muốn có ngoại lệ thì cần cả sự đồng ý của bản thân và sự chấp thuận của Bộ Việc làm và Lao động."
+        },
+        {
+          "title": "Bạn có quyền được nghỉ giữa giờ",
+          "body": "Khi làm việc nhiều giờ, bạn phải được nghỉ giữa chừng. Yêu cầu kiểu “đang bận nên không được nghỉ” là không chính đáng."
+        }
+      ],
+      "actions": [
+        {
+          "title": "Chuẩn bị giấy tờ trước khi bắt đầu làm",
+          "body": "Nếu dưới 18 tuổi, bạn cần giấy đồng ý của người giám hộ và giấy tờ xác nhận quan hệ gia đình. Chuẩn bị trước sẽ giúp bạn ít bị từ chối hơn."
+        },
+        {
+          "title": "Chụp ảnh lịch làm việc",
+          "body": "Nếu phải làm đến khuya hoặc làm quá nhiều giờ, hãy ghi lại lịch làm việc và giờ tan làm thực tế."
+        },
+        {
+          "title": "Nếu quy định không được tuân thủ, hãy gọi 1350 hoặc 1388",
+          "body": "Bạn có thể được tư vấn về quy định lao động tại Bộ Việc làm và Lao động (1350) và được tư vấn dành cho thanh thiếu niên tại Đường dây thanh thiếu niên (1388)."
+        }
+      ],
+      "note": "Khi cần thủ tục riêng như xin giấy phép lao động hay xin chấp thuận làm việc ban đêm, hãy hỏi Bộ Việc làm và Lao động (1350) để biết điều kiện chính xác."
     }
+  },
+  "translation_review": {
+    "en": "pending",
+    "zh": "pending",
+    "vi": "pending"
   }
 }

@@ -1,0 +1,84 @@
+{
+  "_readme": "학교에 들어가기 전 확인할 것. 항목은 content/rights/education-school-enrollment.json 의 내용에서만 가져왔습니다.",
+  "id": "before-school-enrollment",
+  "status": "published",
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-20",
+  "category": "education",
+  "based_on": ["education-school-enrollment"],
+  "organizations": ["rainbowyouth", "danuri-1577-1366", "local-family-center"],
+  "i18n": {
+    "ko": {
+      "title": "학교에 들어가기 전 확인할 것",
+      "summary": "한국 학교에 들어가거나 학교를 옮기기 전에 아래 항목을 확인해 보세요.",
+      "note": "학년 배정과 필요한 서류는 지역과 학교마다 다릅니다. 살고 있는 지역의 교육지원청에서 최종 확인하세요."
+    },
+    "en": {
+      "title": "Before you start at a school",
+      "summary": "Check these before you enrol in a Korean school or move to another one.",
+      "note": "Grade placement and required documents differ by region and school. Confirm with the district education office where you live."
+    },
+    "zh": {
+      "title": "入学前确认的事",
+      "summary": "进入韩国学校或转学之前，请确认下面的内容。",
+      "note": "年级分配和所需材料因地区和学校而异。请向居住地的教育支援厅做最终确认。"
+    },
+    "vi": {
+      "title": "Những điều cần kiểm tra trước khi vào trường",
+      "summary": "Trước khi vào học trường ở Hàn Quốc hoặc chuyển trường, hãy kiểm tra các mục dưới đây.",
+      "note": "Việc xếp lớp và giấy tờ cần thiết khác nhau tùy địa phương và trường học. Hãy xác nhận cuối cùng với phòng hỗ trợ giáo dục nơi bạn sống."
+    }
+  },
+  "items": [
+    {
+      "id": "documents",
+      "text": {
+        "ko": "여권·외국인등록증과 이전 학교 서류(성적표, 재학·졸업 증명서)를 모았나요?",
+        "en": "Have you gathered your passport, residence card and papers from your previous school (transcript, enrolment or graduation certificate)?",
+        "zh": "准备好护照、外国人登录证和以前学校的材料（成绩单、在学·毕业证明）了吗？",
+        "vi": "Bạn đã chuẩn bị hộ chiếu, thẻ đăng ký người nước ngoài và giấy tờ của trường cũ (bảng điểm, giấy xác nhận đang học hoặc tốt nghiệp) chưa?"
+      },
+      "article": "education-school-enrollment"
+    },
+    {
+      "id": "office",
+      "text": {
+        "ko": "살고 있는 지역의 교육지원청에 어느 학교로 가는지 물어봤나요?",
+        "en": "Have you asked the district education office where you live which school to apply to?",
+        "zh": "向居住地的教育支援厅询问过该去哪所学校吗？",
+        "vi": "Bạn đã hỏi phòng hỗ trợ giáo dục nơi mình sống xem nên vào trường nào chưa?"
+      },
+      "article": "education-school-enrollment"
+    },
+    {
+      "id": "grade",
+      "text": {
+        "ko": "이전 학력을 인정받는 절차가 필요한지 확인했나요?",
+        "en": "Have you checked whether your previous study needs to be reviewed to decide your grade?",
+        "zh": "确认了是否需要办理以前学历的认定程序吗？",
+        "vi": "Bạn đã kiểm tra xem có cần thủ tục công nhận học vấn trước đây để xếp lớp không?"
+      },
+      "article": "education-school-enrollment"
+    },
+    {
+      "id": "korean",
+      "text": {
+        "ko": "한국어 지원(한국어 학급, 방과후 수업 등)이 있는지 물어봤나요?",
+        "en": "Have you asked whether Korean language support is available (Korean class, after-school lessons)?",
+        "zh": "询问过是否有韩语支援（韩语班、课后课程等）吗？",
+        "vi": "Bạn đã hỏi xem có hỗ trợ tiếng Hàn không (lớp tiếng Hàn, lớp sau giờ học)?"
+      },
+      "article": "education-school-enrollment"
+    },
+    {
+      "id": "help",
+      "text": {
+        "ko": "통역이나 상담이 필요할 때 연락할 곳을 알아두었나요?",
+        "en": "Do you know where to call if you need interpretation or advice?",
+        "zh": "知道需要翻译或咨询时可以联系哪里吗？",
+        "vi": "Bạn đã biết nơi liên hệ khi cần phiên dịch hoặc tư vấn chưa?"
+      },
+      "link": "organizations"
+    }
+  ]
+}

@@ -17,6 +17,7 @@
     "getInvolved": "一起参与",
     "menu": "打开菜单",
     "close": "关闭",
+    "mainMenu": "主菜单",
     "language": "选择语言"
   },
   "common": {
@@ -31,6 +32,7 @@
     "languages": "支持语言",
     "region": "地区",
     "reviewedAt": "最后审核日",
+    "koreanOnly": "仅提供韩语",
     "createdAt": "首次撰写日",
     "sources": "出处",
     "call": "拨打电话",
@@ -133,6 +135,7 @@
     "evidenceNoneBody": "在 LINKRIGHTS 登记的权利信息中，没有找到完全符合这个情况的资料。因此不介绍未经确认的权利或机构，先告诉你现在就可以做的事。",
     "evidencePossibleNote": "仅凭简短的描述还有不确定的地方，所以对可能适用的信息附上了条件说明。",
     "relatedTitle": "根据情况可以一起看看的权利信息",
+    "suggestTitle": "你还可以这样问",
     "searchRightsCta": "自己查找权利信息",
     "relatedPages": "相关权利信息页面",
     "privacyDetectedTitle": "看起来像是个人信息",
@@ -386,6 +389,12 @@
     "orgsTitle": "可以求助的地方",
     "more": "查看详情",
     "orgLink": "查看求助机构",
+    "articleLink": "查看相关权利信息",
+    "askLink": "向 AI 说说我的情况",
+    "requestTitle": "有遗漏的内容吗？",
+    "requestBody": "如果你觉得这份清单还应该加上什么，告诉我们，我们会审核后补充。",
+    "requestCta": "为这份清单提建议",
+    "requestSubject": "[清单建议] {title}",
     "emergencyLink": "查看紧急求助",
     "relatedTitle": "与这条信息一起使用的清单",
     "homeTitle": "动手试试：不同情况的确认清单",
@@ -438,7 +447,15 @@
     "feedbackTitle": "信息有误或已经过时？",
     "feedbackBody": "告诉我们，我们会审核并修改。邮件中不需要写姓名或联系方式等个人信息。",
     "feedbackCta": "提出修改建议",
-    "feedbackSubject": "[信息修改建议] {title}"
+    "feedbackSubject": "[信息修改建议] {title}",
+    "translationPending": "本译文由 LINKRIGHTS 团队翻译，目前仍在审核中。如有不清楚的地方，请咨询下方列出的机构。"
+  },
+  "languageNames": {
+    "ko": "韩语",
+    "en": "英语",
+    "zh": "中文",
+    "vi": "越南语",
+    "other": "其他语言"
   },
   "heroVideo": {
     "label": "LINKRIGHTS 介绍视频",
@@ -639,8 +656,8 @@
         "body": "请不要填写姓名、联系方式、住址、护照号码、外国人登录号码、签证号码、就医记录等可以辨认身份的信息。只写情况也能得到指引。发送前如果发现这类内容，我们会在画面上再提醒一次，但无法找出所有情况。"
       },
       {
-        "title": "不使用 Cookie 和广告",
-        "body": "本站不投放广告，也不使用追踪用户的 Cookie 或访问分析工具。搜索词和所选地区只会出现在地址栏，不会保存在服务器上。"
+        "title": "不使用 Cookie，仅匿名统计访问量",
+        "body": "本站不投放广告，也不使用追踪用户的 Cookie。为了解有多少人浏览哪些页面，我们使用访问统计工具（Vercel Web Analytics）。该工具不创建 Cookie，用访问请求生成的临时标识会在24小时后丢弃。保留下来的只有所看页面的网址、来源路径、国家或城市级别的大致地区，以及设备和浏览器类型，无法识别是谁访问的。搜索词和所选地区只会出现在地址栏，不会保存在服务器上。"
       },
       {
         "title": "外部链接",
