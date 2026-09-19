@@ -1,0 +1,61 @@
+{
+  "_readme": "질문 게시판(Q&A)입니다. 이용자가 이메일로 보낸 질문에 운영팀이 답한 뒤, 개인정보를 뺀 내용만 여기에 올립니다. 화면에 보이는 글은 모두 운영팀이 검토한 것입니다. (사이트에서 바로 글을 쓰는 기능은 없습니다) 새 글을 올릴 때는 posts 맨 위에 추가하세요. status 가 published 인 글만 보입니다. author 에는 개인을 알아볼 수 있는 이름을 쓰지 마세요. answer 가 비어 있으면 '답변 준비 중'으로 보입니다. articles 와 organizations 에는 등록된 id 만 적을 수 있습니다.",
+  "owner": "운영팀",
+  "reviewed_at": "2026-09-19",
+  "posts": [
+    {
+      "id": "notice-how-to-ask",
+      "status": "published",
+      "kind": "notice",
+      "author": { "ko": "운영팀", "en": "LINKRIGHTS team", "zh": "运营团队", "vi": "Nhóm vận hành" },
+      "asked_at": "2026-09-19",
+      "title": {
+        "ko": "질문은 이렇게 보내주세요 (개인정보는 적지 마세요)",
+        "en": "How to send a question (please do not include personal details)",
+        "zh": "请这样提问（请不要写个人信息）",
+        "vi": "Cách gửi câu hỏi (xin đừng ghi thông tin cá nhân)"
+      },
+      "question": {
+        "ko": "질문 게시판을 어떻게 이용하면 되나요?",
+        "en": "How do I use this question board?",
+        "zh": "问答板要怎么使用？",
+        "vi": "Tôi dùng bảng hỏi đáp này như thế nào?"
+      },
+      "answer": {
+        "ko": "질문은 아래 ‘질문 보내기’ 버튼을 눌러 이메일로 보내주세요. 운영팀이 확인한 뒤, 이름이나 연락처처럼 개인을 알아볼 수 있는 내용을 빼고 질문과 답을 이 게시판에 올립니다.\n\n이렇게 적어주시면 답하기 쉬워요.\n1) 어떤 상황인지 (예: 알바를 시작하려고 해요 / 비자 만료일이 다가와요)\n2) 언제, 어디에서 있었던 일인지 (예: 지난달 / 학교에서)\n3) 무엇이 궁금한지 한 가지 (예: 계약서를 꼭 써야 하나요?)\n\n적지 말아야 할 것: 이름, 전화번호, 주소, 학교 이름, 여권번호, 외국인등록번호, 병원 기록처럼 나를 알아볼 수 있는 정보입니다. 이런 내용이 없어도 안내를 받을 수 있어요.\n\n답을 공개하지 않기를 원하면 메일에 ‘비공개 희망’이라고 적어주세요. 그러면 게시판에 올리지 않고 메일로만 답해요.\n\n지금 위험한 상황이라면 게시판을 기다리지 말고 112(경찰) 또는 119(구급)로 바로 전화하세요.",
+        "en": "Send your question by email using the ‘Send a question’ button below. Our team reads it, removes anything that could identify you, and posts the question and answer here.\n\nIt helps if you write:\n1) What the situation is (for example: I am about to start a part-time job / my visa expires soon)\n2) When and where it happened (for example: last month / at school)\n3) One thing you want to know (for example: do I have to sign a contract?)\n\nPlease do not write: your name, phone number, address, school name, passport number, alien registration number or medical records. You can still get help without them.\n\nIf you do not want your question published, write ‘private’ in the email and we will reply only by email.\n\nIf you are in danger right now, do not wait for this board — call 112 (police) or 119 (ambulance).",
+        "zh": "请点击下方的“发送提问”按钮，用电子邮件提问。运营团队确认后，会去掉可以辨认个人身份的内容，再把问题和回答发布在这里。\n\n这样写会更容易得到回答：\n1) 是什么情况（例如：我打算开始打工／签证快到期了）\n2) 什么时候、在哪里发生的（例如：上个月／在学校）\n3) 想知道的一件事（例如：一定要签合同吗？）\n\n请不要写：姓名、电话号码、住址、学校名称、护照号码、外国人登录号码、就医记录等可以辨认身份的信息。没有这些也能得到帮助。\n\n如果不希望公开，请在邮件中写“不公开”，我们只通过邮件回复。\n\n如果现在有危险，请不要等待，立即拨打 112（警察）或 119（急救）。",
+        "vi": "Hãy gửi câu hỏi qua email bằng nút ‘Gửi câu hỏi’ bên dưới. Nhóm vận hành sẽ đọc, bỏ đi những nội dung có thể nhận ra bạn là ai, rồi đăng câu hỏi và câu trả lời tại đây.\n\nSẽ dễ trả lời hơn nếu bạn viết:\n1) Tình huống của bạn (ví dụ: tôi sắp đi làm thêm / visa của tôi sắp hết hạn)\n2) Khi nào và ở đâu (ví dụ: tháng trước / ở trường)\n3) Một điều bạn muốn biết (ví dụ: tôi có bắt buộc phải ký hợp đồng không?)\n\nXin đừng viết: tên, số điện thoại, địa chỉ, tên trường, số hộ chiếu, số đăng ký người nước ngoài hay hồ sơ bệnh án. Không có những thông tin đó bạn vẫn được hỗ trợ.\n\nNếu bạn không muốn công khai, hãy ghi ‘không công khai’ trong email, chúng tôi sẽ chỉ trả lời qua email.\n\nNếu bạn đang gặp nguy hiểm, đừng chờ ở đây — hãy gọi 112 (cảnh sát) hoặc 119 (cấp cứu)."
+      },
+      "answered_at": "2026-09-19",
+      "answered_by": { "ko": "운영팀", "en": "LINKRIGHTS team", "zh": "运营团队", "vi": "Nhóm vận hành" }
+    },
+    {
+      "id": "notice-scope",
+      "status": "published",
+      "kind": "notice",
+      "author": { "ko": "운영팀", "en": "LINKRIGHTS team", "zh": "运营团队", "vi": "Nhóm vận hành" },
+      "asked_at": "2026-09-19",
+      "title": {
+        "ko": "게시판에서 답할 수 있는 것과 답할 수 없는 것",
+        "en": "What this board can and cannot answer",
+        "zh": "问答板可以回答和不能回答的事",
+        "vi": "Những gì bảng hỏi đáp có thể và không thể trả lời"
+      },
+      "question": {
+        "ko": "어떤 질문까지 답해 주시나요?",
+        "en": "What kinds of questions do you answer?",
+        "zh": "你们会回答什么样的问题？",
+        "vi": "Các bạn trả lời những câu hỏi nào?"
+      },
+      "answer": {
+        "ko": "LINKRIGHTS에 등록된 권리정보와 공식 출처를 바탕으로, 어떤 권리가 있는지·어디에 물어보면 되는지·무엇을 준비하면 좋은지를 안내할 수 있어요.\n\n다만 개인의 사건을 대신 판단하거나 처리할 수는 없어요. 비자 승인 여부, 소송이나 신고의 결과, 진단이나 치료 방법처럼 담당 기관·전문가만 판단할 수 있는 내용은 답하지 않고, 어디에 물어보면 되는지를 알려드려요.\n\n여기 나온 내용은 참고용이에요. 중요한 결정 전에는 관련 기관에 한 번 더 확인해보세요.",
+        "en": "Based on the rights information and official sources registered on LINKRIGHTS, we can explain what rights you have, where to ask, and what to prepare.\n\nWe cannot decide or handle an individual case. Whether a visa will be approved, the outcome of a complaint or lawsuit, or a diagnosis and treatment are decisions only the responsible body or a professional can make — for those we tell you where to ask instead.\n\nWhat you read here is for reference. Before an important decision, please check once more with the relevant organisation.",
+        "zh": "我们会根据 LINKRIGHTS 登记的权利信息和官方出处，说明你有哪些权利、可以向哪里询问、需要准备什么。\n\n但我们无法代替判断或处理个人的案件。签证是否获批、举报或诉讼的结果、诊断和治疗方法等，只有主管机关或专业人士才能判断，这类问题我们会告诉你该向哪里询问。\n\n这里的内容仅供参考。做重要决定前，请再向相关机构确认一次。",
+        "vi": "Dựa trên thông tin quyền và nguồn chính thức đã đăng ký trên LINKRIGHTS, chúng tôi có thể giải thích bạn có quyền gì, nên hỏi ở đâu và cần chuẩn bị gì.\n\nChúng tôi không thể thay bạn phán đoán hay xử lý một vụ việc cá nhân. Visa có được duyệt hay không, kết quả tố giác hoặc kiện tụng, chẩn đoán và cách điều trị là những việc chỉ cơ quan phụ trách hoặc chuyên gia mới quyết định được — với những việc đó chúng tôi sẽ chỉ bạn nơi cần hỏi.\n\nNhững nội dung ở đây chỉ để tham khảo. Trước khi quyết định điều quan trọng, hãy hỏi lại cơ quan liên quan một lần nữa."
+      },
+      "answered_at": "2026-09-19",
+      "answered_by": { "ko": "운영팀", "en": "LINKRIGHTS team", "zh": "运营团队", "vi": "Nhóm vận hành" }
+    }
+  ]
+}

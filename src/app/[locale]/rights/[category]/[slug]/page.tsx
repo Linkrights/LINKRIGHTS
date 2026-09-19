@@ -10,6 +10,7 @@ import { notFound } from 'next/navigation';
 import { ArticleCard } from '@/components/ArticleCard';
 import { CallScript } from '@/components/CallScript';
 import { Glossary } from '@/components/Glossary';
+import { Helpful } from '@/components/Helpful';
 import { Icon } from '@/components/Icon';
 import { ReadAloud } from '@/components/ReadAloud';
 import { SaveButton } from '@/components/SaveButton';
@@ -161,7 +162,8 @@ export default async function ArticlePage({
           <h1 className="lr-h1 mt-4">{body.title}</h1>
           <p className="lr-lead mt-4">{body.summary}</p>
 
-          {/* 이 정보가 어디에서 왔는지, 언제 검토했는지 */}
+          {/* 이 정보가 어디에서 왔는지, 언제 처음 만들고 언제 검토했는지
+              최초 작성일(created_at)은 실제로 확인된 자료에만 적혀 있습니다. 없으면 그 줄을 보여주지 않습니다. */}
           <dl className="mt-5 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 rounded-[var(--radius-control)] border border-[var(--color-line)] bg-surface-soft px-4 py-3 text-[15px] leading-relaxed">
             {publishers.length > 0 && (
               <>
@@ -172,6 +174,12 @@ export default async function ArticlePage({
                     {t.rightsMeta.sourcesMore}
                   </a>
                 </dd>
+              </>
+            )}
+            {article.created_at && (
+              <>
+                <dt className="font-bold text-ink-900">{t.common.createdAt}</dt>
+                <dd className="text-ink-700">{formatDate(article.created_at, locale)}</dd>
               </>
             )}
             <dt className="font-bold text-ink-900">{t.common.reviewedAt}</dt>
@@ -333,11 +341,23 @@ export default async function ArticlePage({
                 </li>
               ))}
             </ul>
-            <p className="mt-4 text-[15px] font-semibold text-ink-700">
-              {t.common.reviewedAt} {formatDate(article.reviewed_at, locale)}
+            <p className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[15px] font-semibold text-ink-700">
+              {article.created_at && (
+                <span>
+                  {t.common.createdAt} {formatDate(article.created_at, locale)}
+                </span>
+              )}
+              <span>
+                {t.common.reviewedAt} {formatDate(article.reviewed_at, locale)}
+              </span>
             </p>
           </section>
         )}
+
+        {/* 이 정보가 도움이 되었나요? — 눌러주신 것만 익명으로 세어 봅니다. */}
+        <div className="border-t border-[var(--color-line)] pt-6">
+          <Helpful locale={locale} kind="article" id={article.id} topic={article.id} />
+        </div>
 
         {/* 정보 수정 제안: 틀리거나 오래된 정보를 알려주는 창구 (이메일) */}
         <section className="rounded-[var(--radius-card)] border border-[var(--color-line)] bg-surface-soft p-5 sm:p-6">

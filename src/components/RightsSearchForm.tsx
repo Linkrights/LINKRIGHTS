@@ -9,8 +9,18 @@ import { getMessages, type Locale } from '@/lib/i18n';
 /** 검색어 최대 길이 (검색어는 주소에 남으므로 짧은 낱말 검색만 받습니다) */
 export const MAX_SEARCH_LENGTH = 100;
 
-export function RightsSearchForm({ locale, defaultValue = '' }: { locale: Locale; defaultValue?: string }) {
+export function RightsSearchForm({
+  locale,
+  defaultValue = '',
+  suggestions = [],
+}: {
+  locale: Locale;
+  defaultValue?: string;
+  /** 검색창 자동완성 목록. 등록된 권리정보의 키워드와 유사 표현에서만 가져옵니다. (search.ts 의 searchSuggestions) */
+  suggestions?: string[];
+}) {
   const t = getMessages(locale);
+  const listId = 'rights-search-suggestions';
 
   return (
     <div className="lr-card p-5 sm:p-6">
@@ -30,9 +40,18 @@ export function RightsSearchForm({ locale, defaultValue = '' }: { locale: Locale
               maxLength={MAX_SEARCH_LENGTH}
               placeholder={t.search.placeholder}
               autoComplete="off"
+              list={suggestions.length > 0 ? listId : undefined}
               enterKeyHint="search"
               className="lr-input pl-10"
             />
+            {/* 자동완성: 등록된 권리정보의 키워드만 보여줍니다. 없는 낱말을 추천하지 않습니다. */}
+            {suggestions.length > 0 && (
+              <datalist id={listId}>
+                {suggestions.map((term) => (
+                  <option key={term} value={term} />
+                ))}
+              </datalist>
+            )}
           </span>
           <button type="submit" className="lr-btn lr-btn-primary lr-press shrink-0">
             {t.search.button}

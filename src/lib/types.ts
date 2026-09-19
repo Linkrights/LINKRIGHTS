@@ -41,6 +41,12 @@ export interface Organization {
   nationwide?: boolean;
   /** 이용할 수 있는 지역 목록 (content/regions.json 의 key). 적지 않으면 region 값을 씁니다. */
   regions?: string[];
+  /**
+   * 도움받을 곳 페이지의 키워드 검색에서 함께 찾을 낱말입니다. (선택)
+   * 적지 않아도 기관 이름·설명·분야·지역·연결된 권리정보로 찾을 수 있습니다.
+   * 이 기관이 실제로 하는 일에 해당하는 말만 적고, 확인되지 않은 업무를 적지 마세요.
+   */
+  keywords?: string[];
   status: ContentStatus;
   owner: string;
   reviewed_at: string;
@@ -73,6 +79,13 @@ export interface RightsArticle {
   status: ContentStatus;
   featured?: boolean;
   owner: string;
+  /**
+   * 이 권리정보를 처음 만든 날 (연-월-일). 선택 항목입니다.
+   * 실제로 확인된 날짜만 적으세요. 적지 않으면 화면에 "최초 작성일"을 표시하지 않고 검토일만 보여줍니다.
+   * (기억나지 않는다고 해서 아무 날짜나 적으면 안 됩니다)
+   */
+  created_at?: string;
+  /** 마지막으로 내용을 확인한 날 (연-월-일) */
   reviewed_at: string;
   keywords: string[];
   organizations: string[];
@@ -276,6 +289,45 @@ export interface SearchIntentsFile {
 
 /** 근거 자료의 관련 단계. direct = 사용자의 말과 자료의 상황이 직접 맞음, possible = 확인되지 않은 조건이 맞을 때만 관련 */
 export type EvidenceTier = 'direct' | 'possible';
+
+/**
+ * 질문 게시판(Q&A)의 글 하나입니다. (content/qna.json)
+ *
+ * 운영 방식: 이용자는 이메일로 질문을 보내고, 운영팀이 답을 적어 이 파일에 올립니다.
+ * 즉 화면에 보이는 모든 글은 운영팀이 검토한 뒤 공개한 것입니다. (서버에 글을 저장하는 기능은 없습니다)
+ * 그래서 개인정보가 그대로 올라가지 않고, 잘못된 답이 검토 없이 노출되지 않습니다.
+ */
+export interface QnaPost {
+  id: string;
+  status: ContentStatus;
+  /** notice = 공지 (목록 맨 위에 고정), question = 질문과 답 */
+  kind: 'notice' | 'question';
+  /** 관련 분야 id (categories.json). 없으면 분야를 표시하지 않습니다. */
+  category?: string;
+  /** 글쓴이 표시. 개인을 알아볼 수 있는 이름은 쓰지 않습니다. (예: 이용자, 운영팀) */
+  author: LocalizedText;
+  /** 질문이 올라온 날 (연-월-일) */
+  asked_at: string;
+  /** 운영팀이 답한 날 (연-월-일). 아직 답하지 않았으면 비워 둡니다. */
+  answered_at?: string;
+  /** 답한 사람 표시 (예: 운영팀) */
+  answered_by?: LocalizedText;
+  title: LocalizedText;
+  /** 질문 내용 (줄바꿈으로 문단을 나눕니다) */
+  question: LocalizedText;
+  /** 운영팀의 답. 아직 답하지 않았으면 비워 둡니다. */
+  answer?: LocalizedText;
+  /** 함께 볼 등록 권리정보 id */
+  articles?: string[];
+  /** 함께 볼 등록 기관 id */
+  organizations?: string[];
+}
+
+export interface QnaFile {
+  owner: string;
+  reviewed_at: string;
+  posts: QnaPost[];
+}
 
 /** 협력기관 (content/partners.json). 실제로 협력하는 기관만 등록합니다. */
 export interface Partner {

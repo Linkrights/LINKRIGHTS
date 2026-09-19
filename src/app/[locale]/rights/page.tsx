@@ -10,6 +10,7 @@ import { RightsSearchForm } from '@/components/RightsSearchForm';
 import { PageHeader, Section } from '@/components/Section';
 import { getArticlesByCategory, getCategories, getRightsCategories } from '@/lib/content';
 import { getMessages, pick, toLocale } from '@/lib/i18n';
+import { searchSuggestions } from '@/lib/search';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: rawLocale } = await params;
@@ -31,7 +32,7 @@ export default async function RightsIndexPage({ params }: { params: Promise<{ lo
       <Section>
         {/* 권리정보 검색: 등록된 정보를 낱말로 바로 찾기 */}
         <div className="mb-10 flex max-w-3xl flex-col gap-4">
-          <RightsSearchForm locale={locale} />
+          <RightsSearchForm locale={locale} suggestions={searchSuggestions(locale)} />
           {/* 이 브라우저에 저장한 권리정보 · 상황별 체크리스트 */}
           <div className="flex flex-wrap gap-x-6 gap-y-2">
             <Link href={`/${locale}/saved`} className="lr-link inline-flex items-center gap-1.5 text-[15px] font-semibold">

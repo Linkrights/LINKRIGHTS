@@ -197,7 +197,7 @@ export function HomeHero({
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/90 sm:text-xl">{labels.subtitle}</p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <Link href={rightsHref} className="lr-btn lr-btn-lg lr-press bg-white text-navy-900 hover:bg-brand-50">
+          <Link href={rightsHref} className="lr-btn lr-btn-onmedia lr-btn-lg lr-press">
             {labels.ctaRights} <Icon name="arrow-right" size={18} />
           </Link>
           <Link
@@ -230,7 +230,9 @@ export function HomeHero({
               </a>
             ))}
           </div>
-          <div className="flex items-center gap-2">
+          {/* 영상 조작 버튼은 오른쪽 끝에 둡니다.
+              휴대폰에서는 위아래로 쌓이기 때문에, 바로 위의 긴급 전화 버튼과 헷갈리지 않도록 오른쪽으로 붙입니다. */}
+          <div className="flex items-center justify-end gap-2">
             {sources && !failed && (
               <button
                 type="button"

@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import '../globals.css';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
+import { PREFERENCES_INIT_SCRIPT } from '@/components/view-preferences';
 import { getSite, resolveOrganizations } from '@/lib/content';
 import { LOCALES, getMessages, htmlLang, pick, toLocale } from '@/lib/i18n';
 
@@ -89,6 +90,11 @@ export default async function LocaleLayout({
 
   return (
     <html lang={htmlLang[locale]}>
+      <head>
+        {/* 저장해 둔 보기 설정(글자 크기·어두운 화면)을 화면이 그려지기 전에 먼저 적용합니다.
+            이렇게 해야 어두운 화면을 고른 사람에게 흰 화면이 잠깐 번쩍이지 않습니다. */}
+        <script dangerouslySetInnerHTML={{ __html: PREFERENCES_INIT_SCRIPT }} />
+      </head>
       <body className="flex min-h-screen flex-col">
         <a href="#main" className="skip-link">
           {t.common.skipToContent}

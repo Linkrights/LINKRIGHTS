@@ -2,12 +2,13 @@
   "nav": {
     "home": "Home",
     "ask": "Ask AI",
-    "askShort": "Ask a question",
+    "askShort": "Ask the AI",
     "rights": "Rights info",
     "organizations": "Get help",
     "about": "About",
     "programs": "Programmes",
     "faq": "FAQ",
+    "qna": "Q&A board",
     "emergency": "Emergency",
     "emergencyQuick": "Emergency 112·119",
     "emergencyQuickTitle": "If you are in danger or badly hurt, call now.",
@@ -29,7 +30,8 @@
     "hours": "Opening hours",
     "languages": "Languages",
     "region": "Area",
-    "reviewedAt": "Reviewed",
+    "reviewedAt": "Last reviewed",
+    "createdAt": "First written",
     "sources": "Sources",
     "call": "Call",
     "visit": "Open website",
@@ -42,9 +44,9 @@
     "staleBody": "The last review was a while ago. Please confirm the current details with the official organisation."
   },
   "home": {
-    "heroTitle": "Know your rights,\nand get connected to the help you need.",
-    "heroSubtitle": "Find out about your rights at school, at work, in health, visas and daily life in plain language, and find where you can get help.",
-    "ctaAsk": "Ask about my situation",
+    "heroTitle": "Know what your rights are —\nand who to ask about them.",
+    "heroSubtitle": "School, work, health, staying in Korea: we put the things that are hard to work out alone into plain words, and connect you to places that can actually help.",
+    "ctaAsk": "Tell the AI about my situation",
     "ctaRights": "Find rights information",
     "askPlaceholder": "e.g. I worked part-time but I still haven't been paid.",
     "askButton": "Find my rights",
@@ -56,10 +58,22 @@
     "aiTitle": "How the AI guide works",
     "aiSubtitle": "Built so the AI does not make things up.",
     "aiPoints": [
-      { "title": "Only registered material", "body": "It answers only from rights information and organisations that LINKRIGHTS has reviewed and registered." },
-      { "title": "No invented contacts", "body": "Organisation names and phone numbers come only from our registered list." },
-      { "title": "It says when it does not know", "body": "With no grounding it will not guess. It tells you who to ask instead." },
-      { "title": "Danger comes first", "body": "If the situation looks urgent, emergency contacts are shown before any general answer." }
+      {
+        "title": "Only registered material",
+        "body": "It answers only from rights information and organisations that LINKRIGHTS has reviewed and registered."
+      },
+      {
+        "title": "No invented contacts",
+        "body": "Organisation names and phone numbers come only from our registered list."
+      },
+      {
+        "title": "It says when it does not know",
+        "body": "With no grounding it will not guess. It tells you who to ask instead."
+      },
+      {
+        "title": "Danger comes first",
+        "body": "If the situation looks urgent, emergency contacts are shown before any general answer."
+      }
     ],
     "impactTitle": "LINKRIGHTS in numbers",
     "impactParticipants": "Young people taking part",
@@ -71,6 +85,8 @@
     "impactLanguages": "Languages",
     "impactLanguagesUnit": "",
     "impactNote": "Participant count as of {date}. Rights guides, organisations and languages are counted directly from what is published on this site.",
+    "qnaTitle": "Q&A board",
+    "qnaSubtitle": "Read questions other people have asked and our answers. You can send your own question too.",
     "featuredTitle": "Most-read rights information",
     "featuredSubtitle": "Starting with the situations people ask about most.",
     "orgTitle": "Where you can get real help",
@@ -99,7 +115,11 @@
     "myQuestion": "Your question",
     "privacyTitle": "Please do not enter personal details",
     "privacyBody": "Do not type your name, phone number, address, passport number, alien registration number, visa number or medical records. Describing the situation is enough.",
-    "disclaimer": "The AI answer is a first guide. Confirm legal, medical and visa decisions with an official organisation.",
+    "disclaimer": "The AI answer is here to help you get started. Before an important decision about law, health or your stay, please check once more with the relevant organisation.",
+    "sessionTitle": "This conversation stays in this tab only.",
+    "sessionBody": "If you refresh or go back and return, you can still see the answer you just got. It disappears when you close the tab, and your question is not stored on our server.",
+    "sessionRestored": "We brought back the conversation you were having.",
+    "clearConversation": "Clear conversation",
     "charsLeft": "characters left",
     "resultSituation": "Looking at your situation",
     "resultRights": "Rights you should know",
@@ -153,7 +173,58 @@
     "how1": "Pick a topic in Rights information and read.",
     "how2": "Ask about your situation to find related rights information and organisations.",
     "how3": "Call an organisation or visit its website to get help.",
-    "emailNote": "Your enquiry is sent by email"
+    "emailNote": "Your enquiry is sent by email",
+    "partnerLabel": "Working with"
+  },
+  "homeStart": {
+    "title": "What do you need right now?",
+    "subtitle": "Pick the one that fits your situation and start there.",
+    "rightsTitle": "Rights information",
+    "rightsBody": "When you want to know what your rights are",
+    "askTitle": "Ask the AI",
+    "askBody": "When you want to describe your own situation",
+    "checklistTitle": "Checklists",
+    "checklistBody": "When you want to go through what to check, one by one",
+    "orgTitle": "Where to get help",
+    "orgBody": "When you want to talk to an organisation that can help",
+    "emergencyNote": "If you are in danger or badly hurt, do not wait — call now.",
+    "emergencyCta": "See emergency help"
+  },
+  "homeUpdates": {
+    "title": "Recently added or reviewed",
+    "subtitle": "Instead of visitor numbers, here is what is actually being updated.",
+    "typeChecklist": "Checklist",
+    "typeArticle": "Rights information",
+    "typeQna": "Question & answer",
+    "createdLabel": "Added",
+    "reviewedLabel": "Reviewed",
+    "note": "These dates are the first-written and last-reviewed dates recorded on each item. They change whenever we update it.",
+    "countsLabel": "Registered right now"
+  },
+  "prefs": {
+    "title": "Display",
+    "fontLabel": "Text size",
+    "fontSmaller": "Smaller text",
+    "fontLarger": "Larger text",
+    "fontReset": "Reset text size",
+    "fontNames": {
+      "small": "Small",
+      "base": "Default",
+      "large": "Large",
+      "xlarge": "Largest"
+    },
+    "themeLabel": "Brightness",
+    "themeSystem": "Device setting",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "note": "Your choice is kept in this browser only and is not sent to our server."
+  },
+  "helpful": {
+    "question": "Was this helpful?",
+    "yes": "It helped",
+    "no": "Not really",
+    "thanks": "Thank you for telling us. We will use it to make these answers better.",
+    "note": "We only count the button you pressed, to see which answers help. Your question and the answer are not sent."
   },
   "readAloud": {
     "listen": "Read aloud",
@@ -237,7 +308,66 @@
     "countAll": "{n} registered organisations",
     "countRegion": "{local} in {region} · {nationwide} nationwide",
     "noRegional": "No organisations are registered for {region} yet. The nationwide organisations below can be used from any area. To find a nearby Family Center, choose your city or province on the website in the ‘Local Family Center’ card.",
-    "groupsLabel": "Organisation types"
+    "groupsLabel": "Narrow by type",
+    "searchLabel": "Search by keyword",
+    "searchHint": "You can search in your own words, not just by name. We look in the description, type, area and the rights information linked to each organisation.",
+    "searchPlaceholder": "e.g. wages, part-time job, school, visa, hospital, counselling",
+    "searchButton": "Search",
+    "searchClear": "Clear filters",
+    "searchCount": "{n} organisations match",
+    "emptyTitle": "No results. Try a different keyword.",
+    "emptyBody": "If you also picked a type or an area, try leaving just one. You can also try the words below.",
+    "examplesLabel": "Try searching for",
+    "examples": [
+      "wages",
+      "part-time job",
+      "school",
+      "visa",
+      "hospital",
+      "counselling",
+      "alien registration",
+      "discrimination"
+    ]
+  },
+  "qna": {
+    "navLabel": "Q&A board",
+    "title": "Q&A board",
+    "subtitle": "Read questions other people have asked and our answers. You can send your own question too.",
+    "howTitle": "How this board works",
+    "how": "Questions come to us by email. Our team writes an answer, removes anything that could identify you, and posts only that here. Nothing you write is published without being read first.",
+    "searchLabel": "Search questions",
+    "searchPlaceholder": "e.g. part-time job, visa, hospital",
+    "count": "{n} questions",
+    "notice": "Notice",
+    "answered": "Answered",
+    "waiting": "Answer coming",
+    "empty": "No questions yet. Yours could be the first.",
+    "emptySearch": "No results. Try a different word.",
+    "guideTitle": "How to send a question",
+    "guideIntro": "The button below opens an email. If you are not sure what to write, follow this order.",
+    "guideWriteTitle": "Helpful to include",
+    "guideWrite": [
+      "What the situation is (for example: I am about to start a part-time job)",
+      "When and where it happened (for example: last month, at school)",
+      "The one thing you most want to know (for example: do I have to sign a contract?)",
+      "Write “private” if you do not want it published"
+    ],
+    "guideAvoidTitle": "Please leave these out",
+    "guideAvoid": "Do not write your name, phone number, address, school name, passport number, alien registration number or medical records. You can still get help without them.",
+    "sendCta": "Send a question",
+    "sendNote": "If the email window does not open, write to {email} directly. We usually reply by email within a few days and post the answer here too.",
+    "askedAt": "Asked",
+    "answeredAt": "Answered",
+    "questionHeading": "Question",
+    "answerHeading": "Our answer",
+    "waitingTitle": "We are still preparing an answer",
+    "waitingBody": "This one needs checking, so it is taking a little longer. We will add the answer to this post.",
+    "relatedArticles": "Rights information worth reading",
+    "relatedOrgs": "Where to get help",
+    "backToList": "Back to list",
+    "askAiNote": "If you need an answer right now",
+    "mailSubject": "[LINKRIGHTS question]",
+    "mailBody": "Please write along these lines. You do not need to give your name, phone number or address.\n\n1. What is the situation?\n\n2. When and where did it happen?\n\n3. What is the one thing you most want to know?\n\n4. If you do not want it published on the board, write \"private\" here.\n"
   },
   "checklist": {
     "navLabel": "Checklists",
@@ -250,6 +380,9 @@
     "noticeTitle": "Your ticks are saved only in this browser",
     "notice": "They are saved without logging in, only in the browser you are using now, and never sent to our server. They will not appear on other devices and disappear if you clear your browsing data.",
     "basedOnTitle": "Rights information this checklist is based on",
+    "basedOnIntro": "The items in this checklist come from the rights information below. If you want to know why an item matters, open it.",
+    "doneTitle": "You have checked everything",
+    "doneBody": "You are ready to start. If you get stuck along the way, ask one of the organisations below.",
     "orgsTitle": "Where you can get help",
     "more": "Read more",
     "orgLink": "See where to get help",
@@ -262,11 +395,26 @@
     "subtitle": "We'll help you find which rights may apply and what to check right now.",
     "getsTitle": "What the answer tells you",
     "gets": [
-      { "title": "Your situation", "body": "A short summary of what you told us." },
-      { "title": "Check these first", "body": "Facts that change what you should do next." },
-      { "title": "Rights you should know", "body": "Explained from registered rights information." },
-      { "title": "What you can do now", "body": "What to check, prepare and ask, in order." },
-      { "title": "Where you can get help", "body": "Only registered organisations." }
+      {
+        "title": "Your situation",
+        "body": "A short summary of what you told us."
+      },
+      {
+        "title": "Check these first",
+        "body": "Facts that change what you should do next."
+      },
+      {
+        "title": "Rights you should know",
+        "body": "Explained from registered rights information."
+      },
+      {
+        "title": "What you can do now",
+        "body": "What to check, prepare and ask, in order."
+      },
+      {
+        "title": "Where you can get help",
+        "body": "Only registered organisations."
+      }
     ],
     "trust": "Answers are based only on information reviewed and registered by LINKRIGHTS, and never make legal, visa or medical decisions for you."
   },
@@ -306,11 +454,26 @@
     "title": "The virtuous cycle LINKRIGHTS wants to build",
     "subtitle": "This is a goal we are still working toward: so that one person's experience can become help for the next.",
     "steps": [
-      { "title": "Know my rights", "body": "Through rights education and rights information, young people learn what rights they have." },
-      { "title": "Find help when needed", "body": "When something happens, they find where to get help through rights information, AI guidance and organisations." },
-      { "title": "Choose and act for myself", "body": "Knowing their rights, they choose among the options for themselves and take action." },
-      { "title": "Share experiences", "body": "Through mentoring and activities, experiences and questions are shared together." },
-      { "title": "Reach the next person better", "body": "We keep improving rights information with feedback from youth, mentors and organisations, so it reaches the next young person better." }
+      {
+        "title": "Know my rights",
+        "body": "Through rights education and rights information, young people learn what rights they have."
+      },
+      {
+        "title": "Find help when needed",
+        "body": "When something happens, they find where to get help through rights information, AI guidance and organisations."
+      },
+      {
+        "title": "Choose and act for myself",
+        "body": "Knowing their rights, they choose among the options for themselves and take action."
+      },
+      {
+        "title": "Share experiences",
+        "body": "Through mentoring and activities, experiences and questions are shared together."
+      },
+      {
+        "title": "Reach the next person better",
+        "body": "We keep improving rights information with feedback from youth, mentors and organisations, so it reaches the next young person better."
+      }
     ],
     "loopNote": "And the cycle starts again, with the next young person learning about their rights."
   },
@@ -349,7 +512,13 @@
     "placeholder": "e.g. wages, visa extension, hospital",
     "button": "Search",
     "examplesLabel": "Try searching for",
-    "examples": ["unpaid wages", "visa extension", "health insurance", "employment contract", "discrimination"],
+    "examples": [
+      "unpaid wages",
+      "visa extension",
+      "health insurance",
+      "employment contract",
+      "discrimination"
+    ],
     "resultsFor": "Results for “{q}”",
     "resultCount": "{n}",
     "directTitle": "Rights information found",
@@ -443,33 +612,49 @@
     "sections": [
       {
         "title": "There are no accounts",
-        "body": "LINKRIGHTS has no sign-up and no login, so we do not collect names, emails or phone numbers."
+        "body": "LINKRIGHTS has no sign-up and no login. There is no field anywhere on this site that asks for your name, email or phone number."
       },
       {
-        "title": "AI questions are not stored against a person",
-        "body": "Your question is sent to the AI service (OpenAI) to produce an answer and is not stored linked to any user. Minimal technical records (time and type of an error) may be kept to fix faults."
+        "title": "AI questions and answers are not stored on our server",
+        "body": "Your question is sent to the AI service (OpenAI) to produce an answer. Neither the question nor the answer is stored on the LINKRIGHTS server — there is no database to store them in. To stop one person from asking too many times in a short period, the server briefly counts requests per internet address (IP) in memory. That count disappears when the server restarts and is not linked to what you asked. When something fails, a minimal technical record (time and type of error) may appear in the server log."
       },
       {
-        "title": "Please do not enter these details",
-        "body": "Do not type identifying information such as your name, contact details, address, passport number, alien registration number, visa number or medical records. Describing the situation is enough."
+        "title": "What is kept in this browser only",
+        "body": "These four are never sent to our server and stay in the browser you are using: (1) rights information you saved with the star, (2) items you ticked in a checklist, (3) your display settings (text size, light or dark), and (4) whether you already pressed “Was this helpful?”. An AI conversation is held in the tab you have open and disappears when you close it. None of this is visible on another device or browser."
       },
       {
-        "title": "No advertising or tracking cookies",
-        "body": "This site carries no advertising and does not use cookies to track visitors."
+        "title": "If you want to delete what is saved",
+        "body": "Saved rights information can be removed on the “Saved” screen, and a checklist with “Clear all ticks”. An AI conversation disappears when you press “New question” or close the tab. To clear everything at once, delete this site’s data in your browser settings. Because none of it is on our server, there is nothing for you to ask us to delete."
+      },
+      {
+        "title": "What the “Was this helpful?” button sends",
+        "body": "Pressing it sends four things only: helpful or not, the language of the page, which topic or which rights information it was, and whether the AI answer used registered material. The question and the answer are not sent, and we cannot tell who pressed it. It is written as a single line in the server log, not a database, and is used only to count which answers help. If you do not press it, nothing is sent."
+      },
+      {
+        "title": "Emails sent to the Q&A board",
+        "body": "Questions for the board are not saved on the site; they come to us by email. After reading, we remove anything that could identify you and post only the question and the answer. If you write “private”, we reply by email only. Your email stays in our inbox, so tell us in the same thread if you would like it deleted."
+      },
+      {
+        "title": "Please do not enter these",
+        "body": "Do not enter your name, contact details, address, passport number, alien registration number, visa number or medical records. Describing the situation is enough. We check for such details before sending and warn you, but we cannot catch every case."
+      },
+      {
+        "title": "No cookies, no advertising",
+        "body": "This site carries no advertising and uses no tracking cookies or analytics tools. Search words and the area you pick appear in the address bar only and are not stored on our server."
       },
       {
         "title": "External links",
-        "body": "The official websites we link to are run by those organisations, and their own privacy policies apply there."
+        "body": "The official websites we link to are run by those organisations. Their handling of personal data follows their own policies."
       },
       {
         "title": "Contact",
-        "body": "For any privacy question, email us at the address in the footer."
+        "body": "If you have any question about privacy, please write to the contact email below."
       }
     ]
   },
   "footer": {
     "aboutSite": "A rights information platform for young people with a migrant background",
-    "notAdvice": "Information here is general guidance, not legal or medical advice. Confirm decisions with an official organisation.",
+    "notAdvice": "What you read here is for reference. Before an important decision, please check once more with the relevant organisation.",
     "contact": "Contact",
     "instagram": "Instagram",
     "blog": "Blog",

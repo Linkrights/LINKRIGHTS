@@ -12,12 +12,21 @@
 //   ⑤ 도움받을 수 있는 곳 ⑥ 한 가지 확인 질문 ⑦ 참고 자료(함께 볼 권리정보·참고·확인한 정보)
 // 내용이 없는 칸은 보여주지 않고, 번호는 보이는 칸끼리 차례로 매깁니다.
 // 등록 자료를 찾지 못했거나 답변을 만들지 못했으면 "다음에 할 수 있는 일"(NoResultHelp)을 보여줍니다.
+//
+// 새로고침해도 대화가 사라지지 않게 하기
+//   실수로 새로고침하거나 뒤로 갔다 와도 방금 받은 답변을 다시 볼 수 있도록,
+//   지금까지의 대화를 이 탭의 임시 저장소(sessionStorage)에 담아 두고 화면을 다시 열 때 불러옵니다.
+//   - 저장 범위: 지금 열려 있는 탭 하나뿐입니다. 탭을 닫으면 사라지고, 다른 탭·다른 기기에서는 보이지 않습니다.
+//   - 서버에는 질문 내용을 저장하지 않습니다. (개인정보 처리방침과 같은 내용입니다)
+//   - "새 질문"을 누르면 저장해 둔 대화도 함께 지웁니다.
+//   - 저장하는 대화 수는 아래 MAX_SAVED_TURNS 개까지입니다.
 
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { PENDING_QUESTION_KEY } from './AskBox';
 import { EmergencyCard } from './EmergencyCard';
 import { Glossary } from './Glossary';
+import { Helpful } from './Helpful';
 import { Icon } from './Icon';
 import { NoResultHelp } from './NoResultHelp';
 import { OrgCard } from './OrgCard';
@@ -30,6 +39,10 @@ import type { AskApiRequest, AskApiResponse, AskHistoryTurn, Organization } from
 const MAX_LENGTH = 500;
 /** 추가 질문 때 함께 보내는 최근 대화 수 (서버에서도 같은 수로 한 번 더 제한합니다) */
 const MAX_HISTORY_TURNS = 3;
+/** 새로고침에 대비해 이 탭에 잠시 담아 두는 대화 수 */
+const MAX_SAVED_TURNS = 3;
+/** 이 탭에만 쓰는 임시 저장소 이름 (탭을 닫으면 사라집니다) */
+const SAVED_TURNS_KEY = 'linkrights:ask-turns';
 
 interface FallbackLink {
   id: string;
@@ -62,6 +75,34 @@ function toHistory(turns: Turn[]): AskHistoryTurn[] {
     }
   }
   return history.slice(-MAX_HISTORY_TURNS);
+}
+
+/** 이 탭에 담아 둔 대화를 읽어옵니다. 모양이 다르거나 읽을 수 없으면 빈 목록으로 시작합니다. */
+function readSavedTurns(): Turn[] {
+  try {
+    const raw = window.sessionStorage.getItem(SAVED_TURNS_KEY);
+    if (!raw) return [];
+    const saved = JSON.parse(raw) as unknown;
+    if (!Array.isArray(saved)) return [];
+    return saved
+      .filter(
+        (turn): turn is Turn =>
+          typeof (turn as Turn)?.question === 'string' && typeof (turn as Turn)?.result?.ok === 'boolean',
+      )
+      .slice(-MAX_SAVED_TURNS);
+  } catch {
+    return [];
+  }
+}
+
+/** 지금까지의 대화를 이 탭에 담아 둡니다. (서버로는 보내지 않습니다) */
+function saveTurns(turns: Turn[]): void {
+  try {
+    if (turns.length === 0) window.sessionStorage.removeItem(SAVED_TURNS_KEY);
+    else window.sessionStorage.setItem(SAVED_TURNS_KEY, JSON.stringify(turns.slice(-MAX_SAVED_TURNS)));
+  } catch {
+    // 임시 저장소를 쓸 수 없는 브라우저(개인정보 보호 모드 등)에서는 이 화면에서만 대화가 남습니다.
+  }
 }
 
 function errorMessageOf(result: AskApiResponse, t: Messages): string | null {
@@ -119,6 +160,7 @@ function ResultView({
   result,
   locale,
   t,
+  feedbackId,
   onNewQuestion,
   onRetry,
   onAnswerFollowUp,
@@ -129,6 +171,8 @@ function ResultView({
   result: AskApiResponse;
   locale: Locale;
   t: Messages;
+  /** "도움이 됐나요?" 를 답변마다 따로 기억하기 위한 이름 (질문 내용은 들어가지 않습니다) */
+  feedbackId: string;
   onNewQuestion: () => void;
   /** 자료를 찾지 못했거나 답변을 만들지 못했을 때: 적었던 질문을 남겨 두고 고쳐 쓰게 합니다. */
   onRetry: () => void;
@@ -385,6 +429,17 @@ function ResultView({
 
               <p className="text-[13px] leading-relaxed text-ink-500">{t.ask.disclaimer}</p>
             </section>
+
+            {/* 이 답변이 도움이 되었나요? — 눌러주신 것만 익명으로 세어 봅니다. (질문·답변 내용은 보내지 않습니다) */}
+            <div className="border-t border-[var(--color-line)] pt-6">
+              <Helpful
+                locale={locale}
+                kind="ai"
+                id={feedbackId}
+                topic={answer.category}
+                evidence={result.evidence}
+              />
+            </div>
           </div>
         </article>
       )}
@@ -427,6 +482,8 @@ export function AskClient({
   /** 지금 보내는 중인 질문의 종류. 'new' = 처음 질문, 'followUp' = 추가 질문 */
   const [pending, setPending] = useState<'new' | 'followUp' | null>(null);
   const [turns, setTurns] = useState<Turn[]>([]);
+  /** 새로고침 뒤에 이전 대화를 다시 불러왔는지 (한 번만 알려줍니다) */
+  const [restored, setRestored] = useState(false);
   const questionRef = useRef<HTMLTextAreaElement>(null);
   const followUpRef = useRef<HTMLTextAreaElement>(null);
   /** 개인정보로 보이는 내용 확인 (보내기 전에 한 번 멈추는 간단한 확인) */
@@ -437,6 +494,11 @@ export function AskClient({
   const followUpNoticeRef = useRef<HTMLDivElement>(null);
   const latestTurnRef = useRef<HTMLDivElement>(null);
   const askedRef = useRef(false);
+  /**
+   * "도움이 됐나요?" 를 답변마다 구분하기 위한 이름입니다.
+   * 화면을 열 때 한 번 정해지는 숫자일 뿐이며, 질문 내용이나 누구인지와는 아무 관계가 없습니다.
+   */
+  const sessionIdRef = useRef(`${Date.now().toString(36)}`);
   const loading = pending !== null;
 
   /**
@@ -468,15 +530,21 @@ export function AskClient({
       result = { ok: false, error: 'server', fallback: fallbackLinks };
     }
 
-    setTurns([...previousTurns, { question: trimmed, result }]);
+    const nextTurns = [...previousTurns, { question: trimmed, result }];
+    setTurns(nextTurns);
+    // 새로고침해도 방금 받은 답변을 다시 볼 수 있도록 이 탭에 담아 둡니다.
+    saveTurns(nextTurns);
+    setRestored(false);
     // 추가 질문이 잘 전달됐으면 입력창을 비웁니다. 실패했으면 다시 보낼 수 있도록 남겨 둡니다.
     if (isFollowUp && result.ok) setFollowUp('');
     setPending(null);
   }
 
-  /** 대화를 모두 지우고 처음 질문 상태로 돌아갑니다. */
+  /** 대화를 모두 지우고 처음 질문 상태로 돌아갑니다. (담아 둔 대화도 함께 지웁니다) */
   function startNewQuestion() {
     setTurns([]);
+    saveTurns([]);
+    setRestored(false);
     setQuestion('');
     setFollowUp('');
     questionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -486,6 +554,8 @@ export function AskClient({
   /** 답을 찾지 못했을 때: 결과만 지우고 적었던 질문은 남겨 둔 채 입력창으로 이동해 고쳐 쓸 수 있게 합니다. */
   function retryQuestion() {
     setTurns([]);
+    saveTurns([]);
+    setRestored(false);
     setFollowUp('');
     questionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     questionRef.current?.focus({ preventScroll: true });
@@ -543,17 +613,27 @@ export function AskClient({
       askedRef.current = true;
       setQuestion(text);
       void ask(text);
+      return;
+    }
+    // 새로 물어본 질문이 없으면, 새로고침 전에 하던 대화를 다시 불러옵니다.
+    const saved = readSavedTurns();
+    if (saved.length > 0) {
+      askedRef.current = true;
+      setTurns(saved);
+      setRestored(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialQuestion]);
 
   // 새 결과가 오면 그 결과가 시작되는 곳으로 화면을 옮기고, 초점도 옮겨 화면낭독기가 읽게 합니다.
+  // 새로고침 뒤 예전 대화를 불러온 경우에는, 이용자가 움직이지 않았는데 화면이 뛰지 않도록 그대로 둡니다.
   useEffect(() => {
+    if (restored) return;
     if (turns.length > 0 && latestTurnRef.current) {
       latestTurnRef.current.focus({ preventScroll: true });
       latestTurnRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  }, [turns]);
+  }, [turns, restored]);
 
   const lastResult = turns.length > 0 ? turns[turns.length - 1].result : null;
   // AI 답변을 한 번 이상 받았고, 마지막 결과가 긴급 안내가 아닐 때만 추가 질문을 받습니다.
@@ -647,6 +727,21 @@ export function AskClient({
         </div>
       )}
 
+      {/* 새로고침 뒤 예전 대화를 다시 불러왔을 때 알려줍니다. */}
+      {restored && turns.length > 0 && (
+        <p
+          role="status"
+          className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-[var(--radius-control)] border border-brand-200 bg-brand-50 px-4 py-3 text-[15px] leading-relaxed text-brand-800"
+        >
+          <span className="inline-flex items-center gap-2 font-semibold">
+            <Icon name="check" size={16} className="shrink-0" /> {t.ask.sessionRestored}
+          </span>
+          <button type="button" onClick={startNewQuestion} className="lr-link font-semibold">
+            {t.ask.clearConversation}
+          </button>
+        </p>
+      )}
+
       <div aria-live="polite" className="mt-8 space-y-6 outline-none">
         {turns.map((turn, index) => (
           <div
@@ -669,6 +764,7 @@ export function AskClient({
               result={turn.result}
               locale={locale}
               t={t}
+              feedbackId={`${sessionIdRef.current}-${index}`}
               onNewQuestion={startNewQuestion}
               onRetry={retryQuestion}
               onAnswerFollowUp={index === turns.length - 1 && canFollowUp && !loading ? focusFollowUp : undefined}
@@ -747,6 +843,14 @@ export function AskClient({
                 </button>
               </div>
             </div>
+
+            {/* 이 대화가 어디에 남는지 솔직하게 알려줍니다. (탭 안에서만 유지되고 서버에는 저장하지 않습니다) */}
+            <p className="mt-4 flex items-start gap-2 border-t border-[var(--color-line)] pt-4 text-[13px] leading-relaxed text-ink-500">
+              <Icon name="shield" size={14} className="mt-0.5 shrink-0 text-brand-600" />{' '}
+              <span>
+                <strong className="font-semibold text-ink-700">{t.ask.sessionTitle}</strong> {t.ask.sessionBody}
+              </span>
+            </p>
           </form>
         )}
       </div>

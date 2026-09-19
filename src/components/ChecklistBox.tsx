@@ -7,6 +7,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { Icon } from './Icon';
 
 export interface ChecklistBoxItem {
   id: string;
@@ -21,10 +22,13 @@ export function ChecklistBox({
   checklistId,
   items,
   labels,
+  done: doneSlot,
 }: {
   checklistId: string;
   items: ChecklistBoxItem[];
-  labels: { progress: string; reset: string };
+  labels: { progress: string; reset: string; doneTitle: string; doneBody: string };
+  /** 모두 확인했을 때 축하 상자 아래에 함께 보여줄 다음 행동 (도움받을 곳 링크 등) */
+  done?: React.ReactNode;
 }) {
   const storageKey = `linkrights:checklist:${checklistId}`;
   const [checked, setChecked] = useState<Checked>({});
@@ -60,6 +64,7 @@ export function ChecklistBox({
   }
 
   const done = items.filter((item) => checked[item.id]).length;
+  const allDone = items.length > 0 && done === items.length;
 
   return (
     <div>
@@ -112,6 +117,20 @@ export function ChecklistBox({
           );
         })}
       </ul>
+
+      {/* 모두 확인했을 때: "끝났다"로 두지 않고 다음에 무엇을 하면 되는지까지 알려줍니다. */}
+      {allDone && (
+        <div
+          role="status"
+          className="lr-appear mt-5 rounded-[var(--radius-card)] border border-brand-200 bg-brand-50 p-5"
+        >
+          <p className="flex items-center gap-2 text-base font-extrabold text-brand-900">
+            <Icon name="check" size={20} className="shrink-0 text-brand-600" /> {labels.doneTitle}
+          </p>
+          <p className="mt-1.5 text-[15px] leading-relaxed text-ink-700">{labels.doneBody}</p>
+          {doneSlot && <div className="mt-3">{doneSlot}</div>}
+        </div>
+      )}
     </div>
   );
 }

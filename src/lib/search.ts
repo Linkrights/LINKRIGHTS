@@ -13,80 +13,18 @@
 //  5) 자료를 못 찾았을 때만: 제목·요약·상황·권리·할 일 제목에 비슷한 낱말이 있는 글을 "링크로만" 제안 (findSimilarArticles)
 
 import { getGroundingArticles, getSearchIntents, getSearchSynonyms, resolveArticle } from './content';
+// 글자를 비교하는 방법(조사·어미 정리, 낱말 경계)은 searchText.ts 에 모아 두고 브라우저 검색과 함께 씁니다.
+import {
+  compact,
+  expandWithGroups,
+  includesAtWordStart,
+  normalize,
+  partMatches,
+  sameWord,
+  stem,
+  termInQuery,
+} from './searchText';
 import { LOCALES, type EvidenceTier, type Locale, type RightsArticle, type SearchIntent } from './types';
-
-function normalize(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[\s]+/g, ' ')
-    .replace(/[.,!?;:()[\]{}"'`~/\\|<>@#$%^&*_+=-]/g, ' ')
-    .trim();
-}
-
-/**
- * 한국어 조사·어미 규칙입니다. [끝부분, 바꿀 글자] 이며 긴 것부터 확인합니다.
- *  - "이라서 / 이라는 / 이라고" 는 모두 "이라" 로 맞춥니다.
- *    ("외국인이라는" 과 "외국인이라서" 는 같은 말로 보지만, "외국인도" 와는 다른 말로 봅니다)
- *  - "하고 / 해요 / 했" 같은 '하다' 활용은 "하" 로 맞춥니다. ("연장하고" → "연장하")
- *  - 조사("를", "에서" 등)는 떼어냅니다. ("비자를" → "비자")
- */
-const ENDING_RULES: [string, string][] = [
-  ['했어요', '하'],
-  ['했는데', '하'],
-  ['하는데', '하'],
-  ['이라서', '이라'],
-  ['이라는', '이라'],
-  ['이라고', '이라'],
-  ['에서는', ''],
-  ['에게서', ''],
-  ['으로는', ''],
-  ['하고', '하'],
-  ['해서', '하'],
-  ['해요', '하'],
-  ['하는', '하'],
-  ['하게', '하'],
-  ['했다', '하'],
-  ['한다', '하'],
-  ['라서', '이라'],
-  ['라는', '이라'],
-  ['라고', '이라'],
-  ['에서', ''],
-  ['에게', ''],
-  ['한테', ''],
-  ['으로', ''],
-  ['이랑', ''],
-  ['까지', ''],
-  ['부터', ''],
-  ['처럼', ''],
-  ['보다', ''],
-  ['는데', ''],
-  ['했', '하'],
-  ['해', '하'],
-  ['은', ''],
-  ['는', ''],
-  ['이', ''],
-  ['가', ''],
-  ['을', ''],
-  ['를', ''],
-  ['에', ''],
-  ['의', ''],
-  ['도', ''],
-  ['만', ''],
-  ['과', ''],
-  ['와', ''],
-  ['로', ''],
-  ['랑', ''],
-];
-
-/** 조사·어미를 한 번 정리합니다. 남는 글자가 minLength 보다 짧아지면 그대로 둡니다. */
-function stem(token: string, minLength = 2): string {
-  for (const [ending, replacement] of ENDING_RULES) {
-    if (token.endsWith(ending) && token.length - ending.length >= minLength) {
-      return token.slice(0, token.length - ending.length) + replacement;
-    }
-  }
-  return token;
-}
 
 /** 어느 글에나 흔하게 나오는 말입니다. 제목·요약 점수 계산에서 뺍니다. */
 const COMMON_WORDS = new Set([
@@ -134,17 +72,6 @@ function isCommon(token: string): boolean {
   return COMMON_WORDS.has(token) || COMMON_WORDS.has(stem(token)) || COMMON_WORDS.has(stem(token, 1));
 }
 
-/** 질문의 단어 하나가 키워드 조각과 같은 말인지 확인합니다. (조사·어미 차이는 같은 말로 봅니다) */
-function sameWord(token: string, part: string): boolean {
-  if (token === part) return true;
-  // "돈을" = "돈" 처럼 한 글자 낱말은 조사만 뗀 모양이 같을 때만 같은 말로 봅니다.
-  if (part.length === 1) return stem(token, 1) === part;
-  const partStem = stem(part);
-  const tokenStem = stem(token);
-  // "무시해요" = "무시" 처럼 명사 + '하다' 는 같은 말로 봅니다.
-  return tokenStem === partStem || tokenStem === `${partStem}하`;
-}
-
 /** 등록된 키워드가 질문에 들어 있는지 확인합니다. */
 function keywordMatches(keyword: string, q: string, tokens: string[]): boolean {
   const term = normalize(keyword);
@@ -176,37 +103,9 @@ function articleText(article: RightsArticle): { title: string; summary: string }
 // 넓힌 낱말은 검색에만 쓰며, AI의 근거는 언제나 등록된 권리정보입니다.
 // ---------------------------------------------------------------------------
 
-/** 표현(한 낱말 또는 여러 낱말)이 질문에 낱말 단위로 들어 있는지 확인합니다. */
-function termInQuery(term: string, q: string, tokens: string[]): boolean {
-  const normalized = normalize(term);
-  if (!normalized) return false;
-  // 띄어쓰기가 없는 중국어는 글자 그대로 찾습니다.
-  if (/\p{Script=Han}/u.test(normalized)) return q.includes(normalized);
-  const parts = normalized.split(' ').filter(Boolean);
-  if (parts.length === 1) return tokens.some((token) => sameWord(token, parts[0]));
-  let from = 0;
-  for (const part of parts) {
-    const index = tokens.findIndex((token, i) => i >= from && partMatches(token, part));
-    if (index === -1) return false;
-    from = index + 1;
-  }
-  return true;
-}
-
 /** 질문에 들어 있는 표현과 같은 묶음의 다른 표현들을 돌려줍니다. (검색용) */
 export function expandQuery(query: string): string[] {
-  const q = normalize(query);
-  if (!q) return [];
-  const tokens = q.split(' ').filter(Boolean);
-  const added = new Set<string>();
-  for (const group of getSearchSynonyms()) {
-    const present = group.terms.filter((term) => termInQuery(term, q, tokens));
-    if (present.length === 0) continue;
-    for (const term of group.terms) {
-      if (!present.includes(term)) added.add(term);
-    }
-  }
-  return [...added];
+  return expandWithGroups(query, getSearchSynonyms());
 }
 
 export interface ScoredArticle {
@@ -299,35 +198,6 @@ export function findSimilarArticles(query: string, limit = 3): RightsArticle[] {
 //               (AI는 조건부로만 안내하고, 서버는 이 자료에 연결된 기관을 더 엄격하게 거릅니다. route.ts 참고)
 // 사전은 등록된 글을 가리키기만 하므로 새 권리·기관·전화번호를 만들지 않습니다.
 // ---------------------------------------------------------------------------
-
-function compact(text: string): string {
-  return text.replace(/\s+/g, '');
-}
-
-/**
- * 표현의 한 낱말이 질문의 낱말과 맞는지: 같거나, 조사·어미만 다르거나, 그 낱말로 시작합니다. ("끝나" ↔ "끝나요")
- * 한 글자 낱말("안", "싫")은 "안전", "안내"처럼 다른 말로 이어지지 않도록 짧은 활용("싫어요", "줘요")까지만 맞춥니다.
- */
-function partMatches(token: string, part: string): boolean {
-  if (token === part || sameWord(token, part)) return true;
-  if (!token.startsWith(part)) return false;
-  return part.length >= 2 || token.length <= part.length + 2;
-}
-
-/** 한글·영문·베트남어처럼 띄어쓰기로 낱말을 나누는 표현인지 (중국어는 띄어쓰기가 없어 낱말 경계를 보지 않습니다) */
-function needsWordStart(term: string): boolean {
-  return /^[\p{Script=Hangul}\p{Script=Latin}0-9]/u.test(term);
-}
-
-/** text 안에서 term 이 낱말의 시작 위치에 나오는지. ("용돈을 안 줘"의 "돈을 안 줘"는 낱말 중간이라 맞지 않습니다) */
-function includesAtWordStart(text: string, term: string, wordStarts?: boolean[]): boolean {
-  if (!needsWordStart(term)) return text.includes(term);
-  for (let index = text.indexOf(term); index !== -1; index = text.indexOf(term, index + 1)) {
-    const atStart = wordStarts ? wordStarts[index] : index === 0 || text[index - 1] === ' ';
-    if (atStart) return true;
-  }
-  return false;
-}
 
 /** 상황 사전의 표현 하나가 질문에 들어 있는지 확인합니다. */
 function triggerMatches(trigger: string, q: string, tokens: string[], compactQuery: string, wordStarts: boolean[]): boolean {
@@ -456,6 +326,67 @@ export function findEvidence(query: string, limits = { direct: 3, possible: 2, t
   const direct = sorted.filter((match) => match.tier === 'direct').slice(0, limits.direct);
   const possible = sorted.filter((match) => match.tier === 'possible').slice(0, limits.possible);
   return { matches: [...direct, ...possible].slice(0, limits.total), intents };
+}
+
+// ---------------------------------------------------------------------------
+// 낱말 검색을 위한 추가 찾기 (권리정보 검색 화면에서만 사용)
+//
+// 검색창에는 "알바", "비자", "임금" 처럼 한 낱말만 적는 경우가 많습니다.
+// 위의 findEvidence 는 "등록 키워드가 질문 안에 들어 있는가"를 보기 때문에,
+// 반대로 "검색어가 등록 키워드 안에 들어 있는" 경우("알바" ⊂ "알바 계약서")는 찾지 못합니다.
+//
+// 아래 함수는 그 반대 방향을 찾아 검색 화면에서만 씁니다.
+// AI 근거 찾기(findEvidence)와 AI 답변 규칙은 전혀 건드리지 않습니다.
+// ---------------------------------------------------------------------------
+
+/** 등록된 키워드 안에 검색어가 들어 있는 글을 찾습니다. ("알바" → "알바 계약서" 가 등록된 글) */
+export function findByRegisteredKeyword(query: string, limit = 12): RightsArticle[] {
+  const terms = [normalize(query), ...expandQuery(query).map((term) => normalize(term))]
+    .map((term) => term.trim())
+    .filter((term) => compact(term).length >= 2);
+  if (terms.length === 0) return [];
+
+  return getGroundingArticles()
+    .map((article) => {
+      const hits = article.keywords.filter((keyword) => {
+        const target = normalize(keyword);
+        return terms.some((term) => target === term || includesAtWordStart(target, term));
+      });
+      return { article, score: hits.length };
+    })
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score || a.article.id.localeCompare(b.article.id))
+    .slice(0, limit)
+    .map((item) => item.article);
+}
+
+/**
+ * 검색창의 추천 낱말입니다. 등록된 권리정보의 키워드와 유사 표현 묶음에서만 가져오며,
+ * 새 낱말을 만들어내지 않습니다. (브라우저의 자동완성 목록으로 넘겨 씁니다)
+ */
+export function searchSuggestions(locale: Locale, limit = 40): string[] {
+  const isHangul = /[\p{Script=Hangul}]/u;
+  const isHan = /[\p{Script=Han}]/u;
+  const keep = (term: string) => {
+    if (compact(term).length < 2) return false;
+    if (locale === 'ko') return isHangul.test(term);
+    if (locale === 'zh') return isHan.test(term) && !isHangul.test(term);
+    // 영어·베트남어 화면에서는 한글·한자가 아닌 표현만 보여줍니다.
+    return !isHangul.test(term) && !isHan.test(term);
+  };
+
+  const terms = new Set<string>();
+  for (const article of getGroundingArticles()) {
+    for (const keyword of article.keywords) {
+      if (keep(keyword)) terms.add(keyword);
+    }
+  }
+  for (const group of getSearchSynonyms()) {
+    for (const term of group.terms) {
+      if (keep(term)) terms.add(term);
+    }
+  }
+  return [...terms].sort((a, b) => a.localeCompare(b)).slice(0, limit);
 }
 
 /** 관련 글을 하나도 못 찾았을 때 보여줄 기본 목록 */

@@ -2,12 +2,13 @@
   "nav": {
     "home": "Trang chủ",
     "ask": "Hỏi AI",
-    "askShort": "Đặt câu hỏi",
+    "askShort": "Hỏi AI",
     "rights": "Thông tin quyền",
     "organizations": "Nơi nhận trợ giúp",
     "about": "Giới thiệu",
     "programs": "Chương trình",
     "faq": "Câu hỏi thường gặp",
+    "qna": "Bảng hỏi đáp",
     "emergency": "Khẩn cấp",
     "emergencyQuick": "Khẩn cấp 112·119",
     "emergencyQuickTitle": "Nếu bạn đang gặp nguy hiểm hoặc bị thương nặng, hãy gọi ngay.",
@@ -29,7 +30,8 @@
     "hours": "Giờ làm việc",
     "languages": "Ngôn ngữ hỗ trợ",
     "region": "Khu vực",
-    "reviewedAt": "Ngày rà soát",
+    "reviewedAt": "Lần kiểm tra gần nhất",
+    "createdAt": "Ngày viết đầu tiên",
     "sources": "Nguồn",
     "call": "Gọi điện",
     "visit": "Mở trang web",
@@ -42,9 +44,9 @@
     "staleBody": "Lần rà soát gần nhất đã khá lâu. Vui lòng xác nhận nội dung mới nhất với cơ quan chính thức."
   },
   "home": {
-    "heroTitle": "Hiểu quyền của mình,\nkết nối với sự trợ giúp bạn cần.",
-    "heroSubtitle": "Tìm hiểu dễ dàng về quyền của bạn ở trường học, nơi làm việc, sức khỏe, visa và cuộc sống hằng ngày, và tìm nơi có thể giúp bạn.",
-    "ctaAsk": "Hỏi về tình huống của tôi",
+    "heroTitle": "Biết mình có quyền gì,\nvà biết hỏi ở đâu.",
+    "heroSubtitle": "Trường học, việc làm, sức khỏe, cư trú — những điều khó tự tìm hiểu một mình được viết lại bằng lời dễ hiểu, và nối bạn tới nơi thật sự có thể giúp.",
+    "ctaAsk": "Kể tình huống của tôi cho AI",
     "ctaRights": "Tìm thông tin quyền",
     "askPlaceholder": "Ví dụ: Tôi đã làm thêm nhưng vẫn chưa được trả lương.",
     "askButton": "Tìm hiểu quyền của tôi",
@@ -56,10 +58,22 @@
     "aiTitle": "Hướng dẫn AI hoạt động thế nào",
     "aiSubtitle": "Được thiết kế để AI không tự bịa ra thông tin.",
     "aiPoints": [
-      { "title": "Chỉ dùng tài liệu đã đăng ký", "body": "Chỉ trả lời dựa trên thông tin quyền và tổ chức mà LINKRIGHTS đã rà soát và đăng ký." },
-      { "title": "Không tự tạo thông tin tổ chức", "body": "Tên và số điện thoại tổ chức chỉ lấy từ danh sách đã đăng ký." },
-      { "title": "Không biết thì nói không biết", "body": "Khi thiếu căn cứ, AI không đoán mà chỉ cho bạn biết nên hỏi ở đâu." },
-      { "title": "Ưu tiên tình huống nguy hiểm", "body": "Nếu có dấu hiệu khẩn cấp, số liên lạc khẩn cấp sẽ hiện trước câu trả lời thông thường." }
+      {
+        "title": "Chỉ dùng tài liệu đã đăng ký",
+        "body": "Chỉ trả lời dựa trên thông tin quyền và tổ chức mà LINKRIGHTS đã rà soát và đăng ký."
+      },
+      {
+        "title": "Không tự tạo thông tin tổ chức",
+        "body": "Tên và số điện thoại tổ chức chỉ lấy từ danh sách đã đăng ký."
+      },
+      {
+        "title": "Không biết thì nói không biết",
+        "body": "Khi thiếu căn cứ, AI không đoán mà chỉ cho bạn biết nên hỏi ở đâu."
+      },
+      {
+        "title": "Ưu tiên tình huống nguy hiểm",
+        "body": "Nếu có dấu hiệu khẩn cấp, số liên lạc khẩn cấp sẽ hiện trước câu trả lời thông thường."
+      }
     ],
     "impactTitle": "LINKRIGHTS qua những con số",
     "impactParticipants": "Thanh thiếu niên tham gia",
@@ -71,6 +85,8 @@
     "impactLanguages": "Ngôn ngữ hỗ trợ",
     "impactLanguagesUnit": "",
     "impactNote": "Số người tham gia tính đến {date}. Số bài thông tin quyền, cơ quan và ngôn ngữ được đếm trực tiếp từ nội dung đã đăng trên trang.",
+    "qnaTitle": "Bảng hỏi đáp",
+    "qnaSubtitle": "Xem câu hỏi của người khác và câu trả lời của nhóm vận hành. Bạn cũng có thể tự gửi câu hỏi.",
     "featuredTitle": "Thông tin quyền được xem nhiều",
     "featuredSubtitle": "Bắt đầu từ những tình huống được hỏi nhiều nhất.",
     "orgTitle": "Nơi bạn thực sự nhận được trợ giúp",
@@ -99,7 +115,11 @@
     "myQuestion": "Câu hỏi của bạn",
     "privacyTitle": "Đừng nhập thông tin cá nhân",
     "privacyBody": "Đừng nhập tên, số điện thoại, địa chỉ, số hộ chiếu, số đăng ký người nước ngoài, số visa hay hồ sơ y tế. Chỉ cần mô tả tình huống là đủ.",
-    "disclaimer": "Câu trả lời của AI chỉ là hướng dẫn ban đầu. Hãy xác nhận các quyết định pháp lý, y tế, cư trú với cơ quan chính thức.",
+    "disclaimer": "Câu trả lời của AI giúp bạn định hướng ban đầu. Trước những quyết định quan trọng về pháp luật, y tế hay cư trú, hãy hỏi lại cơ quan liên quan một lần nữa.",
+    "sessionTitle": "Cuộc trò chuyện này chỉ nằm trong thẻ (tab) đang mở.",
+    "sessionBody": "Dù bạn tải lại trang hay quay lại, câu trả lời vừa nhận vẫn còn. Nó biến mất khi bạn đóng thẻ, và nội dung câu hỏi không được lưu trên máy chủ.",
+    "sessionRestored": "Chúng tôi đã mở lại cuộc trò chuyện bạn đang thực hiện.",
+    "clearConversation": "Xóa cuộc trò chuyện",
     "charsLeft": "ký tự còn lại",
     "resultSituation": "Nhìn vào tình huống của bạn",
     "resultRights": "Quyền bạn cần biết",
@@ -153,7 +173,58 @@
     "how1": "Chọn lĩnh vực bạn quan tâm trong mục Thông tin quyền và đọc.",
     "how2": "Kể về tình huống của bạn để tìm thông tin quyền và cơ quan liên quan.",
     "how3": "Gọi điện hoặc truy cập trang web của cơ quan để được giúp đỡ.",
-    "emailNote": "Yêu cầu được gửi qua email"
+    "emailNote": "Yêu cầu được gửi qua email",
+    "partnerLabel": "Cùng đồng hành"
+  },
+  "homeStart": {
+    "title": "Bạn đang cần gì?",
+    "subtitle": "Hãy chọn một trong bốn mục phù hợp với tình huống của bạn để bắt đầu.",
+    "rightsTitle": "Thông tin về quyền",
+    "rightsBody": "Khi bạn muốn biết mình có quyền gì",
+    "askTitle": "Hỏi AI",
+    "askBody": "Khi bạn muốn tự kể tình huống của mình",
+    "checklistTitle": "Danh sách kiểm tra",
+    "checklistBody": "Khi bạn muốn kiểm tra từng việc một",
+    "orgTitle": "Nơi nhận trợ giúp",
+    "orgBody": "Khi bạn muốn được tư vấn hoặc giúp đỡ thật sự",
+    "emergencyNote": "Nếu bạn đang gặp nguy hiểm hoặc bị thương nặng, đừng chờ — hãy gọi ngay.",
+    "emergencyCta": "Xem trợ giúp khẩn cấp"
+  },
+  "homeUpdates": {
+    "title": "Mới thêm hoặc mới kiểm tra gần đây",
+    "subtitle": "Thay vì số lượng người dùng, chúng tôi cho bạn thấy đúng những gì đang được cập nhật.",
+    "typeChecklist": "Danh sách kiểm tra",
+    "typeArticle": "Thông tin về quyền",
+    "typeQna": "Hỏi và đáp",
+    "createdLabel": "Mới thêm",
+    "reviewedLabel": "Đã kiểm tra",
+    "note": "Ngày ở đây là ngày viết đầu tiên và lần kiểm tra gần nhất ghi trên từng tài liệu, thay đổi mỗi khi chúng tôi sửa.",
+    "countsLabel": "Hiện đang có"
+  },
+  "prefs": {
+    "title": "Hiển thị",
+    "fontLabel": "Cỡ chữ",
+    "fontSmaller": "Chữ nhỏ hơn",
+    "fontLarger": "Chữ lớn hơn",
+    "fontReset": "Về cỡ chữ mặc định",
+    "fontNames": {
+      "small": "Nhỏ",
+      "base": "Mặc định",
+      "large": "Lớn",
+      "xlarge": "Lớn nhất"
+    },
+    "themeLabel": "Độ sáng màn hình",
+    "themeSystem": "Theo thiết bị",
+    "themeLight": "Sáng",
+    "themeDark": "Tối",
+    "note": "Lựa chọn của bạn chỉ được lưu trong trình duyệt này và không gửi lên máy chủ."
+  },
+  "helpful": {
+    "question": "Nội dung này có hữu ích không?",
+    "yes": "Có ích",
+    "no": "Chưa đủ",
+    "thanks": "Cảm ơn bạn đã cho chúng tôi biết. Chúng tôi sẽ dùng để cải thiện nội dung.",
+    "note": "Chúng tôi chỉ đếm nút bạn bấm để biết nội dung nào hữu ích. Câu hỏi và câu trả lời không được gửi đi."
   },
   "readAloud": {
     "listen": "Đọc to",
@@ -237,7 +308,66 @@
     "countAll": "{n} cơ quan đã đăng ký",
     "countRegion": "{local} cơ quan ở {region} · {nationwide} cơ quan toàn quốc",
     "noRegional": "Chưa có cơ quan nào đăng ký cho khu vực {region}. Các cơ quan toàn quốc bên dưới có thể dùng ở mọi khu vực. Để tìm Trung tâm Gia đình gần bạn, hãy chọn tỉnh/thành phố trên trang web trong thẻ ‘Trung tâm Gia đình địa phương’.",
-    "groupsLabel": "Loại cơ quan"
+    "groupsLabel": "Lọc theo lĩnh vực",
+    "searchLabel": "Tìm bằng từ khóa",
+    "searchHint": "Không chỉ tên tổ chức, bạn có thể tìm bằng lời của mình. Chúng tôi tìm trong phần mô tả, lĩnh vực, khu vực và thông tin quyền liên kết với tổ chức đó.",
+    "searchPlaceholder": "ví dụ: tiền lương, làm thêm, trường học, visa, bệnh viện, tư vấn",
+    "searchButton": "Tìm",
+    "searchClear": "Xóa điều kiện",
+    "searchCount": "{n} tổ chức phù hợp",
+    "emptyTitle": "Không có kết quả. Hãy thử từ khóa khác.",
+    "emptyBody": "Nếu bạn đã chọn cả lĩnh vực và khu vực, hãy thử chỉ giữ lại một. Bạn cũng có thể thử các từ bên dưới.",
+    "examplesLabel": "Có thể tìm như thế này",
+    "examples": [
+      "tiền lương",
+      "làm thêm",
+      "trường học",
+      "visa",
+      "bệnh viện",
+      "tư vấn",
+      "đăng ký người nước ngoài",
+      "phân biệt đối xử"
+    ]
+  },
+  "qna": {
+    "navLabel": "Bảng hỏi đáp",
+    "title": "Bảng hỏi đáp",
+    "subtitle": "Xem câu hỏi của người khác và câu trả lời của nhóm vận hành. Bạn cũng có thể tự gửi câu hỏi.",
+    "howTitle": "Bảng này được vận hành như sau",
+    "how": "Câu hỏi được nhận qua email. Nhóm vận hành viết câu trả lời, bỏ đi những nội dung có thể nhận ra bạn là ai, rồi mới đăng tại đây. Trang web không lưu trực tiếp nội dung bạn viết, nên không có chuyện được công khai mà chưa qua kiểm tra.",
+    "searchLabel": "Tìm câu hỏi",
+    "searchPlaceholder": "ví dụ: làm thêm, visa, bệnh viện",
+    "count": "{n} câu hỏi",
+    "notice": "Thông báo",
+    "answered": "Đã trả lời",
+    "waiting": "Đang chuẩn bị trả lời",
+    "empty": "Chưa có câu hỏi nào. Bạn có thể là người đầu tiên.",
+    "emptySearch": "Không có kết quả. Hãy thử từ khác.",
+    "guideTitle": "Hãy gửi câu hỏi như sau",
+    "guideIntro": "Nhấn nút bên dưới sẽ mở cửa sổ soạn email. Nếu chưa biết viết gì, hãy theo thứ tự này.",
+    "guideWriteTitle": "Nên viết những điều này",
+    "guideWrite": [
+      "Tình huống của bạn (ví dụ: tôi sắp đi làm thêm)",
+      "Khi nào và ở đâu (ví dụ: tháng trước, ở trường)",
+      "Một điều bạn muốn biết nhất (ví dụ: tôi có bắt buộc phải ký hợp đồng không?)",
+      "Nếu không muốn công khai, hãy ghi “không công khai”"
+    ],
+    "guideAvoidTitle": "Xin đừng viết những điều này",
+    "guideAvoid": "Đừng viết tên, số điện thoại, địa chỉ, tên trường, số hộ chiếu, số đăng ký người nước ngoài hay hồ sơ bệnh án. Không có những thông tin đó bạn vẫn được hỗ trợ.",
+    "sendCta": "Gửi câu hỏi",
+    "sendNote": "Nếu cửa sổ soạn email không mở, hãy gửi trực tiếp tới {email}. Chúng tôi thường trả lời qua email trong vài ngày và đăng cả lên bảng này.",
+    "askedAt": "Ngày hỏi",
+    "answeredAt": "Ngày trả lời",
+    "questionHeading": "Câu hỏi",
+    "answerHeading": "Trả lời của nhóm vận hành",
+    "waitingTitle": "Chúng tôi vẫn đang chuẩn bị câu trả lời",
+    "waitingBody": "Nội dung này cần kiểm tra nên mất thêm chút thời gian. Khi xong chúng tôi sẽ bổ sung vào bài này.",
+    "relatedArticles": "Thông tin quyền nên xem cùng",
+    "relatedOrgs": "Nơi có thể nhận trợ giúp",
+    "backToList": "Về danh sách",
+    "askAiNote": "Nếu bạn cần câu trả lời ngay bây giờ",
+    "mailSubject": "[LINKRIGHTS câu hỏi]",
+    "mailBody": "Hãy viết theo thứ tự dưới đây. Bạn không cần ghi tên, số điện thoại hay địa chỉ.\n\n1. Tình huống của bạn là gì?\n\n2. Việc đó xảy ra khi nào, ở đâu?\n\n3. Điều bạn muốn biết nhất là gì?\n\n4. Nếu không muốn đăng công khai, hãy ghi \"không công khai\" ở đây.\n"
   },
   "checklist": {
     "navLabel": "Danh sách kiểm tra",
@@ -250,6 +380,9 @@
     "noticeTitle": "Dấu kiểm tra chỉ được lưu trên trình duyệt này",
     "notice": "Lưu mà không cần đăng nhập, chỉ trên trình duyệt bạn đang dùng và không gửi lên máy chủ. Sẽ không hiện trên thiết bị khác và sẽ mất nếu bạn xóa dữ liệu duyệt web.",
     "basedOnTitle": "Thông tin quyền làm cơ sở cho danh sách này",
+    "basedOnIntro": "Các mục trong danh sách này lấy từ thông tin quyền bên dưới. Nếu muốn biết vì sao một mục lại quan trọng, hãy mở ra xem.",
+    "doneTitle": "Bạn đã kiểm tra hết các mục",
+    "doneBody": "Bây giờ bạn đã sẵn sàng bắt đầu. Nếu gặp khó khăn giữa chừng, hãy hỏi các nơi trợ giúp bên dưới.",
     "orgsTitle": "Nơi bạn có thể nhận trợ giúp",
     "more": "Xem chi tiết",
     "orgLink": "Xem nơi nhận trợ giúp",
@@ -262,11 +395,26 @@
     "subtitle": "Chúng tôi sẽ cùng bạn tìm xem quyền nào có thể liên quan và bây giờ cần kiểm tra điều gì.",
     "getsTitle": "Câu trả lời sẽ cho bạn biết",
     "gets": [
-      { "title": "Tình huống hiện tại", "body": "Tóm tắt ngắn những gì bạn đã kể." },
-      { "title": "Cần kiểm tra trước", "body": "Những điều làm thay đổi bước tiếp theo." },
-      { "title": "Quyền bạn cần biết", "body": "Giải thích dựa trên thông tin quyền đã đăng ký." },
-      { "title": "Việc bạn có thể làm ngay", "body": "Cần kiểm tra, chuẩn bị gì và hỏi ai, theo thứ tự." },
-      { "title": "Nơi bạn có thể nhận trợ giúp", "body": "Chỉ kết nối với cơ quan đã đăng ký." }
+      {
+        "title": "Tình huống hiện tại",
+        "body": "Tóm tắt ngắn những gì bạn đã kể."
+      },
+      {
+        "title": "Cần kiểm tra trước",
+        "body": "Những điều làm thay đổi bước tiếp theo."
+      },
+      {
+        "title": "Quyền bạn cần biết",
+        "body": "Giải thích dựa trên thông tin quyền đã đăng ký."
+      },
+      {
+        "title": "Việc bạn có thể làm ngay",
+        "body": "Cần kiểm tra, chuẩn bị gì và hỏi ai, theo thứ tự."
+      },
+      {
+        "title": "Nơi bạn có thể nhận trợ giúp",
+        "body": "Chỉ kết nối với cơ quan đã đăng ký."
+      }
     ],
     "trust": "Câu trả lời chỉ dựa trên tài liệu LINKRIGHTS đã kiểm tra và đăng ký, và không thay bạn đưa ra quyết định về pháp luật, visa hay y tế."
   },
@@ -306,11 +454,26 @@
     "title": "Vòng tuần hoàn tích cực LINKRIGHTS muốn xây dựng",
     "subtitle": "Đây là mục tiêu chúng tôi vẫn đang thực hiện: để trải nghiệm của một người trở thành sự giúp đỡ cho người tiếp theo.",
     "steps": [
-      { "title": "Biết quyền của mình", "body": "Qua giáo dục quyền và thông tin quyền, các bạn biết mình có những quyền gì." },
-      { "title": "Tìm sự giúp đỡ khi cần", "body": "Khi có chuyện xảy ra, tìm nơi giúp đỡ qua thông tin quyền, hướng dẫn của AI và kết nối với cơ quan." },
-      { "title": "Tự lựa chọn và hành động", "body": "Là người hiểu quyền của mình, tự chọn trong các cách và hành động." },
-      { "title": "Chia sẻ trải nghiệm", "body": "Cùng chia sẻ trải nghiệm và câu hỏi qua chương trình cố vấn và các hoạt động." },
-      { "title": "Đến với người tiếp theo tốt hơn", "body": "Tiếp tục bổ sung thông tin quyền từ ý kiến của thanh thiếu niên, cố vấn và tổ chức để đến với bạn trẻ tiếp theo tốt hơn." }
+      {
+        "title": "Biết quyền của mình",
+        "body": "Qua giáo dục quyền và thông tin quyền, các bạn biết mình có những quyền gì."
+      },
+      {
+        "title": "Tìm sự giúp đỡ khi cần",
+        "body": "Khi có chuyện xảy ra, tìm nơi giúp đỡ qua thông tin quyền, hướng dẫn của AI và kết nối với cơ quan."
+      },
+      {
+        "title": "Tự lựa chọn và hành động",
+        "body": "Là người hiểu quyền của mình, tự chọn trong các cách và hành động."
+      },
+      {
+        "title": "Chia sẻ trải nghiệm",
+        "body": "Cùng chia sẻ trải nghiệm và câu hỏi qua chương trình cố vấn và các hoạt động."
+      },
+      {
+        "title": "Đến với người tiếp theo tốt hơn",
+        "body": "Tiếp tục bổ sung thông tin quyền từ ý kiến của thanh thiếu niên, cố vấn và tổ chức để đến với bạn trẻ tiếp theo tốt hơn."
+      }
     ],
     "loopNote": "Và vòng tuần hoàn lại bắt đầu, khi bạn trẻ tiếp theo biết về quyền của mình."
   },
@@ -349,7 +512,13 @@
     "placeholder": "Ví dụ: lương, gia hạn visa, bệnh viện",
     "button": "Tìm",
     "examplesLabel": "Thử tìm như sau",
-    "examples": ["không trả lương", "gia hạn visa", "bệnh viện", "hợp đồng lao động", "phân biệt đối xử"],
+    "examples": [
+      "không trả lương",
+      "gia hạn visa",
+      "bệnh viện",
+      "hợp đồng lao động",
+      "phân biệt đối xử"
+    ],
     "resultsFor": "Kết quả cho “{q}”",
     "resultCount": "{n} kết quả",
     "directTitle": "Thông tin quyền tìm được",
@@ -442,34 +611,50 @@
     "subtitle": "Cách LINKRIGHTS xử lý thông tin, nói bằng lời dễ hiểu.",
     "sections": [
       {
-        "title": "Trang này không có tài khoản",
-        "body": "LINKRIGHTS không có đăng ký và đăng nhập, nên chúng tôi không thu thập tên, email hay số điện thoại."
+        "title": "Không có đăng ký thành viên",
+        "body": "LINKRIGHTS không có chức năng đăng ký hay đăng nhập. Trên trang này không có ô nhập nào hỏi tên, email hay số điện thoại của bạn."
       },
       {
-        "title": "Câu hỏi AI không được lưu gắn với cá nhân",
-        "body": "Câu hỏi được gửi tới dịch vụ AI (OpenAI) để tạo câu trả lời và không được lưu gắn với người dùng nào. Có thể giữ lại ghi nhận kỹ thuật tối thiểu (thời điểm và loại lỗi) để khắc phục sự cố."
+        "title": "Câu hỏi và câu trả lời AI không được lưu trên máy chủ",
+        "body": "Câu hỏi của bạn được gửi tới dịch vụ AI (OpenAI) để tạo câu trả lời. Cả câu hỏi lẫn câu trả lời đều không được lưu trên máy chủ LINKRIGHTS — chúng tôi không có cơ sở dữ liệu để lưu. Để một người không hỏi quá nhiều lần trong thời gian ngắn, máy chủ tạm đếm số lần theo địa chỉ internet (IP) trong bộ nhớ. Con số này mất đi khi máy chủ khởi động lại và không gắn với nội dung câu hỏi. Khi có lỗi, một ghi chép kỹ thuật tối thiểu (thời điểm và loại lỗi) có thể còn lại trong nhật ký máy chủ."
       },
       {
-        "title": "Đừng nhập những thông tin này",
-        "body": "Đừng nhập thông tin nhận dạng như tên, liên hệ, địa chỉ, số hộ chiếu, số đăng ký người nước ngoài, số visa hay hồ sơ y tế. Chỉ mô tả tình huống là đủ."
+        "title": "Những gì chỉ lưu trong trình duyệt này",
+        "body": "Bốn mục sau không được gửi lên máy chủ mà chỉ lưu trong trình duyệt bạn đang dùng: (1) thông tin quyền bạn lưu bằng dấu sao, (2) các mục bạn đã tích trong danh sách kiểm tra, (3) cài đặt hiển thị (cỡ chữ, sáng/tối), (4) việc bạn đã bấm “Có hữu ích không?” hay chưa. Cuộc trò chuyện với AI chỉ nằm trong thẻ đang mở và biến mất khi bạn đóng thẻ. Trên thiết bị hay trình duyệt khác sẽ không thấy."
       },
       {
-        "title": "Không quảng cáo, không cookie theo dõi",
-        "body": "Trang này không có quảng cáo và không dùng cookie nhằm theo dõi người truy cập."
+        "title": "Khi bạn muốn xóa những gì đã lưu",
+        "body": "Thông tin quyền đã lưu có thể xóa ở màn hình “Đã lưu”, danh sách kiểm tra có thể dùng “Bỏ tất cả dấu tích”. Cuộc trò chuyện AI biến mất khi bạn bấm “Câu hỏi mới” hoặc đóng thẻ. Muốn xóa tất cả cùng lúc, hãy xóa dữ liệu trang này trong cài đặt trình duyệt. Vì máy chủ không có những thông tin này nên cũng không có gì để bạn yêu cầu chúng tôi xóa."
+      },
+      {
+        "title": "Nút “Có hữu ích không?” gửi đi những gì",
+        "body": "Khi bấm, chỉ bốn điều được gửi đi: hữu ích hay chưa đủ, ngôn ngữ của trang, thuộc lĩnh vực nào hoặc thông tin quyền nào, và câu trả lời AI có dựa trên tài liệu đã đăng ký hay không. Nội dung câu hỏi và câu trả lời không được gửi, và chúng tôi không biết ai đã bấm. Ghi chép này chỉ là một dòng trong nhật ký máy chủ (không phải cơ sở dữ liệu) và chỉ dùng để đếm xem nội dung nào hữu ích. Không bấm thì không có gì được gửi đi."
+      },
+      {
+        "title": "Email gửi tới bảng hỏi đáp",
+        "body": "Câu hỏi cho bảng hỏi đáp không được lưu thẳng trên trang mà gửi tới nhóm vận hành qua email. Sau khi đọc, chúng tôi bỏ đi tên, thông tin liên lạc và những gì có thể nhận ra bạn, rồi chỉ đăng câu hỏi và câu trả lời. Nếu bạn ghi “không công khai”, chúng tôi chỉ trả lời qua email. Email của bạn còn trong hộp thư liên hệ, nên nếu muốn xóa hãy báo cho chúng tôi trong chính email đó."
+      },
+      {
+        "title": "Xin đừng nhập những thông tin này",
+        "body": "Đừng nhập tên, thông tin liên lạc, địa chỉ, số hộ chiếu, số đăng ký người nước ngoài, số visa hay hồ sơ bệnh án. Chỉ cần kể tình huống là đủ để được hướng dẫn. Trước khi gửi, nếu thấy những nội dung như vậy chúng tôi sẽ nhắc bạn một lần nữa, nhưng không thể phát hiện mọi trường hợp."
+      },
+      {
+        "title": "Không dùng cookie và quảng cáo",
+        "body": "Trang này không đăng quảng cáo và không dùng cookie theo dõi hay công cụ phân tích truy cập. Từ khóa tìm kiếm và khu vực bạn chọn chỉ nằm trên thanh địa chỉ, không được lưu trên máy chủ."
       },
       {
         "title": "Liên kết bên ngoài",
-        "body": "Các trang cơ quan chính thức do chính cơ quan đó vận hành và áp dụng chính sách riêng của họ."
+        "body": "Các trang của cơ quan chính thức mà chúng tôi giới thiệu do chính cơ quan đó vận hành. Việc xử lý thông tin cá nhân ở đó theo chính sách riêng của họ."
       },
       {
         "title": "Liên hệ",
-        "body": "Nếu có thắc mắc về quyền riêng tư, hãy email cho chúng tôi theo địa chỉ ở chân trang."
+        "body": "Nếu có thắc mắc về thông tin cá nhân, xin liên hệ qua email bên dưới."
       }
     ]
   },
   "footer": {
     "aboutSite": "Nền tảng thông tin về quyền dành cho thanh thiếu niên có nền tảng di trú",
-    "notAdvice": "Thông tin ở đây mang tính tham khảo, không phải tư vấn pháp lý hay y tế. Hãy xác nhận với cơ quan chính thức.",
+    "notAdvice": "Những nội dung ở đây chỉ để tham khảo. Trước khi quyết định điều quan trọng, hãy hỏi lại cơ quan liên quan một lần nữa.",
     "contact": "Liên hệ",
     "instagram": "Instagram",
     "blog": "Blog",

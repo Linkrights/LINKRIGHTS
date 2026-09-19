@@ -17,7 +17,7 @@ import { PageHeader, Section } from '@/components/Section';
 import { articleHref, getOrganizations, getRightsCategories, resolveArticle } from '@/lib/content';
 import { detectEmergency } from '@/lib/emergency';
 import { getMessages, pick, toLocale } from '@/lib/i18n';
-import { findEvidence, findRelevantArticles, findSimilarArticles } from '@/lib/search';
+import { findByRegisteredKeyword, findEvidence, findRelevantArticles, findSimilarArticles, searchSuggestions } from '@/lib/search';
 import type { RightsArticle } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
@@ -57,12 +57,16 @@ export default async function RightsSearchPage({
   const q = (Array.isArray(rawQuery) ? rawQuery[0] ?? '' : rawQuery ?? '').trim().slice(0, MAX_SEARCH_LENGTH);
 
   const { matches } = q ? findEvidence(q, SEARCH_LIMITS) : { matches: [] };
-  const direct = matches.filter((match) => match.tier === 'direct').map((match) => match.article);
+  const matchedIds = new Set(matches.map((match) => match.article.id));
+  // "알바", "비자" 처럼 한 낱말만 적은 경우: 등록된 키워드 안에 그 낱말이 들어 있는 글도 함께 찾습니다.
+  // (AI 근거 찾기와는 별개의, 검색 화면 전용 보강입니다)
+  const byKeyword = q ? findByRegisteredKeyword(q, SEARCH_LIMITS.direct).filter((article) => !matchedIds.has(article.id)) : [];
+  const direct = [...matches.filter((match) => match.tier === 'direct').map((match) => match.article), ...byKeyword];
   const possible = matches.filter((match) => match.tier === 'possible').map((match) => match.article);
   // 직접 맞는 글이 없을 때만, 제목·요약에 비슷한 낱말이 있는 글을 참고로 보여줍니다.
-  const shownIds = new Set(matches.map((match) => match.article.id));
+  const shownIds = new Set([...matchedIds, ...byKeyword.map((article) => article.id)]);
   const similar =
-    q && matches.length === 0
+    q && direct.length === 0 && possible.length === 0
       ? findRelevantArticles(q, 6)
           .filter((match) => match.score >= 1 && !shownIds.has(match.article.id))
           .map((match) => match.article)
@@ -98,7 +102,7 @@ export default async function RightsSearchPage({
 
       <Section>
         <div className="max-w-3xl">
-          <RightsSearchForm locale={locale} defaultValue={q} />
+          <RightsSearchForm locale={locale} defaultValue={q} suggestions={searchSuggestions(locale)} />
         </div>
 
         {/* 검색어가 위험한 상황을 뜻하면 긴급 안내를 먼저 보여줍니다. (검색 결과는 그대로 보여줍니다) */}

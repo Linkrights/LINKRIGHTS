@@ -15,6 +15,8 @@ import type {
   Partner,
   PartnersFile,
   ProgramsFile,
+  QnaFile,
+  QnaPost,
   ResolvedArticle,
   RightsArticle,
   SearchIntent,
@@ -191,6 +193,24 @@ export const getPartners = cache((): Partner[] => {
   if (!fs.existsSync(path.join(CONTENT_DIR, 'partners.json'))) return [];
   return (readJson<PartnersFile>('partners.json').partners ?? []).filter((partner) => partner.status === 'published');
 });
+
+/**
+ * 질문 게시판(content/qna.json)의 공개된 글입니다.
+ * 공지를 먼저, 그다음 질문을 최근 날짜 순으로 돌려줍니다. 파일이 없으면 빈 목록입니다.
+ */
+export const getQnaPosts = cache((): QnaPost[] => {
+  if (!fs.existsSync(path.join(CONTENT_DIR, 'qna.json'))) return [];
+  const posts = (readJson<QnaFile>('qna.json').posts ?? []).filter((post) => post.status === 'published');
+  const notices = posts.filter((post) => post.kind === 'notice');
+  const questions = posts
+    .filter((post) => post.kind !== 'notice')
+    .sort((a, b) => (a.asked_at < b.asked_at ? 1 : a.asked_at > b.asked_at ? -1 : a.id.localeCompare(b.id)));
+  return [...notices, ...questions];
+});
+
+export function getQnaPost(id: string): QnaPost | undefined {
+  return getQnaPosts().find((post) => post.id === id);
+}
 
 /** 권리정보 상세 페이지 주소 */
 export function articleHref(locale: Locale, article: RightsArticle): string {

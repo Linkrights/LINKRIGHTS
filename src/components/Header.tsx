@@ -11,6 +11,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from './Icon';
 import { Logo } from './Logo';
+import { Preferences } from './Preferences';
 import { LOCALES, getMessages, localeNames, type Locale } from '@/lib/i18n';
 
 /** 등록된 긴급 기관의 이름과 번호 (layout.tsx 가 content/organizations.json 에서 넘겨줍니다) */
@@ -72,7 +73,9 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
     { href: `/${locale}/organizations`, label: t.nav.organizations },
     { href: `/${locale}/programs`, label: t.nav.programs },
     { href: `/${locale}/about`, label: t.nav.about },
-    // 넓은 메뉴는 글자가 긴 언어(베트남어 등)에서 공간이 부족해 휴대폰 메뉴에만 넣습니다. (넓은 화면에서는 아래쪽 정보·홈 "나는 누구인가요?"·소개 페이지에서 연결)
+    // 넓은 메뉴는 글자가 긴 언어(베트남어 등)에서 공간이 부족해 휴대폰 메뉴에만 넣습니다.
+    // (넓은 화면에서는 아래쪽 정보·홈 "나는 누구인가요?"·홈 질문 게시판 영역·소개 페이지에서 연결)
+    { href: `/${locale}/qna`, label: t.qna.navLabel, mobileOnly: true },
     { href: `/${locale}/get-involved`, label: t.nav.getInvolved, mobileOnly: true },
   ];
 
@@ -184,6 +187,9 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
 
         <div className="ml-auto hidden items-center gap-2 lg:flex">
           {sosButton('h-10 px-2.5 text-sm', 'desktop')}
+
+          {/* 보기 설정: 글자 크기와 밝은 화면/어두운 화면 */}
+          <Preferences locale={locale} onDark={dark} />
 
           <div className="w-36">
             <label htmlFor="header-language" className="sr-only">
@@ -309,6 +315,11 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
                 {t.nav.language}
               </label>
               {languageSelect('mobile-language', false)}
+            </div>
+
+            {/* 보기 설정: 휴대폰에서는 메뉴 안에서 바로 고를 수 있게 펼쳐 둡니다. */}
+            <div className="border-t border-[var(--color-line)] pt-4">
+              <Preferences locale={locale} variant="inline" />
             </div>
           </div>
         </nav>

@@ -90,6 +90,15 @@ if (Array.isArray(organizations)) {
     if (!isDate(org.reviewed_at)) {
       fail(label, '"reviewed_at" 은 2026-09-06 처럼 연-월-일 형식이어야 합니다.');
     }
+    // 검색용 낱말(선택). 적는다면 목록이어야 하고, 너무 짧은 낱말은 아무 기관이나 걸리므로 막습니다.
+    if (org.keywords !== undefined) {
+      if (!Array.isArray(org.keywords)) fail(label, '"keywords" 는 대괄호 [ ] 로 된 목록이어야 합니다.');
+      for (const keyword of Array.isArray(org.keywords) ? org.keywords : []) {
+        if (typeof keyword !== 'string' || keyword.replace(/\s/g, '').length < 2) {
+          fail(label, `"keywords" 의 낱말은 띄어쓰기를 빼고 두 글자 이상이어야 합니다: ${keyword}`);
+        }
+      }
+    }
     if (!org.owner) warn(label, '"owner"(담당자)가 비어 있습니다.');
     if (org.website && !/^https?:\/\//.test(org.website)) {
       fail(label, '"website" 는 https:// 로 시작해야 합니다.');
@@ -128,6 +137,14 @@ if (fs.existsSync(rightsDir)) {
     }
     if (!isDate(article.reviewed_at)) {
       fail(label, '"reviewed_at" 은 2026-09-06 처럼 연-월-일 형식이어야 합니다.');
+    }
+    // 최초 작성일은 선택입니다. 확인된 날짜만 적고, 적었다면 형식과 순서가 맞아야 합니다.
+    if (article.created_at !== undefined) {
+      if (!isDate(article.created_at)) {
+        fail(label, '"created_at"(최초 작성일)은 2026-09-06 처럼 연-월-일 형식이어야 합니다. 모르면 아예 적지 마세요.');
+      } else if (isDate(article.reviewed_at) && article.created_at > article.reviewed_at) {
+        fail(label, `"created_at"(${article.created_at})이 "reviewed_at"(${article.reviewed_at})보다 뒤입니다.`);
+      }
     }
     if (!Array.isArray(article.sources) || article.sources.length === 0) {
       warn(label, '"sources"(출처)가 비어 있습니다. 공식 출처를 최소 한 개 넣어주세요.');
@@ -396,7 +413,46 @@ if (fs.existsSync(checklistDir)) {
   }
 }
 
-// ---------- 4-9. 하단 SNS·카카오톡 채널 주소(site.json) ----------
+// ---------- 4-9. 질문 게시판(qna.json) ----------
+// 운영팀이 검토해 올린 글만 들어갑니다. 연결하는 권리정보·기관은 등록된 것이어야 합니다.
+const qnaPath = path.join(CONTENT, 'qna.json');
+if (fs.existsSync(qnaPath)) {
+  const file = readJson(qnaPath, 'content/qna.json');
+  const posts = file?.posts;
+  if (file && !Array.isArray(posts)) fail('content/qna.json', '"posts" 는 대괄호 [ ] 로 된 목록이어야 합니다.');
+  const postIds = new Set();
+  for (const post of Array.isArray(posts) ? posts : []) {
+    const label = `content/qna.json > ${post.id ?? '(id 없음)'}`;
+    if (!post.id) fail(label, '"id" 가 반드시 필요합니다.');
+    else if (postIds.has(post.id)) fail(label, `글 id 가 중복됩니다: ${post.id}`);
+    else postIds.add(post.id);
+    if (!VALID_STATUS.includes(post.status)) fail(label, '"status" 는 published 또는 draft 여야 합니다.');
+    if (!['notice', 'question'].includes(post.kind)) fail(label, '"kind" 는 notice 또는 question 이어야 합니다.');
+    if (!isDate(post.asked_at)) fail(label, '"asked_at" 은 2026-09-06 처럼 연-월-일 형식이어야 합니다.');
+    if (post.answered_at !== undefined && !isDate(post.answered_at)) {
+      fail(label, '"answered_at" 은 2026-09-06 처럼 연-월-일 형식이어야 합니다.');
+    }
+    if (post.answered_at && isDate(post.asked_at) && post.answered_at < post.asked_at) {
+      fail(label, `"answered_at"(${post.answered_at})이 "asked_at"(${post.asked_at})보다 앞입니다.`);
+    }
+    // 답이 있는데 누가 언제 답했는지가 없으면 신뢰하기 어렵습니다.
+    if (post.answer?.ko?.trim() && !post.answered_at) fail(label, '답(answer)이 있으면 "answered_at"(답한 날)도 필요합니다.');
+    hasKo(post.author, label, 'author');
+    hasKo(post.title, label, 'title');
+    hasKo(post.question, label, 'question');
+    if (post.category !== undefined && !categoryIds.has(post.category)) {
+      fail(label, `"category" 값(${post.category})이 categories.json 에 없습니다.`);
+    }
+    for (const id of post.articles ?? []) {
+      if (!articleIds.has(id)) fail(label, `"articles" 에 등록되지 않은 권리정보 id 가 있습니다: ${id}`);
+    }
+    for (const id of post.organizations ?? []) {
+      if (!orgIds.has(id)) fail(label, `"organizations" 에 등록되지 않은 기관 id 가 있습니다: ${id}`);
+    }
+  }
+}
+
+// ---------- 4-10. 하단 SNS·카카오톡 채널 주소(site.json) ----------
 {
   const site = readJson(path.join(CONTENT, 'site.json'), 'content/site.json');
   for (const [key, link] of Object.entries(site?.social ?? {})) {

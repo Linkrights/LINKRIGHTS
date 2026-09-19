@@ -23,7 +23,14 @@ export type IconName =
   | 'pause'
   | 'stop'
   | 'star'
-  | 'map-pin';
+  | 'map-pin'
+  | 'sun'
+  | 'moon'
+  | 'text-size'
+  | 'monitor'
+  | 'thumb-up'
+  | 'thumb-down'
+  | 'message';
 
 const paths: Record<IconName, ReactNode> = {
   briefcase: (
@@ -110,6 +117,43 @@ const paths: Record<IconName, ReactNode> = {
     <>
       <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" />
       <circle cx="12" cy="10" r="2.5" />
+    </>
+  ),
+  sun: (
+    <>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6" />
+    </>
+  ),
+  moon: <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z" />,
+  'text-size': (
+    <>
+      <path d="M3 7V5.5h9V7M7.5 5.5V19M5.5 19h4" />
+      <path d="M13 12v-1h8v1M17 11v8M15 19h4" />
+    </>
+  ),
+  monitor: (
+    <>
+      <rect x="3" y="4" width="18" height="12" rx="2" />
+      <path d="M9 20h6M12 16v4" />
+    </>
+  ),
+  'thumb-up': (
+    <>
+      <path d="M7 10.5 11 3a2.2 2.2 0 0 1 2.2 2.2V9h4.6a2 2 0 0 1 2 2.3l-1 6A2 2 0 0 1 16.8 19H7z" />
+      <rect x="3" y="10.5" width="4" height="8.5" rx="1" />
+    </>
+  ),
+  'thumb-down': (
+    <>
+      <path d="M7 13.5 11 21a2.2 2.2 0 0 0 2.2-2.2V15h4.6a2 2 0 0 0 2-2.3l-1-6A2 2 0 0 0 16.8 5H7z" />
+      <rect x="3" y="5" width="4" height="8.5" rx="1" />
+    </>
+  ),
+  message: (
+    <>
+      <path d="M4 5.5h16a1 1 0 0 1 1 1V16a1 1 0 0 1-1 1H9l-4.5 3.5V17H4a1 1 0 0 1-1-1V6.5a1 1 0 0 1 1-1z" />
+      <path d="M8 9.5h8M8 13h5" />
     </>
   ),
 };

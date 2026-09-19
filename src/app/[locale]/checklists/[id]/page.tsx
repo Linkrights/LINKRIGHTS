@@ -104,7 +104,17 @@ export default async function ChecklistPage({ params }: { params: Promise<{ loca
           <ChecklistBox
             checklistId={checklist.id}
             items={items}
-            labels={{ progress: t.checklist.progress, reset: t.checklist.reset }}
+            labels={{
+              progress: t.checklist.progress,
+              reset: t.checklist.reset,
+              doneTitle: t.checklist.doneTitle,
+              doneBody: t.checklist.doneBody,
+            }}
+            done={
+              <Link href={`/${locale}/organizations`} className="lr-btn lr-btn-primary lr-btn-sm lr-press">
+                {t.checklist.orgLink} <Icon name="arrow-right" size={16} />
+              </Link>
+            }
           />
           {body.note && <p className="text-[15px] leading-relaxed text-ink-500">{body.note}</p>}
         </div>
@@ -112,6 +122,9 @@ export default async function ChecklistPage({ params }: { params: Promise<{ loca
         {basedOn.length > 0 && (
           <section>
             <h2 className={sectionTitle}>{t.checklist.basedOnTitle}</h2>
+            {/* 왜 이 항목들인지: 항목은 아래 등록 권리정보에서 가져왔다는 점을 분명히 밝힙니다.
+                (등록된 자료에 없는 기관 기준이나 근거를 만들어 쓰지 않습니다) */}
+            <p className="mt-2 max-w-3xl text-[15px] leading-relaxed text-ink-700">{t.checklist.basedOnIntro}</p>
             <ul className="mt-5 grid gap-3 sm:grid-cols-2">
               {basedOn.map((article) => (
                 <li key={article.id}>

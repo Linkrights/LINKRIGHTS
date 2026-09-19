@@ -6,7 +6,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Logo } from './Logo';
-import { getOrganizations, getSite } from '@/lib/content';
+import { getOrganizations, getPartners, getSite } from '@/lib/content';
 import { getMessages, pick, type Locale } from '@/lib/i18n';
 
 const linkClass = 'text-[15px] text-ink-700 hover:text-brand-700 hover:underline';
@@ -55,6 +55,9 @@ export function Footer({ locale }: { locale: Locale }) {
   const feedbackHref = `mailto:${site.contactEmail}?subject=${encodeURIComponent(t.footerNav.feedbackSubject)}`;
   const operator = pick(site.operator, locale);
   const locations = site.locations ?? [];
+  // 운영 주체와 함께 일하는 기관을 있는 그대로 보여줍니다.
+  // 관계 표시(예: 협력기관)는 content/partners.json 의 relation 값을 그대로 쓰며, 여기서 새로 만들지 않습니다.
+  const partners = getPartners();
 
   const aboutLinks = [
     { href: `/${locale}/about`, label: t.footerNav.aboutLink },
@@ -67,6 +70,7 @@ export function Footer({ locale }: { locale: Locale }) {
     { href: `/${locale}/rights`, label: t.nav.rights },
     { href: `/${locale}/organizations`, label: t.nav.organizations },
     { href: `/${locale}/checklists`, label: t.checklist.navLabel },
+    { href: `/${locale}/qna`, label: t.qna.navLabel },
     { href: `/${locale}/saved`, label: t.saved.navLabel },
   ];
 
@@ -238,6 +242,16 @@ export function Footer({ locale }: { locale: Locale }) {
               </a>
             </span>
           </p>
+          {/* 함께 일하는 기관: content/partners.json 에 등록된 기관과 그 관계만 그대로 보여줍니다. */}
+          {partners.length > 0 && (
+            <p className="flex flex-wrap gap-x-2 gap-y-1">
+              {partners.map((partner) => (
+                <span key={partner.id}>
+                  {pick(partner.relation, locale)}: {pick(partner.name, locale)}
+                </span>
+              ))}
+            </p>
+          )}
           {locations.length > 0 && (
             <div className="flex gap-1.5">
               <span className="shrink-0">{t.footerNav.locationLabel}:</span>
