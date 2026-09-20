@@ -72,10 +72,12 @@
   --color-sdg4: #c5192d;
   --color-sdg10: #dd1367;
 
-  /* 글씨체: 영어·숫자와 한글이 서로 다른 글꼴로 섞이지 않도록
-     운영체제의 한글 글꼴을 영어용 글꼴(Segoe UI 등)보다 앞에 둡니다. 별도 글꼴 파일은 받지 않습니다. */
-  --font-sans: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕",
-    "Noto Sans KR", "Noto Sans CJK KR", "Noto Sans", Roboto, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  /* 글씨체: 한글과 영어·숫자가 한 글꼴로 이어지도록 Pretendard 를 먼저 씁니다.
+     글꼴 파일은 우리 서버(public/fonts)에서만 받아오며 외부 업체로 접속 기록이 가지 않습니다.
+     내려받기 전이나 실패했을 때는 아래 운영체제 글꼴로 그대로 보입니다. */
+  --font-sans: Pretendard, "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+    "Malgun Gothic", "맑은 고딕", "Noto Sans KR", "Noto Sans CJK KR", "Noto Sans", Roboto, "Segoe UI",
+    "Helvetica Neue", Arial, sans-serif;
 }
 
 :root {
@@ -207,6 +209,33 @@
   --shadow-raised: 0 6px 20px rgba(0, 0, 0, 0.45);
 }
 
+/* ---------- 글꼴 파일 ----------
+   Pretendard (SIL Open Font License 1.1, public/fonts/LICENSE.txt).
+   한글·영문 자주 쓰는 글자만 담은 subset 파일이며, 굵기는 본문(400)·강조(600)·제목(800) 세 가지만 받습니다.
+   font-display: swap — 글꼴을 받는 동안에도 글이 바로 보이고, 다 받으면 바꿔 그립니다.
+   local() 을 먼저 두어, 기기에 Pretendard 가 이미 있으면 내려받지 않습니다. */
+@font-face {
+  font-family: 'Pretendard';
+  src: local('Pretendard Regular'), local('Pretendard'),
+    url('/fonts/Pretendard-Regular.subset.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: local('Pretendard SemiBold'), url('/fonts/Pretendard-SemiBold.subset.woff2') format('woff2');
+  font-weight: 500 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pretendard';
+  src: local('Pretendard ExtraBold'), url('/fonts/Pretendard-ExtraBold.subset.woff2') format('woff2');
+  font-weight: 700 800;
+  font-style: normal;
+  font-display: swap;
+}
 /* ---------- 기본 ---------- */
 @layer base {
   html {
@@ -231,6 +260,7 @@
     font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "Noto Sans CJK SC", var(--font-sans);
   }
   :lang(vi) body {
+    /* 베트남어 성조 기호는 subset 글꼴에 없을 수 있어 기기 글꼴을 먼저 씁니다. */
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
   }
 

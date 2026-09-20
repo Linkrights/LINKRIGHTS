@@ -97,6 +97,14 @@ export default async function LocaleLayout({
   return (
     <html lang={htmlLang[locale]}>
       <head>
+        {/* 본문 글꼴(Pretendard)을 먼저 받아 글자가 늦게 바뀌는 것을 줄입니다. 나머지 굵기는 필요할 때 받습니다. */}
+        <link
+          rel="preload"
+          href="/fonts/Pretendard-Regular.subset.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
         {/* 저장해 둔 보기 설정(글자 크기·어두운 화면)을 화면이 그려지기 전에 먼저 적용합니다.
             이렇게 해야 어두운 화면을 고른 사람에게 흰 화면이 잠깐 번쩍이지 않습니다. */}
         <script dangerouslySetInnerHTML={{ __html: PREFERENCES_INIT_SCRIPT }} />
