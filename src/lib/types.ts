@@ -47,6 +47,18 @@ export interface Organization {
    * 이 기관이 실제로 하는 일에 해당하는 말만 적고, 확인되지 않은 업무를 적지 마세요.
    */
   keywords?: string[];
+  /**
+   * 어떤 주제로 도움을 받을 수 있는지 (도움받을 곳의 "분야" 선택과 카드의 태그). src/lib/topics.ts 의 값만 씁니다.
+   * 기관 설명에 실제로 적힌 일에 해당하는 것만 고릅니다.
+   */
+  topics?: string[];
+  /**
+   * 한 곳이 아니라 지역마다 센터가 있고, 공식 누리집에서 가까운 센터를 찾는 기관 (예: FamilyNet 가족센터).
+   * 카드에 "지역별 센터" 태그가 붙고, 누리집 버튼이 "가까운 센터 찾기"로 바뀝니다.
+   */
+  local_network?: boolean;
+  /** 누리집에서 지역별 이용기관을 찾을 수 있으면 true (누리집 버튼이 "가까운 곳 찾기"로 바뀝니다) */
+  finder?: boolean;
   status: ContentStatus;
   owner: string;
   reviewed_at: string;

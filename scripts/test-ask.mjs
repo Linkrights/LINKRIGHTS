@@ -767,6 +767,44 @@ async function runDeterministic() {
       regions.organizationArea({ region: '서울', nationwide: true }).nationwide === true && regions.servesRegion(multi, '경기') && !regions.servesRegion(multi, '부산'),
     );
     check('지역: 지역 이름은 언어별로 표시', regions.regionName('서울', 'en') === 'Seoul' && regions.regionName('서울', 'zh') === '首尔');
+
+    // 지역 기관은 모두 등록된 출처가 있어야 합니다. (빈 지역을 채우려고 만든 기관이 없도록)
+    const local = organizations.filter((org) => !areaOf(org).nationwide);
+    check('지역 기관: 모두 출처(source_url)가 있음', local.every((org) => /^https?:\/\//.test(org.source_url ?? '')), local.map((o) => o.id).join(', '));
+    // 지역 기관이 없는 지역에서 안내하는 가족센터 찾기는 등록된 FamilyNet 누리집
+    const family = organizations.find((org) => org.local_network && org.finder && org.website);
+    check('가족센터 찾기: 등록된 FamilyNet 누리집으로 연결', Boolean(family) && /^https:\/\/www\.familynet\.or\.kr/.test(family.website), family ? family.website : '없음');
+    check('가족센터: 지역별 센터를 하나씩 등록하지 않고 전국 1곳으로 안내', organizations.filter((org) => org.local_network).every((org) => areaOf(org).nationwide));
+  }
+
+  // 6-3-1) 도움받을 곳 검색어 나누기: 시·도 이름은 지역으로, 찾는 데 쓰이지 않는 말은 빼기
+  {
+    const orgSearch = data.load('src/lib/orgSearch.ts');
+    const searchText = data.load('src/lib/searchText.ts');
+    const areaOf = (org) => data.load('src/lib/regions.ts').organizationArea(org);
+    const parsed = (q) => orgSearch.parseOrgQuery(q);
+    const p1 = parsed('부산에서 임금 문제 도움받고 싶어요');
+    check('기관 검색: "부산에서 임금 문제 도움받고 싶어요" → 부산 + "임금"', p1.region === '부산' && p1.text === '임금', JSON.stringify(p1));
+    check('기관 검색: "부산" → 부산, 남는 말 없음', parsed('부산').region === '부산' && parsed('부산').text === '');
+    check('기관 검색: "경기도 비자" → 경기 + "비자"', parsed('경기도 비자').region === '경기' && parsed('경기도 비자').text === '비자');
+    check('기관 검색: "임금" → 지역 없음', parsed('임금').region === null && parsed('임금').text === '임금');
+    check('기관 검색: 동네 이름("대림동")은 지역으로 바꾸지 않음', parsed('대림동').region === null && parsed('대림동').text === '대림동');
+    check('기관 검색: 기관 이름 속 지역("서울외국인주민센터")은 그대로 검색', parsed('서울외국인주민센터').region === null);
+    const en = parsed('I need help with wages in Busan');
+    check('기관 검색(영어): → 부산 + "wages"', en.region === '부산' && en.text === 'wages', JSON.stringify(en));
+    const zh = parsed('我在釜山想咨询工资问题');
+    check('기관 검색(중국어): 釜山 → 부산', zh.region === '부산' && zh.text.includes('工资'), JSON.stringify(zh));
+    const vi = parsed('tôi muốn được giúp về tiền lương ở Busan');
+    check('기관 검색(베트남어): → 부산 + "tiền lương"', vi.region === '부산' && vi.text === 'tiền lương', JSON.stringify(vi));
+
+    // 등록된 기관 글(이름·설명·주소·검색 낱말)에서 찾기: 대림동 → 서울 기관만, 임금 → 노동 상담 기관
+    const textOf = (org) =>
+      [...Object.values(org.name), ...Object.values(org.description), ...Object.values(org.address ?? {}), ...(org.keywords ?? [])].join(' ');
+    const found = (q) => organizations.filter((org) => searchText.textMatchesQuery(textOf(org), q));
+    const daerim = found('대림동');
+    check('기관 검색: "대림동" → 서울 기관만', daerim.length > 0 && daerim.every((org) => areaOf(org).regions.includes('서울')), daerim.map((o) => o.id).join(', '));
+    const wage = found('임금').map((o) => o.id);
+    check('기관 검색: "임금" → 고용노동부 1350', wage.includes('moel-1350'), wage.join(', '));
   }
 
   // 6-4) 유사 표현(검색용) · 자료가 없을 때 보여줄 비슷한 권리정보(링크만)

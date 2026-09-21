@@ -2,22 +2,29 @@
 
 // 도움받을 곳 목록입니다. 세 가지 방법으로 좁혀 볼 수 있고, 함께 쓸 수 있습니다.
 //   1) 키워드 검색 — "임금", "알바", "학교", "비자", "병원", "상담", "외국인등록", "체류", "차별" 처럼 하고 싶은 말로 찾기
-//   2) 분야 — 긴급 / 청소년기관 / 이주민 지원 / 공공기관 / 법률 상담
-//   3) 내 지역 — 그 지역 기관과 전국 어디서나 이용할 수 있는 기관
+//      "부산에서 임금 문제 도움받고 싶어요"처럼 문장으로 적어도, 시·도 이름은 지역 선택으로 바꾸고
+//      찾는 데 쓰이지 않는 말(도움받고, 싶어요, 문제 …)은 빼고 찾습니다. (src/lib/orgSearch.ts)
+//   2) 지역 — 전체 지역 / 전국 기관만 / 17개 시·도
+//   3) 분야 — 노동·임금 / 법률 / 체류·비자 … (기관 데이터의 topics, src/lib/topics.ts)
+//
+// 지역을 고르면 "그 지역 기관"을 먼저, 이어서 "전국 어디서나 이용할 수 있는 곳"을 보여줍니다.
+// 그 지역으로 등록된 기관이 하나도 없으면, 기관을 만들어 채우지 않고 가족센터 찾기(FamilyNet)로 안내합니다.
+// (FamilyNet 주소와 전화번호도 content/organizations.json 에 등록된 "우리 동네 가족센터"에서 가져옵니다)
 //
 // 검색 대상(기관 이름만 찾지 않습니다):
 //   기관 이름 · 분야 이름 · 설명(이럴 때 도움을 받을 수 있어요) · 지역과 주소 · 지원 언어 · 전화번호
 //   · 그 기관과 연결된 등록 권리정보의 제목과 키워드 (organizations/page.tsx 에서 미리 만들어 넘겨줍니다)
 // 모두 등록된 자료(content/organizations.json, content/rights)에서만 가져오며 새 정보를 만들지 않습니다.
 //
-// 고른 조건은 주소(?region=서울&category=youth&q=임금)에만 남기고 브라우저 저장소나 서버에는 저장하지 않습니다.
+// 고른 조건은 주소(?region=서울&topic=labor&q=임금)에만 남기고 브라우저 저장소나 서버에는 저장하지 않습니다.
 // 기관 카드는 서버에서 그려 넘겨받습니다. 자바스크립트가 없으면 모든 기관이 그대로 보입니다.
 
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { Icon } from './Icon';
 import { Section } from './Section';
-import { servesRegion } from '@/lib/regions';
-import { expandWithGroups, textMatchesQuery, type TermGroup } from '@/lib/searchText';
+import { parseOrgQuery } from '@/lib/orgSearch';
+import { NATIONWIDE, servesRegion } from '@/lib/regions';
+import { expandWithGroups, normalize, textMatchesQuery, type TermGroup } from '@/lib/searchText';
 
 /** 검색어 최대 길이 (검색어가 주소에 남으므로 짧게 제한합니다) */
 export const MAX_ORG_SEARCH_LENGTH = 60;
@@ -26,6 +33,8 @@ export interface DirectoryItem {
   id: string;
   nationwide: boolean;
   regions: string[];
+  /** 이 기관이 도와주는 분야 (organizations.json 의 topics) */
+  topics: string[];
   /** 검색에 쓰는 글(기관 이름·분야·설명·지역·언어·전화·관련 권리정보). 서버에서 미리 만들어 넘깁니다. */
   search: string;
   /** 서버에서 그린 카드 (li 요소) */
@@ -41,24 +50,40 @@ export interface DirectoryGroup {
 export function OrgDirectory({
   groups,
   regions,
+  topics,
+  family,
   synonyms = [],
   suggestions = [],
   labels,
 }: {
   groups: DirectoryGroup[];
   regions: { key: string; label: string }[];
+  /** 분야 선택 목록 (src/lib/topics.ts 순서, 화면 언어 이름) */
+  topics: { key: string; label: string }[];
+  /** 지역 기관이 없을 때 안내할 가족센터 찾기 (등록된 "우리 동네 가족센터"의 누리집·전화). 없으면 글만 보여줍니다. */
+  family?: { website: string; phone: string };
   /** 검색용 유사 표현 묶음 (content/search-synonyms.json). "알바" 로 적어도 "아르바이트" 를 함께 찾습니다. */
   synonyms?: TermGroup[];
   /** 검색창 자동완성 목록 (등록된 분야 이름·권리정보 키워드에서만) */
   suggestions?: string[];
   labels: {
-    title: string;
+    filtersTitle: string;
     hint: string;
-    all: string;
+    regionLabel: string;
+    topicLabel: string;
+    allRegions: string;
+    nationwideOnly: string;
+    allTopics: string;
     countAll: string;
     countRegion: string;
+    countNationwide: string;
+    localTitle: string;
+    nationwideTitle: string;
+    localNoMatch: string;
+    familyTitle: string;
     noRegional: string;
-    groupsLabel: string;
+    familyButton: string;
+    regionFromSearch: string;
     searchLabel: string;
     searchHint: string;
     searchPlaceholder: string;
@@ -69,99 +94,154 @@ export function OrgDirectory({
     emptyBody: string;
     examplesLabel: string;
     examples: string[];
+    openInNew: string;
   };
 }) {
+  /** null = 전체 지역, "전국" = 전국 기관만, 그 밖에는 시·도 key */
   const [region, setRegion] = useState<string | null>(null);
-  const [category, setCategory] = useState<string | null>(null);
+  const [topic, setTopic] = useState<string | null>(null);
   /** 입력창에 적고 있는 글자 */
   const [draft, setDraft] = useState('');
-  /** 실제로 찾고 있는 낱말 (검색 버튼이나 엔터로 확정) */
+  /** 실제로 찾고 있는 말 (검색 버튼이나 엔터로 확정) */
   const [query, setQuery] = useState('');
+  /** 지역을 검색어에서 찾아 골랐는지 (안내 문구용) */
+  const [regionFromQuery, setRegionFromQuery] = useState(false);
   const listId = 'org-search-suggestions';
 
-  // 주소에 조건이 있으면(?region=서울&category=youth&q=임금) 그대로 시작합니다.
+  // 주소에 조건이 있으면(?region=서울&topic=labor&q=임금) 그대로 시작합니다.
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const value = params.get('region');
-    if (value && regions.some((item) => item.key === value)) setRegion(value);
-    const group = params.get('category');
-    if (group && groups.some((item) => item.key === group)) setCategory(group);
+    const fromUrl = value && (value === NATIONWIDE || regions.some((item) => item.key === value)) ? value : null;
+    if (fromUrl) setRegion(fromUrl);
+    const topicValue = params.get('topic');
+    if (topicValue && topics.some((item) => item.key === topicValue)) setTopic(topicValue);
     const q = (params.get('q') ?? '').slice(0, MAX_ORG_SEARCH_LENGTH);
     if (q) {
       setDraft(q);
       setQuery(q);
+      // 지역을 따로 고르지 않은 주소라면, 검색어의 시·도 이름으로 지역을 고릅니다.
+      const found = parseOrgQuery(q).region;
+      if (!fromUrl && found) {
+        setRegion(found);
+        setRegionFromQuery(true);
+      }
     }
-  }, [regions, groups]);
+  }, [regions, topics]);
 
   /** 고른 조건을 주소에만 적어 둡니다. (새로고침하거나 링크를 나눠도 같은 화면이 보입니다) */
-  function writeUrl(next: { region?: string | null; category?: string | null; q?: string }) {
+  function writeUrl(next: { region?: string | null; topic?: string | null; q?: string }) {
     const url = new URL(window.location.href);
     const set = (key: string, value: string | null | undefined) => {
       if (value) url.searchParams.set(key, value);
       else url.searchParams.delete(key);
     };
     if ('region' in next) set('region', next.region);
-    if ('category' in next) set('category', next.category);
+    if ('topic' in next) set('topic', next.topic);
     if ('q' in next) set('q', next.q);
+    // 예전 주소의 분야(category) 조건은 더 쓰지 않습니다.
+    url.searchParams.delete('category');
     window.history.replaceState(null, '', url);
   }
 
   function chooseRegion(key: string | null) {
     setRegion(key);
+    setRegionFromQuery(false);
     writeUrl({ region: key });
   }
 
-  function chooseCategory(key: string | null) {
-    setCategory(key);
-    writeUrl({ category: key });
+  function chooseTopic(key: string | null) {
+    setTopic(key);
+    writeUrl({ topic: key });
   }
 
   function runSearch(value: string) {
     const text = value.trim().slice(0, MAX_ORG_SEARCH_LENGTH);
     setQuery(text);
-    writeUrl({ q: text });
+    // "부산에서 임금 문제"처럼 시·도 이름이 있으면 그 지역을 고릅니다.
+    const found = text ? parseOrgQuery(text).region : null;
+    if (found) {
+      setRegion(found);
+      setRegionFromQuery(true);
+      writeUrl({ q: text, region: found });
+    } else {
+      writeUrl({ q: text });
+    }
   }
 
-  function clearSearch() {
+  function clearAll() {
     setDraft('');
-    runSearch('');
+    setQuery('');
+    setRegion(null);
+    setTopic(null);
+    setRegionFromQuery(false);
+    writeUrl({ q: '', region: null, topic: null });
   }
 
-  // 검색어와 같은 뜻의 다른 표현도 함께 찾습니다. ("알바" → "아르바이트")
+  // 시·도 이름과 찾는 데 쓰이지 않는 말을 뺀 검색어, 그리고 같은 뜻의 다른 표현 ("알바" → "아르바이트")
+  const searchText = useMemo(() => parseOrgQuery(query).text, [query]);
   const queryTerms = useMemo(() => {
-    const text = query.trim();
-    if (!text) return [];
-    return [text, ...expandWithGroups(text, synonyms)];
-  }, [query, synonyms]);
-
-  const matchesQuery = (item: DirectoryItem) =>
-    queryTerms.length === 0 || queryTerms.some((term) => textMatchesQuery(item.search, term));
-
-  const visibleGroups = groups
-    .filter((group) => !category || group.key === category)
-    .map((group) => ({
-      ...group,
-      items: group.items.filter((item) => servesRegion(item, region) && matchesQuery(item)),
-    }))
-    .filter((group) => group.items.length > 0);
+    if (!searchText) return [];
+    return [searchText, ...expandWithGroups(searchText, synonyms)];
+  }, [searchText, synonyms]);
+  // 낱말이 모두 들어 있는 기관이 하나도 없으면, 낱말 하나라도 들어 있는 기관을 보여줍니다.
+  const looseTerms = useMemo(
+    () => normalize(searchText).split(' ').filter((token) => token.length >= 2),
+    [searchText],
+  );
 
   const allItems = groups.flatMap((group) => group.items);
+  const inRegion = (item: DirectoryItem) =>
+    region === NATIONWIDE ? item.nationwide : servesRegion(item, region);
+  const inTopic = (item: DirectoryItem) => !topic || item.topics.includes(topic);
+  const strictMatch = (item: DirectoryItem) =>
+    queryTerms.length === 0 || queryTerms.some((term) => textMatchesQuery(item.search, term));
+  const useLoose =
+    queryTerms.length > 0 && looseTerms.length > 1 && !allItems.some((item) => inRegion(item) && inTopic(item) && strictMatch(item));
+  const matchesQuery = (item: DirectoryItem) =>
+    useLoose ? looseTerms.some((term) => textMatchesQuery(item.search, term)) : strictMatch(item);
+  const visible = (item: DirectoryItem) => inRegion(item) && inTopic(item) && matchesQuery(item);
+
+  const visibleGroups = groups
+    .map((group) => ({ ...group, items: group.items.filter(visible) }))
+    .filter((group) => group.items.length > 0);
   const shown = visibleGroups.flatMap((group) => group.items);
-  const localCount = region ? shown.filter((item) => item.regions.includes(region)).length : 0;
-  const nationwideCount = shown.filter((item) => item.nationwide && !(region && item.regions.includes(region))).length;
+
+  // 시·도를 골랐을 때: 그 지역 기관 → 전국 기관 순서로 나눠 보여줍니다.
+  const isLocal = Boolean(region) && region !== NATIONWIDE;
+  const localItems = isLocal ? shown.filter((item) => item.regions.includes(region as string)) : [];
+  const nationwideItems = isLocal ? shown.filter((item) => item.nationwide && !item.regions.includes(region as string)) : [];
+  /** 이 지역으로 등록된 기관이 (검색·분야 조건과 상관없이) 하나라도 있는지 */
+  const hasLocalData = isLocal && allItems.some((item) => item.regions.includes(region as string));
   const regionLabel = regions.find((item) => item.key === region)?.label ?? '';
-  const filtered = Boolean(query) || Boolean(category);
 
-  // 분야 버튼에 보여줄 숫자는 지금 고른 지역·검색어 기준으로 셉니다. (0곳인 분야도 눌러 볼 수 있게 그대로 둡니다)
-  const countOf = (group: DirectoryGroup) =>
-    group.items.filter((item) => servesRegion(item, region) && matchesQuery(item)).length;
+  // 분야 선택 상자에 보여줄 숫자는 지금 고른 지역·검색어 기준으로 셉니다. (0곳인 분야도 고를 수 있게 둡니다)
+  const topicCount = (key: string) =>
+    allItems.filter((item) => inRegion(item) && item.topics.includes(key) && matchesQuery(item)).length;
 
-  const chip = (active: boolean) =>
-    `lr-press rounded-full border px-3.5 py-1.5 text-[15px] font-semibold transition-colors ${
-      active
-        ? 'border-navy-900 bg-navy-900 text-white'
-        : 'border-[var(--color-line)] bg-white text-ink-700 hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700'
-    }`;
+  const filtered = Boolean(query) || Boolean(topic);
+  const anyCondition = filtered || Boolean(region);
+  const countText = isLocal
+    ? labels.countRegion
+        .replace('{region}', regionLabel)
+        .replace('{local}', String(localItems.length))
+        .replace('{nationwide}', String(nationwideItems.length))
+    : region === NATIONWIDE
+      ? labels.countNationwide.replace('{n}', String(shown.length))
+      : filtered
+        ? labels.searchCount.replace('{n}', String(shown.length))
+        : labels.countAll.replace('{n}', String(allItems.length));
+
+  const selectClass =
+    'h-12 w-full cursor-pointer appearance-none rounded-[var(--radius-control)] border border-[var(--color-line)] bg-[var(--color-surface)] py-0 pl-3.5 pr-9 text-[15px] font-semibold text-ink-900 transition-colors hover:border-brand-300 focus:border-brand-500 focus:outline-none focus:ring-[3px] focus:ring-brand-100';
+
+  const grid = (items: DirectoryItem[]) => (
+    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {items.map((item) => (
+        <DirectoryCard key={item.id}>{item.card}</DirectoryCard>
+      ))}
+    </ul>
+  );
 
   return (
     <>
@@ -189,7 +269,7 @@ export function OrgDirectory({
                   onChange={(event) => {
                     const value = event.target.value;
                     setDraft(value);
-                    // 검색창의 x 를 눌러 비우면 바로 전체 목록으로 돌아갑니다.
+                    // 검색창의 x 를 눌러 비우면 바로 검색어 없는 목록으로 돌아갑니다.
                     if (value === '') runSearch('');
                   }}
                   maxLength={MAX_ORG_SEARCH_LENGTH}
@@ -236,74 +316,75 @@ export function OrgDirectory({
             )}
           </form>
 
-          {/* 2) 분야로 좁히기 (검색과 함께 쓸 수 있습니다) */}
+          {/* 2) 지역 · 3) 분야 (선택 상자 두 개. 휴대폰에서는 분야 이름이 잘리지 않게 위아래로 놓습니다) */}
           <div className="border-t border-[var(--color-line)] pt-5">
-            <h2 className="text-[15px] font-bold text-ink-900">{labels.groupsLabel}</h2>
-            <div role="group" aria-label={labels.groupsLabel} className="mt-3 flex flex-wrap gap-2">
-              <button type="button" aria-pressed={category === null} onClick={() => chooseCategory(null)} className={chip(category === null)}>
-                {labels.all}
-              </button>
-              {groups.map((group) => (
-                <button
-                  key={group.key}
-                  type="button"
-                  aria-pressed={category === group.key}
-                  onClick={() => chooseCategory(category === group.key ? null : group.key)}
-                  className={chip(category === group.key)}
-                >
-                  {group.title}{' '}
-                  <span className={category === group.key ? 'text-white/70' : 'text-ink-500'}>{countOf(group)}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* 3) 내 지역 선택하기 */}
-          <div className="border-t border-[var(--color-line)] pt-5">
-            <h2 className="text-[15px] font-bold text-ink-900">{labels.title}</h2>
+            <h2 className="text-[15px] font-bold text-ink-900">{labels.filtersTitle}</h2>
             <p className="mt-1 max-w-3xl text-[15px] leading-relaxed text-ink-500">{labels.hint}</p>
-            <div role="group" aria-label={labels.title} className="mt-3 flex flex-wrap gap-2">
-              <button type="button" aria-pressed={region === null} onClick={() => chooseRegion(null)} className={chip(region === null)}>
-                {labels.all}
-              </button>
-              {regions.map((item) => (
-                <button
-                  key={item.key}
-                  type="button"
-                  aria-pressed={region === item.key}
-                  onClick={() => chooseRegion(item.key)}
-                  className={chip(region === item.key)}
-                >
-                  {item.label}
-                </button>
-              ))}
+            <div className="mt-3 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className="min-w-0">
+                <label htmlFor="org-region" className="mb-1 block text-sm font-semibold text-ink-700">
+                  {labels.regionLabel}
+                </label>
+                <span className="relative flex items-center">
+                  <select
+                    id="org-region"
+                    value={region ?? ''}
+                    onChange={(event) => chooseRegion(event.target.value || null)}
+                    className={selectClass}
+                  >
+                    <option value="">{labels.allRegions}</option>
+                    <option value={NATIONWIDE}>{labels.nationwideOnly}</option>
+                    {regions.map((item) => (
+                      <option key={item.key} value={item.key}>
+                        {item.label}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="pointer-events-none absolute right-3.5 text-xs text-ink-500" aria-hidden="true">
+                    ▾
+                  </span>
+                </span>
+              </div>
+              <div className="min-w-0">
+                <label htmlFor="org-topic" className="mb-1 block text-sm font-semibold text-ink-700">
+                  {labels.topicLabel}
+                </label>
+                <span className="relative flex items-center">
+                  <select
+                    id="org-topic"
+                    value={topic ?? ''}
+                    onChange={(event) => chooseTopic(event.target.value || null)}
+                    className={selectClass}
+                  >
+                    <option value="">{labels.allTopics}</option>
+                    {topics.map((item) => (
+                      <option key={item.key} value={item.key}>
+                        {item.label} ({topicCount(item.key)})
+                      </option>
+                    ))}
+                  </select>
+                  <span className="pointer-events-none absolute right-3.5 text-xs text-ink-500" aria-hidden="true">
+                    ▾
+                  </span>
+                </span>
+              </div>
             </div>
           </div>
 
           {/* 지금 몇 곳이 보이는지 */}
-          <p aria-live="polite" className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[15px] font-semibold text-ink-900">
-            <span>
-              {filtered
-                ? labels.searchCount.replace('{n}', String(shown.length))
-                : region
-                  ? labels.countRegion
-                      .replace('{region}', regionLabel)
-                      .replace('{local}', String(localCount))
-                      .replace('{nationwide}', String(nationwideCount))
-                  : labels.countAll.replace('{n}', String(allItems.length))}
-            </span>
-            {filtered && (
-              <button type="button" onClick={clearSearch} className="lr-link text-[15px] font-semibold">
-                {labels.searchClear}
-              </button>
-            )}
-          </p>
-
-          {region && localCount === 0 && shown.length > 0 && (
-            <p className="max-w-3xl rounded-[var(--radius-control)] bg-surface-soft px-4 py-3 text-[15px] leading-relaxed text-ink-700">
-              {labels.noRegional.replace('{region}', regionLabel)}
+          <div aria-live="polite" className="space-y-1">
+            <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[15px] font-semibold text-ink-900">
+              <span>{countText}</span>
+              {anyCondition && (
+                <button type="button" onClick={clearAll} className="lr-link text-[15px] font-semibold">
+                  {labels.searchClear}
+                </button>
+              )}
             </p>
-          )}
+            {regionFromQuery && isLocal && (
+              <p className="text-sm text-ink-500">{labels.regionFromSearch.replace('{region}', regionLabel)}</p>
+            )}
+          </div>
         </div>
       </div>
 
@@ -314,15 +395,7 @@ export function OrgDirectory({
             <h2 className="text-lg font-extrabold text-ink-900">{labels.emptyTitle}</h2>
             <p className="mt-2 text-[15px] leading-relaxed text-ink-700">{labels.emptyBody}</p>
             <div className="mt-4 flex flex-wrap gap-2">
-              <button
-                type="button"
-                onClick={() => {
-                  clearSearch();
-                  chooseCategory(null);
-                  chooseRegion(null);
-                }}
-                className="lr-btn lr-btn-primary lr-btn-sm lr-press"
-              >
+              <button type="button" onClick={clearAll} className="lr-btn lr-btn-primary lr-btn-sm lr-press">
                 {labels.searchClear}
               </button>
               {labels.examples.map((term) => (
@@ -343,15 +416,63 @@ export function OrgDirectory({
         </div>
       )}
 
-      {visibleGroups.map((group) => (
-        <Section key={group.key} id={group.key} title={group.title}>
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {group.items.map((item) => (
-              <DirectoryCard key={item.id}>{item.card}</DirectoryCard>
-            ))}
-          </ul>
-        </Section>
-      ))}
+      {isLocal ? (
+        <>
+          {/* 그 지역 기관 (없으면 기관을 만들어 채우지 않고 가족센터 찾기로 안내) */}
+          {(localItems.length > 0 || !hasLocalData || nationwideItems.length > 0) && (
+            <Section id="local" title={labels.localTitle.replace('{region}', regionLabel)}>
+              {localItems.length > 0 ? (
+                grid(localItems)
+              ) : hasLocalData ? (
+                <p className="lr-card max-w-3xl px-4 py-3 text-[15px] leading-relaxed text-ink-700">
+                  {labels.localNoMatch.replace('{region}', regionLabel)}
+                </p>
+              ) : (
+                <div className="lr-card max-w-3xl p-5 sm:p-6">
+                  <h3 className="text-lg font-extrabold text-ink-900">{labels.familyTitle}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-ink-700">
+                    {labels.noRegional.replace('{region}', regionLabel)}
+                  </p>
+                  {family && (
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      <a
+                        href={family.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${labels.familyButton} (${labels.openInNew})`}
+                        className="lr-btn lr-btn-primary lr-press whitespace-nowrap"
+                      >
+                        <Icon name="external" size={18} /> {labels.familyButton}
+                      </a>
+                      {family.phone && (
+                        <a
+                          href={`tel:${family.phone.replace(/[^\d+]/g, '')}`}
+                          className="lr-btn lr-btn-ghost lr-press whitespace-nowrap"
+                        >
+                          <Icon name="phone" size={18} /> {family.phone}
+                        </a>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+            </Section>
+          )}
+
+          {/* 전국 어디서나 이용할 수 있는 곳 */}
+          {nationwideItems.length > 0 && (
+            <Section id="nationwide" title={labels.nationwideTitle}>
+              {grid(nationwideItems)}
+            </Section>
+          )}
+        </>
+      ) : (
+        visibleGroups.map((group) => (
+          <Section key={group.key} id={group.key} title={group.title}>
+            {grid(group.items)}
+          </Section>
+        ))
+      )}
     </>
   );
 }

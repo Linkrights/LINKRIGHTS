@@ -22,6 +22,12 @@ const MESSAGES = path.join(ROOT, 'messages');
 const LOCALES = ['ko', 'en', 'zh', 'vi'];
 const VALID_STATUS = ['published', 'draft'];
 const VALID_ORG_CATEGORIES = ['emergency', 'public', 'youth', 'migrant', 'legal'];
+// 기관 분야(topics) 목록은 src/lib/topics.ts 의 ORG_TOPICS 한 곳에서만 관리합니다.
+const VALID_ORG_TOPICS = (() => {
+  const source = fs.readFileSync(path.join(ROOT, 'src', 'lib', 'topics.ts'), 'utf8');
+  const list = source.match(/ORG_TOPICS\s*=\s*\[([^\]]*)\]/);
+  return list ? [...list[1].matchAll(/'([^']+)'/g)].map((m) => m[1]) : [];
+})();
 
 const errors = [];
 const warnings = [];
@@ -99,12 +105,32 @@ if (Array.isArray(organizations)) {
         }
       }
     }
+    // 분야(선택). src/lib/topics.ts 에 있는 값만 쓸 수 있습니다.
+    if (org.topics !== undefined) {
+      if (!Array.isArray(org.topics)) fail(label, '"topics" 는 대괄호 [ ] 로 된 목록이어야 합니다.');
+      for (const topic of Array.isArray(org.topics) ? org.topics : []) {
+        if (!VALID_ORG_TOPICS.includes(topic)) {
+          fail(label, `"topics" 는 ${VALID_ORG_TOPICS.join(', ')} 중에서 골라야 합니다. (현재: ${topic})`);
+        }
+      }
+    }
+    for (const flag of ['local_network', 'finder']) {
+      if (org[flag] !== undefined && typeof org[flag] !== 'boolean') fail(label, `"${flag}" 는 true 또는 false 여야 합니다.`);
+    }
+    if ((org.local_network || org.finder) && !org.website) {
+      fail(label, '"local_network" / "finder" 기관은 가까운 곳을 찾을 누리집("website")이 있어야 합니다.');
+    }
     if (!org.owner) warn(label, '"owner"(담당자)가 비어 있습니다.');
     if (org.website && !/^https?:\/\//.test(org.website)) {
       fail(label, '"website" 는 https:// 로 시작해야 합니다.');
     }
     if (!org.phone && !org.website) {
-      warn(label, '전화번호와 홈페이지가 모두 비어 있습니다. 이용자가 연락할 방법이 없습니다.');
+      warn(
+        label,
+        org.source_url
+          ? '전화번호와 홈페이지가 모두 비어 있어, 카드에는 출처(공식 안내) 링크만 보입니다.'
+          : '전화번호와 홈페이지가 모두 비어 있습니다. 이용자가 연락할 방법이 없습니다.',
+      );
     }
   }
 } else if (organizations !== null) {

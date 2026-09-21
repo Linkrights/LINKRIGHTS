@@ -268,7 +268,21 @@
     "region": "지역",
     "address": "주소",
     "nationwide": "전국",
-    "map": "지도 보기"
+    "map": "지도 보기",
+    "localNetwork": "지역별 센터",
+    "findNearby": "가까운 곳 찾기",
+    "officialInfo": "공식 안내 보기"
+  },
+  "orgTopics": {
+    "labor": "노동·임금",
+    "legal": "법률",
+    "visa": "체류·비자",
+    "health": "건강·의료",
+    "mental": "마음 건강",
+    "education": "교육·학교",
+    "family": "가족",
+    "safety": "폭력·안전",
+    "rights": "차별·인권"
   },
   "answerUi": {
     "situation": "지금 상황",
@@ -294,14 +308,26 @@
   },
   "orgFinder": {
     "title": "내 지역 선택하기",
-    "hint": "지역을 고르면 그 지역 기관과 전국 어디서나 이용할 수 있는 기관을 함께 보여줘요. 고르지 않아도 모든 기관을 볼 수 있어요.",
+    "filtersTitle": "지역·분야로 좁히기",
+    "hint": "지역을 고르면 그 지역 기관을 먼저 보여주고, 이어서 전국 어디서나 이용할 수 있는 기관을 보여줘요.",
     "all": "전체",
+    "regionLabel": "지역",
+    "topicLabel": "분야",
+    "allRegions": "전체 지역",
+    "nationwideOnly": "전국 기관만",
+    "allTopics": "전체 분야",
     "countAll": "등록된 기관 {n}곳",
     "countRegion": "{region} 지역 기관 {local}곳 · 전국 기관 {nationwide}곳",
-    "noRegional": "아직 {region} 지역으로 등록된 기관은 없어요. 아래 전국 기관은 어느 지역에서나 이용할 수 있어요. 가까운 가족센터는 ‘우리 동네 가족센터’ 카드의 홈페이지에서 시·도를 골라 찾을 수 있어요.",
-    "groupsLabel": "분야로 좁히기",
+    "countNationwide": "전국 기관 {n}곳",
+    "localTitle": "{region} 지역 기관",
+    "nationwideTitle": "전국 어디서나 이용할 수 있는 곳",
+    "localNoMatch": "{region} 지역 기관 중에는 조건에 맞는 곳이 없어요. 아래 전국 기관을 확인해 보세요.",
+    "familyTitle": "우리 지역 도움받을 곳을 찾고 있나요?",
+    "noRegional": "아직 {region} 지역으로 등록된 기관은 없어요. 가까운 가족센터는 가족센터 통합안내(FamilyNet)에서 시·도를 골라 찾을 수 있어요. 아래 전국 기관은 어느 지역에서나 이용할 수 있어요.",
+    "familyButton": "가족센터 찾기",
+    "regionFromSearch": "검색어에 있는 지역({region})을 골랐어요.",
     "searchLabel": "키워드로 찾기",
-    "searchHint": "기관 이름뿐 아니라 하고 싶은 말로도 찾을 수 있어요. 기관 설명, 분야, 지역, 그 기관과 연결된 권리정보에서 함께 찾아요.",
+    "searchHint": "기관 이름뿐 아니라 하고 싶은 말로도 찾을 수 있어요. ‘부산에서 임금 문제’처럼 지역을 함께 적으면 그 지역 기관을 먼저 보여줘요.",
     "searchPlaceholder": "예: 임금, 알바, 학교, 비자, 병원, 상담",
     "searchButton": "검색",
     "searchClear": "조건 지우기",
@@ -309,7 +335,16 @@
     "emptyTitle": "검색 결과가 없어요. 다른 키워드로 찾아보세요.",
     "emptyBody": "분야나 지역을 함께 골랐다면 하나만 남겨 보세요. 아래 낱말로도 찾아볼 수 있어요.",
     "examplesLabel": "이렇게 찾아보세요",
-    "examples": ["임금", "알바", "학교", "비자", "병원", "상담", "외국인등록", "차별"]
+    "examples": [
+      "임금",
+      "알바",
+      "학교",
+      "비자",
+      "병원",
+      "상담",
+      "외국인등록",
+      "차별"
+    ]
   },
   "qna": {
     "navLabel": "질문 게시판",

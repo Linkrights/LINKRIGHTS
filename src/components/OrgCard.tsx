@@ -2,12 +2,21 @@
 // 여기에 보이는 이름·설명·운영시간·주소·전화번호·홈페이지는 모두 content/organizations.json 에서만 가져옵니다.
 // (AI가 만들어낸 값은 절대 여기에 들어오지 않습니다. 확인되지 않은 항목은 비워 두면 화면에 나타나지 않습니다)
 //
-// 순서: 기관 이름 → "이럴 때 도움을 받을 수 있어요"(설명) → 운영시간·쉬는 날·휴게시간 → 지역·주소(지도 보기) → 지원 언어 → 연락처
+// 순서: 기관 이름 → 지역·분야 태그 → "이럴 때 도움을 받을 수 있어요"(설명) → 지원 언어 → 운영시간·쉬는 날·휴게시간
+//       → 주소(지도 보기) → 연락처
+//
+// 지역 태그: 전국 기관은 [전국], 특정 지역 기관은 [서울]처럼 등록된 지역을 그대로 보여줍니다.
+//   지역마다 센터가 있는 기관(local_network)은 [지역별 센터] 태그를 함께 붙입니다.
+// 분야 태그: 등록된 topics 중 앞의 2개만 보여줍니다.
 
 import { Icon } from './Icon';
 import { formatDate, getMessages, pick, type Locale } from '@/lib/i18n';
 import { organizationArea, regionName } from '@/lib/regions';
+import { isOrgTopic } from '@/lib/topics';
 import type { Organization } from '@/lib/types';
+
+/** 카드에 보여줄 분야 태그 수 */
+const MAX_TOPIC_TAGS = 2;
 
 export function OrgCard({
   org,
@@ -25,21 +34,25 @@ export function OrgCard({
   const region = area.nationwide
     ? t.orgInfo.nationwide
     : area.regions.map((key) => regionName(key, locale)).join(' · ');
+  const topics = (org.topics ?? []).filter(isOrgTopic).slice(0, MAX_TOPIC_TAGS);
   // 지도는 등록된 한국어 주소가 있을 때만 네이버 지도 검색으로 연결합니다. (지도 API·비용 없음)
   const mapHref = org.address?.ko ? `https://map.naver.com/p/search/${encodeURIComponent(org.address.ko)}` : '';
 
   const rows: { key: string; label: string; value: string }[] = [
-    { key: 'hours', label: t.common.hours, value: org.hours ? pick(org.hours, locale) : '' },
-    { key: 'holidays', label: t.orgInfo.holidays, value: org.holidays ? pick(org.holidays, locale) : '' },
-    { key: 'break', label: t.orgInfo.breakTime, value: org.break_time ? pick(org.break_time, locale) : '' },
-    { key: 'place', label: address ? t.orgInfo.address : t.orgInfo.region, value: address || region },
     {
       key: 'languages',
       label: t.common.languages,
       // 지원 언어 이름은 화면 언어로 보여줍니다. (영어 화면이면 Korean · English)
       value: (org.languages ?? []).map((code) => (t.languageNames as Record<string, string>)[code] ?? code).join(' · '),
     },
+    { key: 'hours', label: t.common.hours, value: org.hours ? pick(org.hours, locale) : '' },
+    { key: 'holidays', label: t.orgInfo.holidays, value: org.holidays ? pick(org.holidays, locale) : '' },
+    { key: 'break', label: t.orgInfo.breakTime, value: org.break_time ? pick(org.break_time, locale) : '' },
+    // 지역은 위의 태그로 보여주므로 여기에는 등록된 주소만 둡니다.
+    { key: 'place', label: t.orgInfo.address, value: address },
   ].filter((row) => row.value);
+
+  const tag = 'rounded-full px-2.5 py-0.5 text-xs font-bold';
 
   return (
     <article className={`lr-card flex h-full flex-col ${compact ? 'p-4 sm:p-5' : 'p-5 sm:p-6'}`}>
@@ -51,6 +64,22 @@ export function OrgCard({
           </span>
         )}
       </div>
+
+      {/* 지역·분야 태그 */}
+      <p className="mt-2 flex flex-wrap gap-1.5">
+        {region && (
+          <span className={`${tag} bg-brand-50 text-brand-700`}>
+            <span className="sr-only">{t.orgInfo.region}: </span>
+            {region}
+          </span>
+        )}
+        {org.local_network && <span className={`${tag} bg-brand-50 text-brand-700`}>{t.orgInfo.localNetwork}</span>}
+        {topics.map((topic) => (
+          <span key={topic} className={`${tag} border border-[var(--color-line)] font-semibold text-ink-700`}>
+            {t.orgTopics[topic]}
+          </span>
+        ))}
+      </p>
 
       <div className="mt-3">
         <p className="text-[13px] font-semibold text-brand-700">{t.organizations.helpsWith}</p>{' '}
@@ -85,8 +114,23 @@ export function OrgCard({
       )}
 
       {/* 연락처: 전화번호와 버튼 글자는 줄바꿈하지 않고, 카드가 좁으면 버튼이 통째로 다음 줄로 내려갑니다.
-          "새 창에서 열림" 안내는 화면낭독기용 이름(aria-label)으로만 전달합니다. */}
+          "새 창에서 열림" 안내는 화면낭독기용 이름(aria-label)으로만 전달합니다.
+          누리집에서 가까운 이용기관을 찾는 기관(finder)은 버튼 이름이 "가까운 곳 찾기"입니다.
+          전화번호도 누리집도 없으면 등록된 출처(공식 안내)로 연결합니다. */}
       <div className="mt-auto pt-4">
+        {!org.phone && !org.website && org.source_url && (
+          <div className="flex flex-wrap gap-2 border-t border-[var(--color-line)] pt-4">
+            <a
+              href={org.source_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${name} ${t.orgInfo.officialInfo} (${t.common.openInNew})`}
+              className="lr-btn lr-btn-ghost flex-1 whitespace-nowrap"
+            >
+              <Icon name="external" size={18} /> {t.orgInfo.officialInfo}
+            </a>
+          </div>
+        )}
         {(org.phone || org.website) && (
           <div className="flex flex-wrap gap-2 border-t border-[var(--color-line)] pt-4">
             {org.phone && (
@@ -103,10 +147,10 @@ export function OrgCard({
                 href={org.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`${name} ${t.common.website} (${t.common.openInNew})`}
+                aria-label={`${name} ${org.finder ? t.orgInfo.findNearby : t.common.website} (${t.common.openInNew})`}
                 className="lr-btn lr-btn-ghost flex-1 whitespace-nowrap"
               >
-                <Icon name="external" size={18} /> {t.common.website}
+                <Icon name="external" size={18} /> {org.finder ? t.orgInfo.findNearby : t.common.website}
               </a>
             )}
           </div>
