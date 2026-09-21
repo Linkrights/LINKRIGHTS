@@ -75,11 +75,21 @@ if (Array.isArray(categories)) {
 }
 
 // ---------- 2. 기관(organizations.json) ----------
-const organizations = readJson(path.join(CONTENT, 'organizations.json'), 'content/organizations.json');
+// 전국·주요 기관(organizations.json)과 운영팀이 조사한 지역 기관(organizations-regional.json)을 함께 검사합니다. id 는 두 파일을 통틀어 겹치면 안 됩니다.
+const ORG_FILES = ['organizations.json', 'organizations-regional.json'];
+const orgFileOf = new Map();
+const orgLists = ORG_FILES.map((name) => {
+  const list = readJson(path.join(CONTENT, name), `content/${name}`);
+  if (list !== null && !Array.isArray(list)) fail(`content/${name}`, '이 파일은 대괄호 [ ] 로 시작하는 목록이어야 합니다.');
+  const items = Array.isArray(list) ? list : [];
+  for (const org of items) orgFileOf.set(org, name);
+  return items;
+});
+const organizations = orgLists.flat();
 const orgIds = new Set();
-if (Array.isArray(organizations)) {
+{
   for (const org of organizations) {
-    const label = `content/organizations.json > ${org.id ?? '(id 없음)'}`;
+    const label = `content/${orgFileOf.get(org)} > ${org.id ?? '(id 없음)'}`;
     if (!org.id) fail(label, '"id" 가 반드시 필요합니다.');
     else if (orgIds.has(org.id)) fail(label, `기관 id 가 중복됩니다: ${org.id}`);
     else orgIds.add(org.id);
@@ -124,6 +134,12 @@ if (Array.isArray(organizations)) {
     if (org.website && !/^https?:\/\//.test(org.website)) {
       fail(label, '"website" 는 https:// 로 시작해야 합니다.');
     }
+    // 전화 버튼(tel:)이 제대로 걸리도록 번호 칸에는 번호 하나만 적습니다. (추가 번호·설명은 "phone_note")
+    if (org.phone && !/^[\d-]+$/.test(org.phone)) {
+      fail(label, `"phone" 에는 숫자와 - 로 된 번호 하나만 적습니다. 다른 번호나 설명은 "phone_note" 에 적어 주세요. (현재: ${org.phone})`);
+    }
+    if (org.area !== undefined) hasKo(org.area, label, 'area');
+    if (org.phone_note !== undefined) hasKo(org.phone_note, label, 'phone_note');
     if (!org.phone && !org.website) {
       warn(
         label,
@@ -133,8 +149,6 @@ if (Array.isArray(organizations)) {
       );
     }
   }
-} else if (organizations !== null) {
-  fail('content/organizations.json', '이 파일은 대괄호 [ ] 로 시작하는 목록이어야 합니다.');
 }
 
 // ---------- 3. 권리정보(content/rights/*.json) ----------

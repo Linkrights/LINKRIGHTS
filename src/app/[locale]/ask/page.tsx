@@ -3,7 +3,7 @@
 import type { Metadata } from 'next';
 import { AskClient } from '@/components/AskClient';
 import { PageHeader } from '@/components/Section';
-import { getGlossary, getOrganizations, getRightsCategories, getSite } from '@/lib/content';
+import { getGlossary, getNationwideOrganizations, getRightsCategories, getSite } from '@/lib/content';
 import { getMessages, pick, toLocale } from '@/lib/i18n';
 import { fallbackArticles } from '@/lib/search';
 
@@ -35,7 +35,7 @@ export default async function AskPage({
   const site = getSite();
   const examples = site.exampleQuestions[locale] ?? site.exampleQuestions.ko;
   // 자료가 없거나 답변을 만들지 못했을 때 보여줄, 누구나 이용할 수 있는 청소년 상담 기관 (AI가 고른 기관이 아닌 등록 기관)
-  const generalHelp = getOrganizations().filter((org) => org.category === 'youth');
+  const generalHelp = getNationwideOrganizations().filter((org) => org.category === 'youth');
   const categoryNames = Object.fromEntries(getRightsCategories().map((category) => [category.id, pick(category.name, locale)]));
 
   return (

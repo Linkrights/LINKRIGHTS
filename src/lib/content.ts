@@ -29,6 +29,7 @@ import type {
   TestimonialsFile,
 } from './types';
 import type { GlossaryFile, GlossaryTerm } from './glossary';
+import { organizationArea } from './regions';
 
 const CONTENT_DIR = path.join(process.cwd(), 'content');
 
@@ -97,11 +98,23 @@ export function getCategory(id: string): Category | undefined {
   return getCategories().find((c) => c.id === id);
 }
 
-const readAllOrganizations = cache((): Organization[] => readJson<Organization[]>('organizations.json'));
+/**
+ * 기관 목록 = 전국·주요 기관(organizations.json) + 운영팀이 조사한 지역 기관(organizations-regional.json)
+ * 지역 기관은 가족센터·청소년상담복지센터처럼 시·군·구마다 있는 곳이며, 권리정보와 연결하지 않아 AI 답변에는 쓰이지 않습니다.
+ */
+const readAllOrganizations = cache((): Organization[] => [
+  ...readJson<Organization[]>('organizations.json'),
+  ...readJson<Organization[]>('organizations-regional.json'),
+]);
 
 /** 화면과 AI에 사용할 수 있는, 공개 상태의 기관만 돌려줍니다. */
 export function getOrganizations(): Organization[] {
   return readAllOrganizations().filter((o) => o.status === 'published');
+}
+
+/** 어느 지역에서나 이용할 수 있는(전국) 기관만. 지역 기관이 수백 곳이므로 일반 안내 목록에는 이것만 씁니다. */
+export function getNationwideOrganizations(): Organization[] {
+  return getOrganizations().filter((o) => organizationArea(o).nationwide);
 }
 
 export function getOrganizationMap(): Map<string, Organization> {

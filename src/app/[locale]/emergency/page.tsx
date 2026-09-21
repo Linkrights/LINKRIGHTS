@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import { EmergencyCard } from '@/components/EmergencyCard';
 import { OrgCard } from '@/components/OrgCard';
 import { PageHeader, Section } from '@/components/Section';
-import { getOrganizations, resolveOrganizations } from '@/lib/content';
+import { getNationwideOrganizations, resolveOrganizations } from '@/lib/content';
 import { buildEmergencyCard } from '@/lib/emergency';
 import { getMessages, toLocale } from '@/lib/i18n';
 
@@ -21,7 +21,7 @@ export default async function EmergencyPage({ params }: { params: Promise<{ loca
   const t = getMessages(locale);
   const card = buildEmergencyCard(locale);
   const emergencyOrgs = resolveOrganizations(card.organizationIds);
-  const supportOrgs = getOrganizations().filter((org) => !card.organizationIds.includes(org.id));
+  const supportOrgs = getNationwideOrganizations().filter((org) => !card.organizationIds.includes(org.id));
 
   return (
     <>

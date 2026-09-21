@@ -59,6 +59,10 @@ export interface Organization {
   local_network?: boolean;
   /** 누리집에서 지역별 이용기관을 찾을 수 있으면 true (누리집 버튼이 "가까운 곳 찾기"로 바뀝니다) */
   finder?: boolean;
+  /** 지역 기관의 시·군·구 (예: "대구 중구", "포항시"). 카드의 지역 태그와 "시·군·구" 선택에 씁니다. */
+  area?: LocalizedText;
+  /** 전화번호에 붙는 참고 (예: "청소년전화 1388은 국번 없이 걸 수 있어요.") */
+  phone_note?: LocalizedText;
   status: ContentStatus;
   owner: string;
   reviewed_at: string;

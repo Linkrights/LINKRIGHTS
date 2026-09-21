@@ -14,7 +14,7 @@ import { Icon } from '@/components/Icon';
 import { NoResultHelp } from '@/components/NoResultHelp';
 import { MAX_SEARCH_LENGTH, RightsSearchForm } from '@/components/RightsSearchForm';
 import { PageHeader, Section } from '@/components/Section';
-import { articleHref, getOrganizations, getRightsCategories, resolveArticle } from '@/lib/content';
+import { articleHref, getNationwideOrganizations, getRightsCategories, resolveArticle } from '@/lib/content';
 import { detectEmergency } from '@/lib/emergency';
 import { getMessages, pick, toLocale } from '@/lib/i18n';
 import { findByRegisteredKeyword, findEvidence, findRelevantArticles, findSimilarArticles, searchSuggestions } from '@/lib/search';
@@ -81,7 +81,7 @@ export default async function RightsSearchPage({
           href: articleHref(locale, article),
         }))
       : [];
-  const generalHelp = q && total === 0 ? getOrganizations().filter((org) => org.category === 'youth') : [];
+  const generalHelp = q && total === 0 ? getNationwideOrganizations().filter((org) => org.category === 'youth') : [];
 
   // 검색어가 분야 이름과 겹치면 그 분야로 가는 링크를 함께 보여줍니다.
   const lowered = q.toLowerCase();

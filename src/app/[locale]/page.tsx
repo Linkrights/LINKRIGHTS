@@ -34,6 +34,7 @@ import {
   getChecklists,
   getFaq,
   getFeaturedArticles,
+  getNationwideOrganizations,
   getOrganizations,
   getPartners,
   getQnaPosts,
@@ -54,7 +55,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const categories = getCategories();
   const featured = getFeaturedArticles(6);
   const checklists = getChecklists();
-  const orgs = getOrganizations().filter((o) => !o.emergency).slice(0, 3);
+  const orgs = getNationwideOrganizations().filter((o) => !o.emergency).slice(0, 3);
   const about = getAbout().i18n[locale] ?? getAbout().i18n.ko;
   const partners = getPartners();
   // 홈에는 content/faq.json 에서 featured 로 표시한 핵심 질문(최대 4개)만 보여주고, 나머지는 FAQ 페이지에서 봅니다.

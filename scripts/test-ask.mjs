@@ -768,13 +768,29 @@ async function runDeterministic() {
     );
     check('지역: 지역 이름은 언어별로 표시', regions.regionName('서울', 'en') === 'Seoul' && regions.regionName('서울', 'zh') === '首尔');
 
-    // 지역 기관은 모두 등록된 출처가 있어야 합니다. (빈 지역을 채우려고 만든 기관이 없도록)
+    // 지역 기관은 모두 조사한 날짜와 연락 방법(전화 또는 누리집)이 있어야 합니다. (빈 지역을 채우려고 만든 기관이 없도록)
     const local = organizations.filter((org) => !areaOf(org).nationwide);
-    check('지역 기관: 모두 출처(source_url)가 있음', local.every((org) => /^https?:\/\//.test(org.source_url ?? '')), local.map((o) => o.id).join(', '));
+    const noContact = local.filter((org) => !/^\d{4}-\d{2}-\d{2}$/.test(org.reviewed_at ?? '') || !(org.phone || org.website));
+    check('지역 기관: 모두 확인일과 연락 방법(전화 또는 누리집)이 있음', local.length > 0 && noContact.length === 0, noContact.map((o) => o.id).join(', '));
+    const badPhone = organizations.filter((org) => org.phone && !/^[\d-]+$/.test(org.phone));
+    check('기관 전화번호: 번호 하나만 (전화 버튼이 걸리도록)', badPhone.length === 0, badPhone.map((o) => `${o.id} ${o.phone}`).join(', '));
+    // 지역 기관은 권리정보와 연결하지 않습니다. (AI 답변의 기관 카드는 지금처럼 권리정보에 연결된 기관에서만)
+    const localIds = new Set(local.map((org) => org.id));
+    const linkedLocal = content.getArticles().flatMap((article) => article.organizations.filter((id) => localIds.has(id)));
+    check('지역 기관: 권리정보에 연결되지 않아 AI 답변 기관 후보가 늘지 않음', linkedLocal.length === 0, linkedLocal.join(', '));
+    // 지역 기관 이름 때문에 AI 답변의 일반 안내 문장("가까운 가족센터에 문의")이 지워지지 않아야 합니다. (sanitize 의 숨긴 기관 문장 지우기)
+    const generic = [
+      '가까운 가족센터나 청소년상담복지센터, 다문화가족지원센터에 문의해 보세요.',
+      'You can ask a local Family Center or Youth Counseling and Welfare Center.',
+      '可以咨询附近的家庭中心或青少年咨询福利中心。',
+      'Bạn có thể hỏi Trung tâm Gia đình hoặc Trung tâm Tư vấn và Phúc lợi Thanh thiếu niên gần nhà.',
+    ];
+    const tooGeneric = local.filter((org) => generic.some((sentence) => sanitize.mentionsOrganization(sentence, org)));
+    check('지역 기관 이름이 일반 안내 문장과 겹치지 않음 (AI 답변 문장이 지워지지 않음)', tooGeneric.length === 0, tooGeneric.map((o) => o.id).join(', '));
     // 지역 기관이 없는 지역에서 안내하는 가족센터 찾기는 등록된 FamilyNet 누리집
     const family = organizations.find((org) => org.local_network && org.finder && org.website);
     check('가족센터 찾기: 등록된 FamilyNet 누리집으로 연결', Boolean(family) && /^https:\/\/www\.familynet\.or\.kr/.test(family.website), family ? family.website : '없음');
-    check('가족센터: 지역별 센터를 하나씩 등록하지 않고 전국 1곳으로 안내', organizations.filter((org) => org.local_network).every((org) => areaOf(org).nationwide));
+    check('가족센터 찾기(FamilyNet) 기관은 전국 기관', organizations.filter((org) => org.local_network).every((org) => areaOf(org).nationwide));
   }
 
   // 6-3-1) 도움받을 곳 검색어 나누기: 시·도 이름은 지역으로, 찾는 데 쓰이지 않는 말은 빼기
