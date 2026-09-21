@@ -98,7 +98,7 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
         id={id}
         value={locale}
         onChange={(event) => changeLocale(event.target.value)}
-        className={`h-10 w-full cursor-pointer appearance-none rounded-[var(--radius-control)] border py-0 pl-9 pr-8 text-sm font-semibold transition-colors [&>option]:text-ink-900 ${
+        className={`h-10 w-full cursor-pointer appearance-none rounded-[var(--radius-control)] border py-0 pl-8 pr-7 text-sm font-semibold xl:pl-9 xl:pr-8 transition-colors [&>option]:text-ink-900 ${
           onDark
             ? 'border-white/30 bg-white/5 text-white hover:border-white/60'
             : 'border-[var(--color-line)] bg-white text-ink-700 hover:border-brand-300'
@@ -166,13 +166,14 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
           />
         </Link>
 
-        <nav aria-label={t.nav.mainMenu} className="ml-4 hidden flex-1 items-center gap-0.5 lg:flex xl:ml-8 xl:gap-1">
+        {/* 1024px 화면(스크롤바 포함)에서도 가장 긴 베트남어 메뉴가 한 줄에 들어가도록 lg 에서는 간격을 조금 줄입니다. */}
+        <nav aria-label={t.nav.mainMenu} className="ml-2 hidden flex-1 items-center gap-0 lg:flex xl:ml-8 xl:gap-1">
           {links.filter((link) => !('mobileOnly' in link)).map((link) => (
             <Link
               key={link.href}
               href={link.href}
               aria-current={isActive(link.href) ? 'page' : undefined}
-              className={`whitespace-nowrap rounded-[var(--radius-control)] px-2.5 py-2 text-sm font-semibold transition-colors xl:px-3 xl:text-[15px] ${
+              className={`whitespace-nowrap rounded-[var(--radius-control)] px-1.5 py-2 text-sm font-semibold transition-colors xl:px-3 xl:text-[15px] ${
                 dark
                   ? 'text-white/85 hover:bg-white/10 hover:text-white'
                   : isActive(link.href)
@@ -185,13 +186,13 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
           ))}
         </nav>
 
-        <div className="ml-auto hidden items-center gap-2 lg:flex">
+        <div className="ml-auto hidden items-center gap-1.5 lg:flex xl:gap-2">
           {sosButton('h-10 px-2.5 text-sm', 'desktop')}
 
           {/* 보기 설정: 글자 크기와 밝은 화면/어두운 화면 */}
           <Preferences locale={locale} onDark={dark} />
 
-          <div className="w-36">
+          <div className="w-32 xl:w-36">
             <label htmlFor="header-language" className="sr-only">
               {t.nav.language}
             </label>

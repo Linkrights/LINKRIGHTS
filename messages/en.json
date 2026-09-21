@@ -193,6 +193,41 @@
     "emergencyNote": "If you are in danger or badly hurt, do not wait — call now.",
     "emergencyCta": "See emergency help"
   },
+  "homeFind": {
+    "title": "What do you want to know?",
+    "subtitle": "Search with a word you already know, or describe your situation in a sentence.",
+    "searchTitle": "Search by keyword",
+    "searchBody": "Find rights information, checklists and Q&A posts with a word or topic you already know.",
+    "askTitle": "Ask the AI",
+    "askBody": "Describe your situation in your own words and we will sum up the related rights and what you can do now.",
+    "askCta": "Describe my situation",
+    "flowLabel": "How LINKRIGHTS connects",
+    "flow": [
+      "Understand your situation",
+      "Check your rights",
+      "Find help if you need it"
+    ]
+  },
+  "homeHelp": {
+    "title": "If it's hard to handle alone",
+    "body": "Find organisations that can give advice or help, by area. We show places you can use anywhere in Korea together with local ones.",
+    "regionLabel": "Choose your area",
+    "submit": "Find help",
+    "count": "Registered now: {nationwide} nationwide · {local} local",
+    "emergencyTitle": "If you are in danger now",
+    "emergencyBody": "Don't wait. Call right away.",
+    "emergencyMore": "See all emergency contacts"
+  },
+  "materialRequest": {
+    "title": "Missing something?",
+    "noneTitle": "LINKRIGHTS doesn't have registered information about this situation yet.",
+    "body": "Tell us what information you'd like to see. Your email app will open and you can edit the message before sending. You don't need to include your name or contact details.",
+    "cta": "Request new information",
+    "subject": "[LINKRIGHTS information request]",
+    "subjectWithTitle": "[LINKRIGHTS information request] {title}",
+    "mailBody": "I would like information to be added about the following.\n\n- Topic I was looking for:\n- What I hoped to find:\n",
+    "mailBodyPage": "I would like information to be added about the following.\n\n- Rights information I was reading: {title}\n- What I hoped to find:\n"
+  },
   "homeUpdates": {
     "title": "Recently added or reviewed",
     "subtitle": "Instead of visitor numbers, here is what is actually being updated.",
@@ -265,7 +300,12 @@
     "tip1": "If Korean is hard for you, ask: \"Can I get advice in another language?\"",
     "tip2": "Keep dates, places and things like text messages or contracts next to you so it is easier to explain.",
     "tip3": "You only need to give your name or contact details if the counsellor asks for them.",
-    "note": "Follow the organisation's own guidance on how advice works. If you are in danger now, call 112 (police) or 119 (ambulance) straight away."
+    "note": "Follow the organisation's own guidance on how advice works. If you are in danger now, call 112 (police) or 119 (ambulance) straight away.",
+    "cardLine1": "Hello. I'm calling because I'd like some advice about something.",
+    "cardKorean": "My Korean isn't very good. Can I still get advice?",
+    "cardLanguage": "Can I get advice in {languages}?",
+    "cardYouth": "Can young people get advice here too?",
+    "cardNote": "These are examples only. Please follow the organisation's own instructions."
   },
   "testimonials": {
     "title": "Voices of people who took part",
@@ -316,7 +356,12 @@
     "region": "Choose your area to find help",
     "generalTitle": "Counselling for young people about any worry",
     "retry": "Ask again in different words",
-    "ask": "Ask about my situation"
+    "ask": "Ask about my situation",
+    "retryHint": "You could ask it this way",
+    "retryNote": "These questions come from rights information registered on LINKRIGHTS. Tap one to ask it as a new question.",
+    "retryEdit": "Edit my question and ask again",
+    "sourcesArticle": "Read the rights information this answer used",
+    "sourcesOfficial": "Official sources (organisation websites, open in a new window)"
   },
   "orgFinder": {
     "title": "Choose your area",
@@ -431,7 +476,7 @@
     "requestSubject": "[Checklist suggestion] {title}",
     "emergencyLink": "See emergency help",
     "relatedTitle": "Checklists to use with this information",
-    "homeTitle": "Try it: checklists for your situation",
+    "homeTitle": "Check it off: checklists for your situation",
     "homeSubtitle": "Before starting a part-time job or extending your visa, tick off what to check one by one."
   },
   "homeAsk": {
@@ -582,7 +627,16 @@
     "askNote": "Want to describe your situation in your own words?",
     "askCta": "Explain it to the AI",
     "emergencyTitle": "Are you in danger right now?",
-    "browseAll": "Browse all topics"
+    "browseAll": "Browse all topics",
+    "typeArticle": "Rights info",
+    "typeChecklist": "Checklist",
+    "typeQna": "Q&A board",
+    "checklistsTitle": "Related checklists",
+    "qnaTitle": "From the Q&A board",
+    "orgsTitle": "Where to get help",
+    "orgsMore": "Find help by area",
+    "qnaNote": "If you didn't find what you need, you can read other people's questions on the Q&A board or ask our team directly.",
+    "qnaCta": "Go to the Q&A board"
   },
   "rights": {
     "title": "Rights information",
@@ -615,7 +669,10 @@
   "emergency": {
     "navTitle": "Emergency",
     "pageTitle": "Do you need help right now?",
-    "pageSubtitle": "If you are in danger, call one of these numbers straight away."
+    "pageSubtitle": "If you are in danger, call one of these numbers straight away.",
+    "callLabel": "Call",
+    "officialSite": "Official website",
+    "officialSiteHint": "On a computer, you can open the official website instead of calling."
   },
   "about": {
     "title": "About LINKRIGHTS"

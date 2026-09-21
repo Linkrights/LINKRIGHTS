@@ -155,15 +155,16 @@ export function Preferences({
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
         aria-controls="view-preferences"
-        className={`lr-press inline-flex h-10 items-center gap-1.5 rounded-[var(--radius-control)] border px-2.5 text-sm font-semibold transition-colors ${
+        aria-label={a.title}
+        className={`lr-press inline-flex h-10 items-center gap-1.5 whitespace-nowrap rounded-[var(--radius-control)] border px-2.5 text-sm font-semibold transition-colors ${
           onDark
             ? 'border-white/30 bg-white/5 text-white hover:border-white/60'
             : 'border-[var(--color-line)] bg-white text-ink-700 hover:border-brand-300'
         }`}
       >
         <Icon name="text-size" size={16} />
+        {/* 1024~1279px 화면에서는 아이콘만 보이고(이름은 aria-label 로 읽힘), 더 넓은 화면에서는 이름도 보입니다. */}
         <span className="hidden xl:inline">{a.title}</span>
-        <span className="xl:sr-only">{a.title}</span>
       </button>
 
       {open && (

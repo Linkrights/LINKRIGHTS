@@ -181,6 +181,41 @@
     "emergencyNote": "지금 위험하거나 많이 다쳤다면 기다리지 말고 바로 연락하세요.",
     "emergencyCta": "긴급 도움 보기"
   },
+  "homeFind": {
+    "title": "무엇이 궁금한가요?",
+    "subtitle": "알고 있는 낱말로 바로 찾거나, 내 상황을 문장으로 설명해 보세요.",
+    "searchTitle": "키워드로 찾기",
+    "searchBody": "이미 알고 있는 낱말이나 주제로 권리정보·체크리스트·질문게시판을 찾아요.",
+    "askTitle": "AI에게 물어보기",
+    "askBody": "내 상황을 문장으로 설명하면 관련 권리와 지금 할 수 있는 일을 정리해 드려요.",
+    "askCta": "내 상황 설명하기",
+    "flowLabel": "LINKRIGHTS는 이렇게 이어져요",
+    "flow": [
+      "내 상황 알아보기",
+      "내 권리 확인하기",
+      "필요하면 도움받을 곳 찾기"
+    ]
+  },
+  "homeHelp": {
+    "title": "혼자 해결하기 어렵다면",
+    "body": "상담하거나 도움받을 수 있는 기관을 지역별로 찾아보세요. 전국 어디서나 이용할 수 있는 곳과 우리 지역 기관을 함께 보여줘요.",
+    "regionLabel": "지역 고르기",
+    "submit": "도움받을 곳 찾기",
+    "count": "지금 등록된 기관: 전국 {nationwide}곳 · 지역 {local}곳",
+    "emergencyTitle": "지금 위험하다면",
+    "emergencyBody": "기다리지 말고 바로 전화하세요.",
+    "emergencyMore": "긴급 연락처 모두 보기"
+  },
+  "materialRequest": {
+    "title": "필요한 자료가 없나요?",
+    "noneTitle": "LINKRIGHTS에는 이 상황에 대한 등록 정보가 아직 없어요.",
+    "body": "더 있었으면 하는 자료를 알려주세요. 메일 앱이 열리고, 보내기 전에 내용을 고칠 수 있어요. 이름·연락처 같은 개인정보는 적지 않아도 돼요.",
+    "cta": "자료 추가 요청하기",
+    "subject": "[LINKRIGHTS 자료 추가 요청]",
+    "subjectWithTitle": "[LINKRIGHTS 자료 추가 요청] {title}",
+    "mailBody": "다음 내용에 대한 자료가 추가되었으면 좋겠습니다.\n\n- 궁금했던 주제:\n- 있었으면 하는 내용:\n",
+    "mailBodyPage": "다음 내용에 대한 자료가 추가되었으면 좋겠습니다.\n\n- 보고 있던 권리정보: {title}\n- 있었으면 하는 내용:\n"
+  },
   "homeUpdates": {
     "title": "최근에 새로 만들거나 검토한 것",
     "subtitle": "이용자 수 대신, 실제로 무엇이 업데이트되고 있는지 그대로 보여드려요.",
@@ -253,7 +288,12 @@
     "tip1": "한국어가 어려우면 \"다른 언어로 상담할 수 있나요?\"라고 물어보세요.",
     "tip2": "날짜, 장소, 받은 문자나 계약서 같은 자료를 옆에 두면 설명하기 쉬워요.",
     "tip3": "이름이나 연락처는 상담원이 필요하다고 안내할 때 알려주면 돼요.",
-    "note": "실제 상담 방법과 절차는 기관의 안내를 따라 주세요. 지금 위험하다면 112(경찰) 또는 119(구급)로 바로 전화하세요."
+    "note": "실제 상담 방법과 절차는 기관의 안내를 따라 주세요. 지금 위험하다면 112(경찰) 또는 119(구급)로 바로 전화하세요.",
+    "cardLine1": "안녕하세요. 상담받고 싶은 일이 있어서 전화했어요.",
+    "cardKorean": "제가 한국어가 조금 어려운데 상담이 가능할까요?",
+    "cardLanguage": "{languages}로 상담할 수 있나요?",
+    "cardYouth": "청소년도 상담받을 수 있나요?",
+    "cardNote": "참고용 예시예요. 실제 상담 방법은 기관의 안내를 따라 주세요."
   },
   "testimonials": {
     "title": "함께한 사람들의 목소리",
@@ -304,7 +344,12 @@
     "region": "지역을 골라 도움받을 곳 찾기",
     "generalTitle": "어떤 고민이든 상담할 수 있는 청소년 상담",
     "retry": "질문을 바꿔서 다시 물어보기",
-    "ask": "내 상황 물어보기"
+    "ask": "내 상황 물어보기",
+    "retryHint": "이렇게 바꿔서 물어볼 수 있어요",
+    "retryNote": "LINKRIGHTS에 등록된 권리정보에서 가져온 질문이에요. 누르면 이 질문으로 새로 물어봐요.",
+    "retryEdit": "직접 고쳐서 다시 묻기",
+    "sourcesArticle": "이 내용이 담긴 권리정보 보기",
+    "sourcesOfficial": "공식 출처 (기관 누리집, 새 창에서 열려요)"
   },
   "orgFinder": {
     "title": "내 지역 선택하기",
@@ -419,7 +464,7 @@
     "requestSubject": "[체크리스트 제안] {title}",
     "emergencyLink": "긴급 도움 보기",
     "relatedTitle": "이 정보와 함께 쓰는 체크리스트",
-    "homeTitle": "해보기: 상황별 체크리스트",
+    "homeTitle": "체크해보기: 상황별 체크리스트",
     "homeSubtitle": "알바를 시작하거나 비자를 연장하기 전에, 확인할 것을 하나씩 체크해 보세요."
   },
   "homeAsk": {
@@ -521,7 +566,13 @@
     "placeholder": "예: 월급, 비자 연장, 병원",
     "button": "검색",
     "examplesLabel": "이렇게 검색해 보세요",
-    "examples": ["알바비", "비자 연장", "건강보험", "근로계약서", "차별"],
+    "examples": [
+      "알바비",
+      "비자 연장",
+      "건강보험",
+      "근로계약서",
+      "차별"
+    ],
     "resultsFor": "‘{q}’ 검색 결과",
     "resultCount": "{n}개",
     "directTitle": "찾은 권리정보",
@@ -534,7 +585,16 @@
     "askNote": "내 상황을 문장으로 설명하고 싶다면",
     "askCta": "AI에게 상황 설명하기",
     "emergencyTitle": "지금 위험한 상황인가요?",
-    "browseAll": "분야별로 모두 보기"
+    "browseAll": "분야별로 모두 보기",
+    "typeArticle": "권리정보",
+    "typeChecklist": "체크리스트",
+    "typeQna": "질문게시판",
+    "checklistsTitle": "관련 체크리스트",
+    "qnaTitle": "질문게시판에서 찾은 글",
+    "orgsTitle": "관련 도움받을 곳",
+    "orgsMore": "지역별 도움받을 곳 찾기",
+    "qnaNote": "원하는 답을 찾지 못했다면 질문게시판에서 다른 사람의 질문을 보거나 운영팀에 직접 물어볼 수 있어요.",
+    "qnaCta": "질문게시판 가기"
   },
   "rights": {
     "title": "권리정보",
@@ -567,7 +627,10 @@
   "emergency": {
     "navTitle": "긴급 도움",
     "pageTitle": "지금 도움이 필요한가요?",
-    "pageSubtitle": "위험한 상황이라면 이 페이지의 번호로 바로 연락하세요."
+    "pageSubtitle": "위험한 상황이라면 이 페이지의 번호로 바로 연락하세요.",
+    "callLabel": "전화 걸기",
+    "officialSite": "공식 사이트",
+    "officialSiteHint": "PC에서는 전화 대신 공식 사이트에서 안내를 볼 수 있어요."
   },
   "about": {
     "title": "LINKRIGHTS 소개"

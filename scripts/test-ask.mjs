@@ -372,9 +372,11 @@ function verifyAnswer(label, res) {
       Object.values(article.i18n).flatMap((localeBody) => [localeBody.title, ...localeBody.situations]),
     ),
   );
+  // 근거 자료가 있으면 최대 3개, 자료가 없으면 "질문을 바꿔서 다시 물어보기"용으로 최대 4개
+  const maxSuggestions = body.evidence === 'none' ? 4 : 3;
   check(
-    `${label}: 이어서 물어볼 질문은 등록된 문장만, 최대 3개`,
-    suggestions.length <= 3 && suggestions.every((text) => registeredLines.has(text)),
+    `${label}: 이어서 물어볼 질문은 등록된 문장만, 최대 ${maxSuggestions}개`,
+    suggestions.length <= maxSuggestions && suggestions.every((text) => registeredLines.has(text)),
     suggestions.join(' / '),
   );
   check(
@@ -835,6 +837,9 @@ async function runDeterministic() {
     check('비슷한 권리정보: 등록 글만, 최대 3개', similar.length <= 3 && similar.every((id) => articleById.has(id)), similar.join(', '));
     check('비슷한 권리정보: 은행 계좌 질문 → 통장·휴대폰 글', similar.includes('life-bank-and-phone'), similar.join(', '));
     check('비슷한 권리정보: 흔한 말만 있으면 제안하지 않음', search.findSimilarArticles('어떻게 해야 하나요', 3).length === 0);
+    // "안 돼요" 같은 흔한 끝말로 관련 없는 글(학교·건강보험·폭력)을 제안하지 않음
+    const bankApp = search.findSimilarArticles('은행 앱에서 해외송금이 안 돼요', 3).map((a) => a.id);
+    check('비슷한 권리정보: "은행 앱에서 해외송금이 안 돼요" → 통장·휴대폰 글만', bankApp.length > 0 && bankApp.every((id) => id === 'life-bank-and-phone'), bankApp.join(', '));
 
     const api = makeApi(() => ({
       category: 'life', urgency: 'normal', summary: '은행에서 계좌를 만들 수 없었다고 했어요.', checks: [], rights: [],
@@ -958,6 +963,59 @@ async function runDeterministic() {
       reviewed.every((a) => content.groundingBody(a, 'zh') === a.i18n.zh),
       `${reviewed.length}개`,
     );
+  }
+
+  // 6-8) 검색 화면의 체크리스트·질문게시판 찾기, 자료 추가 요청 메일, 자료가 없을 때 다시 물어볼 질문
+  {
+    const contentSearch = data.load('src/lib/contentSearch.ts');
+    const registeredChecklists = new Set(content.getChecklists().map((c) => c.id));
+    const alba = contentSearch.findChecklists('알바', 'ko', new Set()).map((c) => c.id);
+    check('검색: "알바" → "알바 시작 전 확인할 것" 체크리스트', alba.includes('before-part-time-job'), alba.join(', '));
+    const linked = contentSearch.findChecklists('임금', 'ko', new Set(['labor-unpaid-wages'])).map((c) => c.id);
+    check('검색: 찾은 권리정보로 만든 체크리스트도 함께 (임금 → 알바 체크리스트)', linked.includes('before-part-time-job'), linked.join(', '));
+    check(
+      '검색: 체크리스트는 등록된 것만, 최대 4개',
+      [alba, linked].every((ids) => ids.length <= 4 && ids.every((id) => registeredChecklists.has(id))),
+    );
+    check('검색: 관련 없는 낱말은 체크리스트를 찾지 않음', contentSearch.findChecklists('우주선', 'ko', new Set()).length === 0);
+    const posts = ['질문', '알바', '개인정보'].flatMap((q) => contentSearch.findQnaPosts(q, 'ko', new Set()));
+    check('검색: 질문게시판은 답이 달린 질문만 (이용 안내 공지는 제외)', posts.every((p) => p.kind === 'question' && Boolean(p.answer)), posts.map((p) => p.id).join(', '));
+
+    const site = content.getSite();
+    const materialRequest = data.load('src/lib/materialRequest.ts');
+    const koMessages = JSON.parse(fs.readFileSync(path.join(ROOT, 'messages', 'ko.json'), 'utf8'));
+    const mail = materialRequest.materialRequestHref(site.contactEmail, koMessages.materialRequest);
+    const pageMail = materialRequest.materialRequestHref(site.contactEmail, koMessages.materialRequest, '임금을 못 받았을 때');
+    check('자료 추가 요청: 사이트에 등록된 이메일(site.contactEmail)로만 보냄', Boolean(site.contactEmail) && mail.startsWith(`mailto:${site.contactEmail}?`), mail.slice(0, 60));
+    check('자료 추가 요청: 제목과 본문이 미리 채워짐', mail.includes('subject=') && mail.includes('body='));
+    check('자료 추가 요청: 권리정보 화면에서는 제목에 글 제목이 들어감', decodeURIComponent(pageMail).includes('임금을 못 받았을 때'));
+    check('자료 추가 요청: 이메일이 없으면 링크를 만들지 않음', materialRequest.materialRequestHref('', koMessages.materialRequest) === '');
+    check(
+      '자료 추가 요청: 이름·연락처 같은 개인정보를 묻지 않음',
+      ['ko', 'en', 'zh', 'vi'].every((l) => {
+        const m = JSON.parse(fs.readFileSync(path.join(ROOT, 'messages', `${l}.json`), 'utf8')).materialRequest;
+        return !/이름\s*:|연락처\s*:|전화\s*:|name\s*:|phone\s*:|email\s*:/i.test(`${m.mailBody}${m.mailBodyPage}`);
+      }),
+    );
+
+    // 자료가 없을 때 "질문을 바꿔서 다시 물어보기"용 추천 질문: 등록된 권리정보 문장만, 최대 4개, 기관 없음
+    const registeredLines = new Set(
+      [...articleById.values()].flatMap((article) => Object.values(article.i18n).flatMap((body) => [body.title, ...body.situations])),
+    );
+    const api = makeApi(() => ({
+      category: 'other', urgency: 'normal', summary: '요약', checks: [], rights: [], actions: [],
+      organizations: [], sources: [], follow_up_question: '', limitations: '',
+    }));
+    for (const question of ['친구 결혼식에 뭐 입고 가요?', '대학교 동아리에서 회비를 돌려주지 않아요']) {
+      const res = await api.ask({ question, locale: 'ko' });
+      if (res.body.evidence !== 'none') continue;
+      const suggestions = res.body.suggestions ?? [];
+      check(
+        `자료 없음 다시 묻기: "${question}" → 등록 문장만, 최대 4개, 기관 없음`,
+        suggestions.length <= 4 && suggestions.every((s) => registeredLines.has(s)) && res.body.organizations.length === 0,
+        suggestions.join(' / '),
+      );
+    }
   }
 
   // 7) 화면 문구 4개 언어

@@ -193,6 +193,41 @@
     "emergencyNote": "如果现在有危险或受了重伤，请不要等待，立即联系。",
     "emergencyCta": "查看紧急求助"
   },
+  "homeFind": {
+    "title": "你想了解什么？",
+    "subtitle": "可以用已经知道的词直接查找，也可以用一句话说明你的情况。",
+    "searchTitle": "用关键词查找",
+    "searchBody": "用你已经知道的词或主题，查找权利信息、确认清单和问答板。",
+    "askTitle": "向 AI 提问",
+    "askBody": "用一句话说明你的情况，我们会整理相关的权利和现在可以做的事。",
+    "askCta": "说明我的情况",
+    "flowLabel": "LINKRIGHTS 是这样连接的",
+    "flow": [
+      "了解我的情况",
+      "确认我的权利",
+      "需要时查找求助机构"
+    ]
+  },
+  "homeHelp": {
+    "title": "如果难以独自解决",
+    "body": "按地区查找可以咨询或提供帮助的机构。会一起显示全国都能使用的机构和本地区的机构。",
+    "regionLabel": "选择地区",
+    "submit": "查找求助机构",
+    "count": "目前登记：全国 {nationwide} 处 · 地区 {local} 处",
+    "emergencyTitle": "如果现在有危险",
+    "emergencyBody": "不要等待，请立即拨打电话。",
+    "emergencyMore": "查看全部紧急联系方式"
+  },
+  "materialRequest": {
+    "title": "没有需要的资料吗？",
+    "noneTitle": "LINKRIGHTS 目前还没有关于这种情况的登记信息。",
+    "body": "请告诉我们你希望增加的资料。会打开邮件应用，发送前可以修改内容。不需要写姓名、联系方式等个人信息。",
+    "cta": "申请增加资料",
+    "subject": "[LINKRIGHTS 资料增加申请]",
+    "subjectWithTitle": "[LINKRIGHTS 资料增加申请] {title}",
+    "mailBody": "希望能增加以下内容的资料。\n\n- 想了解的主题：\n- 希望有的内容：\n",
+    "mailBodyPage": "希望能增加以下内容的资料。\n\n- 正在看的权利信息：{title}\n- 希望有的内容：\n"
+  },
   "homeUpdates": {
     "title": "最近新增或审核的内容",
     "subtitle": "我们不用访问人数来说明，而是直接展示实际更新了什么。",
@@ -265,7 +300,12 @@
     "tip1": "韩语有困难时，可以问：“可以用其他语言咨询吗？”",
     "tip2": "把日期、地点、收到的短信或合同等资料放在身边，更容易说明。",
     "tip3": "咨询员说需要时，再告诉对方姓名或联系方式即可。",
-    "note": "实际咨询方式和程序请按照机构的说明。如果现在有危险，请直接拨打 112（警察）或 119（急救）。"
+    "note": "实际咨询方式和程序请按照机构的说明。如果现在有危险，请直接拨打 112（警察）或 119（急救）。",
+    "cardLine1": "你好，我有一件事想咨询，所以打电话过来。",
+    "cardKorean": "我的韩语不太好，可以咨询吗？",
+    "cardLanguage": "可以用{languages}咨询吗？",
+    "cardYouth": "青少年也可以咨询吗？",
+    "cardNote": "以上仅为参考示例，实际咨询方式请按机构的说明进行。"
   },
   "testimonials": {
     "title": "参与者的声音",
@@ -316,7 +356,12 @@
     "region": "选择地区，查找求助机构",
     "generalTitle": "任何烦恼都可以咨询的青少年咨询",
     "retry": "换个说法再问一次",
-    "ask": "询问我的情况"
+    "ask": "询问我的情况",
+    "retryHint": "可以这样换个说法问",
+    "retryNote": "这些问题来自 LINKRIGHTS 登记的权利信息。点击后会用这个问题重新提问。",
+    "retryEdit": "自己修改后再问",
+    "sourcesArticle": "查看这个回答用到的权利信息",
+    "sourcesOfficial": "官方来源（机构网站，在新窗口打开）"
   },
   "orgFinder": {
     "title": "选择我的地区",
@@ -431,7 +476,7 @@
     "requestSubject": "[清单建议] {title}",
     "emergencyLink": "查看紧急求助",
     "relatedTitle": "与这条信息一起使用的清单",
-    "homeTitle": "动手试试：不同情况的确认清单",
+    "homeTitle": "逐项确认：不同情况的确认清单",
     "homeSubtitle": "开始打工或延长签证之前，逐项勾选需要确认的内容。"
   },
   "homeAsk": {
@@ -582,7 +627,16 @@
     "askNote": "想用句子说明自己的情况吗？",
     "askCta": "向 AI 说明情况",
     "emergencyTitle": "你现在有危险吗？",
-    "browseAll": "按领域查看全部"
+    "browseAll": "按领域查看全部",
+    "typeArticle": "权利信息",
+    "typeChecklist": "确认清单",
+    "typeQna": "问答板",
+    "checklistsTitle": "相关确认清单",
+    "qnaTitle": "问答板中的帖子",
+    "orgsTitle": "相关求助机构",
+    "orgsMore": "按地区查找求助机构",
+    "qnaNote": "如果没有找到需要的答案，可以在问答板查看其他人的问题，或直接向运营团队提问。",
+    "qnaCta": "前往问答板"
   },
   "rights": {
     "title": "权利信息",
@@ -615,7 +669,10 @@
   "emergency": {
     "navTitle": "紧急求助",
     "pageTitle": "你现在需要帮助吗？",
-    "pageSubtitle": "如果处于危险中，请立即拨打本页的电话。"
+    "pageSubtitle": "如果处于危险中，请立即拨打本页的电话。",
+    "callLabel": "拨打电话",
+    "officialSite": "官方网站",
+    "officialSiteHint": "在电脑上可以打开官方网站查看说明，代替拨打电话。"
   },
   "about": {
     "title": "关于 LINKRIGHTS"

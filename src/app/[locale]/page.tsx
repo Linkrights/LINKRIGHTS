@@ -19,6 +19,7 @@ import path from 'node:path';
 import Link from 'next/link';
 import { ArticleCard } from '@/components/ArticleCard';
 import { AskBox } from '@/components/AskBox';
+import { HomeHelpFinder } from '@/components/HomeHelpFinder';
 import { HomeHero } from '@/components/HomeHero';
 import { Icon, type IconName } from '@/components/Icon';
 import { OrgCard } from '@/components/OrgCard';
@@ -44,6 +45,7 @@ import {
   resolveOrganizations,
 } from '@/lib/content';
 import { LOCALES, formatDate, getMessages, pick, toLocale } from '@/lib/i18n';
+import { REGIONS } from '@/lib/regions';
 import { searchSuggestions } from '@/lib/search';
 import impact from '../../../content/impact.json';
 
@@ -64,13 +66,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   // 검색창 자동완성: 등록된 권리정보의 키워드에서만 가져옵니다.
   const suggestions = searchSuggestions(locale);
 
-  // 소개 영상: 팀이 만든 LINKRIGHTS 소개 영상 전체(144초, 자르지 않은 웹용 압축본, 소리 없음).
+  // 소개 영상: 팀이 만든 LINKRIGHTS 소개 영상 전체(화질 개선본 "링크라이츠 화질", 자르지 않은 웹용 압축본, 소리 없음).
+  // 데스크톱·태블릿은 1920×1080, 휴대폰은 세로 화면에 맞춰 가운데를 자른 세로 영상입니다.
   // public 폴더에 파일이 있을 때만 씁니다. (없으면 대표 이미지 또는 네이비 배경만)
   const publicFile = (file: string) => fs.existsSync(path.join(process.cwd(), 'public', file));
   const heroVideo = {
-    desktop: '/videos/linkrights-hero-full-720.mp4',
-    mobile: '/videos/linkrights-hero-full-480.mp4',
-    poster: '/images/hero-poster.jpg',
+    desktop: '/videos/linkrights-hero-1080.mp4',
+    mobile: '/videos/linkrights-hero-mobile.mp4',
+    poster: '/images/hero-poster-hd.jpg',
   };
   // 첫 화면 긴급 연락처는 등록된 기관(content/organizations.json)의 번호만 씁니다.
   const heroContacts = resolveOrganizations(['police-112', 'fire-119']).map((org) => ({
@@ -93,10 +96,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   ];
   const introLabel = 'text-sm font-bold tracking-[0.04em] text-brand-700';
 
-  // 2. 무엇이 필요한가요?: 네 가지 진입점. 각 기능을 "언제 쓰는지"로 구분합니다.
-  const startPoints: { key: string; icon: IconName; title: string; body: string; href: string }[] = [
+  // 2. 무엇이 궁금한가요? ② 내 권리 확인하기: 권리정보와 체크리스트 (각 기능을 "언제 쓰는지"로 구분합니다)
+  const checkPoints: { key: string; icon: IconName; title: string; body: string; href: string }[] = [
     { key: 'rights', icon: 'book', title: t.homeStart.rightsTitle, body: t.homeStart.rightsBody, href: `/${locale}/rights` },
-    { key: 'ask', icon: 'sparkles', title: t.homeStart.askTitle, body: t.homeStart.askBody, href: `/${locale}/ask` },
     {
       key: 'checklist',
       icon: 'check',
@@ -104,14 +106,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       body: t.homeStart.checklistBody,
       href: `/${locale}/checklists`,
     },
-    {
-      key: 'organizations',
-      icon: 'lifebuoy',
-      title: t.homeStart.orgTitle,
-      body: t.homeStart.orgBody,
-      href: `/${locale}/organizations`,
-    },
   ];
+  const stepTitle = 'flex items-center gap-2.5 text-lg font-extrabold text-ink-900 sm:text-xl';
+  const stepNumber =
+    'grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand-600 text-[15px] font-bold text-white';
+  // ③ 도움받을 곳: 등록된 기관 수 (전국 기관 / 지역 기관)
+  const nationwideCount = getNationwideOrganizations().length;
+  const orgCounts = { nationwide: nationwideCount, local: getOrganizations().length - nationwideCount };
 
   // 7. 최근에 새로 만들거나 검토한 것
   // 이용자 수 같은 큰 숫자 대신, 등록된 자료에 실제로 적힌 날짜(최초 작성일·검토일)로만 만듭니다.
@@ -194,54 +195,127 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         }}
       />
 
-      {/* 2. 무엇이 필요한가요?: 처음 온 사람이 고를 수 있는 네 가지 -------- */}
+      {/* 2. 무엇이 궁금한가요?: LINKRIGHTS 흐름 그대로 세 단계 ----------------
+          ① 내 상황 알아보기(키워드 검색 / AI 질문) → ② 내 권리 확인하기(권리정보 / 체크리스트) → ③ 필요하면 도움받을 곳 찾기
+          검색과 AI 질문은 역할을 나눠 적습니다: 검색 = 이미 아는 낱말로 찾기, AI = 내 상황을 문장으로 설명하기 */}
       <section id="home-start" className="scroll-mt-20 border-b border-[var(--color-line)] bg-white">
         <div className="lr-container py-14 sm:py-20">
-          <h2 className="lr-h2">{t.homeStart.title}</h2>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-500 sm:text-[17px]">{t.homeStart.subtitle}</p>
+          <h2 className="lr-h2">{t.homeFind.title}</h2>
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-500 sm:text-[17px]">{t.homeFind.subtitle}</p>
 
-          <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-            {startPoints.map((item, index) => (
-              <Reveal
-                key={item.key}
-                index={index}
-                className="lr-card lr-card-hover group relative flex items-start gap-4 p-5 sm:p-6"
-              >
-                <span className="lr-icon-badge h-12 w-12">
-                  <Icon name={item.icon} size={24} />
-                </span>{' '}
-                <span className="min-w-0 flex-1">
-                  <span className="block text-lg font-extrabold leading-snug text-ink-900 group-hover:text-brand-800">
-                    <Link
-                      href={item.href}
-                      className="after:absolute after:inset-0 after:rounded-[var(--radius-card)] after:content-['']"
-                    >
-                      {item.title}
-                    </Link>
+          <ol aria-label={t.homeFind.flowLabel} className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-2 text-[15px] font-semibold text-ink-700">
+            {t.homeFind.flow.map((step, index) => (
+              <li key={step} className="flex items-center gap-2">
+                <a href={`#home-step-${index + 1}`} className="flex items-center gap-2 hover:text-brand-700">
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-navy-900 text-[13px] font-bold text-white">
+                    {index + 1}
+                    <span className="sr-only">.</span>
                   </span>{' '}
-                  <span className="mt-1 block text-[15px] leading-relaxed text-ink-500">{item.body}</span>
-                </span>
-                <Icon
-                  name="arrow-right"
-                  size={20}
-                  className="mt-3 shrink-0 text-ink-300 transition-transform group-hover:translate-x-1 group-hover:text-brand-600"
-                />
-              </Reveal>
+                  <span>{step}</span>
+                </a>
+                {index < t.homeFind.flow.length - 1 && (
+                  <Icon name="arrow-right" size={16} className="shrink-0 text-ink-300" aria-hidden="true" />
+                )}
+              </li>
             ))}
-          </ul>
+          </ol>
 
-          {/* 긴급한 경우는 네 가지 중에서 고르게 하지 않고 따로 안내합니다. */}
-          <p className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1.5 rounded-[var(--radius-control)] border-l-4 border-[var(--color-danger-700)] bg-[var(--color-danger-50)] px-4 py-3.5 text-[15px] leading-relaxed text-ink-900">
-            <span className="inline-flex items-center gap-2 font-semibold text-[var(--color-danger-700)]">
-              <Icon name="alert" size={18} className="shrink-0" /> {t.homeStart.emergencyNote}
-            </span>
-            <Link
-              href={`/${locale}/emergency`}
-              className="inline-flex items-center gap-1 font-bold text-[var(--color-danger-700)] underline underline-offset-2"
-            >
-              {t.homeStart.emergencyCta} <Icon name="arrow-right" size={16} />
-            </Link>
-          </p>
+          {/* ① 내 상황 알아보기 */}
+          <div id="home-step-1" className="mt-10 scroll-mt-24">
+            <h3 className={stepTitle}>
+              <span className={stepNumber}>1</span> {t.homeFind.flow[0]}
+            </h3>
+            <div className="mt-4 grid gap-4 lg:grid-cols-2">
+              <div className="lr-card p-5 sm:p-6">
+                <RightsSearchForm
+                  locale={locale}
+                  suggestions={suggestions}
+                  bare
+                  title={t.homeFind.searchTitle}
+                  hint={t.homeFind.searchBody}
+                  showAskLink={false}
+                />
+              </div>
+              <div className="lr-card flex flex-col p-5 sm:p-6">
+                <p className="flex items-center gap-2 text-lg font-extrabold tracking-tight text-ink-900">
+                  <Icon name="sparkles" size={20} className="shrink-0 text-brand-600" /> {t.homeFind.askTitle}
+                </p>
+                <p className="mt-1 text-[15px] leading-relaxed text-ink-500">{t.homeFind.askBody}</p>
+                <div className="mt-4 flex-1">
+                  <Link href={`/${locale}/ask`} className="lr-btn lr-btn-primary lr-press">
+                    {t.homeFind.askCta} <Icon name="arrow-right" size={18} />
+                  </Link>
+                </div>
+                <p className="mt-4 flex items-start gap-2 border-t border-[var(--color-line)] pt-4 text-sm leading-relaxed text-ink-500">
+                  <Icon name="shield" size={16} className="mt-0.5 shrink-0 text-brand-600" /> <span>{t.homeAsk.trust}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* ② 내 권리 확인하기 */}
+          <div id="home-step-2" className="mt-10 scroll-mt-24">
+            <h3 className={stepTitle}>
+              <span className={stepNumber}>2</span> {t.homeFind.flow[1]}
+            </h3>
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+              {checkPoints.map((item, index) => (
+                <Reveal
+                  key={item.key}
+                  index={index}
+                  className="lr-card lr-card-hover group relative flex items-start gap-4 p-5 sm:p-6"
+                >
+                  <span className="lr-icon-badge h-12 w-12">
+                    <Icon name={item.icon} size={24} />
+                  </span>{' '}
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-lg font-extrabold leading-snug text-ink-900 group-hover:text-brand-800">
+                      <Link
+                        href={item.href}
+                        className="after:absolute after:inset-0 after:rounded-[var(--radius-card)] after:content-['']"
+                      >
+                        {item.title}
+                      </Link>
+                    </span>{' '}
+                    <span className="mt-1 block text-[15px] leading-relaxed text-ink-500">{item.body}</span>
+                  </span>
+                  <Icon
+                    name="arrow-right"
+                    size={20}
+                    className="mt-3 shrink-0 text-ink-300 transition-transform group-hover:translate-x-1 group-hover:text-brand-600"
+                  />
+                </Reveal>
+              ))}
+            </ul>
+          </div>
+
+          {/* ③ 필요하면 도움받을 곳 찾기: 일반 상담(지역 선택)과 긴급 상황을 나눠서 */}
+          <div id="home-step-3" className="mt-10 scroll-mt-24">
+            <h3 className={stepTitle}>
+              <span className={stepNumber}>3</span> {t.homeFind.flow[2]}
+            </h3>
+            <div className="mt-4">
+              <HomeHelpFinder
+                locale={locale}
+                regions={REGIONS.map((region) => ({ key: region.key, label: pick(region.name, locale) }))}
+                counts={orgCounts}
+                contacts={heroContacts}
+                labels={{
+                  title: t.homeHelp.title,
+                  body: t.homeHelp.body,
+                  regionLabel: t.homeHelp.regionLabel,
+                  allRegions: t.orgFinder.allRegions,
+                  nationwideOnly: t.orgFinder.nationwideOnly,
+                  submit: t.homeHelp.submit,
+                  count: t.homeHelp.count,
+                  emergencyTitle: t.homeHelp.emergencyTitle,
+                  emergencyBody: t.homeHelp.emergencyBody,
+                  emergencyMore: t.homeHelp.emergencyMore,
+                  call: t.nav.emergencyCall,
+                }}
+              />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -428,10 +502,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           ))}
         </ul>
 
-        {/* 낱말로 바로 찾기: AI 질문과 역할이 다르다는 것을 검색창 안내 문구로 구분합니다. */}
-        <div className="mt-8">
-          <RightsSearchForm locale={locale} suggestions={suggestions} />
-        </div>
       </Section>
 
       {/* 6. 내 상황을 말해 보세요: 무엇을 얻을 수 있는지 함께 보여줍니다 (AI는 권리를 알아가는 도구) */}
@@ -524,7 +594,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </ul>
       </Section>
 
-      {/* 9. 해보기: 상황별 체크리스트 (content/checklists) -------------- */}
+      {/* 9. 체크해보기: 상황별 체크리스트 (content/checklists) ---------- */}
       {checklists.length > 0 && (
         <Section
           tone="soft"
@@ -586,9 +656,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           {faq.map((item) => (
             <li key={item.id}>
               <details className="group">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 text-base font-bold text-ink-900 hover:bg-surface-soft sm:px-6">
-                  {pick(item.q, locale)}
-                  <span className="shrink-0 text-ink-300 transition-transform group-open:rotate-180" aria-hidden="true">
+                <summary className="flex cursor-pointer list-none items-start justify-between gap-4 px-5 py-4 text-left text-base font-bold leading-snug text-ink-900 hover:bg-surface-soft sm:px-6 [&::-webkit-details-marker]:hidden">
+                  {/* 질문은 왼쪽 정렬, 아이콘은 오른쪽 첫 줄에 고정 (두 줄이 되어도 겹치지 않게) */}
+                  <span className="min-w-0 flex-1">{pick(item.q, locale)}</span>
+                  <span
+                    className="grid h-[22px] w-5 shrink-0 place-items-center text-ink-300 transition-transform group-open:rotate-180"
+                    aria-hidden="true"
+                  >
                     ▾
                   </span>
                 </summary>

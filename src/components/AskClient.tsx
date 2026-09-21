@@ -33,6 +33,7 @@ import { OrgCard } from './OrgCard';
 import { PrivacyNotice } from './PrivacyNotice';
 import { findPersonalInfo, removePersonalInfo } from './privacy-detect';
 import { matchGlossary, type GlossaryTerm } from '@/lib/glossary';
+import { materialRequestHref } from '@/lib/materialRequest';
 import { formatDate, getMessages, type Locale, type Messages } from '@/lib/i18n';
 import type { AskApiRequest, AskApiResponse, AskHistoryTurn, Organization } from '@/lib/types';
 
@@ -165,6 +166,8 @@ function ResultView({
   onRetry,
   onAnswerFollowUp,
   onSuggestion,
+  onNewSuggestion,
+  contactEmail,
   glossaryTerms = [],
   generalHelp = [],
   categoryNames = {},
@@ -181,6 +184,10 @@ function ResultView({
   onAnswerFollowUp?: () => void;
   /** 가장 최근 답변에만 넘깁니다. '이런 것도 물어볼 수 있어요'를 누르면 그 문장으로 이어서 물어봅니다. */
   onSuggestion?: (text: string) => void;
+  /** 자료를 찾지 못했을 때: 추천 질문을 누르면 그 문장으로 새로 물어봅니다. (앞의 답변에 이어서가 아니라 새 질문) */
+  onNewSuggestion?: (text: string) => void;
+  /** 자료 추가 요청 메일을 받을 공식 이메일 (content/site.json) */
+  contactEmail?: string;
   /** 쉬운 말 풀이 용어 (content/glossary.json). 답변에 나온 용어만 골라 옆에 보여주며, 답변 내용은 바꾸지 않습니다. */
   glossaryTerms?: GlossaryTerm[];
   /** 누구나 이용할 수 있는 청소년 상담 기관 (등록 기관, 자료가 없을 때만 보여줌) */
@@ -219,6 +226,8 @@ function ResultView({
   }
   const n = (key: string) => parts.indexOf(key) + 1;
   const noEvidence = result.ok && result.evidence === 'none';
+  // 자료 추가 요청 메일: 등록된 공식 이메일로만 만들고, 이용자가 쓴 질문은 넣지 않습니다.
+  const materialHref = materialRequestHref(contactEmail, t.materialRequest);
   const category =
     answer && categoryNames[answer.category]
       ? { href: `/${locale}/rights/${answer.category}`, name: categoryNames[answer.category] }
@@ -336,6 +345,9 @@ function ResultView({
                 category={category}
                 generalHelp={generalHelp}
                 onRetry={onRetry}
+                suggestions={result.suggestions ?? []}
+                onSuggestion={onNewSuggestion}
+                materialHref={materialHref}
               />
             )}
 
@@ -366,7 +378,7 @@ function ResultView({
             )}
 
             {/* 이어서 물어볼 수 있는 질문: 등록된 권리정보에 적혀 있는 문장만 보여주고, 누르면 그대로 추가 질문이 됩니다. */}
-            {onSuggestion && result.suggestions && result.suggestions.length > 0 && (
+            {!noEvidence && onSuggestion && result.suggestions && result.suggestions.length > 0 && (
               <section>
                 <p className="text-[15px] font-bold text-ink-900">{t.ask.suggestTitle}</p>
                 <ul className="mt-3 flex flex-wrap gap-2">
@@ -413,41 +425,62 @@ function ResultView({
                 </div>
               )}
 
-              {/* 확인한 정보: 실제로 사용한 등록 자료의 제목, 검토일, 발행기관과 공식 링크 */}
+              {/* 확인한 정보: 실제로 사용한 등록 자료(서버가 등록 id 로 확인한 권리정보 상세 페이지)와 그 자료의 공식 출처
+                  - 권리정보 상세 페이지 링크(source.href)는 서버가 등록된 글의 분야·id 로 만든 주소입니다. AI가 만든 주소가 아닙니다.
+                  - 공식 출처는 기관 누리집으로 가는 외부 링크이므로 따로 이름을 붙여 구분합니다. */}
               {result.sources.length > 0 && (
                 <div>
                   <p className="text-[15px] font-bold text-ink-900">{t.ask.resultSources}</p>
                   <ul className="mt-2 space-y-3">
                     {result.sources.map((source) => (
-                      <li key={source.id} className="text-[15px]">
-                        <Link href={source.href} className="lr-link font-semibold">
-                          {source.title}
-                        </Link>{' '}
-                        <p className="mt-0.5 text-[13px] text-ink-500">
+                      <li key={source.id} className="rounded-[var(--radius-control)] border border-[var(--color-line)] bg-white p-3.5 text-[15px]">
+                        <Link href={source.href} className="group flex items-start justify-between gap-3">
+                          <span className="min-w-0">
+                            <span className="block text-[13px] font-semibold text-brand-700">{a.sourcesArticle}</span>
+                            <span className="mt-0.5 block font-bold leading-snug text-ink-900 group-hover:text-brand-800 group-hover:underline">
+                              {source.title}
+                            </span>
+                          </span>
+                          <Icon name="arrow-right" size={18} className="mt-3 shrink-0 text-brand-600" />
+                        </Link>
+                        <p className="mt-1 text-[13px] text-ink-500">
                           {t.common.reviewedAt} {formatDate(source.reviewed_at, locale)}
                         </p>
                         {source.sources.length > 0 && (
-                          <ul className="mt-1 space-y-0.5">
-                            {source.sources.map((official) => (
-                              <li key={official.url} className="text-[13px] leading-relaxed text-ink-500">
-                                {official.publisher && <span>{official.publisher} · </span>}
-                                <a
-                                  href={official.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  aria-label={`${official.title} (${t.common.openInNew})`}
-                                  className="underline underline-offset-2 hover:text-brand-700"
-                                >
-                                  {official.title}
-                                </a>
-                              </li>
-                            ))}
-                          </ul>
+                          <div className="mt-2 border-t border-[var(--color-line)] pt-2">
+                            <p className="text-[13px] font-semibold text-ink-700">{a.sourcesOfficial}</p>
+                            <ul className="mt-1 space-y-0.5">
+                              {source.sources.map((official) => (
+                                <li key={official.url} className="text-[13px] leading-relaxed text-ink-500">
+                                  {official.publisher && <span>{official.publisher} · </span>}
+                                  <a
+                                    href={official.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={`${official.title} (${t.common.openInNew})`}
+                                    className="underline underline-offset-2 hover:text-brand-700"
+                                  >
+                                    {official.title}
+                                  </a>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
                         )}
                       </li>
                     ))}
                   </ul>
                 </div>
+              )}
+
+              {/* 필요한 자료가 없다면: 공식 이메일로 자료 추가 요청 (자료가 없을 때는 위의 안내 상자에 이미 있습니다) */}
+              {!noEvidence && materialHref && (
+                <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[15px] text-ink-700">
+                  <span>{t.materialRequest.title}</span>
+                  <a href={materialHref} className="lr-link inline-flex items-center gap-1 font-semibold">
+                    <Icon name="message" size={16} /> {t.materialRequest.cta}
+                  </a>
+                </p>
               )}
 
               <p className="text-[13px] leading-relaxed text-ink-500">{t.ask.disclaimer}</p>
@@ -487,6 +520,7 @@ export function AskClient({
   glossaryTerms = [],
   generalHelp = [],
   categoryNames = {},
+  contactEmail,
 }: {
   locale: Locale;
   examples: string[];
@@ -498,6 +532,8 @@ export function AskClient({
   generalHelp?: Organization[];
   /** 분야 id → 이름 */
   categoryNames?: Record<string, string>;
+  /** 자료 추가 요청 메일을 받을 공식 이메일 (content/site.json 의 contactEmail) */
+  contactEmail?: string;
 }) {
   const t = getMessages(locale);
   const [question, setQuestion] = useState(initialQuestion);
@@ -589,6 +625,15 @@ export function AskClient({
   function askSuggestion(text: string) {
     setFollowUp(text);
     void ask(text, true);
+  }
+
+  /**
+   * 자료를 찾지 못한 답변에서 추천 질문을 누르면: 앞의 답변에 이어서가 아니라 그 문장으로 새로 물어봅니다.
+   * (추천 질문은 서버가 등록된 권리정보의 문장에서만 고른 것입니다)
+   */
+  function askNewSuggestion(text: string) {
+    setQuestion(text);
+    void ask(text, false);
   }
 
   /** AI의 확인 질문에 답할 수 있도록 추가 질문 입력창으로 이동합니다. */
@@ -798,6 +843,8 @@ export function AskClient({
               onRetry={retryQuestion}
               onAnswerFollowUp={index === turns.length - 1 && canFollowUp && !loading ? focusFollowUp : undefined}
               onSuggestion={index === turns.length - 1 && canFollowUp && !loading ? askSuggestion : undefined}
+              onNewSuggestion={index === turns.length - 1 && !loading ? askNewSuggestion : undefined}
+              contactEmail={contactEmail}
             />
           </div>
         ))}

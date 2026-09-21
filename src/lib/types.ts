@@ -63,6 +63,11 @@ export interface Organization {
   area?: LocalizedText;
   /** 전화번호에 붙는 참고 (예: "청소년전화 1388은 국번 없이 걸 수 있어요.") */
   phone_note?: LocalizedText;
+  /**
+   * 공식 신고·안내 페이지 (선택). 긴급 연락처에서 PC처럼 전화를 걸기 어려운 환경을 위해 "공식 사이트"로 연결합니다.
+   * 기관이 직접 운영하는 공식 주소만 적습니다. 비어 있으면 website 를 쓰고, 둘 다 없으면 전화 버튼만 보여줍니다.
+   */
+  report_url?: string;
   status: ContentStatus;
   owner: string;
   reviewed_at: string;

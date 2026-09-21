@@ -131,6 +131,10 @@ const orgIds = new Set();
       fail(label, '"local_network" / "finder" 기관은 가까운 곳을 찾을 누리집("website")이 있어야 합니다.');
     }
     if (!org.owner) warn(label, '"owner"(담당자)가 비어 있습니다.');
+    // 긴급 기관의 공식 신고·안내 페이지(선택). 비워 두면 website 를 씁니다. 추측한 주소는 적지 않습니다.
+    if (org.report_url !== undefined && !/^https:\/\//.test(org.report_url)) {
+      fail(label, `"report_url" 은 https:// 로 시작하는 공식 주소여야 합니다. 모르면 칸을 지워 주세요. (현재: ${org.report_url})`);
+    }
     if (org.website && !/^https?:\/\//.test(org.website)) {
       fail(label, '"website" 는 https:// 로 시작해야 합니다.');
     }

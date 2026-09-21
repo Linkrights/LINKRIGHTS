@@ -49,6 +49,7 @@ export default async function AskPage({
         glossaryTerms={getGlossary()}
         generalHelp={generalHelp}
         categoryNames={categoryNames}
+        contactEmail={site.contactEmail}
       />
     </>
   );

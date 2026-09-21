@@ -23,6 +23,7 @@
 
 import { NextResponse } from 'next/server';
 import {
+  getArticles,
   getCategories,
   getGroundingArticles,
   getOrganizations,
@@ -85,6 +86,8 @@ const MAX_POSSIBLE_RIGHTS = 2;
 const MAX_RELATED = 3;
 /** 답변 아래에 보여줄 "이런 것도 물어볼 수 있어요" 문장 수와 길이 */
 const MAX_SUGGESTIONS = 3;
+/** 근거 자료를 찾지 못했을 때 "질문을 바꿔서 다시 물어보기"에 보여줄 문장 수 (등록된 권리정보의 문장만) */
+const MAX_RETRY_SUGGESTIONS = 4;
 const MAX_SUGGESTION_LENGTH = 60;
 /** "먼저 확인할 것" 최대 개수와 한 항목의 최대 길이 */
 const MAX_CHECKS = 3;
@@ -395,11 +398,15 @@ export async function POST(request: Request) {
   //  ① 이번에 쓴 자료의 "이런 상황인가요?"(situations) 문장 — 이용자가 말하듯 적힌 문장입니다.
   //  ② 함께 볼 수 있는 권리정보의 제목 — 대부분 질문 형태입니다.
   // 이미 물어본 것과 같은 문장은 빼고, 최대 MAX_SUGGESTIONS 개만 보냅니다.
+  // 근거 자료를 하나도 쓰지 못했다면 "질문을 바꿔서 다시 물어보기"에 쓰도록,
+  //  ③ 함께 보여주는 비슷한 권리정보의 "이런 상황인가요?" 문장까지 넣어 최대 MAX_RETRY_SUGGESTIONS 개를 보냅니다.
+  //  (역시 등록된 문장만이며, 권리나 기관을 판단하는 문장이 아닙니다)
+  const suggestionLimit = usedArticles.length === 0 ? MAX_RETRY_SUGGESTIONS : MAX_SUGGESTIONS;
   const askedBefore = [question, ...history.map((turn) => turn.question)].map((text) => text.replace(/\s+/g, ''));
   const suggestions: string[] = [];
   const addSuggestion = (text: string) => {
     const clean = text.trim();
-    if (!clean || clean.length > MAX_SUGGESTION_LENGTH || suggestions.length >= MAX_SUGGESTIONS) return;
+    if (!clean || clean.length > MAX_SUGGESTION_LENGTH || suggestions.length >= suggestionLimit) return;
     const compact = clean.replace(/\s+/g, '');
     if (askedBefore.some((asked) => asked === compact) || suggestions.some((item) => item.replace(/\s+/g, '') === compact)) return;
     suggestions.push(clean);
@@ -408,6 +415,12 @@ export async function POST(request: Request) {
     for (const situation of resolveArticle(article, locale).body.situations) addSuggestion(situation);
   }
   for (const item of related) addSuggestion(item.title);
+  if (usedArticles.length === 0) {
+    for (const item of related) {
+      const article = groundingById.get(item.id) ?? getArticles().find((candidate) => candidate.id === item.id);
+      for (const situation of article ? resolveArticle(article, locale).body.situations.slice(0, 1) : []) addSuggestion(situation);
+    }
+  }
 
   return json({
     ok: true,

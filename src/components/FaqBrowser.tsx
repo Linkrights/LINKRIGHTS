@@ -214,13 +214,14 @@ export function FaqBrowser({
                     <li key={item.id} id={`faq-${item.id}`} className="scroll-mt-24">
                       <details open={openId === item.id} onToggle={(event) => toggle(item.id, event)} className="group">
                         <summary
-                          className={`flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 text-base font-bold text-ink-900 sm:px-6 [&::-webkit-details-marker]:hidden ${
+                          className={`flex cursor-pointer list-none items-start justify-between gap-4 px-5 py-4 text-left text-base font-bold leading-snug text-ink-900 sm:px-6 [&::-webkit-details-marker]:hidden ${
                             emergency ? 'hover:bg-white/60' : 'hover:bg-surface-soft'
                           }`}
                         >
-                          <span>{item.q}</span>
+                          {/* 질문은 왼쪽 정렬, 아이콘은 오른쪽 첫 줄에 고정 (두 줄이 되어도 겹치지 않게) */}
+                          <span className="min-w-0 flex-1">{item.q}</span>
                           <span
-                            className="shrink-0 text-ink-300 transition-transform duration-200 group-open:rotate-180"
+                            className="grid h-[22px] w-5 shrink-0 place-items-center text-ink-300 transition-transform duration-200 group-open:rotate-180"
                             aria-hidden="true"
                           >
                             ▾

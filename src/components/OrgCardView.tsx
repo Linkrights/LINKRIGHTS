@@ -23,7 +23,10 @@ import type { Organization } from '@/lib/types';
 const MAX_TOPIC_TAGS = 2;
 
 /** 카드에 필요한 화면 문구 묶음 */
-export type OrgCardMessages = Pick<Messages, 'common' | 'orgInfo' | 'orgTopics' | 'organizations' | 'nav' | 'languageNames'>;
+export type OrgCardMessages = Pick<
+  Messages,
+  'common' | 'orgInfo' | 'orgTopics' | 'organizations' | 'nav' | 'languageNames' | 'callScript'
+>;
 
 export function OrgCardView({
   org,
@@ -46,6 +49,26 @@ export function OrgCardView({
       : area.regions.map((key) => regionName(key, locale)).join(' · ');
   const phoneNote = org.phone_note ? pick(org.phone_note, locale) : '';
   const topics = (org.topics ?? []).filter(isOrgTopic).slice(0, MAX_TOPIC_TAGS);
+
+  // "전화하기 전에 이렇게 말해보세요": 전화번호가 있는 일반 기관에만 (긴급 번호는 바로 전화하도록 넣지 않습니다)
+  // 모두 "물어보는" 문장이며, 기관이 어떤 서비스를 한다고 단정하지 않습니다.
+  //  - 한국어가 아닌 지원 언어가 등록된 기관: 그 언어로 상담할 수 있는지 묻는 문장
+  //  - 그렇지 않으면: 한국어가 어려워도 상담할 수 있는지 묻는 문장
+  //  - 청소년 기관이 아니면: 청소년도 상담받을 수 있는지 묻는 문장
+  const otherLanguages = (org.languages ?? [])
+    .filter((code) => code !== 'ko' && code !== 'other')
+    .map((code) => (t.languageNames as Record<string, string>)[code] ?? code);
+  const callLines =
+    org.phone && !org.emergency
+      ? [
+          t.callScript.cardLine1,
+          otherLanguages.length > 0
+            ? t.callScript.cardLanguage.replace('{languages}', otherLanguages.join(', '))
+            : t.callScript.cardKorean,
+          ...(org.category !== 'youth' ? [t.callScript.cardYouth] : []),
+          t.callScript.line3,
+        ]
+      : [];
   // 지도는 등록된 한국어 주소가 있을 때만 네이버 지도 검색으로 연결합니다. (지도 API·비용 없음)
   const mapHref = org.address?.ko ? `https://map.naver.com/p/search/${encodeURIComponent(org.address.ko)}` : '';
 
@@ -167,6 +190,29 @@ export function OrgCardView({
           </div>
         )}
         {phoneNote && <p className="mt-2 text-sm leading-relaxed text-ink-700">{phoneNote}</p>}
+        {callLines.length > 0 && (
+          <details className="group mt-3 rounded-[var(--radius-control)] border border-[var(--color-line)]">
+            <summary className="flex cursor-pointer list-none items-start justify-between gap-3 px-3.5 py-2.5 text-left text-sm font-semibold text-ink-700 hover:bg-surface-soft [&::-webkit-details-marker]:hidden">
+              <span className="flex min-w-0 items-start gap-2">
+                <Icon name="message" size={16} className="mt-0.5 shrink-0 text-brand-600" />
+                <span>{t.callScript.title}</span>
+              </span>
+              <span className="mt-0.5 shrink-0 text-ink-300 transition-transform group-open:rotate-180" aria-hidden="true">
+                ▾
+              </span>
+            </summary>
+            <div className="border-t border-[var(--color-line)] px-3.5 pb-3.5 pt-3">
+              <ul className="space-y-2">
+                {callLines.map((line) => (
+                  <li key={line} className="rounded-[var(--radius-control)] bg-surface-soft px-3 py-2 text-sm leading-relaxed text-ink-900">
+                    “{line}”
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-2.5 text-[13px] leading-relaxed text-ink-500">{t.callScript.cardNote}</p>
+            </div>
+          </details>
+        )}
         <p className="mt-3 text-xs text-ink-500">
           {t.common.reviewedAt} {formatDate(org.reviewed_at, locale)}
         </p>

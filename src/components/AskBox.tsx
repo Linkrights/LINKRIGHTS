@@ -31,14 +31,14 @@ export function AskBox({ locale, examples }: { locale: Locale; examples: string[
   function go(question: string) {
     const trimmed = question.trim();
     if (!trimmed) return;
-    // 질문 내용이 주소(URL)와 방문 기록에 남지 않도록, 이 탭의 임시 저장소에 담아 질문 페이지로 넘깁니다.
+    // 질문 내용이 주소(URL)·방문 기록·서버 기록에 남지 않도록, 이 탭의 임시 저장소에 담아 질문 페이지로 넘깁니다.
+    // 임시 저장소를 쓸 수 없는 브라우저에서도 질문을 주소에 넣지 않습니다. (질문 페이지에서 다시 적을 수 있어요)
     try {
       window.sessionStorage.setItem(PENDING_QUESTION_KEY, trimmed.slice(0, 500));
-      router.push(`/${locale}/ask`);
     } catch {
-      // 임시 저장소를 쓸 수 없는 브라우저에서만 예전처럼 주소로 넘깁니다. (질문 페이지가 주소에서 바로 지웁니다)
-      router.push(`/${locale}/ask?q=${encodeURIComponent(trimmed)}`);
+      // 저장하지 못해도 이동만 합니다.
     }
+    router.push(`/${locale}/ask`);
   }
 
   function removeAndSend() {

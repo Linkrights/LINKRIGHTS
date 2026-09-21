@@ -179,6 +179,7 @@ export default async function OrganizationsPage({ params }: { params: Promise<{ 
           organizations: t.organizations,
           nav: t.nav,
           languageNames: t.languageNames,
+          callScript: t.callScript,
         }}
         items={items}
         groups={ORDER.map((key) => ({ key, title: t.organizations.categories[key] }))}

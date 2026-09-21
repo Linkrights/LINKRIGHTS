@@ -32,6 +32,7 @@ import {
 } from '@/lib/content';
 import { matchGlossary } from '@/lib/glossary';
 import { LOCALES, formatDate, getMessages, pick, toLocale } from '@/lib/i18n';
+import { materialRequestHref } from '@/lib/materialRequest';
 import type { RightsArticle } from '@/lib/types';
 
 export const dynamicParams = false;
@@ -105,6 +106,7 @@ export default async function ArticlePage({
   const feedbackHref = `mailto:${site.contactEmail}?subject=${encodeURIComponent(
     t.rightsMeta.feedbackSubject.replace('{title}', body.title),
   )}`;
+  const materialHref = materialRequestHref(site.contactEmail, t.materialRequest, body.title);
 
   // 본문이 실제로 쓰인 언어 (번역이 없어 한국어를 보여줄 때는 한국어로 읽고 찾습니다)
   const textLocale = fallback ? 'ko' : locale;
@@ -335,6 +337,7 @@ export default async function ArticlePage({
         {sources.length > 0 && (
           <section id="sources" className="scroll-mt-24 border-t border-[var(--color-line)] pt-8">
             <h2 className="text-lg font-extrabold text-ink-900 sm:text-xl">{t.rights.sourcesHeading}</h2>
+            <p className="mt-1 text-sm text-ink-500">{t.answerUi.sourcesOfficial}</p>
             <ul className="mt-4 space-y-3">
               {sources.map((source) => (
                 <li key={source.url} className="text-[15px] leading-relaxed text-ink-700">
@@ -362,6 +365,15 @@ export default async function ArticlePage({
                 {t.common.reviewedAt} {formatDate(article.reviewed_at, locale)}
               </span>
             </p>
+            {/* 필요한 자료가 없다면: 사이트에 등록된 공식 이메일(site.contactEmail)로 자료 추가 요청 */}
+            {materialHref && (
+              <p className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[15px] text-ink-700">
+                <span>{t.materialRequest.title}</span>
+                <a href={materialHref} className="lr-link inline-flex items-center gap-1 font-semibold">
+                  <Icon name="message" size={16} /> {t.materialRequest.cta}
+                </a>
+              </p>
+            )}
           </section>
         )}
 

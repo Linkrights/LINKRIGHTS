@@ -13,6 +13,22 @@ import { Notice, PageHeader, Section } from '@/components/Section';
 import { getAbout, getPartners, getPrograms } from '@/lib/content';
 import { getMessages, pick, toLocale } from '@/lib/i18n';
 
+/**
+ * "왜 시작했는가" 글을 앞 문장 / 따옴표로 묶인 말들 / 뒷 문장으로 나눕니다. (글 내용은 그대로, 줄바꿈과 모양만 정리)
+ * 따옴표("…" 또는 “…”)가 없으면 전체를 한 문단으로 둡니다.
+ */
+function splitQuotes(text: string): { before: string; quotes: string[]; after: string } | null {
+  const matches = [...text.matchAll(/"[^"]+"|“[^”]+”/g)];
+  if (matches.length === 0) return null;
+  const first = matches[0].index ?? 0;
+  const last = matches[matches.length - 1];
+  return {
+    before: text.slice(0, first).trim(),
+    quotes: matches.map((match) => match[0]),
+    after: text.slice((last.index ?? 0) + last[0].length).trim(),
+  };
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: rawLocale } = await params;
   const locale = toLocale(rawLocale);
@@ -29,6 +45,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const fallback = locale !== 'ko' && !file.i18n[locale];
   const programs = getPrograms().items.filter((p) => p.status === 'published');
   const hasPartners = getPartners().length > 0;
+  const why = splitQuotes(about.why_body);
 
   return (
     <>
@@ -42,7 +59,22 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
       {/* 1. 왜 시작했는가 */}
       <Section title={about.why_title}>
-        <p className="lr-lead max-w-3xl">{about.why_body}</p>
+        {why ? (
+          <div className="max-w-3xl">
+            {why.before && <p className="lr-lead text-pretty">{why.before}</p>}
+            {/* 청소년에게서 들은 말: 한 줄에 하나씩 */}
+            <ul className="mt-6 space-y-2 border-l-4 border-brand-500 pl-5 sm:pl-6">
+              {why.quotes.map((quote) => (
+                <li key={quote} className="text-balance text-xl font-bold leading-snug text-navy-900 sm:text-2xl">
+                  {quote}
+                </li>
+              ))}
+            </ul>
+            {why.after && <p className="lr-lead mt-6 text-pretty">{why.after}</p>}
+          </div>
+        ) : (
+          <p className="lr-lead max-w-3xl text-pretty">{about.why_body}</p>
+        )}
       </Section>
 
       {/* 2. 우리가 주목한 문제 */}
