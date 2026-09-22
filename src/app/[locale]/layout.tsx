@@ -17,7 +17,7 @@ export function generateStaticParams() {
 }
 
 function siteUrl(): string {
-  return process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://linkrights.vercel.app';
+  return process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://linkrights.org';
 }
 
 export async function generateMetadata({
@@ -97,6 +97,11 @@ export default async function LocaleLayout({
   return (
     <html lang={htmlLang[locale]}>
       <head>
+        <meta 
+          name="naver-site-verification" 
+          content="c06092eb35f9b462a3a28255d2158fd092090f65" 
+          />
+        
         {/* 본문 글꼴(Pretendard)을 먼저 받아 글자가 늦게 바뀌는 것을 줄입니다. 나머지 굵기는 필요할 때 받습니다. */}
         <link
           rel="preload"
