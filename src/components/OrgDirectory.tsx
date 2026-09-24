@@ -431,8 +431,9 @@ export function OrgDirectory({
             {labels.examples.length > 0 && !query && (
               <div className="mt-3">
                 <p className="text-sm font-semibold text-ink-500">{labels.examplesLabel}</p>
+                {/* 예시 낱말은 다섯 개만 보여줍니다. (고르는 데 시간이 걸리지 않게) */}
                 <ul className="mt-2 flex flex-wrap gap-2">
-                  {labels.examples.map((term) => (
+                  {labels.examples.slice(0, 5).map((term) => (
                     <li key={term}>
                       <button
                         type="button"
@@ -452,9 +453,9 @@ export function OrgDirectory({
           </form>
 
           {/* 2) 지역 · 3) 분야 (선택 상자. 휴대폰에서는 이름이 잘리지 않게 위아래로 놓습니다) */}
-          <div className="border-t border-[var(--color-line)] pt-5">
+          <div className="border-t border-[var(--color-line)] pt-4">
+            {/* 지역·분야는 고르는 상자 이름만으로 충분해서, 따로 설명 문단을 두지 않습니다. */}
             <h2 className="text-[15px] font-bold text-ink-900">{labels.filtersTitle}</h2>
-            <p className="mt-1 max-w-3xl text-[15px] leading-relaxed text-ink-500">{labels.hint}</p>
             <div className="mt-3 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2">
               <div className="min-w-0">
                 <label htmlFor="org-region" className="mb-1 block text-sm font-semibold text-ink-700">

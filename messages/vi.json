@@ -331,7 +331,8 @@
     "localNetwork": "Trung tâm địa phương",
     "findNearby": "Tìm nơi gần bạn",
     "officialInfo": "Xem thông tin chính thức",
-    "updatedLabel": "Ngày kiểm tra gần nhất của danh sách"
+    "updatedLabel": "Ngày kiểm tra gần nhất của danh sách",
+    "moreInfo": "Thông tin chi tiết"
   },
   "orgTopics": {
     "labor": "Lao động & tiền lương",
@@ -790,5 +791,9 @@
   "meta": {
     "homeTitle": "LINKRIGHTS | Thông tin quyền cho thanh thiếu niên di trú tại Hàn Quốc",
     "homeDescription": "Giúp thanh thiếu niên có nền tảng di trú tại Hàn Quốc hiểu quyền của mình, tìm thông tin và kết nối với tổ chức hỗ trợ: việc làm, trường học, y tế, cư trú và nhân quyền, bằng lời dễ hiểu."
+  },
+  "welcome": {
+    "title": "Bạn muốn bắt đầu bằng ngôn ngữ nào?",
+    "note": "Lựa chọn của bạn được ghi nhớ trong trình duyệt này. Bạn có thể đổi bất cứ lúc nào ở đầu trang."
   }
 }

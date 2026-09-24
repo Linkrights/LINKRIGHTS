@@ -32,6 +32,8 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
 
+  // 처음 언어를 고르는 화면에서는 메뉴를 보여주지 않습니다. (고르는 일에만 집중할 수 있게)
+  const welcome = pathname.endsWith('/welcome');
   // 홈에서만 영상 위 어두운 헤더를 씁니다.
   const dark = pathname === `/${locale}`;
   const transparent = dark && !scrolled && !open && !sosOpen;
@@ -127,6 +129,12 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
   ];
 
   function changeLocale(next: string) {
+    // 고른 언어를 이 브라우저에 기억해 둡니다. (첫 화면의 언어 선택과 같은 값)
+    try {
+      document.cookie = `lr-locale=${next}; path=/; max-age=${60 * 60 * 24 * 365}; samesite=lax`;
+    } catch {
+      // 쿠키를 쓸 수 없는 브라우저에서도 언어 이동은 그대로 됩니다.
+    }
     const segments = pathname.split('/');
     segments[1] = next;
     router.push(segments.join('/') || `/${next}`);
@@ -192,6 +200,9 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
       </button>
     );
   };
+
+  // 언어를 고르는 첫 화면에서는 메뉴 대신 로고만 보여줍니다.
+  if (welcome) return null;
 
   return (
     <header

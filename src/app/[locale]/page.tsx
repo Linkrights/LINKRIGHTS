@@ -56,8 +56,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const t = getMessages(locale);
   const site = getSite();
   const categories = getCategories();
-  const featured = getFeaturedArticles(6);
+  // 홈에는 많이 찾는 권리정보 3개와 체크리스트 2개만 보여줍니다. (한 화면에 너무 많지 않게, 나머지는 각 목록에서)
+  const featured = getFeaturedArticles(3);
   const checklists = getChecklists();
+  const homeChecklists = checklists.slice(0, 2);
   const about = getAbout().i18n[locale] ?? getAbout().i18n.ko;
   const partners = getPartners();
   // 홈에는 content/faq.json 에서 featured 로 표시한 핵심 질문(최대 4개)만 보여주고, 나머지는 FAQ 페이지에서 봅니다.
@@ -200,23 +202,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <h2 className="lr-h2">{t.homeFind.title}</h2>
           <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-500 sm:text-[17px]">{t.homeFind.subtitle}</p>
 
-          <ol aria-label={t.homeFind.flowLabel} className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-2 text-[15px] font-semibold text-ink-700">
-            {t.homeFind.flow.map((step, index) => (
-              <li key={step} className="flex items-center gap-2">
-                <a href={`#home-step-${index + 1}`} className="flex items-center gap-2 hover:text-brand-700">
-                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-navy-900 text-[13px] font-bold text-white">
-                    {index + 1}
-                    <span className="sr-only">.</span>
-                  </span>{' '}
-                  <span>{step}</span>
-                </a>
-                {index < t.homeFind.flow.length - 1 && (
-                  <Icon name="arrow-right" size={16} className="shrink-0 text-ink-300" aria-hidden="true" />
-                )}
-              </li>
-            ))}
-          </ol>
-
           {/* ① 내 상황 알아보기 */}
           <div id="home-step-1" className="mt-10 scroll-mt-24">
             <h3 className={stepTitle}>
@@ -238,14 +223,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                   <Icon name="sparkles" size={20} className="shrink-0 text-brand-600" /> {t.homeFind.askTitle}
                 </p>
                 <p className="mt-1 text-[15px] leading-relaxed text-ink-500">{t.homeFind.askBody}</p>
-                <div className="mt-4 flex-1">
+                {/* 안내 문구는 아래 "내 상황을 말해 보세요" 구역에 한 번만 둡니다. (같은 말을 두 번 읽지 않게) */}
+                <div className="mt-4">
                   <Link href={`/${locale}/ask`} className="lr-btn lr-btn-primary lr-press">
                     {t.homeFind.askCta} <Icon name="arrow-right" size={18} />
                   </Link>
                 </div>
-                <p className="mt-4 flex items-start gap-2 border-t border-[var(--color-line)] pt-4 text-sm leading-relaxed text-ink-500">
-                  <Icon name="shield" size={16} className="mt-0.5 shrink-0 text-brand-600" /> <span>{t.homeAsk.trust}</span>
-                </p>
               </div>
             </div>
           </div>
@@ -402,26 +385,15 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </div>
           </div>
           <div className="lg:col-span-5">
+            {/* 답변에 무엇이 들어 있는지: 제목만 한 줄씩 짧게 보여주고, 자세한 설명은 실제 답변에서 봅니다. */}
             <h3 className="text-lg font-bold text-ink-900">{t.homeAsk.getsTitle}</h3>
-            <ol className="mt-4 border-t border-[var(--color-line)]">
-              {t.homeAsk.gets.map((item, index) => (
-                <li
-                  key={item.title}
-                  className={`flex gap-3 border-b border-[var(--color-line)] py-3.5 ${
-                    index === 3 ? '-mx-3 rounded-[var(--radius-control)] bg-brand-50 px-3' : ''
-                  }`}
-                >
-                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-navy-900 text-[13px] font-bold text-white">
-                    {index + 1}
-                    <span className="sr-only">.</span>
-                  </span>{' '}
-                  <span className="min-w-0">
-                    <span className="block font-bold text-ink-900">{item.title}</span>{' '}
-                    <span className="mt-0.5 block text-[15px] leading-relaxed text-ink-500">{item.body}</span>
-                  </span>
+            <ul className="mt-4 space-y-2">
+              {t.homeAsk.gets.map((item) => (
+                <li key={item.title} className="flex items-start gap-2.5 text-[15px] leading-relaxed text-ink-700">
+                  <Icon name="check" size={18} className="mt-0.5 shrink-0 text-brand-600" /> <span>{item.title}</span>
                 </li>
               ))}
-            </ol>
+            </ul>
             <p className="mt-5 flex items-start gap-2 text-sm leading-relaxed text-ink-500">
               <Icon name="shield" size={16} className="mt-0.5 shrink-0 text-brand-600" /> <span>{t.homeAsk.trust}</span>
             </p>
@@ -482,7 +454,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 </span>{' '}
                 · {t.home.statsNote}
               </p>
-              <p className="mt-2 text-[13px] leading-relaxed text-white/60">{t.homeUpdates.note}</p>
             </div>
           </div>
         </section>
@@ -511,7 +482,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           action={viewAll(`/${locale}/checklists`)}
         >
           <ul className="grid gap-4 md:grid-cols-2">
-            {checklists.map((checklist, index) => {
+            {homeChecklists.map((checklist, index) => {
               const body = checklist.i18n[locale] ?? checklist.i18n.ko;
               const category = getCategory(checklist.category);
               return (

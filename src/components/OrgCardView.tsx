@@ -82,6 +82,8 @@ export function OrgCardView({
     }
   })();
 
+  // 카드에는 전화를 걸기 전에 꼭 필요한 것(지원 언어·운영시간)만 두고,
+  // 휴무일·점심시간·주소처럼 덜 급한 것은 "자세한 정보"를 눌렀을 때 보여줍니다. (카드가 길어지지 않게)
   const rows: { key: string; label: string; value: string }[] = [
     {
       key: 'languages',
@@ -90,6 +92,8 @@ export function OrgCardView({
       value: (org.languages ?? []).map((code) => (t.languageNames as Record<string, string>)[code] ?? code).join(' · '),
     },
     { key: 'hours', label: t.common.hours, value: org.hours ? pick(org.hours, locale) : '' },
+  ].filter((row) => row.value);
+  const moreRows: { key: string; label: string; value: string }[] = [
     { key: 'holidays', label: t.orgInfo.holidays, value: org.holidays ? pick(org.holidays, locale) : '' },
     { key: 'break', label: t.orgInfo.breakTime, value: org.break_time ? pick(org.break_time, locale) : '' },
     // 지역은 위의 태그로 보여주므로 여기에는 등록된 주소만 둡니다.
@@ -135,26 +139,46 @@ export function OrgCardView({
           {rows.map((row) => (
             <div key={row.key} className="contents">
               <dt className="font-semibold text-ink-700">{row.label}</dt>
-              <dd className="min-w-0 text-ink-500">
-                {row.value}
-                {row.key === 'place' && mapHref && (
-                  <>
-                    {' '}
-                    <a
-                      href={mapHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${name} ${t.orgInfo.map} (${t.common.openInNew})`}
-                      className="lr-link inline-flex items-center gap-1 whitespace-nowrap font-semibold"
-                    >
-                      <Icon name="map-pin" size={14} /> {t.orgInfo.map}
-                    </a>
-                  </>
-                )}
-              </dd>
+              <dd className="min-w-0 text-ink-500">{row.value}</dd>
             </div>
           ))}
         </dl>
+      )}
+
+      {/* 휴무일·점심시간·주소: 필요할 때만 펼쳐 봅니다. */}
+      {moreRows.length > 0 && (
+        <details className="group mt-2">
+          <summary className="flex cursor-pointer list-none items-center gap-1 text-sm font-semibold text-ink-500 hover:text-brand-700 [&::-webkit-details-marker]:hidden">
+            {t.orgInfo.moreInfo}
+            <span className="text-ink-300 transition-transform group-open:rotate-180" aria-hidden="true">
+              ▾
+            </span>
+          </summary>
+          <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5 text-sm">
+            {moreRows.map((row) => (
+              <div key={row.key} className="contents">
+                <dt className="font-semibold text-ink-700">{row.label}</dt>
+                <dd className="min-w-0 text-ink-500">
+                  {row.value}
+                  {row.key === 'place' && mapHref && (
+                    <>
+                      {' '}
+                      <a
+                        href={mapHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${name} ${t.orgInfo.map} (${t.common.openInNew})`}
+                        className="lr-link inline-flex items-center gap-1 whitespace-nowrap font-semibold"
+                      >
+                        <Icon name="map-pin" size={14} /> {t.orgInfo.map}
+                      </a>
+                    </>
+                  )}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </details>
       )}
 
       {/* 연락처: 전화번호와 버튼 글자는 줄바꿈하지 않고, 카드가 좁으면 버튼이 통째로 다음 줄로 내려갑니다.

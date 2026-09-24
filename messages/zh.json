@@ -331,7 +331,8 @@
     "localNetwork": "各地中心",
     "findNearby": "查找附近的中心",
     "officialInfo": "查看官方说明",
-    "updatedLabel": "此列表的最后检查日期"
+    "updatedLabel": "此列表的最后检查日期",
+    "moreInfo": "详细信息"
   },
   "orgTopics": {
     "labor": "劳动·工资",
@@ -790,5 +791,9 @@
   "meta": {
     "homeTitle": "LINKRIGHTS | 在韩移民背景青少年权利信息平台",
     "homeDescription": "帮助在韩移民背景青少年了解自身权利、查找信息并连接到可提供帮助的机构：工作、学校、医疗、居留签证与人权信息，用简单的语言呈现。"
+  },
+  "welcome": {
+    "title": "您想用哪种语言开始？",
+    "note": "我们会在此浏览器中记住您的选择，您随时可以在页面上方更改。"
   }
 }

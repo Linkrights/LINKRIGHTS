@@ -331,7 +331,8 @@
     "localNetwork": "지역별 센터",
     "findNearby": "가까운 곳 찾기",
     "officialInfo": "공식 안내 보기",
-    "updatedLabel": "이 목록의 마지막 검토일"
+    "updatedLabel": "이 목록의 마지막 검토일",
+    "moreInfo": "자세한 정보"
   },
   "orgTopics": {
     "labor": "노동·임금",
@@ -760,5 +761,9 @@
   "meta": {
     "homeTitle": "링크라이츠 LINKRIGHTS | 이주배경청소년 권리정보 플랫폼",
     "homeDescription": "이주배경청소년이 자신의 권리를 알고, 필요한 정보를 찾고, 도움받을 수 있는 기관까지 연결되도록 돕습니다. 일·알바, 학교, 병원, 체류·비자, 인권 정보를 쉬운 말로 안내합니다."
+  },
+  "welcome": {
+    "title": "어떤 언어로 시작하시겠어요?",
+    "note": "고른 언어는 이 브라우저에 기억해 둬요. 화면 위에서 언제든 바꿀 수 있어요."
   }
 }

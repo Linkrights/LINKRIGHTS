@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 import '../globals.css';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
+import { HideOnWelcome } from '@/components/HideOnWelcome';
 import { PREFERENCES_INIT_SCRIPT } from '@/components/view-preferences';
 import { getSite, resolveOrganizations } from '@/lib/content';
 import { LOCALES, getMessages, htmlLang, pick, toLocale } from '@/lib/i18n';
@@ -122,7 +123,9 @@ export default async function LocaleLayout({
         <main id="main" className="flex-1">
           {children}
         </main>
-        <Footer locale={locale} />
+        <HideOnWelcome>
+          <Footer locale={locale} />
+        </HideOnWelcome>
         <Analytics />
         <script
           type="application/ld+json"

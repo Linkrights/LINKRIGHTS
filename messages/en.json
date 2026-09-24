@@ -331,7 +331,8 @@
     "localNetwork": "Local centres",
     "findNearby": "Find one near you",
     "officialInfo": "Official information",
-    "updatedLabel": "Last reviewed in this list"
+    "updatedLabel": "Last reviewed in this list",
+    "moreInfo": "More details"
   },
   "orgTopics": {
     "labor": "Work & wages",
@@ -790,5 +791,9 @@
   "meta": {
     "homeTitle": "LINKRIGHTS | Rights information for migrant-background youth in Korea",
     "homeDescription": "Helping young people with a migrant background in Korea understand their rights, find information and reach organisations that can help: work, school, health, visa and human rights, in plain language."
+  },
+  "welcome": {
+    "title": "Which language would you like to use?",
+    "note": "We remember your choice in this browser. You can change it any time at the top of the page."
   }
 }
