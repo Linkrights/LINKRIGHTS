@@ -8,6 +8,23 @@
       "hero_body": "LINKRIGHTS는 이주배경청소년이 자신의 권리를 알고, 필요한 정보를 스스로 찾고, 실제로 도움을 받을 수 있는 곳까지 연결되도록 돕는 권리정보 플랫폼입니다.",
       "why_title": "왜 이 프로젝트를 시작했을까요",
       "why_body": "한국에서 살아가는 이주배경청소년을 만나면서 같은 말을 반복해서 들었습니다. \"내가 어떤 권리를 가지고 있는지 모르겠어요.\" \"어디에 물어봐야 하는지 모르겠어요.\" 정보가 없는 것이 아니라, 정보가 너무 흩어져 있고 너무 어려웠습니다. LINKRIGHTS는 그 사이를 잇기 위해 시작했습니다.",
+      "youth_title": "왜 이주배경청소년인가요?",
+      "youth_intro": "이주배경청소년은 본인이나 부모님이 다른 나라에서 온 청소년을 말합니다. 한국에서 태어나 자란 다문화가정 청소년, 부모님을 따라 한국에 온 중도입국청소년, 외국인 가정의 청소년이 모두 포함됩니다.",
+      "youth_points": [
+        {
+          "title": "제도는 있지만, 닿기까지가 멉니다",
+          "body": "학교, 일, 병원, 체류처럼 생활에 꼭 필요한 제도는 이미 있습니다. 그런데 무엇을 어디에서 확인해야 하는지는 기관마다 흩어져 있습니다."
+        },
+        {
+          "title": "물어볼 곳을 찾는 것부터 어렵습니다",
+          "body": "말이 서툴거나 절차가 낯설면 질문하는 것 자체가 어렵습니다. 무엇을 모르는지 설명하기 어려워서 그냥 넘어가게 됩니다."
+        },
+        {
+          "title": "권리를 알면 스스로 선택할 수 있습니다",
+          "body": "내가 어떤 권리를 가지고 있는지 알면, 참고 넘길지 도움을 요청할지 스스로 정할 수 있습니다. LINKRIGHTS는 그 판단에 필요한 정보를 모아 둡니다."
+        }
+      ],
+      "youth_note": "이 내용은 LINKRIGHTS가 만난 청소년들의 이야기와 등록된 권리정보를 바탕으로 정리한 설명이며, 통계 수치는 담고 있지 않습니다.",
       "problems_title": "우리가 주목한 문제",
       "problems": [
         {
@@ -122,6 +139,23 @@
       "hero_body": "LINKRIGHTS is a rights information platform that helps young people with a migrant background understand their rights, find the information they need, and reach organisations that can actually help.",
       "why_title": "Why we started",
       "why_body": "Talking with migrant-background youth in Korea, we kept hearing the same things: \"I do not know what rights I have.\" \"I do not know who to ask.\" The information exists, but it is scattered and hard to read. LINKRIGHTS exists to close that gap.",
+      "youth_title": "Why migrant-background youth?",
+      "youth_intro": "Migrant-background youth are young people who came from another country themselves, or whose parents did. This includes young people from multicultural families born in Korea, young people who moved here to join their parents, and young people in foreign-national families.",
+      "youth_points": [
+        {
+          "title": "The systems exist, but they are far away",
+          "body": "School, work, hospitals and visas already have rules and services. What to check, and where, is spread across many different organisations."
+        },
+        {
+          "title": "Even finding someone to ask is hard",
+          "body": "When the language or the procedure is new, asking the question itself is difficult. It is hard to explain what you do not know, so things get left undone."
+        },
+        {
+          "title": "Knowing your rights makes choice possible",
+          "body": "When you know what rights you have, you can decide for yourself whether to let something go or ask for help. LINKRIGHTS gathers the information needed for that decision."
+        }
+      ],
+      "youth_note": "This section is based on what the young people we met told us and on the rights information registered here. It does not contain statistics.",
       "problems_title": "The problems we saw",
       "problems": [
         {
@@ -236,6 +270,23 @@
       "hero_body": "LINKRIGHTS 是一个权利信息平台，帮助移民背景青少年了解自己的权利、自己找到需要的信息，并连接到真正能够提供帮助的地方。",
       "why_title": "我们为什么开始这个项目",
       "why_body": "在与生活在韩国的移民背景青少年见面的过程中，我们反复听到同样的话：“我不知道自己有哪些权利。”“我不知道该去问谁。”并不是没有信息，而是信息太分散、太难懂。LINKRIGHTS 就是为了连接这中间的距离而开始的。",
+      "youth_title": "为什么关注移民背景青少年？",
+      "youth_intro": "移民背景青少年是指本人或父母来自其他国家的青少年，包括在韩国出生的多文化家庭子女、随父母来到韩国的中途入境青少年，以及外国人家庭的青少年。",
+      "youth_points": [
+        {
+          "title": "制度是有的，但离生活很远",
+          "body": "上学、打工、看病、居留都已有相应的制度和服务。但要确认什么、去哪里确认，分散在不同机构的网站上。"
+        },
+        {
+          "title": "连该问谁都很难找到",
+          "body": "语言不熟悉、手续陌生时，连提问本身都很难。说不清自己不懂什么，事情就这样被搁置了。"
+        },
+        {
+          "title": "知道权利，才能自己选择",
+          "body": "知道自己有哪些权利，才能决定是先忍一忍还是寻求帮助。LINKRIGHTS 把做这个判断需要的信息整理在一起。"
+        }
+      ],
+      "youth_note": "本部分内容整理自我们见到的青少年的讲述和网站已登记的权利信息，不包含统计数据。",
       "problems_title": "我们关注的问题",
       "problems": [
         {
@@ -350,6 +401,23 @@
       "hero_body": "LINKRIGHTS là nền tảng thông tin về quyền, giúp thanh thiếu niên có nền tảng di trú biết quyền của mình, tự tìm thông tin cần thiết và kết nối đến nơi thực sự có thể giúp đỡ.",
       "why_title": "Vì sao chúng tôi bắt đầu dự án này",
       "why_body": "Khi gặp gỡ thanh thiếu niên có nền tảng di trú đang sống ở Hàn Quốc, chúng tôi liên tục nghe những câu giống nhau: “Em không biết mình có những quyền gì.” “Em không biết phải hỏi ở đâu.” Không phải là không có thông tin, mà thông tin quá phân tán và quá khó. LINKRIGHTS ra đời để nối khoảng cách đó.",
+      "youth_title": "Vì sao là thanh thiếu niên có nền tảng di trú?",
+      "youth_intro": "Thanh thiếu niên có nền tảng di trú là các bạn trẻ đến từ nước khác, hoặc có cha mẹ đến từ nước khác. Bao gồm bạn trẻ trong gia đình đa văn hóa sinh ra ở Hàn Quốc, bạn trẻ theo cha mẹ sang Hàn Quốc và bạn trẻ trong gia đình người nước ngoài.",
+      "youth_points": [
+        {
+          "title": "Chế độ thì có, nhưng ở rất xa",
+          "body": "Trường học, việc làm, bệnh viện và cư trú đều đã có quy định và dịch vụ. Nhưng cần kiểm tra gì và ở đâu lại nằm rải rác trên trang web của nhiều cơ quan khác nhau."
+        },
+        {
+          "title": "Tìm được người để hỏi cũng đã khó",
+          "body": "Khi ngôn ngữ còn lạ và thủ tục còn mới, việc đặt câu hỏi cũng khó. Khó nói rõ mình chưa hiểu điều gì, nên nhiều việc bị bỏ qua."
+        },
+        {
+          "title": "Biết quyền thì mới tự chọn được",
+          "body": "Khi biết mình có những quyền gì, bạn có thể tự quyết định nên bỏ qua hay nhờ giúp đỡ. LINKRIGHTS tập hợp thông tin cần cho quyết định đó."
+        }
+      ],
+      "youth_note": "Phần này được viết dựa trên những gì các bạn trẻ kể với chúng tôi và thông tin quyền đã đăng ký trên trang, không chứa số liệu thống kê.",
       "problems_title": "Những vấn đề chúng tôi nhìn thấy",
       "problems": [
         {
@@ -459,5 +527,6 @@
       "future_title": "Hướng đi sắp tới",
       "future_body": "Mục tiêu của chúng tôi là vẫn còn lại như một nền tảng thông tin về quyền có thể tiếp tục sử dụng ngay cả sau khi chương trình kết thúc. Chúng tôi sẽ dần bổ sung thêm ngôn ngữ và thông tin về quyền, đồng thời định kỳ kiểm tra lại thông tin của các cơ quan để luôn cập nhật."
     }
-  }
+  },
+  "youth_sources": []
 }

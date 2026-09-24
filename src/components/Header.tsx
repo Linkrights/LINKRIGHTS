@@ -27,6 +27,8 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [sosOpen, setSosOpen] = useState(false);
+  /** 넓은 화면에서 지금 열려 있는 메뉴 묶음 (마우스를 올리거나 키보드로 들어가면 열립니다) */
+  const [menu, setMenu] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
 
@@ -38,7 +40,18 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
   useEffect(() => {
     setOpen(false);
     setSosOpen(false);
+    setMenu(null);
   }, [pathname]);
+
+  // Esc 키를 누르면 열려 있는 메뉴 묶음을 닫습니다.
+  useEffect(() => {
+    if (!menu) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenu(null);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [menu]);
 
   // 홈에서 조금이라도 스크롤하면 헤더 배경을 채웁니다.
   useEffect(() => {
@@ -68,15 +81,49 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
 
   const askHref = `/${locale}/ask`;
   const emergencyHref = `/${locale}/emergency`;
-  const links = [
-    { href: `/${locale}/rights`, label: t.nav.rights },
-    { href: `/${locale}/organizations`, label: t.nav.organizations },
-    { href: `/${locale}/programs`, label: t.nav.programs },
-    { href: `/${locale}/about`, label: t.nav.about },
-    // 넓은 메뉴는 글자가 긴 언어(베트남어 등)에서 공간이 부족해 휴대폰 메뉴에만 넣습니다.
-    // (넓은 화면에서는 아래쪽 정보·홈 "나는 누구인가요?"·홈 질문 게시판 영역·소개 페이지에서 연결)
-    { href: `/${locale}/qna`, label: t.qna.navLabel, mobileOnly: true },
-    { href: `/${locale}/get-involved`, label: t.nav.getInvolved, mobileOnly: true },
+  // 메뉴는 네 묶음입니다. 넓은 화면에서는 묶음 이름에 마우스를 올리거나 키보드로 옮기면 아래 목록이 열리고,
+  // 휴대폰에서는 지금처럼 메뉴 버튼 안에 묶음별로 펼쳐 보여줍니다. (묶음 이름 자체도 그 분야의 첫 화면으로 가는 링크입니다)
+  const menuGroups: { key: string; label: string; href: string; items: { href: string; label: string }[] }[] = [
+    {
+      key: 'rights',
+      label: t.nav.rights,
+      href: `/${locale}/rights`,
+      items: [
+        { href: `/${locale}/rights`, label: t.nav.rights },
+        { href: `/${locale}/checklists`, label: t.checklist.navLabel },
+        { href: `/${locale}/saved`, label: t.saved.navLabel },
+      ],
+    },
+    {
+      key: 'help',
+      label: t.nav.organizations,
+      href: `/${locale}/organizations`,
+      items: [
+        { href: `/${locale}/organizations`, label: t.nav.organizations },
+        { href: emergencyHref, label: t.nav.emergency },
+      ],
+    },
+    {
+      key: 'ask',
+      label: t.nav.questions,
+      href: `/${locale}/qna`,
+      items: [
+        { href: askHref, label: t.nav.ask },
+        { href: `/${locale}/qna`, label: t.qna.navLabel },
+        { href: `/${locale}/faq`, label: t.nav.faq },
+      ],
+    },
+    {
+      key: 'about',
+      label: t.nav.about,
+      href: `/${locale}/about`,
+      items: [
+        { href: `/${locale}/about`, label: t.nav.about },
+        { href: `/${locale}/about#why-youth`, label: t.about.whyYouthNav },
+        { href: `/${locale}/programs`, label: t.nav.programs },
+        { href: `/${locale}/get-involved`, label: t.nav.getInvolved },
+      ],
+    },
   ];
 
   function changeLocale(next: string) {
@@ -166,24 +213,66 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
           />
         </Link>
 
-        {/* 1024px 화면(스크롤바 포함)에서도 가장 긴 베트남어 메뉴가 한 줄에 들어가도록 lg 에서는 간격을 조금 줄입니다. */}
+        {/* 1024px 화면(스크롤바 포함)에서도 가장 긴 베트남어 메뉴가 한 줄에 들어가도록 lg 에서는 간격을 조금 줄입니다.
+            묶음 이름에 마우스를 올리거나 키보드로 옮기면 아래 목록이 열립니다. (누르면 그 분야의 첫 화면으로 이동) */}
         <nav aria-label={t.nav.mainMenu} className="ml-2 hidden flex-1 items-center gap-0 lg:flex xl:ml-8 xl:gap-1">
-          {links.filter((link) => !('mobileOnly' in link)).map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              aria-current={isActive(link.href) ? 'page' : undefined}
-              className={`whitespace-nowrap rounded-[var(--radius-control)] px-1.5 py-2 text-sm font-semibold transition-colors xl:px-3 xl:text-[15px] ${
-                dark
-                  ? 'text-white/85 hover:bg-white/10 hover:text-white'
-                  : isActive(link.href)
-                    ? 'bg-brand-50 text-brand-700'
-                    : 'text-ink-700 hover:bg-surface-soft hover:text-brand-700'
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {menuGroups.map((group) => {
+            const groupOpen = menu === group.key;
+            return (
+              <div
+                key={group.key}
+                className="relative"
+                onMouseEnter={() => setMenu(group.key)}
+                onMouseLeave={() => setMenu((current) => (current === group.key ? null : current))}
+                onFocus={() => setMenu(group.key)}
+                onBlur={(event) => {
+                  if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                    setMenu((current) => (current === group.key ? null : current));
+                  }
+                }}
+              >
+                <Link
+                  href={group.href}
+                  aria-current={isActive(group.href) ? 'page' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={groupOpen}
+                  className={`flex items-center gap-1 whitespace-nowrap rounded-[var(--radius-control)] px-1.5 py-2 text-sm font-semibold transition-colors xl:px-3 xl:text-[15px] ${
+                    dark
+                      ? 'text-white/85 hover:bg-white/10 hover:text-white'
+                      : isActive(group.href)
+                        ? 'bg-brand-50 text-brand-700'
+                        : 'text-ink-700 hover:bg-surface-soft hover:text-brand-700'
+                  }`}
+                >
+                  {group.label}
+                  <span aria-hidden="true" className={`text-[10px] ${dark ? 'text-white/60' : 'text-ink-300'}`}>
+                    ▾
+                  </span>
+                </Link>
+                {groupOpen && (
+                  <div className="absolute left-0 top-full z-50 pt-2">
+                    <ul className="min-w-[13rem] rounded-[var(--radius-card)] border border-[var(--color-line)] bg-white p-1.5 shadow-lg">
+                      {group.items.map((item) => (
+                        <li key={item.href}>
+                          <Link
+                            href={item.href}
+                            aria-current={isActive(item.href) ? 'page' : undefined}
+                            className={`block whitespace-nowrap rounded-[var(--radius-control)] px-3 py-2 text-[15px] font-semibold transition-colors ${
+                              isActive(item.href)
+                                ? 'bg-brand-50 text-brand-700'
+                                : 'text-ink-700 hover:bg-surface-soft hover:text-brand-700'
+                            }`}
+                          >
+                            {item.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </nav>
 
         <div className="ml-auto hidden items-center gap-1.5 lg:flex xl:gap-2">
@@ -285,22 +374,30 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
               <Icon name="arrow-right" size={18} />
             </Link>
 
-            <ul className="divide-y divide-[var(--color-line)]">
-              {links.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    aria-current={isActive(link.href) ? 'page' : undefined}
-                    className={`flex items-center justify-between px-1 py-3.5 text-base font-semibold ${
-                      isActive(link.href) ? 'text-brand-700' : 'text-ink-900'
-                    }`}
-                  >
-                    {link.label}
-                    <Icon name="arrow-right" size={18} className="text-ink-300" />
-                  </Link>
-                </li>
+            {/* 휴대폰 메뉴: 넓은 화면과 같은 묶음으로 보여줍니다. (묶음 이름 → 그 안의 화면들) */}
+            <div className="divide-y divide-[var(--color-line)]">
+              {menuGroups.map((group) => (
+                <section key={group.key} className="py-3">
+                  <p className="px-1 text-[13px] font-bold tracking-[0.02em] text-ink-500">{group.label}</p>
+                  <ul className="mt-1">
+                    {group.items.map((item) => (
+                      <li key={item.href}>
+                        <Link
+                          href={item.href}
+                          aria-current={isActive(item.href) ? 'page' : undefined}
+                          className={`flex items-center justify-between px-1 py-3 text-base font-semibold ${
+                            isActive(item.href) ? 'text-brand-700' : 'text-ink-900'
+                          }`}
+                        >
+                          {item.label}
+                          <Icon name="arrow-right" size={18} className="text-ink-300" />
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
               ))}
-              <li>
+              <div className="py-1">
                 <Link
                   href={emergencyHref}
                   className="flex items-center gap-2 px-1 py-3.5 text-base font-bold text-[var(--color-danger-700)]"
@@ -308,8 +405,8 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
                   <Icon name="alert" size={18} />
                   {t.nav.emergency}
                 </Link>
-              </li>
-            </ul>
+              </div>
+            </div>
 
             <div className="space-y-2 border-t border-[var(--color-line)] pt-4">
               <label htmlFor="mobile-language" className="block text-sm font-semibold text-ink-700">

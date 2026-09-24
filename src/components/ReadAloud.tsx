@@ -10,6 +10,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from './Icon';
+import { speakableText } from '@/lib/speech';
 import type { Locale } from '@/lib/types';
 
 export interface ReadAloudLabels {
@@ -26,11 +27,14 @@ export interface ReadAloudLabels {
 const SPEECH_LANG: Record<Locale, string> = { ko: 'ko-KR', en: 'en-US', zh: 'zh-CN', vi: 'vi-VN' };
 const MAX_CHUNK = 180;
 
-/** 글을 문장 단위(너무 길면 쉼표·띄어쓰기 기준)로 나눕니다. */
-function splitText(blocks: string[]): string[] {
+/**
+ * 글을 문장 단위(너무 길면 쉼표·띄어쓰기 기준)로 나눕니다.
+ * 한국어는 1331 같은 번호를 "천삼백삼십일"처럼 읽도록 소리용 글자로 바꿉니다. (화면 글자는 그대로)
+ */
+function splitText(blocks: string[], locale: Locale): string[] {
   const chunks: string[] = [];
   for (const block of blocks) {
-    const text = block.replace(/\s+/g, ' ').trim();
+    const text = speakableText(block, locale).replace(/\s+/g, ' ').trim();
     if (!text) continue;
     for (const sentence of text.split(/(?<=[.!?。！？])\s*/)) {
       let rest = sentence.trim();
@@ -110,7 +114,7 @@ export function ReadAloud({ blocks, locale, labels }: { blocks: string[]; locale
     } else if (state === 'paused') {
       speakFrom(position.current);
     } else {
-      chunks.current = splitText(blocks);
+      chunks.current = splitText(blocks, locale);
       speakFrom(0);
     }
   }

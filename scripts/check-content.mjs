@@ -523,6 +523,38 @@ for (const name of ['site.json', 'about.json', 'programs.json', 'faq.json']) {
       }
     }
   }
+  if (name === 'about.json') {
+    // "왜 이주배경청소년인가요?" 부분: 제목·설명·항목이 모두 있어야 소개 메뉴의 링크가 빈 화면으로 가지 않습니다.
+    for (const [lang, body] of Object.entries(data.i18n ?? {})) {
+      const missing = ['youth_title', 'youth_intro'].filter((key) => !body?.[key]);
+      if (missing.length > 0) fail('content/about.json', `${lang} 에 ${missing.join(', ')} 이(가) 필요합니다.`);
+      if (!Array.isArray(body?.youth_points) || body.youth_points.length === 0) {
+        fail('content/about.json', `${lang}.youth_points 에 항목이 하나 이상 필요합니다.`);
+      }
+      for (const point of body?.youth_points ?? []) {
+        if (!point?.title || !point?.body) fail('content/about.json', `${lang}.youth_points 의 각 항목에 title 과 body 가 필요합니다.`);
+      }
+    }
+    // 근거 자료(선택): 등록하면 실제 공식 주소여야 합니다.
+    for (const source of data.youth_sources ?? []) {
+      if (!source?.url || !/^https:\/\//.test(source.url)) {
+        fail('content/about.json', `youth_sources 의 주소는 https:// 로 시작하는 공식 주소여야 합니다: ${source?.url}`);
+      }
+      hasKo(source?.title, 'content/about.json', 'youth_sources > title');
+    }
+  }
+  if (name === 'programs.json') {
+    // 프로그램 설명 칸(선택): 등록하면 한국어가 있어야 다른 언어에서도 보여줄 수 있습니다.
+    for (const item of data.items ?? []) {
+      const label = `content/programs.json > ${item.id}`;
+      for (const key of ['why', 'helps', 'how', 'audience', 'format']) {
+        if (item[key] !== undefined) hasKo(item[key], label, key);
+      }
+      if (item.status === 'published' && !item.why) {
+        warn(label, '"왜 필요한가요"(why)가 비어 있어 프로그램 카드에 이유가 보이지 않습니다.');
+      }
+    }
+  }
   if (name === 'site.json' && !data.contactEmail) warn('content/site.json', '"contactEmail"(문의 이메일)이 비어 있습니다.');
 }
 

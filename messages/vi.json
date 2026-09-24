@@ -18,7 +18,8 @@
     "menu": "Mở menu",
     "close": "Đóng",
     "mainMenu": "Menu chính",
-    "language": "Chọn ngôn ngữ"
+    "language": "Chọn ngôn ngữ",
+    "questions": "Câu hỏi"
   },
   "common": {
     "skipToContent": "Đến nội dung chính",
@@ -98,7 +99,13 @@
     "sdgTitle": "SDGs và LINKRIGHTS",
     "sdgSubtitle": "Sự thay đổi mà chúng tôi muốn góp phần tạo ra.",
     "faqTitle": "Câu hỏi thường gặp",
-    "emergencyBanner": "Nếu bạn đang gặp nguy hiểm, hãy gọi ngay 112 (cảnh sát) hoặc 119 (cấp cứu)."
+    "emergencyBanner": "Nếu bạn đang gặp nguy hiểm, hãy gọi ngay 112 (cảnh sát) hoặc 119 (cấp cứu).",
+    "statsTitle": "Dữ liệu đã đăng ký",
+    "statsSubtitle": "Chỉ đếm những gì LINKRIGHTS đã kiểm tra và đăng ký.",
+    "statsPrograms": "Chương trình",
+    "statsProgramsUnit": "",
+    "statsUpdated": "Cập nhật lần cuối",
+    "statsNote": "Ngày này thay đổi mỗi khi thông tin được thêm hoặc sửa."
   },
   "ask": {
     "title": "Hỏi hướng dẫn AI",
@@ -323,7 +330,8 @@
     "map": "Xem bản đồ",
     "localNetwork": "Trung tâm địa phương",
     "findNearby": "Tìm nơi gần bạn",
-    "officialInfo": "Xem thông tin chính thức"
+    "officialInfo": "Xem thông tin chính thức",
+    "updatedLabel": "Ngày kiểm tra gần nhất của danh sách"
   },
   "orgTopics": {
     "labor": "Lao động & tiền lương",
@@ -361,7 +369,8 @@
     "retryNote": "Các câu hỏi này lấy từ thông tin quyền đã đăng ký trên LINKRIGHTS. Nhấn vào để hỏi lại bằng câu đó.",
     "retryEdit": "Tự sửa câu hỏi và hỏi lại",
     "sourcesArticle": "Xem thông tin quyền mà câu trả lời đã dùng",
-    "sourcesOfficial": "Nguồn chính thức (trang web của cơ quan, mở cửa sổ mới)"
+    "sourcesOfficial": "Nguồn chính thức (trang web của cơ quan, mở cửa sổ mới)",
+    "regionHelp": "Xem nơi trợ giúp ở {region}"
   },
   "orgFinder": {
     "title": "Chọn khu vực của tôi",
@@ -675,9 +684,16 @@
     "officialSiteHint": "Trên máy tính, bạn có thể mở trang web chính thức thay vì gọi điện."
   },
   "about": {
+    "whyYouthNav": "Vì sao là thanh thiếu niên có nền tảng di trú?",
     "title": "Giới thiệu LINKRIGHTS"
   },
   "programs": {
+    "whyLabel": "Vì sao cần?",
+    "helpsLabel": "Có thể giúp gì?",
+    "detailsLabel": "Xem thêm về cách tổ chức",
+    "howLabel": "Diễn ra thế nào?",
+    "audienceLabel": "Dành cho ai",
+    "formatLabel": "Cách tổ chức",
     "title": "Chương trình và hoạt động",
     "subtitle": "Quyền trở thành của bạn khi bạn học và thực hành cùng nhau.",
     "communityTitle": "Cộng đồng"

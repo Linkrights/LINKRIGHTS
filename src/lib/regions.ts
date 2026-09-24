@@ -25,6 +25,26 @@ export function regionName(key: string, locale: Locale): string {
   return region ? (region.name[locale] ?? region.name.ko) : key;
 }
 
+/**
+ * 질문 글에 등록된 시·도 이름이 들어 있으면 그 지역을 찾아 줍니다. (예: "울산에서 한국어 교육" → 울산)
+ * content/regions.json 에 등록된 이름(4개 언어)만 찾고, 없는 지역을 만들어내지 않습니다.
+ * "서울시", "경기도"처럼 뒤에 글자가 붙어도 찾을 수 있게 등록된 이름이 들어 있는지로만 봅니다.
+ */
+export function findRegionInText(text: string): RegionItem | null {
+  const haystack = text.toLowerCase();
+  let found: { region: RegionItem; length: number } | null = null;
+  for (const region of REGIONS) {
+    for (const name of Object.values(region.name)) {
+      const needle = (name ?? '').toLowerCase();
+      // 두 글자 미만의 이름은 다른 낱말에 섞일 수 있어 찾지 않습니다.
+      if (needle.length < 2 || !haystack.includes(needle)) continue;
+      // 이름이 더 긴 지역을 우선합니다. ("경기"보다 "경기도")
+      if (!found || needle.length > found.length) found = { region, length: needle.length };
+    }
+  }
+  return found?.region ?? null;
+}
+
 export interface OrganizationArea {
   nationwide: boolean;
   regions: string[];

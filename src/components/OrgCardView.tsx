@@ -71,6 +71,16 @@ export function OrgCardView({
       : [];
   // 지도는 등록된 한국어 주소가 있을 때만 네이버 지도 검색으로 연결합니다. (지도 API·비용 없음)
   const mapHref = org.address?.ko ? `https://map.naver.com/p/search/${encodeURIComponent(org.address.ko)}` : '';
+  // 홈페이지 버튼이 어디로 가는지 알 수 있게 주소(도메인)만 함께 적습니다.
+  const siteHost = (() => {
+    const url = org.website || org.source_url;
+    if (!url) return '';
+    try {
+      return new URL(url).host.replace(/^www\./, '');
+    } catch {
+      return '';
+    }
+  })();
 
   const rows: { key: string; label: string; value: string }[] = [
     {
@@ -189,6 +199,8 @@ export function OrgCardView({
             )}
           </div>
         )}
+        {/* 어디로 이어지는 링크인지 주소를 함께 보여줍니다. (등록된 주소에서 그대로 가져옵니다) */}
+        {siteHost && <p className="mt-2 text-[13px] text-ink-500">{siteHost}</p>}
         {phoneNote && <p className="mt-2 text-sm leading-relaxed text-ink-700">{phoneNote}</p>}
         {callLines.length > 0 && (
           <details className="group mt-3 rounded-[var(--radius-control)] border border-[var(--color-line)]">

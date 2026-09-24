@@ -27,6 +27,7 @@ export function NoResultHelp({
   suggestions = [],
   onSuggestion,
   materialHref,
+  region,
 }: {
   t: Messages;
   locale: Locale;
@@ -47,6 +48,8 @@ export function NoResultHelp({
   onSuggestion?: (text: string) => void;
   /** 자료 추가 요청 메일 (mailto:). 없으면 보여주지 않습니다. */
   materialHref?: string;
+  /** 질문에 나온 지역에 등록된 기관이 있을 때만 (서버가 등록된 지역 이름으로만 찾습니다) */
+  region?: { key: string; label: string; count: number };
 }) {
   const a = t.answerUi;
   const similarId = 'no-result-similar';
@@ -73,6 +76,14 @@ export function NoResultHelp({
           similarHref={links.length > 0 ? `#${similarId}` : undefined}
           rightsHref={category ? category.href : `/${locale}/rights`}
           organizationsHref={`/${locale}/organizations`}
+          regionHelp={
+            region
+              ? {
+                  label: a.regionHelp.replace('{region}', region.label),
+                  href: `/${locale}/organizations?region=${encodeURIComponent(region.key)}`,
+                }
+              : undefined
+          }
           askHref={askHref}
           suggestions={suggestions}
           onSuggestion={onSuggestion}

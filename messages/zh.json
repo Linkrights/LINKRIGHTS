@@ -18,7 +18,8 @@
     "menu": "打开菜单",
     "close": "关闭",
     "mainMenu": "主菜单",
-    "language": "选择语言"
+    "language": "选择语言",
+    "questions": "提问"
   },
   "common": {
     "skipToContent": "跳到主要内容",
@@ -98,7 +99,13 @@
     "sdgTitle": "SDGs 与 LINKRIGHTS",
     "sdgSubtitle": "说明我们希望带来的改变。",
     "faqTitle": "常见问题",
-    "emergencyBanner": "如果你现在有危险，请立即拨打 112（警察）或 119（急救）。"
+    "emergencyBanner": "如果你现在有危险，请立即拨打 112（警察）或 119（急救）。",
+    "statsTitle": "目前已登记的资料",
+    "statsSubtitle": "仅统计 LINKRIGHTS 亲自确认并登记的内容。",
+    "statsPrograms": "项目",
+    "statsProgramsUnit": "个",
+    "statsUpdated": "最后更新",
+    "statsNote": "每当资料新增或修改时，这个日期也会随之更新。"
   },
   "ask": {
     "title": "向 AI 提问",
@@ -323,7 +330,8 @@
     "map": "查看地图",
     "localNetwork": "各地中心",
     "findNearby": "查找附近的中心",
-    "officialInfo": "查看官方说明"
+    "officialInfo": "查看官方说明",
+    "updatedLabel": "此列表的最后检查日期"
   },
   "orgTopics": {
     "labor": "劳动·工资",
@@ -361,7 +369,8 @@
     "retryNote": "这些问题来自 LINKRIGHTS 登记的权利信息。点击后会用这个问题重新提问。",
     "retryEdit": "自己修改后再问",
     "sourcesArticle": "查看这个回答用到的权利信息",
-    "sourcesOfficial": "官方来源（机构网站，在新窗口打开）"
+    "sourcesOfficial": "官方来源（机构网站，在新窗口打开）",
+    "regionHelp": "查看{region}可以求助的机构"
   },
   "orgFinder": {
     "title": "选择我的地区",
@@ -675,9 +684,16 @@
     "officialSiteHint": "在电脑上可以打开官方网站查看说明，代替拨打电话。"
   },
   "about": {
+    "whyYouthNav": "为什么关注移民背景青少年？",
     "title": "关于 LINKRIGHTS"
   },
   "programs": {
+    "whyLabel": "为什么需要？",
+    "helpsLabel": "能提供什么帮助？",
+    "detailsLabel": "查看运营信息",
+    "howLabel": "如何进行？",
+    "audienceLabel": "对象",
+    "formatLabel": "运营方式",
     "title": "项目与活动",
     "subtitle": "权利要在学习和共同实践中才真正属于自己。",
     "communityTitle": "社区"

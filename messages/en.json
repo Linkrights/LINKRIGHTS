@@ -18,7 +18,8 @@
     "menu": "Open menu",
     "close": "Close",
     "mainMenu": "Main menu",
-    "language": "Choose language"
+    "language": "Choose language",
+    "questions": "Questions"
   },
   "common": {
     "skipToContent": "Skip to main content",
@@ -98,7 +99,13 @@
     "sdgTitle": "SDGs and LINKRIGHTS",
     "sdgSubtitle": "The change we are trying to contribute to.",
     "faqTitle": "Frequently asked questions",
-    "emergencyBanner": "If you are in danger right now, call 112 (police) or 119 (ambulance)."
+    "emergencyBanner": "If you are in danger right now, call 112 (police) or 119 (ambulance).",
+    "statsTitle": "Registered right now",
+    "statsSubtitle": "We count only what LINKRIGHTS has checked and registered.",
+    "statsPrograms": "Programmes",
+    "statsProgramsUnit": "",
+    "statsUpdated": "Last updated",
+    "statsNote": "This date changes whenever information is added or revised."
   },
   "ask": {
     "title": "Ask the AI guide",
@@ -323,7 +330,8 @@
     "map": "View map",
     "localNetwork": "Local centres",
     "findNearby": "Find one near you",
-    "officialInfo": "Official information"
+    "officialInfo": "Official information",
+    "updatedLabel": "Last reviewed in this list"
   },
   "orgTopics": {
     "labor": "Work & wages",
@@ -361,7 +369,8 @@
     "retryNote": "These questions come from rights information registered on LINKRIGHTS. Tap one to ask it as a new question.",
     "retryEdit": "Edit my question and ask again",
     "sourcesArticle": "Read the rights information this answer used",
-    "sourcesOfficial": "Official sources (organisation websites, open in a new window)"
+    "sourcesOfficial": "Official sources (organisation websites, open in a new window)",
+    "regionHelp": "See places to get help in {region}"
   },
   "orgFinder": {
     "title": "Choose your area",
@@ -675,9 +684,16 @@
     "officialSiteHint": "On a computer, you can open the official website instead of calling."
   },
   "about": {
+    "whyYouthNav": "Why migrant-background youth?",
     "title": "About LINKRIGHTS"
   },
   "programs": {
+    "whyLabel": "Why does it matter?",
+    "helpsLabel": "How can it help?",
+    "detailsLabel": "More about how it runs",
+    "howLabel": "How does it work?",
+    "audienceLabel": "Who it is for",
+    "formatLabel": "How it runs",
     "title": "Programmes and activities",
     "subtitle": "Rights become yours when you learn and practise them together.",
     "communityTitle": "Community"

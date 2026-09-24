@@ -365,32 +365,50 @@ export function findByRegisteredKeyword(query: string, limit = 12): RightsArticl
 }
 
 /**
- * 검색창의 추천 낱말입니다. 등록된 권리정보의 키워드와 유사 표현 묶음에서만 가져오며,
- * 새 낱말을 만들어내지 않습니다. (브라우저의 자동완성 목록으로 넘겨 씁니다)
+ * 검색창의 추천 낱말입니다. 등록된 권리정보의 키워드에서만 가져오며, 새 낱말을 만들어내지 않습니다.
+ * (브라우저의 자동완성 목록으로 넘겨 씁니다)
+ *
+ * 키워드에는 검색이 잘 되도록 "돈 안 줘", "90일 안에"처럼 문장 조각이나 숫자 조건도 들어 있습니다.
+ * 이런 말은 찾을 때는 쓰이지만 추천 목록에 뜨면 "이 사이트에서 무엇을 검색할 수 있는지" 알기 어려워서,
+ * 아래 조건으로 주제어만 남기고 글마다 앞쪽 키워드부터 골라 분야가 고르게 보이도록 합니다.
+ *   - 숫자가 들어간 말(18세 미만, 90일)은 뺍니다.
+ *   - 조사나 어미로 끝나는 문장 조각(돈을 못 받, 무서워, 학교 가고 싶)은 뺍니다.
+ *   - 화면 언어의 글자로 쓴 말만 보여줍니다. (영어 화면에 베트남어가 섞이지 않게)
  */
-export function searchSuggestions(locale: Locale, limit = 40): string[] {
+const FRAGMENT_END = /(싶|요|데|했|았|렸|워|낮|야|받|줘|싸|해|없|지|나|않|다|줄|이라서|이라고|이니까)$/;
+const FRAGMENT_INSIDE = /(^|\s)\S*(이|가|을|를|은|는|에|인데|라고|라서|때문)\s/;
+const VIETNAMESE = /[ăâêôơưđáàảãạấầẩẫậắằẳẵặéèẻẽẹếềểễệíìỉĩịóòỏõọốồổỗộớờởỡợúùủũụứừửữựýỳỷỹỵ]/i;
+/** 글 하나에서 추천 목록에 넣을 키워드 수 (앞쪽 키워드가 그 글의 대표 낱말입니다) */
+const SUGGESTIONS_PER_ARTICLE = 2;
+
+export function searchSuggestions(locale: Locale, limit = 24): string[] {
   const isHangul = /[\p{Script=Hangul}]/u;
   const isHan = /[\p{Script=Han}]/u;
-  const keep = (term: string) => {
-    if (compact(term).length < 2) return false;
+  const inLocale = (term: string) => {
     if (locale === 'ko') return isHangul.test(term);
     if (locale === 'zh') return isHan.test(term) && !isHangul.test(term);
-    // 영어·베트남어 화면에서는 한글·한자가 아닌 표현만 보여줍니다.
-    return !isHangul.test(term) && !isHan.test(term);
+    if (locale === 'vi') return !isHangul.test(term) && !isHan.test(term) && VIETNAMESE.test(term);
+    return !isHangul.test(term) && !isHan.test(term) && !VIETNAMESE.test(term);
+  };
+  const keep = (term: string) => {
+    if (compact(term).length < 2) return false;
+    if (/\d/.test(term)) return false;
+    if (!inLocale(term)) return false;
+    // 한국어는 문장 조각을 빼고 주제어만 남깁니다. (다른 언어 키워드는 낱말 그대로 등록되어 있습니다)
+    if (locale === 'ko' && (FRAGMENT_END.test(term) || FRAGMENT_INSIDE.test(term))) return false;
+    return true;
   };
 
+  // 글마다 앞쪽 키워드부터 차례로 골라, 한 분야의 낱말만 길게 이어지지 않게 합니다.
+  const perArticle = getGroundingArticles().map((article) => article.keywords.filter(keep).slice(0, SUGGESTIONS_PER_ARTICLE));
   const terms = new Set<string>();
-  for (const article of getGroundingArticles()) {
-    for (const keyword of article.keywords) {
-      if (keep(keyword)) terms.add(keyword);
+  for (let round = 0; round < SUGGESTIONS_PER_ARTICLE; round += 1) {
+    for (const keywords of perArticle) {
+      if (keywords[round]) terms.add(keywords[round]);
+      if (terms.size >= limit) return [...terms];
     }
   }
-  for (const group of getSearchSynonyms()) {
-    for (const term of group.terms) {
-      if (keep(term)) terms.add(term);
-    }
-  }
-  return [...terms].sort((a, b) => a.localeCompare(b)).slice(0, limit);
+  return [...terms];
 }
 
 /** 관련 글을 하나도 못 찾았을 때 보여줄 기본 목록 */

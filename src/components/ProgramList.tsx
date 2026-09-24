@@ -15,18 +15,37 @@ export interface ProgramCardData {
   tagKey: string;
   tag: string;
   title: string;
+  /** 무엇을 하나요 */
   body: string;
+  /** 왜 필요한가요 / 어떤 도움을 줄 수 있나요 (등록된 것만, 없으면 빈 글자) */
+  why?: string;
+  helps?: string;
+  /** 운영 정보: 기관 관계자처럼 더 자세히 보고 싶은 분을 위해 접었다 펼 수 있게 보여줍니다. */
+  how?: string;
+  audience?: string;
+  format?: string;
   image: string;
+}
+
+export interface ProgramLabels {
+  why: string;
+  helps: string;
+  details: string;
+  how: string;
+  audience: string;
+  format: string;
 }
 
 export function ProgramList({
   items,
   allLabel,
   groupLabel,
+  labels,
 }: {
   items: ProgramCardData[];
   allLabel: string;
   groupLabel: string;
+  labels: ProgramLabels;
 }) {
   const [active, setActive] = useState<string | null>(null);
   const tags = [...new Map(items.map((item) => [item.tagKey, item.tag])).entries()];
@@ -79,6 +98,56 @@ export function ProgramList({
                 <span className="text-sm font-semibold text-brand-700">{item.tag}</span>{' '}
                 <h2 className="mt-1.5 text-xl font-extrabold leading-snug text-ink-900">{item.title}</h2>{' '}
                 <p className="lr-body mt-2">{item.body}</p>
+
+                {/* 왜 필요한가요 / 어떤 도움을 줄 수 있나요: 등록된 글이 있을 때만 */}
+                {(item.why || item.helps) && (
+                  <dl className="mt-4 space-y-3 border-t border-[var(--color-line)] pt-4">
+                    {item.why && (
+                      <div>
+                        <dt className="text-[13px] font-bold tracking-[0.02em] text-brand-700">{labels.why}</dt>
+                        <dd className="mt-1 text-[15px] leading-relaxed text-ink-700">{item.why}</dd>
+                      </div>
+                    )}
+                    {item.helps && (
+                      <div>
+                        <dt className="text-[13px] font-bold tracking-[0.02em] text-brand-700">{labels.helps}</dt>
+                        <dd className="mt-1 text-[15px] leading-relaxed text-ink-700">{item.helps}</dd>
+                      </div>
+                    )}
+                  </dl>
+                )}
+
+                {/* 운영 정보: 기관 관계자처럼 더 자세한 내용이 필요할 때만 펼쳐 봅니다. (등록된 값이 있을 때만) */}
+                {(item.how || item.audience || item.format) && (
+                  <details className="group mt-4 rounded-[var(--radius-control)] border border-[var(--color-line)]">
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-2.5 text-sm font-semibold text-ink-700 hover:bg-surface-soft [&::-webkit-details-marker]:hidden">
+                      {labels.details}
+                      <span className="shrink-0 text-ink-300 transition-transform group-open:rotate-180" aria-hidden="true">
+                        ▾
+                      </span>
+                    </summary>
+                    <dl className="space-y-3 border-t border-[var(--color-line)] px-4 pb-4 pt-3 text-[15px]">
+                      {item.how && (
+                        <div>
+                          <dt className="font-semibold text-ink-900">{labels.how}</dt>
+                          <dd className="mt-0.5 leading-relaxed text-ink-700">{item.how}</dd>
+                        </div>
+                      )}
+                      {item.audience && (
+                        <div>
+                          <dt className="font-semibold text-ink-900">{labels.audience}</dt>
+                          <dd className="mt-0.5 leading-relaxed text-ink-700">{item.audience}</dd>
+                        </div>
+                      )}
+                      {item.format && (
+                        <div>
+                          <dt className="font-semibold text-ink-900">{labels.format}</dt>
+                          <dd className="mt-0.5 leading-relaxed text-ink-700">{item.format}</dd>
+                        </div>
+                      )}
+                    </dl>
+                  </details>
+                )}
               </div>
             </article>
           </Reveal>

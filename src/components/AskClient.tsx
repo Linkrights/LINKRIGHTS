@@ -31,6 +31,7 @@ import { Icon } from './Icon';
 import { NoResultHelp } from './NoResultHelp';
 import { OrgCard } from './OrgCard';
 import { PrivacyNotice } from './PrivacyNotice';
+import { ReadAloud } from './ReadAloud';
 import { findPersonalInfo, removePersonalInfo } from './privacy-detect';
 import { matchGlossary, type GlossaryTerm } from '@/lib/glossary';
 import { materialRequestHref } from '@/lib/materialRequest';
@@ -213,6 +214,21 @@ function ResultView({
       )
     : [];
 
+  // 소리로 읽어줄 글: 화면에 보이는 답변 칸을 순서대로 (기관 이름·번호는 카드에서 따로 보여줍니다)
+  const readBlocks = answer
+    ? [
+        `${a.situation}. ${answer.summary}`,
+        ...((answer.checks ?? []).length > 0 ? [`${a.checks}. ${(answer.checks ?? []).join(' ')}`] : []),
+        ...(answer.rights.length > 0
+          ? [`${a.rights}. ${answer.rights.map((item) => `${item.title}. ${item.body}`).join(' ')}`]
+          : []),
+        ...(answer.actions.length > 0
+          ? [`${a.actions}. ${answer.actions.map((item) => `${item.title}. ${item.body}`).join(' ')}`]
+          : []),
+        ...(answer.limitations ? [`${t.ask.resultLimitations}. ${answer.limitations}`] : []),
+      ]
+    : [];
+
   // 보이는 칸끼리 번호를 매깁니다.
   const parts: string[] = [];
   if (answer && result.ok) {
@@ -277,6 +293,10 @@ function ResultView({
                 <span>{t.ask.evidencePossibleNote}</span>
               </p>
             )}
+            {/* 답변을 소리로 듣기: 화면에 보이는 글을 그대로 읽습니다. (한국어는 1331 같은 번호를 수로 읽습니다) */}
+            <div className="mt-4">
+              <ReadAloud blocks={readBlocks} locale={locale} labels={t.readAloud} />
+            </div>
           </div>
 
           <div className="space-y-9 px-5 py-6 sm:px-7 sm:py-8">
@@ -348,6 +368,7 @@ function ResultView({
                 suggestions={result.suggestions ?? []}
                 onSuggestion={onNewSuggestion}
                 materialHref={materialHref}
+                region={result.region}
               />
             )}
 

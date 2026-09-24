@@ -32,9 +32,10 @@ import {
   resolveOrganizations,
 } from '@/lib/content';
 import { buildEmergencyCard, detectEmergency } from '@/lib/emergency';
-import { DEFAULT_LOCALE, isLocale } from '@/lib/i18n';
+import { DEFAULT_LOCALE, isLocale, pick } from '@/lib/i18n';
 import { askOpenAi, buildContext, type ContextSituation } from '@/lib/openai';
 import { checkLimits } from '@/lib/rateLimit';
+import { findRegionInText, organizationArea, servesRegion } from '@/lib/regions';
 import {
   buildAllowlist,
   dropLegalLabelSentences,
@@ -241,6 +242,11 @@ export async function POST(request: Request) {
     clarify: intent.clarify ?? '',
   }));
 
+  // 질문에 등록된 시·도 이름이 있으면 그 지역을 알아 둡니다. (등록된 지역 이름만 찾습니다)
+  // 자료가 없을 때 "어느 지역의 무엇을 찾는지"를 그대로 되짚어 주고, 그 지역에 등록된 기관으로 이어 주기 위한 것입니다.
+  const mentionedRegion = findRegionInText(question);
+  const regionLabel = mentionedRegion ? pick(mentionedRegion.name, locale) : '';
+
   const context = buildContext(
     evidence.map((match) => ({
       article: match.article,
@@ -252,6 +258,7 @@ export async function POST(request: Request) {
     linkedOrganizations,
     categoryIds,
     situations,
+    regionLabel,
   );
 
   // --- 5) AI 호출 ---
@@ -422,6 +429,14 @@ export async function POST(request: Request) {
     }
   }
 
+  // 질문에 지역이 나왔고 그 지역에 등록된 기관이 있으면, 자료가 없을 때 그 지역 목록으로 이어 줍니다.
+  // (기관 이름을 만들어 말하는 것이 아니라, 등록된 지역 목록 화면으로 보내는 링크입니다)
+  const regionOrgCount = mentionedRegion
+    ? organizations.filter(
+        (org) => !org.emergency && servesRegion(organizationArea(org), mentionedRegion.key) && !organizationArea(org).nationwide,
+      ).length
+    : 0;
+
   return json({
     ok: true,
     mode: 'ai',
@@ -431,6 +446,7 @@ export async function POST(request: Request) {
     suggestions,
     organizations: shownOrganizations,
     sources,
+    region: mentionedRegion && regionOrgCount > 0 ? { key: mentionedRegion.key, label: regionLabel, count: regionOrgCount } : undefined,
     emergency: emergency
       ? { title: emergency.title, message: emergency.message, steps: emergency.steps, note: emergency.note }
       : undefined,

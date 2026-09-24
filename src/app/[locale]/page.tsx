@@ -22,7 +22,6 @@ import { AskBox } from '@/components/AskBox';
 import { HomeHelpFinder } from '@/components/HomeHelpFinder';
 import { HomeHero } from '@/components/HomeHero';
 import { Icon, type IconName } from '@/components/Icon';
-import { OrgCard } from '@/components/OrgCard';
 import { Reveal } from '@/components/Reveal';
 import { RightsSearchForm } from '@/components/RightsSearchForm';
 import { Section } from '@/components/Section';
@@ -38,9 +37,11 @@ import {
   getNationwideOrganizations,
   getOrganizations,
   getPartners,
+  getPrograms,
   getQnaPosts,
   getSite,
   getTestimonials,
+  lastReviewedAt,
   resolveArticle,
   resolveOrganizations,
 } from '@/lib/content';
@@ -57,7 +58,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const categories = getCategories();
   const featured = getFeaturedArticles(6);
   const checklists = getChecklists();
-  const orgs = getNationwideOrganizations().filter((o) => !o.emergency).slice(0, 3);
   const about = getAbout().i18n[locale] ?? getAbout().i18n.ko;
   const partners = getPartners();
   // 홈에는 content/faq.json 에서 featured 로 표시한 핵심 질문(최대 4개)만 보여주고, 나머지는 FAQ 페이지에서 봅니다.
@@ -81,20 +81,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     name: pick(org.name, locale),
     phone: org.phone,
   }));
-
-  // LINKRIGHTS가 함께 알려주는 세 가지
-  const helpSteps = [
-    { title: t.ask.resultRights, body: t.homeBrand.step1 },
-    { title: t.ask.resultActions, body: t.homeBrand.step2 },
-    { title: t.ask.resultOrgs, body: t.homeBrand.step3 },
-  ];
-  // 사용하는 방법 세 단계 (각 단계에서 바로 이동)
-  const howSteps = [
-    { body: t.homeIntro.how1, href: `/${locale}/rights`, label: t.nav.rights },
-    { body: t.homeIntro.how2, href: `/${locale}/ask`, label: t.home.ctaAsk },
-    { body: t.homeIntro.how3, href: `/${locale}/organizations`, label: t.nav.organizations },
-  ];
-  const introLabel = 'text-sm font-bold tracking-[0.04em] text-brand-700';
 
   // 2. 무엇이 궁금한가요? ② 내 권리 확인하기: 권리정보와 체크리스트 (각 기능을 "언제 쓰는지"로 구분합니다)
   const checkPoints: { key: string; icon: IconName; title: string; body: string; href: string }[] = [
@@ -150,16 +136,27 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : a.key.localeCompare(b.key)))
     .slice(0, 4);
 
-  // 지금 등록된 자료 수 (크게 강조하지 않고 한 줄로만 적습니다)
-  const counts = [
-    `${t.home.impactArticles} ${getArticles().length}${t.home.impactArticlesUnit}`,
-    `${t.home.impactOrganizations} ${getOrganizations().length}${t.home.impactOrganizationsUnit}`,
-    `${t.home.impactLanguages} ${LOCALES.length}${t.home.impactLanguagesUnit}`,
-    `${t.home.impactParticipants} ${impact.participants.count}${t.home.impactParticipantsUnit} (${formatDate(
-      impact.participants.as_of,
-      locale,
-    )})`,
+  // 지금 등록된 자료 수: 모두 등록된 자료를 그대로 센 값입니다. (임의의 숫자를 넣지 않습니다)
+  const stats: { key: string; label: string; value: number; unit: string; note?: string }[] = [
+    { key: 'articles', label: t.home.impactArticles, value: getArticles().length, unit: t.home.impactArticlesUnit },
+    {
+      key: 'organizations',
+      label: t.home.impactOrganizations,
+      value: getOrganizations().length,
+      unit: t.home.impactOrganizationsUnit,
+    },
+    { key: 'programs', label: t.home.statsPrograms, value: getPrograms().items.filter((p) => p.status === 'published').length, unit: t.home.statsProgramsUnit },
+    { key: 'languages', label: t.home.impactLanguages, value: LOCALES.length, unit: t.home.impactLanguagesUnit },
+    {
+      key: 'participants',
+      label: t.home.impactParticipants,
+      value: impact.participants.count,
+      unit: t.home.impactParticipantsUnit,
+      note: formatDate(impact.participants.as_of, locale),
+    },
   ];
+  // 마지막 업데이트: 등록된 자료의 검토일 중 가장 최근 날짜 (자료를 고치면 함께 바뀝니다)
+  const lastUpdated = lastReviewedAt();
 
   const viewAll = (href: string) => (
     <Link href={href} className="lr-btn lr-btn-ghost lr-btn-sm lr-press">
@@ -319,158 +316,50 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
-      {/* 3. 나는 누구인가요?: 내 위치에서 시작할 수 있게 위쪽에 둡니다 ------ */}
-      <Section tone="soft" title={t.involved.whoTitle} subtitle={t.involved.whoSubtitle}>
-        <ul className="grid gap-x-8 gap-y-10 md:grid-cols-3">
-          {(
-            [
-              {
-                key: 'youth',
-                icon: 'sparkles',
-                title: t.involved.youthTitle,
-                body: t.involved.youthBody,
-                cta: t.involved.youthCta,
-                href: `/${locale}/rights`,
-                secondary: t.involved.youthSecondary,
-                secondaryHref: `/${locale}/ask`,
-              },
-              {
-                key: 'mentor',
-                icon: 'book',
-                title: t.involved.mentorTitle,
-                body: t.involved.mentorBody,
-                cta: t.involved.mentorCta,
-                href: `mailto:${site.contactEmail}?subject=${encodeURIComponent(t.involved.mentorSubject)}`,
-                secondary: t.involved.mentorSecondary,
-                secondaryHref: `/${locale}/programs#mentoring`,
-              },
-              {
-                key: 'partner',
-                icon: 'briefcase',
-                title: t.involved.partnerTitle,
-                body: t.involved.partnerBody,
-                cta: t.involved.partnerCta,
-                href: `mailto:${site.contactEmail}?subject=${encodeURIComponent(t.involved.partnerSubject)}`,
-                secondary: t.involved.partnerSecondary,
-                secondaryHref: `/${locale}/get-involved`,
-              },
-            ] as { key: string; icon: IconName; title: string; body: string; cta: string; href: string; secondary: string; secondaryHref: string }[]
-          ).map((item, index) => (
-            <Reveal key={item.key} index={index} className="flex flex-col border-t-2 border-navy-900 pt-6">
-              <span className="lr-icon-badge h-11 w-11">
-                <Icon name={item.icon} size={22} />
-              </span>{' '}
-              <h3 className="lr-h3 mt-4">{item.title}</h3>{' '}
-              <p className="mt-2 flex-1 text-[15px] leading-relaxed text-ink-500">{item.body}</p>
-              <div className="mt-5 flex flex-col items-start gap-2">
-                {item.href.startsWith('mailto:') ? (
-                  <>
-                    <a href={item.href} className="lr-btn lr-btn-primary lr-press">
-                      {item.cta} <Icon name="arrow-right" size={18} />
-                    </a>
-                    <span className="text-[13px] text-ink-500">{t.homeIntro.emailNote}</span>
-                  </>
-                ) : (
-                  <Link href={item.href} className="lr-btn lr-btn-primary lr-press">
-                    {item.cta} <Icon name="arrow-right" size={18} />
-                  </Link>
-                )}
-                <Link href={item.secondaryHref} className="lr-link mt-1 text-[15px] font-semibold">
-                  {item.secondary}
-                </Link>
-              </div>
-            </Reveal>
-          ))}
-        </ul>
-      </Section>
-
-      {/* 4. LINKRIGHTS 소개: 누가 만들고 운영하는 곳인지까지 -------------- */}
+      {/* 3. LINKRIGHTS 소개: 누가 만들고 운영하는 곳인지 한눈에. (자세한 이야기는 소개 페이지에서) ------ */}
       <section id="home-intro" className="scroll-mt-20 border-b border-[var(--color-line)] bg-white">
-        <div className="lr-container py-20 sm:py-28">
-          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-5">
+        <div className="lr-container py-16 sm:py-20">
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-7">
               <p className="lr-eyebrow">LINKRIGHTS</p>
-              <h2 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-ink-900 sm:text-[2.5rem]">
+              <h2 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-ink-900 sm:text-[2.25rem]">
                 {about.hero_title}
               </h2>
-              <p className="mt-6 text-lg leading-relaxed text-ink-700">{about.hero_body}</p>
+              <p className="mt-5 text-lg leading-relaxed text-ink-700">{about.hero_body}</p>
               <p className="mt-4 text-[17px] leading-relaxed text-ink-500">{about.change_body}</p>
+              <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+                <Link href={`/${locale}/about`} className="lr-link inline-flex items-center gap-1.5 text-[15px] font-semibold">
+                  {t.nav.about} <Icon name="arrow-right" size={16} />
+                </Link>
+                <Link
+                  href={`/${locale}/about#why-youth`}
+                  className="lr-link inline-flex items-center gap-1.5 text-[15px] font-semibold"
+                >
+                  {t.about.whyYouthNav} <Icon name="arrow-right" size={16} />
+                </Link>
+              </div>
+            </div>
 
-              {/* 운영 주체와 함께하는 곳: content/site.json 의 운영 주체, content/partners.json 의 관계 표시를 그대로 씁니다. */}
-              <dl className="mt-7 space-y-2 border-t border-[var(--color-line)] pt-5 text-[15px] leading-relaxed">
-                <div className="flex flex-wrap gap-x-2">
+            {/* 운영 주체와 함께하는 곳: content/site.json 의 운영 주체, content/partners.json 의 관계 표시를 그대로 씁니다. */}
+            <div className="lg:col-span-5">
+              <dl className="space-y-4 border-t-2 border-navy-900 pt-5 text-[15px] leading-relaxed">
+                <div>
                   <dt className="font-bold text-ink-900">{t.footerNav.operatorLabel}</dt>
-                  <dd className="text-ink-700">{pick(site.operator, locale)}</dd>
+                  <dd className="mt-0.5 text-ink-700">{pick(site.operator, locale)}</dd>
                 </div>
                 {partners.length > 0 && (
-                  <div className="flex flex-wrap gap-x-2">
+                  <div>
                     <dt className="font-bold text-ink-900">{t.homeIntro.partnerLabel}</dt>
-                    <dd className="text-ink-700">
+                    <dd className="mt-0.5 text-ink-700">
                       {partners.map((partner) => `${pick(partner.name, locale)} (${pick(partner.relation, locale)})`).join(' · ')}
                     </dd>
                   </div>
                 )}
+                <div>
+                  <dt className="font-bold text-ink-900">{t.homeIntro.whoLabel}</dt>
+                  <dd className="mt-0.5 text-ink-700">{t.homeIntro.whoBody}</dd>
+                </div>
               </dl>
-
-              <Link
-                href={`/${locale}/about`}
-                className="lr-link mt-5 inline-flex items-center gap-1.5 text-[15px] font-semibold"
-              >
-                {t.nav.about} <Icon name="arrow-right" size={16} />
-              </Link>
-            </div>
-
-            <div className="space-y-12 lg:col-span-7">
-              {/* 누구를 위한 곳인가요? */}
-              <div>
-                <h3 className={introLabel}>{t.homeIntro.whoLabel}</h3>
-                <p className="mt-3 text-xl font-semibold leading-relaxed text-ink-900 sm:text-2xl">{t.homeIntro.whoBody}</p>
-              </div>
-
-              {/* 어떤 도움을 주나요? */}
-              <div>
-                <h3 className={introLabel}>{t.homeIntro.helpLabel}</h3>
-                <ol className="mt-3 border-t-2 border-navy-900">
-                  {helpSteps.map((step, index) => (
-                    <Reveal
-                      key={step.title}
-                      index={index}
-                      className="grid grid-cols-[3rem_1fr] gap-4 border-b border-[var(--color-line)] py-5 sm:grid-cols-[4.5rem_1fr] sm:py-6"
-                    >
-                      <span className="text-2xl font-extrabold tabular-nums text-brand-600 sm:text-3xl">
-                        {String(index + 1).padStart(2, '0')}
-                        <span className="sr-only">.</span>
-                      </span>{' '}
-                      <div>
-                        <h4 className="text-lg font-bold text-ink-900 sm:text-xl">{step.title}</h4>{' '}
-                        <p className="mt-1 text-[16px] leading-relaxed text-ink-500">{step.body}</p>
-                      </div>
-                    </Reveal>
-                  ))}
-                </ol>
-              </div>
-
-              {/* 어떻게 쓰나요? */}
-              <div>
-                <h3 className={introLabel}>{t.homeIntro.howLabel}</h3>
-                <ol className="mt-4 grid gap-6 sm:grid-cols-3 sm:gap-5">
-                  {howSteps.map((step, index) => (
-                    <li key={step.href} className="flex flex-col border-t border-[var(--color-line)] pt-4">
-                      <span className="grid h-8 w-8 place-items-center rounded-full bg-navy-900 text-sm font-bold text-white">
-                        {index + 1}
-                        <span className="sr-only">.</span>
-                      </span>{' '}
-                      <p className="mt-3 flex-1 text-[15px] leading-relaxed text-ink-700">{step.body}</p>
-                      <Link
-                        href={step.href}
-                        className="lr-link mt-3 inline-flex items-center gap-1 text-[15px] font-semibold"
-                      >
-                        {step.label} <Icon name="arrow-right" size={16} />
-                      </Link>
-                    </li>
-                  ))}
-                </ol>
-              </div>
             </div>
           </div>
         </div>
@@ -571,11 +460,30 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               ))}
             </ul>
 
-            {/* 지금 등록된 자료 수: 크게 강조하지 않고 한 줄로만 적습니다. */}
-            <p className="mt-8 text-[13px] leading-relaxed text-white/60">
-              <span className="font-semibold text-white/75">{t.homeUpdates.countsLabel}</span> · {counts.join(' · ')}
-            </p>
-            <p className="mt-2 text-[13px] leading-relaxed text-white/60">{t.homeUpdates.note}</p>
+            {/* 지금 등록된 자료: 실제로 등록된 것만 세어 보여줍니다. (숫자는 자료가 늘면 함께 늘어납니다) */}
+            <div className="mt-10 border-t border-white/20 pt-8">
+              <h3 className="text-lg font-bold">{t.home.statsTitle}</h3>
+              <p className="mt-1 text-[15px] leading-relaxed text-white/70">{t.home.statsSubtitle}</p>
+              <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3 lg:grid-cols-5">
+                {stats.map((stat) => (
+                  <div key={stat.key}>
+                    <dt className="text-[13px] font-semibold leading-snug text-white/70">{stat.label}</dt>
+                    <dd className="mt-1.5 text-3xl font-extrabold tabular-nums sm:text-4xl">
+                      {stat.value}
+                      {stat.unit && <span className="ml-0.5 align-baseline text-base font-bold text-white/70">{stat.unit}</span>}
+                    </dd>
+                    {stat.note && <p className="mt-1 text-[13px] text-white/60">{stat.note}</p>}
+                  </div>
+                ))}
+              </dl>
+              <p className="mt-6 text-[13px] leading-relaxed text-white/60">
+                <span className="font-semibold text-white/75">
+                  {t.home.statsUpdated} {formatDate(lastUpdated, locale)}
+                </span>{' '}
+                · {t.home.statsNote}
+              </p>
+              <p className="mt-2 text-[13px] leading-relaxed text-white/60">{t.homeUpdates.note}</p>
+            </div>
           </div>
         </section>
       )}
@@ -632,23 +540,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </ul>
         </Section>
       )}
-
-      {/* 10. 실제 도움을 받을 수 있는 곳 ----------------------------- */}
-      <Section title={t.home.orgTitle} subtitle={t.home.orgSubtitle} action={viewAll(`/${locale}/organizations`)}>
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {orgs.map((org, index) => (
-            <Reveal key={org.id} index={index}>
-              <OrgCard org={org} locale={locale} />
-            </Reveal>
-          ))}
-        </ul>
-        <Link
-          href={`/${locale}/organizations`}
-          className="lr-link mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold"
-        >
-          <Icon name="search" size={16} /> {t.orgFinder.searchLabel}
-        </Link>
-      </Section>
 
       {/* 11. 자주 묻는 질문 + 질문 게시판 ----------------------------- */}
       <Section tone="soft" title={t.home.faqTitle} action={viewAll(`/${locale}/faq`)}>

@@ -18,6 +18,7 @@ export function NoResultActions({
   similarHref,
   rightsHref,
   organizationsHref,
+  regionHelp,
   askHref,
   suggestions = [],
   onSuggestion,
@@ -37,6 +38,8 @@ export function NoResultActions({
   similarHref?: string;
   rightsHref: string;
   organizationsHref: string;
+  /** 질문에 지역이 나왔고 그 지역에 등록된 기관이 있을 때만 (예: 울산 도움받을 곳 보기) */
+  regionHelp?: { label: string; href: string };
   /** 검색 화면: AI 질문 페이지 */
   askHref?: string;
   /** 등록된 권리정보에서 고른 바꿔 물어볼 질문 */
@@ -66,8 +69,10 @@ export function NoResultActions({
           </Link>
         </li>
         <li>
-          <Link href={organizationsHref} className={button}>
-            <Icon name="map-pin" size={18} className="shrink-0 text-brand-600" /> <span>{labels.region}</span>
+          {/* 질문에 나온 지역에 등록된 기관이 있으면 그 지역 목록으로 바로 보냅니다. */}
+          <Link href={regionHelp?.href ?? organizationsHref} className={button}>
+            <Icon name="map-pin" size={18} className="shrink-0 text-brand-600" />{' '}
+            <span>{regionHelp?.label ?? labels.region}</span>
           </Link>
         </li>
         {onRetry ? (

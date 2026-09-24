@@ -148,7 +148,19 @@ export interface ProgramItem {
   status: ContentStatus;
   tag: LocalizedText;
   title: LocalizedText;
+  /** 무엇을 하나요 */
   body: LocalizedText;
+  /** 왜 필요한가요 (선택) */
+  why?: LocalizedText;
+  /** 어떤 도움을 줄 수 있나요 (선택) */
+  helps?: LocalizedText;
+  /**
+   * 아래 세 가지는 운영 정보입니다. 기관 관계자처럼 더 자세한 내용이 필요한 분을 위해
+   * 프로그램 카드에서 펼쳐 볼 수 있게 보여줍니다. 등록된 값이 있을 때만 보이며, 없으면 아무것도 보이지 않습니다.
+   */
+  how?: LocalizedText;
+  audience?: LocalizedText;
+  format?: LocalizedText;
 }
 
 export interface ProgramsFile {
@@ -243,6 +255,12 @@ export interface AboutBody {
   hero_body: string;
   why_title: string;
   why_body: string;
+  /** "왜 이주배경청소년인가요?" (소개 메뉴에서 바로 연결하는 부분) */
+  youth_title: string;
+  youth_intro: string;
+  youth_points: RightsBlock[];
+  /** 이 설명이 어디에서 왔는지 (통계 수치를 담지 않는다는 안내) */
+  youth_note?: string;
   problems_title: string;
   problems: RightsBlock[];
   change_title: string;
@@ -272,6 +290,11 @@ export interface SdgDetail {
 export interface AboutFile {
   owner: string;
   reviewed_at: string;
+  /**
+   * "왜 이주배경청소년인가요?" 설명의 근거 자료 (선택).
+   * 공식 통계나 보고서를 등록하면 그 부분 아래에 링크로 보여줍니다. 없으면 아무것도 보여주지 않습니다.
+   */
+  youth_sources?: { title: LocalizedText; publisher?: LocalizedText; url: string }[];
   i18n: { ko: AboutBody } & Partial<Record<Locale, AboutBody>>;
 }
 
@@ -417,6 +440,11 @@ export interface AskApiSuccess {
   organizations: Organization[];
   /** 근거로 사용한 권리정보 (제목, 링크, 검토일) */
   sources: { id: string; title: string; href: string; reviewed_at: string; sources: RightsSource[] }[];
+  /**
+   * 질문에 등록된 시·도 이름이 들어 있고 그 지역에 등록된 기관이 있을 때만 채웁니다.
+   * (예: "울산에서 ~" → 울산 지역 도움받을 곳 목록으로 이어 주는 링크에 씁니다. 기관 이름을 만들어내지 않습니다)
+   */
+  region?: { key: string; label: string; count: number };
   emergency?: {
     title: string;
     message: string;

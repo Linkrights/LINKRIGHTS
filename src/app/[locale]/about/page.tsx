@@ -46,6 +46,8 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const programs = getPrograms().items.filter((p) => p.status === 'published');
   const hasPartners = getPartners().length > 0;
   const why = splitQuotes(about.why_body);
+  // "왜 이주배경청소년인가요?"의 근거 자료: 등록된 것만 보여줍니다. (없으면 아무것도 보여주지 않습니다)
+  const youthSources = file.youth_sources ?? [];
 
   return (
     <>
@@ -74,6 +76,43 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           </div>
         ) : (
           <p className="lr-lead max-w-3xl text-pretty">{about.why_body}</p>
+        )}
+      </Section>
+
+      {/* 1-1. 왜 이주배경청소년인가요?: 누구를 말하는지 먼저 밝히고, 어떤 어려움이 있는지 이어서 설명합니다.
+              (소개 메뉴에서 이 부분으로 바로 옵니다. 근거 자료는 content/about.json 의 youth_sources 에 등록된 것만 보여줍니다) */}
+      <Section tone="soft" title={about.youth_title} id="why-youth">
+        <p className="lr-lead max-w-3xl text-pretty">{about.youth_intro}</p>
+        <ol className="mt-8 grid gap-x-12 gap-y-8 sm:grid-cols-3">
+          {about.youth_points.map((point, index) => (
+            <li key={point.title} className="border-t-2 border-navy-900 pt-5">
+              <span className="text-[15px] font-extrabold tabular-nums text-brand-600">
+                {String(index + 1).padStart(2, '0')}
+                <span className="sr-only">.</span>
+              </span>
+              <h3 className="lr-h3 mt-2">{point.title}</h3>{' '}
+              <p className="lr-body mt-1.5">{point.body}</p>
+            </li>
+          ))}
+        </ol>
+        {about.youth_note && <p className="mt-8 max-w-3xl text-sm leading-relaxed text-ink-500">{about.youth_note}</p>}
+        {youthSources.length > 0 && (
+          <ul className="mt-3 space-y-1 text-sm leading-relaxed text-ink-500">
+            {youthSources.map((source) => (
+              <li key={source.url}>
+                {source.publisher && <span>{pick(source.publisher, locale)} · </span>}
+                <a
+                  href={source.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${pick(source.title, locale)} (${t.common.openInNew})`}
+                  className="underline underline-offset-2 hover:text-brand-700"
+                >
+                  {pick(source.title, locale)}
+                </a>
+              </li>
+            ))}
+          </ul>
         )}
       </Section>
 

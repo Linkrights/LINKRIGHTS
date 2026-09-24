@@ -1018,6 +1018,54 @@ async function runDeterministic() {
     }
   }
 
+  // 6-9) 검색창 추천 낱말, 소리로 읽을 때의 번호, 질문에 나온 지역 찾기
+  {
+    const search = data.load('src/lib/search.ts');
+    const articleKeywords = new Set(content.getGroundingArticles().flatMap((article) => article.keywords));
+    for (const locale of ['ko', 'en', 'zh', 'vi']) {
+      const terms = search.searchSuggestions(locale);
+      check(`검색창 추천(${locale}): 등록된 권리정보 키워드만`, terms.length > 0 && terms.every((term) => articleKeywords.has(term)), terms.slice(0, 5).join(', '));
+      check(`검색창 추천(${locale}): 숫자가 들어간 말은 빼기 (18세 미만, 90일)`, terms.every((term) => !/\d/.test(term)), terms.filter((term) => /\d/.test(term)).join(', '));
+    }
+    const ko = search.searchSuggestions('ko');
+    check('검색창 추천(ko): 문장 조각을 빼기 (돈을 못 받, 무서워)', !ko.some((term) => /(돈을 못 받|무서워|학교 가고 싶|갈 곳이 없|무시당했)/.test(term)), ko.join(' | '));
+    check('검색창 추천(ko): 주제어가 들어 있음 (임금체불·비자 연장·병원)', ['임금체불', '비자 연장', '병원'].every((term) => ko.includes(term)), ko.join(' | '));
+    const en = search.searchSuggestions('en');
+    const vi = search.searchSuggestions('vi');
+    const VI_MARK = /[ăâêôơưđáàảãạấầẩẫậắằẳẵặéèẻẽẹếềểễệíìỉĩịóòỏõọốồổỗộớờởỡợúùủũụứừửữựýỳỷỹỵ]/i;
+    check('검색창 추천: 영어 목록에 베트남어가 섞이지 않음', en.every((term) => !VI_MARK.test(term)), en.filter((term) => VI_MARK.test(term)).join(', '));
+    check('검색창 추천: 베트남어 목록은 베트남어 표기만', vi.every((term) => VI_MARK.test(term)), vi.filter((term) => !VI_MARK.test(term)).join(', '));
+
+    const speech = data.load('src/lib/speech.ts');
+    check('소리로 읽기: 1331 → 천삼백삼십일', speech.speakableText('1331로 전화하세요', 'ko') === '천삼백삼십일로 전화하세요', speech.speakableText('1331로 전화하세요', 'ko'));
+    check('소리로 읽기: 112 → 백십이, 110 → 백십', speech.speakableText('112 110', 'ko') === '백십이 백십', speech.speakableText('112 110', 'ko'));
+    check('소리로 읽기: 1577-1366 같은 긴 번호는 그대로', speech.speakableText('1577-1366', 'ko') === '1577-1366');
+    check('소리로 읽기: 02-3672-7559 도 그대로', speech.speakableText('02-3672-7559', 'ko') === '02-3672-7559');
+    check('소리로 읽기: 다른 언어는 바꾸지 않음', speech.speakableText('Call 1331', 'en') === 'Call 1331');
+    check('소리로 읽기: 화면 글자(전화번호)는 그대로 유지', content.getOrganizations().every((org) => !org.phone || /^[\d-]+$/.test(org.phone)));
+
+    const regions = data.load('src/lib/regions.ts');
+    check('지역 찾기: "울산에서 한국어 교육" → 울산', regions.findRegionInText('울산에서 한국어 교육을 받고 싶어요')?.key === '울산');
+    check('지역 찾기: 지역이 없으면 없음', regions.findRegionInText('알바비를 못 받았어요') === null);
+    check(
+      '지역 찾기: 등록된 시·도만 (없는 지역은 찾지 않음)',
+      regions.findRegionInText('도쿄에서 학교를 알아보고 있어요') === null,
+    );
+
+    // 자료가 없고 질문에 지역이 나오면, 그 지역 목록으로 이어 주는 링크 정보만 붙입니다. (기관을 만들어내지 않음)
+    const api = makeApi(() => ({
+      category: 'other', urgency: 'normal', summary: '요약', checks: [], rights: [], actions: [],
+      organizations: [], sources: [], follow_up_question: '', limitations: '',
+    }));
+    const res = await api.ask({ question: '울산에서 댄스 연습을 할 곳을 찾고 있어요', locale: 'ko' });
+    check(
+      '자료 없음 + 지역: 등록된 지역 링크만 붙고 기관은 붙지 않음',
+      res.body.evidence === 'none' && res.body.organizations.length === 0 && res.body.region?.key === '울산' && res.body.region?.count > 0,
+      JSON.stringify(res.body.region ?? null),
+    );
+    check('자료 없음 + 지역: AI에게 보낸 자료에 지역 힌트가 들어감', String(res.call?.messages?.at(-1)?.content ?? '').includes('<mentioned_region>울산</mentioned_region>'));
+  }
+
   // 7) 화면 문구 4개 언어
   {
     const load = (locale) => JSON.parse(fs.readFileSync(path.join(ROOT, 'messages', `${locale}.json`), 'utf8'));

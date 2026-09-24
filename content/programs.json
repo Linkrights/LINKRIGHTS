@@ -7,7 +7,12 @@
       "id": "rights-education",
       "image": "",
       "status": "published",
-      "tag": { "ko": "권리교육", "en": "Rights education", "zh": "权利教育", "vi": "Giáo dục quyền" },
+      "tag": {
+        "ko": "권리교육",
+        "en": "Rights education",
+        "zh": "权利教育",
+        "vi": "Giáo dục quyền"
+      },
       "title": {
         "ko": "내 권리를 배우는 시간",
         "en": "Learning my rights",
@@ -19,13 +24,30 @@
         "en": "Workshops built around real situations: part-time work, school, hospitals and visas, and what rights you have in each.",
         "zh": "以打工、学校、医院、居留等真实场景为主题，一起讨论自己拥有哪些权利的工作坊。",
         "vi": "Hội thảo dựa trên tình huống thực tế: làm thêm, trường học, bệnh viện, cư trú và quyền của bạn trong từng trường hợp."
+      },
+      "why": {
+        "ko": "권리는 배우지 않으면 있는지도 모르고 지나가기 쉽습니다. 학교나 일터에서 문제가 생겼을 때 무엇을 요구할 수 있는지 미리 알아 두면 다르게 대응할 수 있습니다.",
+        "en": "Rights are easy to miss if no one explains them. Knowing in advance what you can ask for at school or at work changes what you can do when something goes wrong.",
+        "zh": "权利如果没人讲解，很容易就这样错过。事先知道在学校或职场可以要求什么，遇到问题时就能有不同的应对。",
+        "vi": "Nếu không ai giải thích, bạn rất dễ bỏ qua quyền của mình. Biết trước mình có thể yêu cầu gì ở trường hay nơi làm việc sẽ giúp bạn xử lý khác đi khi có chuyện."
+      },
+      "helps": {
+        "ko": "내 상황에서 무엇을 확인하고 어디에 물어볼지 스스로 찾아보는 연습을 합니다. 워크숍에서 나온 질문은 이 사이트의 권리정보로 정리합니다.",
+        "en": "You practise working out what to check and whom to ask in your own situation. The questions raised become rights information on this site.",
+        "zh": "一起练习在自己的情况下要确认什么、该问谁。工作坊里出现的问题会整理成本网站的权利信息。",
+        "vi": "Bạn thực hành tự tìm ra cần kiểm tra gì và hỏi ai trong tình huống của mình. Những câu hỏi nảy sinh sẽ được tổng hợp thành thông tin quyền trên trang này."
       }
     },
     {
       "id": "mentoring",
       "image": "",
       "status": "published",
-      "tag": { "ko": "멘토링", "en": "Mentoring", "zh": "导师计划", "vi": "Cố vấn" },
+      "tag": {
+        "ko": "멘토링",
+        "en": "Mentoring",
+        "zh": "导师计划",
+        "vi": "Cố vấn"
+      },
       "title": {
         "ko": "대학생 멘토와 함께",
         "en": "With a university mentor",
@@ -33,17 +55,34 @@
         "vi": "Cùng cố vấn sinh viên"
       },
       "body": {
-        "ko": "가까운 나이의 대학생 멘토가 공부, 진학, 진로 고민을 함께 나눕니다. 정답을 주기보다 선택지를 함께 찾는 시간입니다.",
-        "en": "Mentors close in age talk through study, admissions and career worries: not giving answers, but finding options together.",
-        "zh": "年龄相近的大学生导师一起探讨学习、升学与前途，重在一起寻找选择，而非给出标准答案。",
-        "vi": "Cố vấn là sinh viên cùng trao đổi về học tập, tuyển sinh và nghề nghiệp: cùng tìm lựa chọn thay vì đưa ra đáp án."
+        "ko": "가까운 나이의 대학생 멘토가 공부, 진학, 진로뿐 아니라 발표, 친구 관계 같은 일상의 고민까지 함께 이야기합니다. 정답을 주기보다 선택지를 함께 찾는 시간입니다.",
+        "en": "Mentors close in age talk through study, admissions and career questions, and also everyday worries such as presentations or friendships. Not giving answers, but finding options together.",
+        "zh": "年龄相近的大学生导师一起聊学习、升学、出路，也聊发表、朋友关系这些日常的烦恼。不是给标准答案，而是一起找出选择。",
+        "vi": "Các anh chị sinh viên gần tuổi cùng trò chuyện về học tập, thi cử, hướng đi, và cả những lo lắng thường ngày như thuyết trình hay quan hệ bạn bè. Không đưa ra đáp án, mà cùng tìm lựa chọn."
+      },
+      "why": {
+        "ko": "궁금한 것이 생겨도 물어볼 사람을 찾기 어렵다는 이야기를 자주 들었습니다. 기관에 묻기에는 작아 보이는 고민일수록 먼저 겪어 본 사람의 이야기가 도움이 됩니다.",
+        "en": "We often heard that there is no one to ask. For worries that feel too small to take to an organisation, hearing from someone who has been there helps.",
+        "zh": "我们常听到“不知道该问谁”。越是觉得“这种小事不好意思去问机构”的烦恼，越需要有过同样经历的人的经验。",
+        "vi": "Chúng tôi thường nghe rằng không biết hỏi ai. Với những lo lắng có vẻ quá nhỏ để hỏi một cơ quan, kinh nghiệm của người từng trải sẽ giúp ích."
+      },
+      "helps": {
+        "ko": "혼자 정하기 어려운 일을 이야기하면서 선택지를 정리합니다. 필요하면 관련 권리정보나 도움받을 곳으로 이어 줍니다.",
+        "en": "Talking it through helps you lay out your options. When it helps, we point to the related rights information or places to get help.",
+        "zh": "把难以独自决定的事说出来，一起把选择整理清楚。需要时会连接到相关的权利信息或可以求助的机构。",
+        "vi": "Nói ra điều khó tự quyết định giúp bạn sắp xếp các lựa chọn. Khi cần, chúng tôi chỉ tới thông tin quyền hoặc nơi có thể giúp."
       }
     },
     {
       "id": "culture",
       "image": "",
       "status": "published",
-      "tag": { "ko": "생활·문화", "en": "Culture & life", "zh": "生活·文化", "vi": "Văn hóa & đời sống" },
+      "tag": {
+        "ko": "생활·문화",
+        "en": "Culture & life",
+        "zh": "生活·文化",
+        "vi": "Văn hóa & đời sống"
+      },
       "title": {
         "ko": "함께 경험하는 한국생활",
         "en": "Experiencing Korea together",
@@ -55,13 +94,30 @@
         "en": "Museums, performances and neighbourhood trips: shared activities that build practical knowledge and friendships.",
         "zh": "通过博物馆、演出、社区探访等共同活动，自然地积累生活信息与人际关系。",
         "vi": "Bảo tàng, biểu diễn, khám phá khu phố: hoạt động chung giúp tích lũy kiến thức và kết nối bạn bè."
+      },
+      "why": {
+        "ko": "한국생활에 필요한 정보는 설명을 듣는 것보다 직접 해 볼 때 더 오래 남습니다. 함께 다니면 그 자리에서 궁금한 것을 물어볼 수 있습니다.",
+        "en": "What you need for daily life in Korea sticks better when you do it, not just hear about it. Going together means you can ask right when a question comes up.",
+        "zh": "在韩国生活需要的信息，亲自做过比只听讲解记得更久。一起行动时，有疑问可以当场就问。",
+        "vi": "Những điều cần cho cuộc sống ở Hàn Quốc sẽ nhớ lâu hơn khi bạn tự làm, chứ không chỉ nghe kể. Đi cùng nhau thì thắc mắc nào cũng hỏi được ngay lúc đó."
+      },
+      "helps": {
+        "ko": "교통, 예약, 시설 이용처럼 바로 쓰는 것을 익히고, 같은 고민을 하는 친구를 만날 수 있습니다.",
+        "en": "You practise everyday things such as transport, bookings and using public facilities, and meet others with the same questions.",
+        "zh": "练习交通、预约、使用设施这些马上用得到的事，也能认识有同样困惑的朋友。",
+        "vi": "Bạn làm quen với những việc dùng ngay như đi lại, đặt lịch, sử dụng cơ sở công cộng, và gặp những bạn có cùng thắc mắc."
       }
     },
     {
       "id": "info-platform",
       "image": "",
       "status": "published",
-      "tag": { "ko": "정보 플랫폼", "en": "Information platform", "zh": "信息平台", "vi": "Nền tảng thông tin" },
+      "tag": {
+        "ko": "정보 플랫폼",
+        "en": "Information platform",
+        "zh": "信息平台",
+        "vi": "Nền tảng thông tin"
+      },
       "title": {
         "ko": "이 웹사이트, LINKRIGHTS",
         "en": "This website, LINKRIGHTS",
@@ -73,6 +129,18 @@
         "en": "Questions raised in our programmes are turned into rights information and published here so anyone can come back to them.",
         "zh": "把项目中出现的问题整理成权利信息，做成这个随时可以回来查看的网站。",
         "vi": "Những câu hỏi từ chương trình được biên soạn thành thông tin quyền và đăng tại đây để ai cũng có thể xem lại."
+      },
+      "why": {
+        "ko": "프로그램에서 나온 질문은 한 번 답하고 끝나면 다음 사람에게 남지 않습니다. 같은 질문을 언제든 다시 찾을 수 있는 곳이 필요했습니다.",
+        "en": "A question answered once in a workshop does not reach the next person. We needed a place where the same question can be looked up again at any time.",
+        "zh": "在活动中回答一次的问题，不会留给下一个人。我们需要一个随时都能再查到同样问题的地方。",
+        "vi": "Một câu hỏi chỉ được trả lời một lần trong buổi sinh hoạt sẽ không đến được người tiếp theo. Cần một nơi để lúc nào cũng tra lại được câu hỏi đó."
+      },
+      "helps": {
+        "ko": "검토한 권리정보와 등록된 도움받을 곳을 언제든 다시 볼 수 있습니다. 필요하면 AI에게 내 상황을 설명하고 관련 정보를 찾을 수 있습니다.",
+        "en": "Reviewed rights information and registered places to get help are always available. You can also describe your situation to the AI and find related information.",
+        "zh": "经过检查的权利信息和已登记的求助机构随时可以再看。也可以向 AI 说明自己的情况，找到相关信息。",
+        "vi": "Thông tin quyền đã được kiểm tra và nơi có thể giúp đã đăng ký luôn xem lại được. Bạn cũng có thể mô tả tình huống cho AI để tìm thông tin liên quan."
       }
     }
   ],

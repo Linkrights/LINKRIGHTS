@@ -17,7 +17,7 @@ import { CallScript } from '@/components/CallScript';
 import { OrgDirectory, type DirectoryItem } from '@/components/OrgDirectory';
 import { PageHeader } from '@/components/Section';
 import { getArticles, getOrganizations, getSearchSynonyms } from '@/lib/content';
-import { LOCALES, getMessages, pick, toLocale } from '@/lib/i18n';
+import { LOCALES, formatDate, getMessages, pick, toLocale } from '@/lib/i18n';
 import { REGIONS, organizationArea, regionName } from '@/lib/regions';
 import { ORG_TOPICS, isOrgTopic } from '@/lib/topics';
 import type { Locale, LocalizedText, Organization } from '@/lib/types';
@@ -48,6 +48,12 @@ export default async function OrganizationsPage({ params }: { params: Promise<{ 
   const t = getMessages(locale);
   const organizations = getOrganizations();
   const articles = getArticles();
+  // 이 목록을 마지막으로 확인한 날: 등록된 기관들의 검토일 중 가장 최근 날짜 (기관 정보를 고치면 함께 바뀝니다)
+  const listReviewedAt = organizations
+    .map((org) => org.reviewed_at)
+    .filter(Boolean)
+    .sort()
+    .at(-1) ?? '';
 
   /** 이 화면 언어의 문구 하나만 남깁니다. (카드는 이 문구만 씁니다. 번역이 없으면 한국어) */
   function trim(text: Partial<Record<Locale, string>> | undefined): LocalizedText | undefined {
@@ -168,7 +174,12 @@ export default async function OrganizationsPage({ params }: { params: Promise<{ 
 
   return (
     <>
-      <PageHeader title={t.organizations.title} subtitle={t.organizations.subtitle} />
+      <PageHeader title={t.organizations.title} subtitle={t.organizations.subtitle}>
+        {/* 이 목록을 마지막으로 확인한 날: 등록된 기관 자료의 검토일 중 가장 최근 날짜를 그대로 보여줍니다. */}
+        <p className="mb-3 text-sm text-ink-500">
+          {t.orgInfo.updatedLabel} {formatDate(listReviewedAt, locale)}
+        </p>
+      </PageHeader>
 
       <OrgDirectory
         locale={locale}

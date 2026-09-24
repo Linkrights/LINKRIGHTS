@@ -218,6 +218,22 @@ export const getEmergencyConfig = cache((): EmergencyConfig => readJson<Emergenc
 
 export const getPrograms = cache((): ProgramsFile => readJson<ProgramsFile>('programs.json'));
 
+/**
+ * 등록된 자료의 검토일 중 가장 최근 날짜입니다. (권리정보·기관·체크리스트·프로그램·소개 글)
+ * 화면의 "마지막 업데이트"에 씁니다. 날짜를 따로 적어 두는 것이 아니라 자료에서 계산하므로,
+ * 기관 정보를 고치면서 그 기관의 reviewed_at 을 갱신하면 화면의 날짜도 함께 바뀝니다.
+ */
+export const lastReviewedAt = cache((): string => {
+  const dates = [
+    ...getArticles().map((article) => article.reviewed_at),
+    ...getOrganizations().map((org) => org.reviewed_at),
+    ...getChecklists().map((checklist) => checklist.reviewed_at),
+    getPrograms().reviewed_at,
+    getAbout().reviewed_at,
+  ].filter((date): date is string => Boolean(date));
+  return dates.sort().at(-1) ?? '';
+});
+
 export const getFaq = cache((): FaqFile => readJson<FaqFile>('faq.json'));
 
 export const getAbout = cache((): AboutFile => readJson<AboutFile>('about.json'));
