@@ -652,7 +652,8 @@
     "pageSubtitle": "위험한 상황이라면 이 페이지의 번호로 바로 연락하세요.",
     "callLabel": "전화 걸기",
     "officialSite": "공식 사이트",
-    "officialSiteHint": "PC에서는 전화 대신 공식 사이트에서 안내를 볼 수 있어요."
+    "officialSiteHint": "PC에서는 전화 대신 위의 공식 사이트에서 신고하거나 안내를 볼 수 있어요. 전화는 휴대폰에서 눌러 주세요.",
+    "reportSite": "온라인 신고·상담하기"
   },
   "about": {
     "whyYouthNav": "왜 이주배경청소년인가요?",

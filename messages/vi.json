@@ -682,7 +682,8 @@
     "pageSubtitle": "Nếu đang gặp nguy hiểm, hãy gọi ngay một trong các số trên trang này.",
     "callLabel": "Gọi điện",
     "officialSite": "Trang web chính thức",
-    "officialSiteHint": "Trên máy tính, bạn có thể mở trang web chính thức thay vì gọi điện."
+    "officialSiteHint": "Trên máy tính, hãy dùng trang chính thức ở trên để báo cáo hoặc xem hướng dẫn. Trên điện thoại, chạm vào số để gọi.",
+    "reportSite": "Báo cáo · tư vấn trực tuyến"
   },
   "about": {
     "whyYouthNav": "Vì sao là thanh thiếu niên có nền tảng di trú?",

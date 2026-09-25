@@ -682,7 +682,8 @@
     "pageSubtitle": "If you are in danger, call one of these numbers straight away.",
     "callLabel": "Call",
     "officialSite": "Official website",
-    "officialSiteHint": "On a computer, you can open the official website instead of calling."
+    "officialSiteHint": "On a computer, use the official site above to report or read the guidance. Tap the number on a phone to call.",
+    "reportSite": "Report or get help online"
   },
   "about": {
     "whyYouthNav": "Why migrant-background youth?",

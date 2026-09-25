@@ -17,10 +17,23 @@
     },
     "phone": "112",
     "website": "https://www.police.go.kr",
-    "languages": ["ko", "en", "zh", "vi", "other"],
+    "languages": [
+      "ko",
+      "en",
+      "zh",
+      "vi",
+      "other"
+    ],
     "region": "전국",
-    "topics": ["safety"],
-    "hours": { "ko": "24시간", "en": "24 hours", "zh": "24小时", "vi": "24 giờ" },
+    "topics": [
+      "safety"
+    ],
+    "hours": {
+      "ko": "24시간",
+      "en": "24 hours",
+      "zh": "24小时",
+      "vi": "24 giờ"
+    },
     "status": "published",
     "owner": "운영팀",
     "reviewed_at": "2026-09-06",
@@ -44,10 +57,24 @@
     },
     "phone": "119",
     "website": "https://www.nfa.go.kr",
-    "languages": ["ko", "en", "zh", "vi", "other"],
+    "languages": [
+      "ko",
+      "en",
+      "zh",
+      "vi",
+      "other"
+    ],
     "region": "전국",
-    "topics": ["safety", "health"],
-    "hours": { "ko": "24시간", "en": "24 hours", "zh": "24小时", "vi": "24 giờ" },
+    "topics": [
+      "safety",
+      "health"
+    ],
+    "hours": {
+      "ko": "24시간",
+      "en": "24 hours",
+      "zh": "24小时",
+      "vi": "24 giờ"
+    },
     "status": "published",
     "owner": "운영팀",
     "reviewed_at": "2026-09-06",
@@ -71,14 +98,26 @@
     },
     "phone": "1388",
     "website": "https://www.kyci.or.kr",
-    "languages": ["ko"],
+    "languages": [
+      "ko"
+    ],
     "region": "전국",
-    "topics": ["mental", "safety", "education"],
-    "hours": { "ko": "24시간", "en": "24 hours", "zh": "24小时", "vi": "24 giờ" },
+    "topics": [
+      "mental",
+      "safety",
+      "education"
+    ],
+    "hours": {
+      "ko": "24시간",
+      "en": "24 hours",
+      "zh": "24小时",
+      "vi": "24 giờ"
+    },
     "status": "published",
     "owner": "운영팀",
-    "reviewed_at": "2026-09-06",
-    "source_url": "https://www.kyci.or.kr"
+    "reviewed_at": "2026-09-24",
+    "source_url": "https://www.kyci.or.kr",
+    "report_url": "https://www.1388.go.kr"
   },
   {
     "id": "cyber1388",
@@ -97,14 +136,18 @@
       "vi": "Tư vấn trực tuyến qua chat, tin nhắn hoặc diễn đàn nếu bạn ngại gọi điện."
     },
     "phone": "1388",
-    "website": "https://www.cyber1388.kr",
-    "languages": ["ko"],
+    "website": "https://www.1388.go.kr",
+    "languages": [
+      "ko"
+    ],
     "region": "전국",
-    "topics": ["mental"],
+    "topics": [
+      "mental"
+    ],
     "status": "published",
     "owner": "운영팀",
-    "reviewed_at": "2026-09-06",
-    "source_url": "https://www.cyber1388.kr"
+    "reviewed_at": "2026-09-24",
+    "source_url": "https://www.1388.go.kr"
   },
   {
     "id": "women-1366",
@@ -124,14 +167,25 @@
     },
     "phone": "1366",
     "website": "https://www.women1366.kr",
-    "languages": ["ko"],
+    "languages": [
+      "ko"
+    ],
     "region": "전국",
-    "topics": ["safety", "family"],
-    "hours": { "ko": "24시간", "en": "24 hours", "zh": "24小时", "vi": "24 giờ" },
+    "topics": [
+      "safety",
+      "family"
+    ],
+    "hours": {
+      "ko": "24시간",
+      "en": "24 hours",
+      "zh": "24小时",
+      "vi": "24 giờ"
+    },
     "status": "published",
     "owner": "운영팀",
-    "reviewed_at": "2026-09-06",
-    "source_url": "https://www.women1366.kr"
+    "reviewed_at": "2026-09-24",
+    "source_url": "https://www.women1366.kr",
+    "report_url": "https://www.women1366.kr"
   },
   {
     "id": "danuri-1577-1366",
@@ -151,10 +205,24 @@
     },
     "phone": "1577-1366",
     "website": "https://www.liveinkorea.kr",
-    "languages": ["ko", "en", "zh", "vi", "other"],
+    "languages": [
+      "ko",
+      "en",
+      "zh",
+      "vi",
+      "other"
+    ],
     "region": "전국",
-    "topics": ["family", "safety"],
-    "hours": { "ko": "24시간", "en": "24 hours", "zh": "24小时", "vi": "24 giờ" },
+    "topics": [
+      "family",
+      "safety"
+    ],
+    "hours": {
+      "ko": "24시간",
+      "en": "24 hours",
+      "zh": "24小时",
+      "vi": "24 giờ"
+    },
     "status": "published",
     "owner": "운영팀",
     "reviewed_at": "2026-09-06",
@@ -178,10 +246,20 @@
     },
     "phone": "117",
     "website": "https://www.safe182.go.kr",
-    "languages": ["ko"],
+    "languages": [
+      "ko"
+    ],
     "region": "전국",
-    "topics": ["safety", "education"],
-    "hours": { "ko": "24시간", "en": "24 hours", "zh": "24小时", "vi": "24 giờ" },
+    "topics": [
+      "safety",
+      "education"
+    ],
+    "hours": {
+      "ko": "24시간",
+      "en": "24 hours",
+      "zh": "24小时",
+      "vi": "24 giờ"
+    },
     "status": "published",
     "owner": "운영팀",
     "reviewed_at": "2026-09-06",
@@ -205,10 +283,23 @@
     },
     "phone": "1350",
     "website": "https://www.moel.go.kr",
-    "languages": ["ko", "en", "zh", "vi", "other"],
+    "languages": [
+      "ko",
+      "en",
+      "zh",
+      "vi",
+      "other"
+    ],
     "region": "전국",
-    "topics": ["labor"],
-    "hours": { "ko": "평일 09:00~18:00", "en": "Weekdays 09:00-18:00", "zh": "工作日 09:00~18:00", "vi": "Ngày thường 09:00-18:00" },
+    "topics": [
+      "labor"
+    ],
+    "hours": {
+      "ko": "평일 09:00~18:00",
+      "en": "Weekdays 09:00-18:00",
+      "zh": "工作日 09:00~18:00",
+      "vi": "Ngày thường 09:00-18:00"
+    },
     "status": "published",
     "owner": "운영팀",
     "reviewed_at": "2026-09-06",
@@ -232,10 +323,23 @@
     },
     "phone": "1345",
     "website": "https://www.hikorea.go.kr",
-    "languages": ["ko", "en", "zh", "vi", "other"],
+    "languages": [
+      "ko",
+      "en",
+      "zh",
+      "vi",
+      "other"
+    ],
     "region": "전국",
-    "topics": ["visa"],
-    "hours": { "ko": "평일 09:00~18:00", "en": "Weekdays 09:00-18:00", "zh": "工作日 09:00~18:00", "vi": "Ngày thường 09:00-18:00" },
+    "topics": [
+      "visa"
+    ],
+    "hours": {
+      "ko": "평일 09:00~18:00",
+      "en": "Weekdays 09:00-18:00",
+      "zh": "工作日 09:00~18:00",
+      "vi": "Ngày thường 09:00-18:00"
+    },
     "status": "published",
     "owner": "운영팀",
     "reviewed_at": "2026-09-06",
@@ -259,10 +363,22 @@
     },
     "phone": "1577-1000",
     "website": "https://www.nhis.or.kr",
-    "languages": ["ko", "en", "zh", "vi"],
+    "languages": [
+      "ko",
+      "en",
+      "zh",
+      "vi"
+    ],
     "region": "전국",
-    "topics": ["health"],
-    "hours": { "ko": "평일 09:00~18:00", "en": "Weekdays 09:00-18:00", "zh": "工作日 09:00~18:00", "vi": "Ngày thường 09:00-18:00" },
+    "topics": [
+      "health"
+    ],
+    "hours": {
+      "ko": "평일 09:00~18:00",
+      "en": "Weekdays 09:00-18:00",
+      "zh": "工作日 09:00~18:00",
+      "vi": "Ngày thường 09:00-18:00"
+    },
     "status": "published",
     "owner": "운영팀",
     "reviewed_at": "2026-09-06",
@@ -286,10 +402,20 @@
     },
     "phone": "1331",
     "website": "https://www.humanrights.go.kr",
-    "languages": ["ko", "en"],
+    "languages": [
+      "ko",
+      "en"
+    ],
     "region": "전국",
-    "topics": ["rights"],
-    "hours": { "ko": "평일 09:00~18:00", "en": "Weekdays 09:00-18:00", "zh": "工作日 09:00~18:00", "vi": "Ngày thường 09:00-18:00" },
+    "topics": [
+      "rights"
+    ],
+    "hours": {
+      "ko": "평일 09:00~18:00",
+      "en": "Weekdays 09:00-18:00",
+      "zh": "工作日 09:00~18:00",
+      "vi": "Ngày thường 09:00-18:00"
+    },
     "status": "published",
     "owner": "운영팀",
     "reviewed_at": "2026-09-06",
@@ -313,10 +439,19 @@
     },
     "phone": "132",
     "website": "https://www.klac.or.kr",
-    "languages": ["ko"],
+    "languages": [
+      "ko"
+    ],
     "region": "전국",
-    "topics": ["legal"],
-    "hours": { "ko": "평일 09:00~18:00", "en": "Weekdays 09:00-18:00", "zh": "工作日 09:00~18:00", "vi": "Ngày thường 09:00-18:00" },
+    "topics": [
+      "legal"
+    ],
+    "hours": {
+      "ko": "평일 09:00~18:00",
+      "en": "Weekdays 09:00-18:00",
+      "zh": "工作日 09:00~18:00",
+      "vi": "Ngày thường 09:00-18:00"
+    },
     "status": "published",
     "owner": "운영팀",
     "reviewed_at": "2026-09-06",
@@ -340,10 +475,20 @@
     },
     "phone": "02-733-7587",
     "website": "https://www.rainbowyouth.or.kr",
-    "languages": ["ko"],
+    "languages": [
+      "ko"
+    ],
     "region": "전국",
-    "topics": ["education", "mental"],
-    "hours": { "ko": "평일 09:00~18:00", "en": "Weekdays 09:00-18:00", "zh": "工作日 09:00~18:00", "vi": "Ngày thường 09:00-18:00" },
+    "topics": [
+      "education",
+      "mental"
+    ],
+    "hours": {
+      "ko": "평일 09:00~18:00",
+      "en": "Weekdays 09:00-18:00",
+      "zh": "工作日 09:00~18:00",
+      "vi": "Ngày thường 09:00-18:00"
+    },
     "status": "published",
     "owner": "운영팀",
     "reviewed_at": "2026-09-06",
@@ -367,9 +512,14 @@
     },
     "phone": "",
     "website": "https://www.moe.go.kr",
-    "languages": ["ko", "en"],
+    "languages": [
+      "ko",
+      "en"
+    ],
     "region": "전국",
-    "topics": ["education"],
+    "topics": [
+      "education"
+    ],
     "status": "published",
     "owner": "운영팀",
     "reviewed_at": "2026-09-06",
@@ -393,9 +543,17 @@
     },
     "phone": "110",
     "website": "https://www.epeople.go.kr",
-    "languages": ["ko", "en"],
+    "languages": [
+      "ko",
+      "en"
+    ],
     "region": "전국",
-    "hours": { "ko": "평일 09:00~18:00", "en": "Weekdays 09:00-18:00", "zh": "工作日 09:00~18:00", "vi": "Ngày thường 09:00-18:00" },
+    "hours": {
+      "ko": "평일 09:00~18:00",
+      "en": "Weekdays 09:00-18:00",
+      "zh": "工作日 09:00~18:00",
+      "vi": "Ngày thường 09:00-18:00"
+    },
     "status": "published",
     "owner": "운영팀",
     "reviewed_at": "2026-09-06",
@@ -421,7 +579,10 @@
     "website": "https://www.familynet.or.kr",
     "languages": [],
     "region": "전국",
-    "topics": ["family", "education"],
+    "topics": [
+      "family",
+      "education"
+    ],
     "local_network": true,
     "finder": true,
     "status": "published",
@@ -447,11 +608,26 @@
     },
     "phone": "1577-0071",
     "website": "",
-    "languages": ["ko", "other"],
+    "languages": [
+      "ko",
+      "other"
+    ],
     "region": "전국",
-    "topics": ["labor"],
-    "hours": { "ko": "09:00~18:00", "en": "09:00-18:00", "zh": "09:00~18:00", "vi": "09:00-18:00" },
-    "holidays": { "ko": "연중무휴", "en": "Open every day of the year", "zh": "全年无休", "vi": "Mở cửa quanh năm" },
+    "topics": [
+      "labor"
+    ],
+    "hours": {
+      "ko": "09:00~18:00",
+      "en": "09:00-18:00",
+      "zh": "09:00~18:00",
+      "vi": "09:00-18:00"
+    },
+    "holidays": {
+      "ko": "연중무휴",
+      "en": "Open every day of the year",
+      "zh": "全年无休",
+      "vi": "Mở cửa quanh năm"
+    },
     "status": "published",
     "owner": "운영팀",
     "reviewed_at": "2026-09-16",
@@ -481,7 +657,10 @@
     "owner": "운영팀",
     "reviewed_at": "2026-09-21",
     "source_url": "https://www.gov.kr/portal/rcvfvrSvc/dtlEx/149200000040",
-    "topics": ["labor", "education"]
+    "topics": [
+      "labor",
+      "education"
+    ]
   },
   {
     "id": "wmigrant-counseling",
@@ -501,10 +680,24 @@
     },
     "phone": "02-3672-7559",
     "website": "http://www.wmigrant.org",
-    "languages": ["en", "zh", "vi", "other"],
+    "languages": [
+      "en",
+      "zh",
+      "vi",
+      "other"
+    ],
     "region": "서울",
-    "topics": ["family", "safety", "rights"],
-    "hours": { "ko": "평일 09:00~18:00", "en": "Weekdays 09:00-18:00", "zh": "工作日 09:00~18:00", "vi": "Ngày thường 09:00-18:00" },
+    "topics": [
+      "family",
+      "safety",
+      "rights"
+    ],
+    "hours": {
+      "ko": "평일 09:00~18:00",
+      "en": "Weekdays 09:00-18:00",
+      "zh": "工作日 09:00~18:00",
+      "vi": "Ngày thường 09:00-18:00"
+    },
     "status": "published",
     "owner": "운영팀",
     "reviewed_at": "2026-09-16",
@@ -530,9 +723,17 @@
     "website": "https://lawhomedoctor.moj.go.kr",
     "languages": [],
     "region": "전국",
-    "topics": ["legal", "labor"],
+    "topics": [
+      "legal",
+      "labor"
+    ],
     "finder": true,
-    "hours": { "ko": "평일 10:00~17:00", "en": "Weekdays 10:00-17:00", "zh": "工作日 10:00~17:00", "vi": "Ngày thường 10:00-17:00" },
+    "hours": {
+      "ko": "평일 10:00~17:00",
+      "en": "Weekdays 10:00-17:00",
+      "zh": "工作日 10:00~17:00",
+      "vi": "Ngày thường 10:00-17:00"
+    },
     "status": "published",
     "owner": "운영팀",
     "reviewed_at": "2026-09-16",
@@ -555,14 +756,21 @@
       "vi": "Bạn có thể gọi bất cứ lúc nào, 24 giờ, khi thấy quá khó khăn. Cuộc gọi miễn phí, và cũng có tư vấn qua mạng xã hội (Madeullaen). Từ tháng 1/2024, đường dây 1393 cũ đã được gộp vào 109. (Bộ Y tế và Phúc lợi, Quỹ Tôn trọng Sự sống Hàn Quốc)"
     },
     "phone": "109",
-    "website": "",
+    "website": "https://www.129.go.kr/109",
     "languages": [],
     "region": "전국",
-    "topics": ["mental"],
-    "hours": { "ko": "24시간", "en": "24 hours", "zh": "24小时", "vi": "24 giờ" },
+    "topics": [
+      "mental"
+    ],
+    "hours": {
+      "ko": "24시간",
+      "en": "24 hours",
+      "zh": "24小时",
+      "vi": "24 giờ"
+    },
     "status": "published",
     "owner": "운영팀",
-    "reviewed_at": "2026-09-16",
+    "reviewed_at": "2026-09-24",
     "source_url": "https://www.mohw.go.kr/board.es?mid=a10503010100&bid=0027&act=view&list_no=1479607"
   },
   {
@@ -585,8 +793,15 @@
     "website": "",
     "languages": [],
     "region": "전국",
-    "topics": ["mental"],
-    "hours": { "ko": "24시간", "en": "24 hours", "zh": "24小时", "vi": "24 giờ" },
+    "topics": [
+      "mental"
+    ],
+    "hours": {
+      "ko": "24시간",
+      "en": "24 hours",
+      "zh": "24小时",
+      "vi": "24 giờ"
+    },
     "status": "published",
     "owner": "운영팀",
     "reviewed_at": "2026-09-16",
@@ -610,9 +825,15 @@
     },
     "phone": "02-2229-4900",
     "website": "https://global.seoul.go.kr",
-    "languages": ["ko", "en", "zh"],
+    "languages": [
+      "ko",
+      "en",
+      "zh"
+    ],
     "region": "서울",
-    "topics": ["mental"],
+    "topics": [
+      "mental"
+    ],
     "address": {
       "ko": "서울 영등포구 대림동",
       "en": "Daerim-dong, Yeongdeungpo-gu, Seoul",
@@ -650,8 +871,15 @@
     },
     "languages": [],
     "region": "서울",
-    "keywords": ["대림동", "영등포"],
-    "topics": ["legal", "visa", "rights"],
+    "keywords": [
+      "대림동",
+      "영등포"
+    ],
+    "topics": [
+      "legal",
+      "visa",
+      "rights"
+    ],
     "status": "published",
     "owner": "운영팀",
     "reviewed_at": "2026-09-21",

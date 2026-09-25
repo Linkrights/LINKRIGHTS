@@ -65,14 +65,19 @@ export function EmergencyCard({
                   <span className="shrink-0 text-sm font-bold text-[var(--color-danger-700)]">{t.emergency.callLabel}</span>
                 </a>
                 {site && (
-                  // 긴급 상황에서는 새 창을 강제로 열지 않고 같은 창에서 공식 사이트로 이동합니다. (뒤로 가기로 돌아올 수 있게)
+                  // 긴급 상황에서는 새 창을 강제로 열지 않고 같은 창에서 이동합니다. (뒤로 가기로 돌아올 수 있게)
+                  // 마우스를 쓰는 화면(PC)에서는 전화를 걸기 어려우므로 이 링크를 번호 위에 먼저 보여줍니다.
                   <a
                     href={site}
                     rel="noopener noreferrer"
-                    aria-label={`${name} ${t.emergency.officialSite}`}
-                    className="flex items-center gap-1.5 border-t border-[var(--color-danger-200)] px-4 py-2 text-[13px] font-semibold text-ink-700 hover:text-[var(--color-danger-700)]"
+                    aria-label={`${name} ${org.report_url ? t.emergency.reportSite : t.emergency.officialSite}`}
+                    className="flex items-center justify-between gap-2 border-t border-[var(--color-danger-200)] px-4 py-2.5 text-sm font-bold text-[var(--color-danger-700)] hover:bg-[var(--color-danger-50)] [@media(pointer:fine)]:order-first [@media(pointer:fine)]:border-b [@media(pointer:fine)]:border-t-0"
                   >
-                    <Icon name="external" size={14} className="shrink-0" /> {t.emergency.officialSite}
+                    <span className="inline-flex min-w-0 items-center gap-1.5">
+                      <Icon name="external" size={15} className="shrink-0" />{' '}
+                      <span className="min-w-0">{org.report_url ? t.emergency.reportSite : t.emergency.officialSite}</span>
+                    </span>
+                    <Icon name="arrow-right" size={15} className="shrink-0" />
                   </a>
                 )}
               </li>

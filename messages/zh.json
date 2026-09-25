@@ -682,7 +682,8 @@
     "pageSubtitle": "如果处于危险中，请立即拨打本页的电话。",
     "callLabel": "拨打电话",
     "officialSite": "官方网站",
-    "officialSiteHint": "在电脑上可以打开官方网站查看说明，代替拨打电话。"
+    "officialSiteHint": "在电脑上可以通过上方的官方网站申报或查看指南。用手机点击号码即可拨打。",
+    "reportSite": "在线申报·咨询"
   },
   "about": {
     "whyYouthNav": "为什么关注移民背景青少年？",

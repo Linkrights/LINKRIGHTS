@@ -203,7 +203,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-500 sm:text-[17px]">{t.homeFind.subtitle}</p>
 
           {/* ① 내 상황 알아보기 */}
-          <div id="home-step-1" className="mt-10 scroll-mt-24">
+          <div id="home-step-1" className="mt-8 scroll-mt-24">
             <h3 className={stepTitle}>
               <span className={stepNumber}>1</span> {t.homeFind.flow[0]}
             </h3>
@@ -233,44 +233,52 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </div>
           </div>
 
-          {/* ② 내 권리 확인하기 */}
-          <div id="home-step-2" className="mt-10 scroll-mt-24">
+          {/* ② 내 권리 확인하기: 분야를 고르면 그 분야의 권리정보로 갑니다. (전체 목록·체크리스트는 아래 링크로) */}
+          <div id="home-step-2" className="mt-8 scroll-mt-24">
             <h3 className={stepTitle}>
               <span className={stepNumber}>2</span> {t.homeFind.flow[1]}
             </h3>
-            <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-              {checkPoints.map((item, index) => (
-                <Reveal
-                  key={item.key}
-                  index={index}
-                  className="lr-card lr-card-hover group relative flex items-start gap-4 p-5 sm:p-6"
-                >
-                  <span className="lr-icon-badge h-12 w-12">
-                    <Icon name={item.icon} size={24} />
-                  </span>{' '}
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-lg font-extrabold leading-snug text-ink-900 group-hover:text-brand-800">
-                      <Link
-                        href={item.href}
-                        className="after:absolute after:inset-0 after:rounded-[var(--radius-card)] after:content-['']"
-                      >
-                        {item.title}
-                      </Link>
-                    </span>{' '}
-                    <span className="mt-1 block text-[15px] leading-relaxed text-ink-500">{item.body}</span>
-                  </span>
-                  <Icon
-                    name="arrow-right"
-                    size={20}
-                    className="mt-3 shrink-0 text-ink-300 transition-transform group-hover:translate-x-1 group-hover:text-brand-600"
-                  />
-                </Reveal>
+            {/* "도움받을 곳"은 아래 ③단계에서 지역으로 찾으므로 여기 목록에서는 뺍니다. */}
+            <ul className="mt-4 grid border-t border-[var(--color-line)] sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-3">
+              {categories
+                .filter((category) => category.kind !== 'directory')
+                .map((category) => (
+                <li key={category.id} className="border-b border-[var(--color-line)]">
+                  <Link
+                    href={`/${locale}/rights/${category.id}`}
+                    className="group flex items-center gap-4 py-4"
+                  >
+                    <Icon name={category.icon as IconName} size={22} className="shrink-0 text-brand-600" />
+                    <span className="min-w-0 flex-1">
+                      <span className="block font-bold text-ink-900 group-hover:text-brand-700">
+                        {pick(category.name, locale)}
+                      </span>{' '}
+                      <span className="mt-0.5 block text-sm leading-snug text-ink-500">{pick(category.tagline, locale)}</span>
+                    </span>
+                    <Icon
+                      name="arrow-right"
+                      size={18}
+                      className="shrink-0 text-ink-300 transition-transform group-hover:translate-x-1 group-hover:text-brand-600"
+                    />
+                  </Link>
+                </li>
               ))}
             </ul>
+            <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+              {checkPoints.map((item) => (
+                <Link
+                  key={item.key}
+                  href={item.href}
+                  className="lr-link inline-flex items-center gap-1.5 text-[15px] font-semibold"
+                >
+                  <Icon name={item.icon} size={16} /> {item.title}
+                </Link>
+              ))}
+            </div>
           </div>
 
           {/* ③ 필요하면 도움받을 곳 찾기: 일반 상담(지역 선택)과 긴급 상황을 나눠서 */}
-          <div id="home-step-3" className="mt-10 scroll-mt-24">
+          <div id="home-step-3" className="mt-8 scroll-mt-24">
             <h3 className={stepTitle}>
               <span className={stepNumber}>3</span> {t.homeFind.flow[2]}
             </h3>
@@ -348,35 +356,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
-      {/* 5. 어떤 상황에 있나요?: 분야를 큰 글씨 목록으로 ----------------- */}
-      <Section title={t.homeBrand.situationTitle} subtitle={t.home.browseSubtitle}>
-        <ul className="grid border-t border-[var(--color-line)] sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-3">
-          {categories.map((category) => (
-            <li key={category.id} className="border-b border-[var(--color-line)]">
-              <Link
-                href={category.kind === 'directory' ? `/${locale}/organizations` : `/${locale}/rights/${category.id}`}
-                className="group flex items-center gap-4 py-5"
-              >
-                <Icon name={category.icon as IconName} size={24} className="shrink-0 text-brand-600" />
-                <span className="min-w-0 flex-1">
-                  <span className="block text-lg font-bold text-ink-900 group-hover:text-brand-700">
-                    {pick(category.name, locale)}
-                  </span>{' '}
-                  <span className="mt-0.5 block text-[15px] leading-snug text-ink-500">{pick(category.tagline, locale)}</span>
-                </span>
-                <Icon
-                  name="arrow-right"
-                  size={18}
-                  className="shrink-0 text-ink-300 transition-transform group-hover:translate-x-1 group-hover:text-brand-600"
-                />
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-      </Section>
-
-      {/* 6. 내 상황을 말해 보세요: 무엇을 얻을 수 있는지 함께 보여줍니다 (AI는 권리를 알아가는 도구) */}
+      {/* 4. 내 상황을 말해 보세요: 무엇을 얻을 수 있는지 함께 보여줍니다 (AI는 권리를 알아가는 도구) */}
       <Section tone="soft" title={t.homeBrand.askTitle} subtitle={t.homeAsk.subtitle}>
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-7">
@@ -401,7 +381,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </Section>
 
-      {/* 7. 최근에 새로 만들거나 검토한 것 ------------------------------
+      {/* 5. 최근에 새로 만들거나 검토한 것 ------------------------------
           큰 숫자로 규모를 보여주는 대신, 등록 자료의 실제 날짜로 "지금도 손보고 있다"를 보여줍니다. */}
       {updates.length > 0 && (
         <section aria-labelledby="updates-title" className="bg-navy-900 text-white">
@@ -462,7 +442,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       {/* 7-1. 실제 참여자 후기: content/testimonials.json 에 공개 동의를 받아 등록한 후기가 있을 때만 */}
       <Testimonials items={getTestimonials()} t={t} locale={locale} />
 
-      {/* 8. 많이 찾는 권리정보 -------------------------------------- */}
+      {/* 6. 많이 찾는 권리정보 -------------------------------------- */}
       <Section title={t.home.featuredTitle} subtitle={t.home.featuredSubtitle} action={viewAll(`/${locale}/rights`)}>
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((article, index) => (
@@ -473,7 +453,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </ul>
       </Section>
 
-      {/* 9. 체크해보기: 상황별 체크리스트 (content/checklists) ---------- */}
+      {/* 7. 체크해보기: 상황별 체크리스트 (content/checklists) ---------- */}
       {checklists.length > 0 && (
         <Section
           tone="soft"
@@ -512,7 +492,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </Section>
       )}
 
-      {/* 11. 자주 묻는 질문 + 질문 게시판 ----------------------------- */}
+      {/* 8. 자주 묻는 질문 + 질문 게시판 ----------------------------- */}
       <Section tone="soft" title={t.home.faqTitle} action={viewAll(`/${locale}/faq`)}>
         <ul className="lr-card divide-y divide-[var(--color-line)] overflow-hidden">
           {faq.map((item) => (
