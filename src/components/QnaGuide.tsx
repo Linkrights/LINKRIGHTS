@@ -1,25 +1,15 @@
 // 질문을 어떻게 적으면 좋은지 알려주는 안내입니다. (게시판 목록과 상세 화면에서 함께 씁니다)
 //
-// 질문은 사이트에 바로 저장되지 않고 이메일로 운영팀에 전달됩니다.
-// 그래서 "무엇을 적으면 되는지", "무엇을 적으면 안 되는지"를 버튼 옆에서 먼저 보여줍니다.
+// "무엇을 적으면 되는지", "무엇을 적으면 안 되는지"를 먼저 보여주고, 바로 아래에서 질문을 보낼 수 있습니다.
+// (메일 앱이 없어도 보낼 수 있게, 예전의 메일 쓰기 버튼 대신 입력칸을 둡니다. 메일 주소도 함께 안내합니다)
 
 import { Icon } from './Icon';
+import { SubmitBox } from './SubmitBox';
 import { getMessages, type Locale } from '@/lib/i18n';
 
-export function QnaGuide({
-  locale,
-  contactEmail,
-  className = '',
-}: {
-  locale: Locale;
-  contactEmail: string;
-  className?: string;
-}) {
+export function QnaGuide({ locale, className = '' }: { locale: Locale; className?: string }) {
   const t = getMessages(locale);
   const a = t.qna;
-  const mailto = `mailto:${contactEmail}?subject=${encodeURIComponent(a.mailSubject)}&body=${encodeURIComponent(
-    a.mailBody,
-  )}`;
 
   return (
     <section className={`lr-card p-5 sm:p-6 ${className}`}>
@@ -45,11 +35,13 @@ export function QnaGuide({
         </div>
       </div>
 
-      <div className="mt-5 flex flex-col items-start gap-2">
-        <a href={mailto} className="lr-btn lr-btn-primary lr-press">
-          {a.sendCta} <Icon name="arrow-right" size={18} />
-        </a>
-        <p className="text-[13px] leading-relaxed text-ink-500">{a.sendNote.replace('{email}', contactEmail)}</p>
+      {/* 질문 보내기: 사이트에서 바로 보냅니다. (운영팀이 확인하기 전까지 게시판에 보이지 않습니다) */}
+      <div className="mt-6 border-t border-[var(--color-line)] pt-5">
+        <h3 className="text-[15px] font-bold text-ink-900">{t.forms.questionTitle}</h3>
+        <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{t.forms.questionNote}</p>
+        <div className="mt-4">
+          <SubmitBox locale={locale} kind="question" />
+        </div>
       </div>
     </section>
   );

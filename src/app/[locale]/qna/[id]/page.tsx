@@ -11,7 +11,7 @@ import { Icon } from '@/components/Icon';
 import { OrgCard } from '@/components/OrgCard';
 import { QnaGuide } from '@/components/QnaGuide';
 import { Notice } from '@/components/Section';
-import { getArticle, getCategory, getQnaPost, getQnaPosts, getSite, resolveOrganizations } from '@/lib/content';
+import { getArticle, getCategory, getQnaPost, getQnaPosts, resolveOrganizations } from '@/lib/content';
 import { LOCALES, formatDate, getMessages, isFallback, pick, toLocale } from '@/lib/i18n';
 import type { RightsArticle } from '@/lib/types';
 
@@ -58,7 +58,6 @@ export default async function QnaPostPage({ params }: { params: Promise<{ locale
   if (!post) notFound();
 
   const t = getMessages(locale);
-  const site = getSite();
   const category = post.category ? getCategory(post.category) : undefined;
   const articles = (post.articles ?? []).map((articleId) => getArticle(articleId)).filter((a): a is RightsArticle => Boolean(a));
   const orgs = resolveOrganizations(post.organizations ?? []);
@@ -166,7 +165,7 @@ export default async function QnaPostPage({ params }: { params: Promise<{ locale
 
         <p className="text-[13px] leading-relaxed text-ink-500">{t.footer.notAdvice}</p>
 
-        <QnaGuide locale={locale} contactEmail={site.contactEmail} />
+        <QnaGuide locale={locale} />
 
         <Link href={`/${locale}/qna`} className="lr-btn lr-btn-ghost lr-press">
           <Icon name="arrow-right" size={18} className="rotate-180" /> {t.qna.backToList}

@@ -12,13 +12,15 @@
 //   따라서 이 기록만으로는 누가 무엇을 물었는지 알 수 없습니다.
 //
 // 어디에 남나요?
-//   데이터베이스가 없으므로 서버 실행 기록(Vercel 로그)에 한 줄로만 남습니다.
-//   "어떤 종류의 답변이 도움이 되었는지" 를 세어 보기 위한 것이며, 계정이나 사람과 연결하지 않습니다.
+//   서버 실행 기록(Vercel 로그)에 한 줄로 남고, 관리자 데이터베이스가 연결되어 있으면
+//   "몇 월 며칠 · 어떤 언어 · 어떤 분야 · 도움됨/아쉬움" 의 숫자만 1 올립니다.
+//   글자(질문·답변)는 어느 쪽에도 저장하지 않으므로, 이 숫자만으로는 누가 무엇을 물었는지 알 수 없습니다.
 //
 // 같은 사람이 계속 누르는 것을 막기 위해 AI 질문과 같은 사용량 제한을 씁니다.
 
 import { NextResponse } from 'next/server';
 import { getArticles, getCategories } from '@/lib/content';
+import { countHelpful, hasDb } from '@/lib/db';
 import { isLocale } from '@/lib/i18n';
 import { checkLimits } from '@/lib/rateLimit';
 
@@ -59,6 +61,15 @@ export async function POST(request: Request) {
   console.log(
     `[feedback] kind=${kind} helpful=${payload.helpful ? 'yes' : 'no'} locale=${locale} topic=${topic} evidence=${evidence}`,
   );
+
+  // 관리자 페이지에서 볼 수 있도록 숫자만 하나 올립니다. (실패해도 이용자 화면에는 영향을 주지 않습니다)
+  if (hasDb()) {
+    try {
+      await countHelpful({ kind, locale, topic, evidence, helpful: payload.helpful });
+    } catch (error) {
+      console.error('[feedback] 집계하지 못했습니다:', error instanceof Error ? error.message : error);
+    }
+  }
 
   return new NextResponse(null, { status: 204 });
 }

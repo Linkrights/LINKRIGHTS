@@ -427,7 +427,7 @@
     "title": "Q&A board",
     "subtitle": "Read questions other people have asked and our answers. You can send your own question too.",
     "howTitle": "How this board works",
-    "how": "Questions come to us by email. Our team writes an answer, removes anything that could identify you, and posts only that here. Nothing you write is published without being read first.",
+    "how": "Send your question below. Our team writes an answer, removes anything that could identify you, and posts only that here. Nothing appears on the board until the team has read it.",
     "searchLabel": "Search questions",
     "searchPlaceholder": "e.g. part-time job, visa, hospital",
     "count": "{n} questions",
@@ -437,7 +437,7 @@
     "empty": "No questions yet. Yours could be the first.",
     "emptySearch": "No results. Try a different word.",
     "guideTitle": "How to send a question",
-    "guideIntro": "The button below opens an email. If you are not sure what to write, follow this order.",
+    "guideIntro": "You can send your question below. If you are not sure what to write, follow this order.",
     "guideWriteTitle": "Helpful to include",
     "guideWrite": [
       "What the situation is (for example: I am about to start a part-time job)",
@@ -447,8 +447,6 @@
     ],
     "guideAvoidTitle": "Please leave these out",
     "guideAvoid": "Do not write your name, phone number, address, school name, passport number, alien registration number or medical records. You can still get help without them.",
-    "sendCta": "Send a question",
-    "sendNote": "If the email window does not open, write to {email} directly. We usually reply by email within a few days and post the answer here too.",
     "askedAt": "Asked",
     "answeredAt": "Answered",
     "questionHeading": "Question",
@@ -457,10 +455,9 @@
     "waitingBody": "This one needs checking, so it is taking a little longer. We will add the answer to this post.",
     "relatedArticles": "Rights information worth reading",
     "relatedOrgs": "Where to get help",
-    "backToList": "Back to list",
+    "backToList": "Back to the question board",
     "askAiNote": "If you need an answer right now",
-    "mailSubject": "[LINKRIGHTS question]",
-    "mailBody": "Please write along these lines. You do not need to give your name, phone number or address.\n\n1. What is the situation?\n\n2. When and where did it happen?\n\n3. What is the one thing you most want to know?\n\n4. If you do not want it published on the board, write \"private\" here.\n"
+    "userAuthor": "Someone who wrote in"
   },
   "checklist": {
     "navLabel": "Checklists",
@@ -613,7 +610,8 @@
     "menteeTitle": "Youth with a migrant background (mentee)",
     "menteeBody": "If you would like to join the mentoring as a mentee, you can ask us by email. We talk about school and what comes next, and also everyday worries like presentations or friendships.",
     "menteeCta": "Ask about joining as a mentee",
-    "menteeSubject": "[LINKRIGHTS] Mentee enquiry"
+    "menteeSubject": "[LINKRIGHTS] Mentee enquiry",
+    "howToBodyForm": "Press a button and the form opens. You can send it without an email app."
   },
   "search": {
     "title": "Search rights information",
@@ -743,7 +741,7 @@
     "sections": [
       {
         "title": "There are no accounts",
-        "body": "LINKRIGHTS has no sign-up and no login. There is no field anywhere on this site that asks for your name, email or phone number."
+        "body": "LINKRIGHTS has no sign-up and no login. You need no personal details to read rights information, ask the AI or use a checklist. A field for contact details appears only when you send a question or an enquiry, and for questions you may leave it empty."
       },
       {
         "title": "AI questions and answers are not stored on our server",
@@ -755,15 +753,15 @@
       },
       {
         "title": "If you want to delete what is saved",
-        "body": "Saved rights information can be removed on the “Saved” screen, and a checklist with “Clear all ticks”. An AI conversation disappears when you press “New question” or close the tab. To clear everything at once, delete this site’s data in your browser settings. None of it is ever sent to our server, so there is nothing for you to ask us to delete."
+        "body": "Saved rights information can be removed on the “Saved” screen, and a checklist with “Clear all ticks”. An AI conversation disappears when you press “New question” or close the tab. To clear everything at once, delete this site’s data in your browser settings. None of it is ever sent to our server, so there is nothing for you to ask us to delete. If you want a question or enquiry you sent through the site deleted, tell us its reference number at the contact address below and we will delete it."
       },
       {
         "title": "What the “Was this helpful?” button sends",
-        "body": "Pressing it sends only these four: (1) helpful or not, (2) the language of the page, (3) which topic or which rights information it was, (4) whether the AI answer used registered material. The question and the answer are not sent, and we cannot tell who pressed it. It is written as a single line in the server log, not a database, and is used only to count which answers help. If you do not press it, nothing is sent."
+        "body": "Pressing it sends only these four: (1) helpful or not, (2) the language of the page, (3) which topic or which rights information it was, (4) whether the AI answer used registered material. The question and the answer are not sent, and we cannot tell who pressed it. It is kept only as counts — on which day, in which language, for which topic, how many people found it helpful or not — and is used only to see which answers help. No question or answer text is stored. If you do not press it, nothing is sent."
       },
       {
-        "title": "Emails sent to the Q&A board",
-        "body": "Questions for the board are not saved on the site; they come to us by email. After reading, we remove anything that could identify you and post only the question and the answer. If you write “private”, we reply by email only. Your email stays in our inbox, so tell us in the same thread if you would like it deleted."
+        "title": "How we handle what you send us",
+        "body": "You can send a question, a join enquiry or a correction straight from the site. What you send is stored where only the LINKRIGHTS team can see it, and we keep five things: (1) your message, (2) the title, (3) the language of the page, (4) the date, and (5) contact details, only if you filled them in. Your internet address (IP) is used briefly to stop one person sending too many messages and is not stored with your message. Join enquiries need contact details so that we can reply; questions can be sent without them. After we answer a question, only what the team chooses to post appears on the question board, with anything that could identify you removed. If you are under 14, please send it together with a guardian or a teacher. You can still write to us by email instead."
       },
       {
         "title": "Please do not enter these",
@@ -771,7 +769,7 @@
       },
       {
         "title": "One cookie for language, visits counted anonymously",
-        "body": "This site carries no advertising and uses no tracking cookies. The only cookie is the one that remembers the language you chose (lr-locale); it is used only to show the site in that language next time and never identifies you. To see how many people use which pages, we use a visit-counting tool (Vercel Web Analytics). It sets no cookies and discards the temporary marker it builds from the incoming request after 24 hours. What remains is the page address, how you arrived, a rough country or city level location, and the device and browser type — it cannot tell who you are. Search words and the area you pick appear only in the address bar and are not stored on the server."
+        "body": "This site carries no advertising and uses no tracking cookies. The only cookie is the one that remembers the language you chose (lr-locale); it is used only to show the site in that language next time and never identifies you. One more cookie exists for the team when they log in to the admin screen; it is never created on the pages you see. To see how many people use which pages, we use a visit-counting tool (Vercel Web Analytics). It sets no cookies and discards the temporary marker it builds from the incoming request after 24 hours. What remains is the page address, how you arrived, a rough country or city level location, and the device and browser type — it cannot tell who you are. Search words and the area you pick appear only in the address bar and are not stored on the server."
       },
       {
         "title": "External links",
@@ -801,5 +799,36 @@
   "welcome": {
     "title": "Which language would you like to use?",
     "note": "We remember your choice in this browser. You can change it any time at the top of the page."
+  },
+  "forms": {
+    "titleLabel": "Title",
+    "titlePlaceholder": "e.g. I have not been paid for my part-time work",
+    "bodyLabel": "Your message",
+    "bodyPlaceholder": "Tell us what is happening. You do not need to write your name or contact details.",
+    "contactLabel": "Where we can reply",
+    "contactPlaceholder": "Email address",
+    "contactOptional": "(you can leave this empty)",
+    "contactRequired": "(needed so we can reply)",
+    "guardianNote": "If you are under 14, please send this together with a guardian or a teacher.",
+    "storeNote": "Only the LINKRIGHTS team can see what you send.",
+    "privacyLink": "Privacy policy",
+    "submit": "Send",
+    "sending": "Sending",
+    "successTitle": "Sent",
+    "successBody": "Reference {id} · We will read it and get back to you.",
+    "another": "Send another",
+    "errorBody": "We could not send it. Please try again in a moment.",
+    "errorRate": "That is several messages in a short time. Please try again in five minutes.",
+    "errorShort": "Please write a little more.",
+    "errorContact": "Please tell us where we can reply.",
+    "privacyTitle": "This looks like personal information",
+    "privacyBody": "We spotted something that looks like a phone or ID number. You can remove it and still get help.",
+    "privacyRemove": "Remove it",
+    "questionTitle": "Send a question",
+    "questionNote": "Answers are posted on the question board with names and contact details removed. Write \"private please\" in your message if you do not want it posted.",
+    "correctionTitle": "Did you find something wrong?",
+    "correctionIntro": "Tell us if a phone number has changed or a website does not open. We will check and fix it.",
+    "mailInstead": "If you prefer email, write to {email}.",
+    "disabled": "The form is not available right now. Please write to {email}."
   }
 }

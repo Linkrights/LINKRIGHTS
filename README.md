@@ -128,6 +128,12 @@ NEXT_PUBLIC_SITE_URL=https://실제-사이트-주소
 | `DAILY_REQUEST_LIMIT` | 하루 전체 AI 질문 허용 횟수 | 처음에는 `300`~`500` |
 | `RATE_LIMIT_PER_WINDOW` | 한 사람이 5분 동안 물을 수 있는 횟수 | `6` |
 | `NEXT_PUBLIC_SITE_URL` | 실제 사이트 주소 (검색 노출에 사용) | 배포 후 입력 |
+| `DATABASE_URL` | 관리자 페이지용 데이터베이스 (Vercel 마켓플레이스에서 Neon 을 연결하면 자동으로 들어옵니다) | 관리자 페이지를 쓸 때만 |
+| `ADMIN_PASSWORD` | 관리자 페이지 비밀번호 (8자 이상) | 관리자 페이지를 쓸 때만 |
+
+> 관리자 페이지(`/admin`)를 쓰려면 `DATABASE_URL` 과 `ADMIN_PASSWORD` 가 필요합니다. 자세한 설정 방법은
+> [docs/관리자-페이지-설정.md](docs/관리자-페이지-설정.md) 에 있습니다. 두 값이 없으면 사이트는 예전처럼
+> 문의 메일 주소를 보여주고, 그 밖의 기능은 모두 그대로 동작합니다.
 
 > ⚠️ **`.env.local` 파일은 절대로 다른 사람에게 보내거나 GitHub에 올리지 마세요.**
 > 이 프로젝트는 이미 `.gitignore` 설정으로 자동 제외되도록 되어 있습니다.

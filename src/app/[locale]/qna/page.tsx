@@ -9,8 +9,13 @@ import { Icon } from '@/components/Icon';
 import { QnaBoard, type QnaRow } from '@/components/QnaBoard';
 import { QnaGuide } from '@/components/QnaGuide';
 import { Notice, PageHeader, Section } from '@/components/Section';
-import { getCategory, getQnaPosts, getSite } from '@/lib/content';
+import { getCategory, getQnaPosts } from '@/lib/content';
+import { listPublishedQuestions } from '@/lib/db';
 import { LOCALES, formatDate, getMessages, pick, toLocale } from '@/lib/i18n';
+
+// 사이트에서 보낸 질문에 운영팀이 답하면 5분 안에 이 목록에 나타납니다.
+// (등록 글 content/qna.json 은 예전처럼 배포할 때 그대로 들어갑니다)
+export const revalidate = 300;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: rawLocale } = await params;
@@ -22,7 +27,6 @@ export default async function QnaPage({ params }: { params: Promise<{ locale: st
   const { locale: rawLocale } = await params;
   const locale = toLocale(rawLocale);
   const t = getMessages(locale);
-  const site = getSite();
   const posts = getQnaPosts();
 
   const rows: QnaRow[] = posts.map((post) => {
@@ -48,6 +52,22 @@ export default async function QnaPage({ params }: { params: Promise<{ locale: st
     };
   });
 
+  // 사이트에서 보내 주신 질문 가운데, 운영팀이 답하고 게시판에 올리기로 한 글만 함께 보여줍니다.
+  // (이 화면 언어로 보낸 질문만 보여줍니다. 번역은 하지 않습니다)
+  const sent = (await listPublishedQuestions()).filter((row) => row.locale === locale);
+  const sentRows: QnaRow[] = sent.map((row) => ({
+    id: `s-${row.id}`,
+    href: `/${locale}/qna/s/${row.id}`,
+    notice: false,
+    title: row.title || row.body.replace(/\s+/g, ' ').slice(0, 60),
+    author: t.qna.userAuthor,
+    date: formatDate(row.created_at.slice(0, 10), locale),
+    answered: Boolean(row.answer.trim()),
+    search: [row.title, row.body, row.answer].filter(Boolean).join(' '),
+  }));
+  // 공지는 맨 위에 두고, 그 아래에 새로 답한 질문부터 보여줍니다.
+  rows.splice(rows.filter((row) => row.notice).length, 0, ...sentRows);
+
   return (
     <>
       <PageHeader title={t.qna.title} subtitle={t.qna.subtitle} />
@@ -56,7 +76,7 @@ export default async function QnaPage({ params }: { params: Promise<{ locale: st
         <div className="max-w-4xl space-y-8">
           <Notice title={t.qna.howTitle} body={t.qna.how} />
 
-          <QnaGuide locale={locale} contactEmail={site.contactEmail} />
+          <QnaGuide locale={locale} />
 
           <QnaBoard locale={locale} rows={rows} />
 

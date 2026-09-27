@@ -1140,10 +1140,74 @@ async function runLive() {
   console.log(`\n의심 항목 ${flags}개. 위 답변을 직접 읽고 판단해 주세요.`);
 }
 
+
+// ---------------------------------------------------------------------------
+// 7. 사이트에서 보낸 글(질문·참여 문의·정보 수정 제보) 규칙과 관리자 로그인
+//    데이터베이스 없이, 규칙을 정한 코드만 그대로 실행해 확인합니다.
+// ---------------------------------------------------------------------------
+function checkSubmitRules() {
+  const runtime = createRuntime(async () => {
+    throw new Error('이 검사에서는 바깥으로 연결하지 않습니다.');
+  });
+  const { validateSubmission, LIMITS } = runtime.load('src/lib/submissions.ts');
+  const locales = ['ko', 'en', 'zh', 'vi'];
+  const base = { kind: 'question', locale: 'ko', title: '제목', body: '알바비를 못 받았어요', contact: '' };
+
+  const plain = validateSubmission(base, locales);
+  check('7-1 질문은 연락처 없이 보낼 수 있다', plain.ok && plain.value.contact === '');
+  check('7-2 정해지지 않은 종류는 받지 않는다', validateSubmission({ ...base, kind: 'other' }, locales).ok === false);
+  check('7-3 내용이 너무 짧으면 받지 않는다', validateSubmission({ ...base, body: '네' }, locales).reason === 'body');
+  check(
+    '7-4 참여 문의는 연락처가 있어야 한다',
+    validateSubmission({ ...base, kind: 'join', detail: 'mentee' }, locales).reason === 'contact',
+  );
+  check(
+    '7-5 참여 문의의 구분은 정해진 값만 (멘티·멘토·학교/기관)',
+    validateSubmission({ ...base, kind: 'join', detail: 'somewhere', contact: 'a@b.c' }, locales).reason === 'detail',
+  );
+  check(
+    '7-6 멘티 참여 문의는 연락처가 있으면 받는다',
+    validateSubmission({ ...base, kind: 'join', detail: 'mentee', contact: 'a@b.c' }, locales).ok === true,
+  );
+  check(
+    '7-7 보이지 않는 칸을 채우면 자동 프로그램으로 본다',
+    validateSubmission({ ...base, website: 'http://spam.example' }, locales).reason === 'bot',
+  );
+  const long = validateSubmission({ ...base, body: '가'.repeat(LIMITS.body + 500) }, locales);
+  check('7-8 너무 긴 글은 정해진 길이까지만 저장한다', long.ok && long.value.body.length === LIMITS.body);
+  const other = validateSubmission({ ...base, locale: 'de' }, locales);
+  check('7-9 등록되지 않은 언어는 한국어로 둔다', other.ok && other.value.locale === 'ko');
+  const control = validateSubmission({ ...base, body: '알바비를\u0007 못 받았어요\n다음 달에도요' }, locales);
+  check(
+    '7-10 보이지 않는 제어문자는 지우고 줄바꿈은 남긴다',
+    control.ok && !control.value.body.includes('\u0007') && control.value.body.includes('\n'),
+  );
+
+  // 관리자 로그인: 비밀번호 하나로 들어가고, 쪽지(쿠키)는 서명으로 확인합니다.
+  const before = process.env.ADMIN_PASSWORD;
+  process.env.ADMIN_PASSWORD = 'linkrights-test-password';
+  const auth = runtime.load('src/lib/adminAuth.ts');
+  check('7-11 비밀번호를 넣어 두면 관리자 기능을 쓸 수 있다', auth.hasAdmin() === true);
+  check('7-12 틀린 비밀번호는 거절한다', auth.checkPassword('wrong-password') === false);
+  check('7-13 맞는 비밀번호는 통과한다', auth.checkPassword('linkrights-test-password') === true);
+  const token = auth.createToken();
+  check('7-14 우리가 만든 쪽지는 통과한다', auth.verifyToken(token.value) === true);
+  const forged = token.value.split('.')[0] + '.' + 'a'.repeat(64);
+  check('7-15 서명을 바꾼 쪽지는 거절한다', auth.verifyToken(forged) === false);
+  check(
+    '7-16 시간이 지난 쪽지는 거절한다',
+    auth.verifyToken(token.value, Date.now() + (token.maxAge + 60) * 1000) === false,
+  );
+  if (before === undefined) delete process.env.ADMIN_PASSWORD;
+  else process.env.ADMIN_PASSWORD = before;
+  check('7-17 비밀번호가 없으면 관리자 기능은 꺼져 있다', auth.hasAdmin() === false && auth.verifyToken(token.value) === false);
+}
+
 if (LIVE) {
   await runLive();
 } else {
   const table = await runDeterministic();
+  checkSubmitRules();
   console.log('\n질문별로 AI에게 전달되는 자료');
   for (const row of table) {
     console.log(`  [${row.n}] ${row.q}`);

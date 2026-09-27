@@ -427,7 +427,7 @@
     "title": "Bảng hỏi đáp",
     "subtitle": "Xem câu hỏi của người khác và câu trả lời của nhóm vận hành. Bạn cũng có thể tự gửi câu hỏi.",
     "howTitle": "Bảng này được vận hành như sau",
-    "how": "Câu hỏi được nhận qua email. Nhóm vận hành viết câu trả lời, bỏ đi những nội dung có thể nhận ra bạn là ai, rồi mới đăng tại đây. Trang web không lưu trực tiếp nội dung bạn viết, nên không có chuyện được công khai mà chưa qua kiểm tra.",
+    "how": "Hãy gửi câu hỏi ở bên dưới. Nhóm vận hành viết câu trả lời, bỏ đi những nội dung có thể nhận ra bạn là ai, rồi mới đăng tại đây. Nội dung bạn gửi không xuất hiện trên bảng trước khi nhóm vận hành xem.",
     "searchLabel": "Tìm câu hỏi",
     "searchPlaceholder": "ví dụ: làm thêm, visa, bệnh viện",
     "count": "{n} câu hỏi",
@@ -437,7 +437,7 @@
     "empty": "Chưa có câu hỏi nào. Bạn có thể là người đầu tiên.",
     "emptySearch": "Không có kết quả. Hãy thử từ khác.",
     "guideTitle": "Hãy gửi câu hỏi như sau",
-    "guideIntro": "Nhấn nút bên dưới sẽ mở cửa sổ soạn email. Nếu chưa biết viết gì, hãy theo thứ tự này.",
+    "guideIntro": "Bạn có thể gửi câu hỏi ở bên dưới. Nếu chưa biết viết gì, hãy theo thứ tự này.",
     "guideWriteTitle": "Nên viết những điều này",
     "guideWrite": [
       "Tình huống của bạn (ví dụ: tôi sắp đi làm thêm)",
@@ -447,8 +447,6 @@
     ],
     "guideAvoidTitle": "Xin đừng viết những điều này",
     "guideAvoid": "Đừng viết tên, số điện thoại, địa chỉ, tên trường, số hộ chiếu, số đăng ký người nước ngoài hay hồ sơ bệnh án. Không có những thông tin đó bạn vẫn được hỗ trợ.",
-    "sendCta": "Gửi câu hỏi",
-    "sendNote": "Nếu cửa sổ soạn email không mở, hãy gửi trực tiếp tới {email}. Chúng tôi thường trả lời qua email trong vài ngày và đăng cả lên bảng này.",
     "askedAt": "Ngày hỏi",
     "answeredAt": "Ngày trả lời",
     "questionHeading": "Câu hỏi",
@@ -457,10 +455,9 @@
     "waitingBody": "Nội dung này cần kiểm tra nên mất thêm chút thời gian. Khi xong chúng tôi sẽ bổ sung vào bài này.",
     "relatedArticles": "Thông tin quyền nên xem cùng",
     "relatedOrgs": "Nơi có thể nhận trợ giúp",
-    "backToList": "Về danh sách",
+    "backToList": "Về bảng hỏi đáp",
     "askAiNote": "Nếu bạn cần câu trả lời ngay bây giờ",
-    "mailSubject": "[LINKRIGHTS câu hỏi]",
-    "mailBody": "Hãy viết theo thứ tự dưới đây. Bạn không cần ghi tên, số điện thoại hay địa chỉ.\n\n1. Tình huống của bạn là gì?\n\n2. Việc đó xảy ra khi nào, ở đâu?\n\n3. Điều bạn muốn biết nhất là gì?\n\n4. Nếu không muốn đăng công khai, hãy ghi \"không công khai\" ở đây.\n"
+    "userAuthor": "Người gửi câu hỏi"
   },
   "checklist": {
     "navLabel": "Danh sách kiểm tra",
@@ -613,7 +610,8 @@
     "menteeTitle": "Thanh thiếu niên có nền tảng di trú (mentee)",
     "menteeBody": "Nếu bạn muốn tham gia chương trình cố vấn với tư cách mentee, hãy hỏi chúng tôi qua email. Chúng ta cùng trò chuyện về trường học, hướng đi phía trước và cả những lo lắng thường ngày như thuyết trình hay quan hệ bạn bè.",
     "menteeCta": "Hỏi về việc tham gia làm mentee",
-    "menteeSubject": "[LINKRIGHTS] Hỏi tham gia mentee"
+    "menteeSubject": "[LINKRIGHTS] Hỏi tham gia mentee",
+    "howToBodyForm": "Bấm nút là biểu mẫu mở ra. Bạn có thể gửi mà không cần ứng dụng email."
   },
   "search": {
     "title": "Tìm thông tin quyền",
@@ -743,7 +741,7 @@
     "sections": [
       {
         "title": "Không có đăng ký thành viên",
-        "body": "LINKRIGHTS không có chức năng đăng ký hay đăng nhập. Trên trang này không có ô nhập nào hỏi tên, email hay số điện thoại của bạn."
+        "body": "LINKRIGHTS không có chức năng đăng ký hay đăng nhập. Bạn không cần thông tin cá nhân nào để đọc thông tin quyền, hỏi AI hay dùng danh sách kiểm tra. Ô thông tin liên lạc chỉ xuất hiện khi bạn gửi câu hỏi hoặc yêu cầu, và với câu hỏi bạn có thể để trống."
       },
       {
         "title": "Câu hỏi và câu trả lời AI không được lưu trên máy chủ",
@@ -755,15 +753,15 @@
       },
       {
         "title": "Khi bạn muốn xóa những gì đã lưu",
-        "body": "Thông tin quyền đã lưu có thể xóa ở màn hình “Đã lưu”, danh sách kiểm tra có thể dùng “Bỏ tất cả dấu tích”. Cuộc trò chuyện AI biến mất khi bạn bấm “Câu hỏi mới” hoặc đóng thẻ. Muốn xóa tất cả cùng lúc, hãy xóa dữ liệu trang này trong cài đặt trình duyệt. Những thông tin này không bao giờ được gửi tới máy chủ của ban vận hành, nên cũng không có gì để bạn yêu cầu chúng tôi xóa."
+        "body": "Thông tin quyền đã lưu có thể xóa ở màn hình “Đã lưu”, danh sách kiểm tra có thể dùng “Bỏ tất cả dấu tích”. Cuộc trò chuyện AI biến mất khi bạn bấm “Câu hỏi mới” hoặc đóng thẻ. Muốn xóa tất cả cùng lúc, hãy xóa dữ liệu trang này trong cài đặt trình duyệt. Những thông tin này không bao giờ được gửi tới máy chủ của ban vận hành, nên cũng không có gì để bạn yêu cầu chúng tôi xóa. Nếu muốn xóa câu hỏi hay yêu cầu đã gửi qua trang, hãy báo mã tiếp nhận cho email liên hệ bên dưới, chúng tôi sẽ xóa."
       },
       {
         "title": "Nút “Có hữu ích không?” gửi đi những gì",
-        "body": "Khi bấm, chỉ bốn điều sau được gửi đi: (1) hữu ích hay chưa đủ, (2) ngôn ngữ của trang, (3) thuộc lĩnh vực nào hoặc thông tin quyền nào, (4) câu trả lời AI có dựa trên tài liệu đã đăng ký hay không. Nội dung câu hỏi và câu trả lời không được gửi, và chúng tôi không biết ai đã bấm. Ghi chép này chỉ là một dòng trong nhật ký máy chủ (không phải cơ sở dữ liệu) và chỉ dùng để đếm xem nội dung nào hữu ích. Không bấm thì không có gì được gửi đi."
+        "body": "Khi bấm, chỉ bốn điều sau được gửi đi: (1) hữu ích hay chưa đủ, (2) ngôn ngữ của trang, (3) thuộc lĩnh vực nào hoặc thông tin quyền nào, (4) câu trả lời AI có dựa trên tài liệu đã đăng ký hay không. Nội dung câu hỏi và câu trả lời không được gửi, và chúng tôi không biết ai đã bấm. Ghi chép này chỉ được lưu dưới dạng con số — ngày nào, ngôn ngữ nào, lĩnh vực nào, hữu ích hay chưa đủ bao nhiêu lần — và chỉ dùng để biết nội dung nào hữu ích. Không lưu chữ của câu hỏi hay câu trả lời. Không bấm thì không có gì được gửi đi."
       },
       {
-        "title": "Email gửi tới bảng hỏi đáp",
-        "body": "Câu hỏi cho bảng hỏi đáp không được lưu thẳng trên trang mà gửi tới nhóm vận hành qua email. Sau khi đọc, chúng tôi bỏ đi tên, thông tin liên lạc và những gì có thể nhận ra bạn, rồi chỉ đăng câu hỏi và câu trả lời. Nếu bạn ghi “không công khai”, chúng tôi chỉ trả lời qua email. Email của bạn còn trong hộp thư liên hệ, nên nếu muốn xóa hãy báo cho chúng tôi trong chính email đó."
+        "title": "Chúng tôi xử lý nội dung bạn gửi như thế nào",
+        "body": "Bạn có thể gửi câu hỏi, yêu cầu tham gia hoặc báo thông tin cần sửa ngay từ trang web. Nội dung bạn gửi được lưu ở nơi chỉ nhóm vận hành LINKRIGHTS xem được, và chúng tôi giữ năm mục: (1) nội dung, (2) tiêu đề, (3) ngôn ngữ của trang, (4) ngày gửi, (5) thông tin liên lạc chỉ khi bạn có ghi. Địa chỉ mạng (IP) chỉ được dùng trong chốc lát để ngăn một người gửi quá nhiều và không lưu cùng nội dung. Yêu cầu tham gia cần thông tin liên lạc để chúng tôi trả lời; câu hỏi thì không bắt buộc. Sau khi trả lời câu hỏi, chỉ những gì nhóm vận hành quyết định đăng mới xuất hiện trên bảng hỏi đáp, sau khi đã xóa các chi tiết có thể nhận ra bạn. Nếu bạn dưới 14 tuổi, hãy gửi cùng người giám hộ hoặc thầy cô. Bạn vẫn có thể gửi qua email như trước."
       },
       {
         "title": "Xin đừng nhập những thông tin này",
@@ -771,7 +769,7 @@
       },
       {
         "title": "Chỉ một cookie ngôn ngữ, lượt truy cập đếm ẩn danh",
-        "body": "Trang này không đăng quảng cáo và không dùng cookie theo dõi. Cookie duy nhất là cookie ghi nhớ ngôn ngữ bạn đã chọn (lr-locale), chỉ dùng để hiển thị trang bằng ngôn ngữ đó vào lần sau và không dùng để nhận diện bạn. Để biết có bao nhiêu người xem những trang nào, chúng tôi dùng công cụ đếm lượt truy cập (Vercel Web Analytics). Công cụ này không tạo cookie và sẽ hủy dấu tạm thời tạo từ yêu cầu truy cập sau 24 giờ. Chỉ còn lại địa chỉ trang đã xem, đường dẫn đến trang, khu vực ở mức quốc gia hoặc thành phố, loại thiết bị và trình duyệt; không thể biết ai đã xem. Từ khóa tìm kiếm và khu vực bạn chọn chỉ xuất hiện trên thanh địa chỉ và không được lưu trên máy chủ."
+        "body": "Trang này không đăng quảng cáo và không dùng cookie theo dõi. Cookie duy nhất là cookie ghi nhớ ngôn ngữ bạn đã chọn (lr-locale), chỉ dùng để hiển thị trang bằng ngôn ngữ đó vào lần sau và không dùng để nhận diện bạn. Ngoài ra có một cookie chỉ dành cho nhóm vận hành khi đăng nhập màn hình quản trị; nó không bao giờ được tạo trên các trang bạn xem. Để biết có bao nhiêu người xem những trang nào, chúng tôi dùng công cụ đếm lượt truy cập (Vercel Web Analytics). Công cụ này không tạo cookie và sẽ hủy dấu tạm thời tạo từ yêu cầu truy cập sau 24 giờ. Chỉ còn lại địa chỉ trang đã xem, đường dẫn đến trang, khu vực ở mức quốc gia hoặc thành phố, loại thiết bị và trình duyệt; không thể biết ai đã xem. Từ khóa tìm kiếm và khu vực bạn chọn chỉ xuất hiện trên thanh địa chỉ và không được lưu trên máy chủ."
       },
       {
         "title": "Liên kết bên ngoài",
@@ -801,5 +799,36 @@
   "welcome": {
     "title": "Bạn muốn bắt đầu bằng ngôn ngữ nào?",
     "note": "Lựa chọn của bạn được ghi nhớ trong trình duyệt này. Bạn có thể đổi bất cứ lúc nào ở đầu trang."
+  },
+  "forms": {
+    "titleLabel": "Tiêu đề",
+    "titlePlaceholder": "Ví dụ: Tôi chưa được trả lương làm thêm",
+    "bodyLabel": "Nội dung",
+    "bodyPlaceholder": "Hãy kể tình huống của bạn. Bạn không cần ghi tên hay thông tin liên lạc.",
+    "contactLabel": "Nơi nhận trả lời",
+    "contactPlaceholder": "Địa chỉ email",
+    "contactOptional": "(có thể để trống)",
+    "contactRequired": "(cần có để chúng tôi trả lời)",
+    "guardianNote": "Nếu bạn dưới 14 tuổi, hãy gửi cùng với người giám hộ hoặc thầy cô.",
+    "storeNote": "Chỉ nhóm vận hành LINKRIGHTS xem được nội dung bạn gửi.",
+    "privacyLink": "Chính sách quyền riêng tư",
+    "submit": "Gửi",
+    "sending": "Đang gửi",
+    "successTitle": "Đã gửi",
+    "successBody": "Mã tiếp nhận {id} · Nhóm vận hành sẽ xem và trả lời bạn.",
+    "another": "Gửi thêm",
+    "errorBody": "Chưa gửi được. Vui lòng thử lại sau ít phút.",
+    "errorRate": "Bạn vừa gửi nhiều lần. Hãy thử lại sau 5 phút.",
+    "errorShort": "Hãy viết thêm một chút.",
+    "errorContact": "Hãy cho biết nơi chúng tôi có thể trả lời.",
+    "privacyTitle": "Có nội dung trông như thông tin cá nhân",
+    "privacyBody": "Có đoạn trông như số điện thoại hoặc số đăng ký. Bạn có thể xóa đi mà vẫn được hỗ trợ.",
+    "privacyRemove": "Xóa phần đó",
+    "questionTitle": "Gửi câu hỏi",
+    "questionNote": "Câu trả lời được đăng trên bảng hỏi đáp sau khi xóa tên và thông tin liên lạc. Nếu không muốn công khai, hãy ghi \"mong được riêng tư\" trong nội dung.",
+    "correctionTitle": "Bạn thấy thông tin nào chưa đúng?",
+    "correctionIntro": "Hãy báo cho chúng tôi nếu số điện thoại đã đổi hoặc trang web không mở được. Chúng tôi sẽ kiểm tra và sửa.",
+    "mailInstead": "Nếu bạn quen dùng email, hãy gửi tới {email}.",
+    "disabled": "Hiện chưa dùng được biểu mẫu. Hãy gửi tới {email}."
   }
 }

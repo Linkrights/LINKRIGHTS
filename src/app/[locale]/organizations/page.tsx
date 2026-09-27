@@ -16,6 +16,7 @@ import type { Metadata } from 'next';
 import { CallScript } from '@/components/CallScript';
 import { OrgDirectory, type DirectoryItem } from '@/components/OrgDirectory';
 import { PageHeader } from '@/components/Section';
+import { SubmitBox } from '@/components/SubmitBox';
 import { getArticles, getOrganizations, getSearchSynonyms } from '@/lib/content';
 import { LOCALES, formatDate, getMessages, pick, toLocale } from '@/lib/i18n';
 import { REGIONS, organizationArea, regionName } from '@/lib/regions';
@@ -205,6 +206,15 @@ export default async function OrganizationsPage({ params }: { params: Promise<{ 
       {/* 전화하기 전 도움말 (참고용) */}
       <div className="lr-container pb-14">
         <CallScript t={t} className="max-w-3xl" />
+
+        {/* 잘못된 정보 알려주기: 전화번호나 누리집이 바뀌면 이용자가 바로 알려줄 수 있게 합니다. */}
+        <section id="report" className="lr-card mt-6 max-w-3xl scroll-mt-24 p-5 sm:p-6">
+          <h2 className="text-lg font-extrabold text-ink-900">{t.forms.correctionTitle}</h2>
+          <p className="mt-1.5 text-[15px] leading-relaxed text-ink-700">{t.forms.correctionIntro}</p>
+          <div className="mt-4">
+            <SubmitBox locale={locale} kind="correction" detail="organizations" withTitle={false} rows={4} />
+          </div>
+        </section>
       </div>
     </>
   );

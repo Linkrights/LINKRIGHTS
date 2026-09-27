@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { Icon, type IconName } from '@/components/Icon';
 import { PartnerList } from '@/components/PartnerList';
 import { PageHeader, Section } from '@/components/Section';
+import { SubmitBox, canSubmit } from '@/components/SubmitBox';
 import { getPartners, getPrograms, getSite } from '@/lib/content';
 import { getMessages, pick, toLocale } from '@/lib/i18n';
 
@@ -28,6 +29,8 @@ export default async function GetInvolvedPage({ params }: { params: Promise<{ lo
   const t = getMessages(locale);
   const site = getSite();
   const community = getPrograms().community_notice;
+  // 글 보내기 칸을 쓸 수 있는지 (데이터베이스가 연결되어 있는지)
+  const forms = canSubmit();
 
   const ways: {
     key: string;
@@ -85,21 +88,44 @@ export default async function GetInvolvedPage({ params }: { params: Promise<{ lo
               </span>{' '}
               <h2 className="mt-4 text-xl font-extrabold text-ink-900">{way.title}</h2>{' '}
               <p className="lr-body mt-2 flex-1">{way.body}</p>
-              <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3">
-                <a href={way.href} className="lr-btn lr-btn-primary lr-press">
-                  {way.cta} <Icon name="arrow-right" size={18} />
-                </a>
-                <Link href={way.secondaryHref} className="lr-link text-[15px] font-semibold">
-                  {way.secondary}
-                </Link>
-              </div>
+              {/* 문의는 사이트에서 바로 보냅니다. (메일 앱이 없어도 됩니다)
+                  데이터베이스가 연결되어 있지 않으면 예전처럼 메일 쓰기 버튼이 보입니다. */}
+              {forms ? (
+                <div className="mt-6">
+                  <details className="group">
+                    <summary className="lr-btn lr-btn-primary lr-press w-full cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                      {way.cta}
+                      <span className="transition-transform group-open:rotate-180" aria-hidden="true">
+                        ▾
+                      </span>
+                    </summary>
+                    <div className="mt-4 border-t border-[var(--color-line)] pt-4">
+                      <SubmitBox locale={locale} kind="join" detail={way.key} needContact withTitle={false} rows={5} />
+                    </div>
+                  </details>
+                  <Link href={way.secondaryHref} className="lr-link mt-3 inline-block text-[15px] font-semibold">
+                    {way.secondary}
+                  </Link>
+                </div>
+              ) : (
+                <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3">
+                  <a href={way.href} className="lr-btn lr-btn-primary lr-press">
+                    {way.cta} <Icon name="arrow-right" size={18} />
+                  </a>
+                  <Link href={way.secondaryHref} className="lr-link text-[15px] font-semibold">
+                    {way.secondary}
+                  </Link>
+                </div>
+              )}
             </li>
           ))}
         </ul>
 
         <div className="mt-6 max-w-3xl rounded-[var(--radius-control)] border border-[var(--color-line)] bg-white p-5">
           <h2 className="text-base font-bold text-ink-900">{t.involved.howToTitle}</h2>
-          <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{t.involved.howToBody}</p>
+          <p className="mt-1 text-[15px] leading-relaxed text-ink-700">
+            {forms ? t.involved.howToBodyForm : t.involved.howToBody}
+          </p>
           <p className="mt-2 text-[15px] text-ink-700">
             <span className="font-semibold text-ink-900">{t.involved.emailLabel}</span>{' '}
             <a className="lr-link break-all" href={`mailto:${site.contactEmail}`}>

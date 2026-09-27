@@ -14,6 +14,7 @@ import { Helpful } from '@/components/Helpful';
 import { Icon } from '@/components/Icon';
 import { ReadAloud } from '@/components/ReadAloud';
 import { SaveButton } from '@/components/SaveButton';
+import { SubmitBox, canSubmit } from '@/components/SubmitBox';
 import { Notice } from '@/components/Section';
 import { OrgCard } from '@/components/OrgCard';
 import {
@@ -388,9 +389,23 @@ export default async function ArticlePage({
         <section className="rounded-[var(--radius-card)] border border-[var(--color-line)] bg-surface-soft p-5 sm:p-6">
           <h2 className="text-base font-bold text-ink-900">{t.rightsMeta.feedbackTitle}</h2>
           <p className="mt-1 text-[15px] leading-relaxed text-ink-700">{t.rightsMeta.feedbackBody}</p>
-          <a href={feedbackHref} className="lr-btn lr-btn-ghost lr-btn-sm lr-press mt-3">
-            {t.rightsMeta.feedbackCta}
-          </a>
+          {canSubmit() ? (
+            <details className="group mt-3">
+              <summary className="lr-btn lr-btn-ghost lr-btn-sm lr-press cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                {t.rightsMeta.feedbackCta}
+                <span className="transition-transform group-open:rotate-180" aria-hidden="true">
+                  ▾
+                </span>
+              </summary>
+              <div className="mt-4 border-t border-[var(--color-line)] pt-4">
+                <SubmitBox locale={locale} kind="correction" detail={article.id} withTitle={false} rows={4} />
+              </div>
+            </details>
+          ) : (
+            <a href={feedbackHref} className="lr-btn lr-btn-ghost lr-btn-sm lr-press mt-3">
+              {t.rightsMeta.feedbackCta}
+            </a>
+          )}
         </section>
 
         {/* 내 상황 물어보기 */}
