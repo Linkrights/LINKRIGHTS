@@ -9,7 +9,7 @@
 // 새 정보를 만들지 않고, 검색어를 나누기만 합니다.
 
 import { REGIONS } from './regions';
-import { normalize, stem } from './searchText';
+import { normalize, stem, textMatchesQuery } from './searchText';
 
 /** 시·도 이름 뒤에 붙는 말 ("부산시", "경기도", "서울특별시", "부산 지역") */
 const REGION_SUFFIXES = ['특별자치시', '특별자치도', '특별시', '광역시', '지역', '시', '도'];
@@ -111,4 +111,49 @@ export function parseOrgQuery(query: string): ParsedOrgQuery {
   }
 
   return { region, text: kept.join(' ') };
+}
+
+/** 기관 하나를 찾을 때 쓰는 글과 지역 (등록된 자료에서 만든 것입니다) */
+export interface OrgSearchItem {
+  id: string;
+  /** 이름·설명·시군구·등록 키워드를 이어 붙인 글 (모든 언어) */
+  text: string;
+  /** 이 기관이 맡는 시·도 (전국 기관은 비어 있습니다) */
+  regions: string[];
+  nationwide: boolean;
+  emergency: boolean;
+}
+
+/**
+ * 질문의 낱말이 등록된 기관 설명에 들어 있는 곳을 찾습니다.
+ *
+ * 왜 필요한가요?
+ *   "울산 통번역"처럼 물으면 권리정보에는 맞는 글이 없어도, 등록된 기관 설명에는 그 말이 있을 수 있습니다.
+ *   (예: 울산남구가족센터 — "결혼이민자 통번역서비스") 그때 "정보가 없다"고만 하지 않고 등록된 기관을 보여주기 위한 것입니다.
+ *
+ * 지키는 것
+ *   - 등록된 글자만 봅니다. 기관을 새로 만들거나 없는 서비스를 말하지 않습니다.
+ *   - 긴급 번호(112·119 등)는 여기에서 고르지 않습니다. 긴급 안내는 따로 있습니다.
+ *   - 질문에 시·도 이름이 있으면 그 지역 기관 → 전국 기관 순서로 보여줍니다.
+ */
+export function findOrgMatches(items: OrgSearchItem[], query: string, limit = 3): string[] {
+  const { region, text } = parseOrgQuery(query);
+  // 지역 이름만 적은 질문("울산")은 여기에서 다루지 않습니다. (지역 목록 링크로 안내합니다)
+  if (!text) return [];
+  const tokens = text.split(' ').filter(Boolean);
+  const matches = (item: OrgSearchItem) => {
+    // 띄어쓰기가 달라도 같은 말로 봅니다. ("한국어교육" ↔ "한국어 교육")
+    const glued = normalize(item.text).replace(/\s+/g, '');
+    return tokens.every(
+      (token) => textMatchesQuery(item.text, token) || (token.length >= 3 && glued.includes(token.replace(/\s+/g, ''))),
+    );
+  };
+  const matched = items.filter((item) => !item.emergency && matches(item));
+  if (matched.length === 0) return [];
+  const inRegion = region ? matched.filter((item) => !item.nationwide && item.regions.includes(region)) : [];
+  const nationwide = matched.filter((item) => item.nationwide);
+  // 지역을 말하지 않은 질문에서는 지역 기관도 뒤에 붙여 줍니다.
+  const rest = region ? [] : matched.filter((item) => !item.nationwide);
+  const ordered = [...inRegion, ...nationwide, ...rest];
+  return [...new Set(ordered.map((item) => item.id))].slice(0, limit);
 }

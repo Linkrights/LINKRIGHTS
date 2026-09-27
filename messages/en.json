@@ -233,7 +233,8 @@
     "subject": "[LINKRIGHTS information request]",
     "subjectWithTitle": "[LINKRIGHTS information request] {title}",
     "mailBody": "I would like information to be added about the following.\n\n- Topic I was looking for:\n- What I hoped to find:\n",
-    "mailBodyPage": "I would like information to be added about the following.\n\n- Rights information I was reading: {title}\n- What I hoped to find:\n"
+    "mailBodyPage": "I would like information to be added about the following.\n\n- Rights information I was reading: {title}\n- What I hoped to find:\n",
+    "formBody": "Tell us what you wish we had. Write it below and the team will read it. You do not need to give your name or contact details."
   },
   "homeUpdates": {
     "title": "Recently added or reviewed",
@@ -298,7 +299,7 @@
     "viewList": "See everything you saved"
   },
   "callScript": {
-    "title": "Before you call, try saying this",
+    "title": "What to say once the call connects",
     "intro": "If you are not sure how to start the call, use these sentences as a guide. They are only examples and do not replace advice from the organisation.",
     "line1": "Hello. I'm calling because I'd like some advice.",
     "line1Topic": "Hello. I'm calling because I'd like some advice about {topic}.",
@@ -347,6 +348,8 @@
     "rights": "Discrimination & rights"
   },
   "answerUi": {
+    "registeredOrgsTitle": "Found in our registered list",
+    "registeredOrgsNote": "These registered places mention the words you wrote. Ask them directly whether you can use the service and when they are open.",
     "situation": "Your situation",
     "checks": "Check these first",
     "rights": "Rights you should know",
@@ -626,7 +629,9 @@
       "visa extension",
       "health insurance",
       "employment contract",
-      "discrimination"
+      "discrimination",
+      "Korean classes",
+      "interpretation"
     ],
     "resultsFor": "Results for “{q}”",
     "resultCount": "{n}",

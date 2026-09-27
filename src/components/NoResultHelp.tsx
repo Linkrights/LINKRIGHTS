@@ -11,8 +11,14 @@ import Link from 'next/link';
 import { Icon } from './Icon';
 import { NoResultActions } from './NoResultActions';
 import { OrgCard } from './OrgCard';
+import { SubmitForm, type SubmitFormLabels } from './SubmitForm';
 import type { Locale, Messages } from '@/lib/i18n';
 import type { Organization } from '@/lib/types';
+
+/** 글 보내기 칸에 넘길 문구만 골라 담습니다. (messages 의 forms 묶음) */
+function formLabels(t: Messages): SubmitFormLabels {
+  return { ...t.forms };
+}
 
 export function NoResultHelp({
   t,
@@ -27,6 +33,7 @@ export function NoResultHelp({
   suggestions = [],
   onSuggestion,
   materialHref,
+  canSubmit = false,
   region,
 }: {
   t: Messages;
@@ -48,6 +55,8 @@ export function NoResultHelp({
   onSuggestion?: (text: string) => void;
   /** 자료 추가 요청 메일 (mailto:). 없으면 보여주지 않습니다. */
   materialHref?: string;
+  /** 사이트에서 바로 보내는 칸을 쓸 수 있는지 (관리자 데이터베이스가 연결되어 있을 때) */
+  canSubmit?: boolean;
   /** 질문에 나온 지역에 등록된 기관이 있을 때만 (서버가 등록된 지역 이름으로만 찾습니다) */
   region?: { key: string; label: string; count: number };
 }) {
@@ -114,14 +123,37 @@ export function NoResultHelp({
         </div>
       )}
 
-      {/* 필요한 자료가 없다면: 공식 이메일로 자료 추가 요청 */}
-      {materialHref && (
+      {/* 필요한 자료가 없다면: 사이트에서 바로 자료 추가 요청 (칸을 쓸 수 없으면 예전처럼 메일) */}
+      {(canSubmit || materialHref) && (
         <div className="mt-6 rounded-[var(--radius-control)] border border-[var(--color-line)] bg-white p-4">
           <p className="text-[15px] font-bold text-ink-900">{t.materialRequest.noneTitle}</p>
-          <p className="mt-1 text-sm leading-relaxed text-ink-500">{t.materialRequest.body}</p>
-          <a href={materialHref} className="lr-btn lr-btn-ghost lr-btn-sm lr-press mt-3">
-            <Icon name="message" size={16} /> {t.materialRequest.cta}
-          </a>
+          <p className="mt-1 text-sm leading-relaxed text-ink-500">
+            {canSubmit ? t.materialRequest.formBody : t.materialRequest.body}
+          </p>
+          {canSubmit ? (
+            <details className="group mt-3">
+              <summary className="lr-btn lr-btn-ghost lr-btn-sm lr-press cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                <Icon name="message" size={16} /> {t.materialRequest.cta}
+                <span className="transition-transform group-open:rotate-180" aria-hidden="true">
+                  ▾
+                </span>
+              </summary>
+              <div className="mt-4 border-t border-[var(--color-line)] pt-4">
+                <SubmitForm
+                  kind="correction"
+                  detail="material"
+                  locale={locale}
+                  labels={formLabels(t)}
+                  withTitle={false}
+                  rows={4}
+                />
+              </div>
+            </details>
+          ) : (
+            <a href={materialHref} className="lr-btn lr-btn-ghost lr-btn-sm lr-press mt-3">
+              <Icon name="message" size={16} /> {t.materialRequest.cta}
+            </a>
+          )}
         </div>
       )}
 

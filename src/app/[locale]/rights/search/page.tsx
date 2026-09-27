@@ -14,6 +14,7 @@ import Link from 'next/link';
 import { ArticleCard } from '@/components/ArticleCard';
 import { Icon } from '@/components/Icon';
 import { NoResultHelp } from '@/components/NoResultHelp';
+import { canSubmit } from '@/components/SubmitBox';
 import { MAX_SEARCH_LENGTH, RightsSearchForm } from '@/components/RightsSearchForm';
 import { PageHeader, Section } from '@/components/Section';
 import { OrgCard } from '@/components/OrgCard';
@@ -31,7 +32,14 @@ import { materialRequestHref } from '@/lib/materialRequest';
 import { organizationArea } from '@/lib/regions';
 import { detectEmergency } from '@/lib/emergency';
 import { getMessages, pick, toLocale } from '@/lib/i18n';
-import { findByRegisteredKeyword, findEvidence, findRelevantArticles, findSimilarArticles, searchSuggestions } from '@/lib/search';
+import {
+  findByRegisteredKeyword,
+  findEvidence,
+  findOrganizationsByKeyword,
+  findRelevantArticles,
+  findSimilarArticles,
+  searchSuggestions,
+} from '@/lib/search';
 import type { Locale, RightsArticle } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
@@ -109,7 +117,12 @@ export default async function RightsSearchPage({
   const linkedOrgs = resolveOrganizations([...new Set(direct.flatMap((article) => article.organizations))])
     .filter((org) => !org.emergency && organizationArea(org).nationwide)
     .slice(0, 3);
-  const total = direct.length + possible.length + similar.length + checklists.length + qnaPosts.length;
+  // 검색어의 낱말이 설명에 들어 있는 등록 기관 (예: "통번역" → 가족센터). 권리정보에 맞는 글이 없어도 기관은 찾아 줍니다.
+  const keywordOrgs = q
+    ? findOrganizationsByKeyword(q, 6).filter((org) => !linkedOrgs.some((linked) => linked.id === org.id))
+    : [];
+  const total =
+    direct.length + possible.length + similar.length + checklists.length + qnaPosts.length + keywordOrgs.length;
   // 결과가 없을 때: 제목·상황·할 일에 비슷한 낱말이 있는 등록 권리정보(링크만)와, 누구나 이용할 수 있는 청소년 상담 기관(등록 기관)
   const similarLinks =
     q && total === 0
@@ -269,9 +282,10 @@ export default async function RightsSearchPage({
               {total > 0 && (
                 <section className="mt-10">
                   <h3 className="text-lg font-bold text-ink-900">{t.search.orgsTitle}</h3>
-                  {linkedOrgs.length > 0 && (
+                  {/* 찾은 권리정보에 연결된 기관 + 검색어의 낱말이 설명에 들어 있는 등록 기관 */}
+                  {[...linkedOrgs, ...keywordOrgs].length > 0 && (
                     <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                      {linkedOrgs.map((org) => (
+                      {[...linkedOrgs, ...keywordOrgs].map((org) => (
                         <li key={org.id}>
                           <OrgCard org={org} locale={locale} compact />
                         </li>
@@ -296,6 +310,7 @@ export default async function RightsSearchPage({
                     generalHelp={generalHelp}
                     askHref={`/${locale}/ask`}
                     materialHref={materialHref}
+                    canSubmit={canSubmit()}
                   />
                 </div>
               )}

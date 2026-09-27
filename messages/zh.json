@@ -233,7 +233,8 @@
     "subject": "[LINKRIGHTS 资料增加申请]",
     "subjectWithTitle": "[LINKRIGHTS 资料增加申请] {title}",
     "mailBody": "希望能增加以下内容的资料。\n\n- 想了解的主题：\n- 希望有的内容：\n",
-    "mailBodyPage": "希望能增加以下内容的资料。\n\n- 正在看的权利信息：{title}\n- 希望有的内容：\n"
+    "mailBodyPage": "希望能增加以下内容的资料。\n\n- 正在看的权利信息：{title}\n- 希望有的内容：\n",
+    "formBody": "请告诉我们你希望补充的内容。写在下面发送，运营团队会查看。不用填写姓名、联系方式等个人信息。"
   },
   "homeUpdates": {
     "title": "最近新增或审核的内容",
@@ -298,7 +299,7 @@
     "viewList": "查看已保存的全部内容"
   },
   "callScript": {
-    "title": "打电话前，可以这样说",
+    "title": "电话接通后可以这样说",
     "intro": "第一次打电话不知道从哪里说起时，可以参考下面的句子。这只是参考示例，不能代替机构的咨询。",
     "line1": "您好，我有事情想咨询，所以打了电话。",
     "line1Topic": "您好，我想咨询有关{topic}的问题。",
@@ -347,6 +348,8 @@
     "rights": "歧视·人权"
   },
   "answerUi": {
+    "registeredOrgsTitle": "在已登记的机构中找到了",
+    "registeredOrgsNote": "这些已登记机构的介绍中出现了你写的词。能否使用、什么时候开放，请直接向机构询问。",
     "situation": "现在的情况",
     "checks": "请先确认",
     "rights": "我应该知道的权利",
@@ -626,7 +629,9 @@
       "签证延期",
       "医院",
       "劳动合同",
-      "歧视"
+      "歧视",
+      "韩语教育",
+      "口笔译"
     ],
     "resultsFor": "“{q}”的搜索结果",
     "resultCount": "{n}条",

@@ -85,6 +85,7 @@ EVIDENCE RULES (most important)
 - Keep each document's <limits>. Never make a statement stronger or broader than the document.
 - If no document fits, or <retrieved_documents> is empty, that is a normal result. Do not complete the answer by guessing. Return "rights": [], "sources": [] and "organizations": [], still give everyday safe steps in "actions", and say briefly and honestly in "limitations" that LINKRIGHTS does not have registered information for this exact situation yet.
 - When there is no document, still answer about what the user actually asked, not about something general. Name their own subject in "summary" and in "limitations" using their words, for example "울산에서 한국어 교육을 어디에서 받을 수 있는지" or "댄스 연습 공간". If <mentioned_region> is given, say the place too, for example "지금 LINKRIGHTS에는 울산의 한국어 교육 정보가 등록되어 있지 않아요". Never turn this into a general sentence such as "관련 정보가 없습니다" alone.
+- <registered_organizations_found count="N"/> means the server found N registered organisations whose own registered description matches the user's words, and the site shows them as cards directly under your answer. When it is present, do NOT say that LINKRIGHTS has no registered information about this subject or this region. Instead write in "limitations" that some registered places are shown below and what the user can ask them about, for example "아래에 등록된 곳들이 있어요. 통번역을 받을 수 있는지, 언제 이용할 수 있는지 물어보세요". Still never name them or describe what they do: the cards do that, and "organizations" stays as it is.
 - With no document, make "actions" fit that subject: what the user can check or ask for themselves (for example opening hours, cost, how to apply, what level or documents are needed, whether it is open to their age or visa), where such information is usually announced (a school, a local public office, a community centre or the organisation's own notice), and what to write down before asking. Keep every step safe and general: never name an organisation, a programme, a website, a phone number or an address that is not in <allowed_organizations>, and never say that a specific place exists in that region.
 - Everyday safe steps that need no document: writing down what happened with dates, keeping messages or records, talking to a trusted teacher, school counsellor or guardian, and taking care of your safety. Do not attach laws, reporting procedures or organisations to these steps.
 - "checks": 0 to 3 facts the user should check first because the right next step depends on them. Take them only from <applies_when>, <limits> or <actions> of the documents you used, or from <unconfirmed> in <query_understanding>. Write each one as a short thing to check, not as a question, for example "체류기간이 끝나는 날짜를 확인해 보세요". Never invent conditions, document names, deadlines or requirements that the documents do not state. The server removes checks that contain a question mark.
@@ -337,6 +338,12 @@ export function buildContext(
   situations: ContextSituation[] = [],
   /** 질문에 나온 등록된 시·도 이름 (없으면 빈 글자). 근거가 아니라 "무엇을 묻는지" 되짚어 주기 위한 힌트입니다. */
   regionLabel = '',
+  /**
+   * 질문의 낱말이 설명에 들어 있는 등록 기관을 서버가 몇 곳 찾았는지.
+   * 그 기관 카드는 서버가 등록 자료 그대로 답변 아래에 보여줍니다. (AI는 이름을 말하지 않습니다)
+   * 자료가 없다고만 답하지 않도록, "몇 곳 있다"는 사실만 알려 줍니다.
+   */
+  registeredOrganizationsFound = 0,
 ): string {
   const documents: string[] = [];
   let length = 0;
@@ -369,6 +376,9 @@ export function buildContext(
     '',
     `<allowed_category_ids>${escapeXml([...categoryIds, 'other'].join(', '))}</allowed_category_ids>`,
     ...(regionLabel ? ['', `<mentioned_region>${escapeXml(regionLabel)}</mentioned_region>`] : []),
+    ...(registeredOrganizationsFound > 0
+      ? ['', `<registered_organizations_found count="${registeredOrganizationsFound}" />`]
+      : []),
   ].join('\n');
 }
 

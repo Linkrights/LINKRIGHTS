@@ -48,7 +48,7 @@ import {
   scrubBlocks,
   type Allowlist,
 } from '@/lib/sanitize';
-import { findEvidence, findSimilarArticles, fallbackArticles } from '@/lib/search';
+import { findEvidence, findOrganizationsByKeyword, findSimilarArticles, fallbackArticles } from '@/lib/search';
 import type {
   AiAnswer,
   AiRight,
@@ -81,6 +81,8 @@ const MAX_ACTIONS = 4;
 const MAX_ORGANIZATIONS = 2;
 /** possible 자료에만 연결된 기관은 AI가 직접 고른 경우에만, 최대 1곳까지 보여줍니다. */
 const MAX_POSSIBLE_ORGANIZATIONS = 1;
+/** 근거 자료에 연결된 기관이 없을 때, 질문의 낱말로 찾은 등록 기관을 최대 몇 곳까지 보여줄지 */
+const MAX_SUGGESTED_ORGANIZATIONS = 3;
 /** possible 자료에서 온 권리는 조건을 붙여 쓴 것만, 최대 2개까지 보여줍니다. (짧은 설명만으로 권리를 단정하지 않도록) */
 const MAX_POSSIBLE_RIGHTS = 2;
 /** 답변에 쓰지 않았지만 함께 볼 수 있는 등록 권리정보 링크 수 */
@@ -247,6 +249,11 @@ export async function POST(request: Request) {
   const mentionedRegion = findRegionInText(question);
   const regionLabel = mentionedRegion ? pick(mentionedRegion.name, locale) : '';
 
+  // 등록된 기관 중 질문의 낱말이 설명에 들어 있는 곳 (예: "울산 통번역" → 울산남구가족센터의 결혼이민자 통번역서비스)
+  // 권리정보에 맞는 글이 없어도 등록된 기관은 안내할 수 있어야 해서 따로 찾습니다.
+  // AI에게는 "몇 곳 찾았는지"만 알려 주고(없다고 단정하지 않도록), 기관 카드는 서버가 등록 자료 그대로 보여줍니다.
+  const keywordOrganizations = findOrganizationsByKeyword(searchText, MAX_SUGGESTED_ORGANIZATIONS);
+
   const context = buildContext(
     evidence.map((match) => ({
       article: match.article,
@@ -259,6 +266,7 @@ export async function POST(request: Request) {
     categoryIds,
     situations,
     regionLabel,
+    keywordOrganizations.length,
   );
 
   // --- 5) AI 호출 ---
@@ -437,6 +445,13 @@ export async function POST(request: Request) {
       ).length
     : 0;
 
+  // AI가 고른 기관이 없을 때만, 낱말로 찾은 등록 기관을 카드로 함께 보여줍니다.
+  // (AI가 만든 것이 아니라 등록된 기관 목록에서 그대로 가져온 것입니다)
+  const suggestedOrganizations =
+    orgIds.length === 0
+      ? keywordOrganizations.filter((org) => !shownOrganizations.some((shown) => shown.id === org.id))
+      : [];
+
   return json({
     ok: true,
     mode: 'ai',
@@ -445,6 +460,7 @@ export async function POST(request: Request) {
     related,
     suggestions,
     organizations: shownOrganizations,
+    suggestedOrganizations,
     sources,
     region: mentionedRegion && regionOrgCount > 0 ? { key: mentionedRegion.key, label: regionLabel, count: regionOrgCount } : undefined,
     emergency: emergency

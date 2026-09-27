@@ -443,6 +443,11 @@ export interface AskApiSuccess {
   suggestions?: string[];
   /** 화면에 그대로 그릴 수 있도록 서버가 채워 넣은 기관 정보 */
   organizations: Organization[];
+  /**
+   * 근거 자료에 연결된 기관이 없을 때, 질문의 낱말이 설명에 들어 있는 등록 기관 (서버가 찾습니다).
+   * AI가 고르거나 만든 것이 아니라 content/organizations*.json 에 등록된 기관 그대로입니다.
+   */
+  suggestedOrganizations?: Organization[];
   /** 근거로 사용한 권리정보 (제목, 링크, 검토일) */
   sources: { id: string; title: string; href: string; reviewed_at: string; sources: RightsSource[] }[];
   /**

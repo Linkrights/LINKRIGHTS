@@ -54,6 +54,10 @@ const JOIN_LABELS: Record<string, string> = {
   mentee: '멘티(청소년)',
   mentor: '대학생 멘토',
   partner: '학교·기관',
+  // 정보 수정 제보가 어느 화면에서 왔는지
+  material: '자료 추가 요청',
+  organizations: '도움받을 수 있는 곳 화면',
+  ask: 'AI 답변 화면',
 };
 
 export function AdminClient({ ready }: { ready: { admin: boolean; db: boolean } }) {

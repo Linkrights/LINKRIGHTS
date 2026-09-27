@@ -741,7 +741,13 @@ async function runDeterministic() {
       const messages = JSON.parse(fs.readFileSync(path.join(ROOT, 'messages', `${locale}.json`), 'utf8'));
       for (const term of messages.search?.examples ?? []) {
         const { matches } = search.findEvidence(term, { direct: 12, possible: 6, total: 18 });
-        check(`권리정보 검색 예시(${locale}): "${term}" 결과 있음`, matches.length > 0, matches.map((m) => m.article.id).join(', ') || '없음');
+        // 검색 화면은 권리정보와 등록 기관을 함께 보여줍니다. (예: "통번역" → 가족센터)
+        const orgs = search.findOrganizationsByKeyword(term, 6);
+        check(
+          `권리정보 검색 예시(${locale}): "${term}" 결과 있음`,
+          matches.length > 0 || orgs.length > 0,
+          [...matches.map((m) => m.article.id), ...orgs.map((o) => o.id)].join(', ') || '없음',
+        );
       }
       check(`권리정보 검색 예시(${locale}): 예시 낱말이 있음`, (messages.search?.examples ?? []).length > 0);
     }
@@ -1084,6 +1090,8 @@ async function runDeterministic() {
     }
   }
 
+  await checkSuggestedOrganizations(makeApi(rulebreakingAnswer).ask);
+
   return table;
 }
 
@@ -1203,11 +1211,61 @@ function checkSubmitRules() {
   check('7-17 비밀번호가 없으면 관리자 기능은 꺼져 있다', auth.hasAdmin() === false && auth.verifyToken(token.value) === false);
 }
 
+
+// ---------------------------------------------------------------------------
+// 8. 등록된 기관을 낱말로 찾기
+//    권리정보에 맞는 글이 없어도, 등록된 기관 설명에 그 말이 있으면 찾아내야 합니다.
+//    (피드백: "울산, 세종 등 조사한 기관 중 통번역을 지원해주는 기관이 있는데 등록된 정보가 없다고 뜹니다")
+// ---------------------------------------------------------------------------
+function checkOrgKeywordSearch() {
+  const runtime = createRuntime(async () => {
+    throw new Error('이 검사에서는 바깥으로 연결하지 않습니다.');
+  });
+  const { findOrganizationsByKeyword } = runtime.load('src/lib/search.ts');
+  const ids = (query, limit) => findOrganizationsByKeyword(query, limit).map((org) => org.id);
+
+  const ulsan = ids('울산 통번역');
+  check('8-1 "울산 통번역" 으로 울산 기관을 찾는다', ulsan.length > 0, ulsan.join(', ') || '찾지 못함');
+  check(
+    '8-2 찾은 기관이 실제로 울산 기관이다',
+    ulsan.length > 0 && ulsan.every((id) => id.startsWith('ulsan-')),
+    ulsan.join(', '),
+  );
+  const koreanClass = ids('세종 한국어교육');
+  check('8-3 "세종 한국어교육" 으로도 찾는다', koreanClass.length > 0, koreanClass.join(', ') || '찾지 못함');
+  check('8-4 지역 이름만 적으면 여기에서는 찾지 않는다 (지역 목록으로 안내)', ids('울산').length === 0);
+  check('8-5 아무 말이나 적으면 찾지 않는다', ids('zzzqqq 없는말').length === 0);
+  check('8-6 긴급 번호는 고르지 않는다', ids('폭력 신고', 10).every((id) => !['police-112', 'fire-119', 'school-violence-117'].includes(id)));
+  check('8-7 개수 제한을 지킨다', ids('상담', 2).length <= 2);
+  const interpreters = ids('통번역', 6);
+  check('8-8 지역을 말하지 않아도 등록된 기관을 찾는다', interpreters.length > 0, interpreters.join(', ') || '찾지 못함');
+}
+
+
+// ---------------------------------------------------------------------------
+// 9. 근거 자료가 없어도 등록된 기관은 안내한다
+//    "울산 통번역"처럼 권리정보에는 맞는 글이 없어도, 등록된 기관 설명에 그 말이 있으면 카드로 보여줘야 합니다.
+//    AI에게는 "몇 곳 찾았는지"만 알려 주고, 기관을 고르게 하지 않습니다. (등록 자료 그대로 보여줍니다)
+// ---------------------------------------------------------------------------
+async function checkSuggestedOrganizations(ask) {
+  const { body } = await ask({ question: '울산 통번역', locale: 'ko' });
+  const suggested = body.suggestedOrganizations ?? [];
+  check('9-1 자료가 없을 때도 등록 기관을 함께 보여준다', suggested.length > 0, suggested.map((o) => o.id).join(', ') || '없음');
+  check('9-2 보여주는 기관은 등록된 울산 기관이다', suggested.length > 0 && suggested.every((o) => o.id.startsWith('ulsan-')), suggested.map((o) => o.id).join(', '));
+  check('9-3 긴급 번호는 섞이지 않는다', suggested.every((o) => o.category !== 'emergency'));
+  check('9-4 AI가 고른 기관 칸은 비어 있다 (등록 기관은 따로 보여줍니다)', body.answer.organizations.length === 0);
+
+  // 근거 자료를 쓴 질문에서는 이 칸을 쓰지 않습니다. (AI가 고른 기관만 보여줍니다)
+  const paid = await ask({ question: '알바비를 못 받았어요', locale: 'ko' });
+  check('9-5 근거 자료가 있을 때는 등록 기관 칸을 쓰지 않는다', (paid.body.suggestedOrganizations ?? []).length === 0);
+}
+
 if (LIVE) {
   await runLive();
 } else {
   const table = await runDeterministic();
   checkSubmitRules();
+  checkOrgKeywordSearch();
   console.log('\n질문별로 AI에게 전달되는 자료');
   for (const row of table) {
     console.log(`  [${row.n}] ${row.q}`);

@@ -169,6 +169,7 @@ function ResultView({
   onSuggestion,
   onNewSuggestion,
   contactEmail,
+  canSubmit = false,
   glossaryTerms = [],
   generalHelp = [],
   categoryNames = {},
@@ -189,6 +190,8 @@ function ResultView({
   onNewSuggestion?: (text: string) => void;
   /** 자료 추가 요청 메일을 받을 공식 이메일 (content/site.json) */
   contactEmail?: string;
+  /** 사이트에서 바로 보내는 칸을 쓸 수 있는지 */
+  canSubmit?: boolean;
   /** 쉬운 말 풀이 용어 (content/glossary.json). 답변에 나온 용어만 골라 옆에 보여주며, 답변 내용은 바꾸지 않습니다. */
   glossaryTerms?: GlossaryTerm[];
   /** 누구나 이용할 수 있는 청소년 상담 기관 (등록 기관, 자료가 없을 때만 보여줌) */
@@ -283,6 +286,12 @@ function ResultView({
 
       {result.ok && answer && (
         <article className="lr-card lr-appear overflow-hidden">
+          {/* 답변 전체를 소리로 듣기: 한 번 누르면 아래 내용을 이어서 읽습니다.
+              (번호마다 따로 읽어주는 것이 아니라 전체를 읽으므로 맨 위에 둡니다) */}
+          <div className="border-b border-[var(--color-line)] px-5 py-3 sm:px-7">
+            <ReadAloud blocks={readBlocks} locale={locale} labels={t.readAloud} />
+          </div>
+
           {/* ① 지금 상황 */}
           <div className="border-b border-[var(--color-line)] bg-surface-soft px-5 py-5 sm:px-7 sm:py-6">
             <PartHeading n={n('situation')} title={a.situation} level="h2" />
@@ -293,10 +302,6 @@ function ResultView({
                 <span>{t.ask.evidencePossibleNote}</span>
               </p>
             )}
-            {/* 답변을 소리로 듣기: 화면에 보이는 글을 그대로 읽습니다. (한국어는 1331 같은 번호를 수로 읽습니다) */}
-            <div className="mt-4">
-              <ReadAloud blocks={readBlocks} locale={locale} labels={t.readAloud} />
-            </div>
           </div>
 
           <div className="space-y-9 px-5 py-6 sm:px-7 sm:py-8">
@@ -368,8 +373,23 @@ function ResultView({
                 suggestions={result.suggestions ?? []}
                 onSuggestion={onNewSuggestion}
                 materialHref={materialHref}
+              canSubmit={canSubmit}
                 region={result.region}
               />
+            )}
+
+            {/* 등록된 기관 중 질문의 낱말과 맞는 곳: 근거 자료가 없어도 등록 기관은 안내합니다.
+                (AI가 고른 것이 아니라 등록된 기관 목록에서 찾은 것이라, 따로 알려 줍니다) */}
+            {(result.suggestedOrganizations ?? []).length > 0 && (
+              <section>
+                <h3 className="lr-h3">{a.registeredOrgsTitle}</h3>
+                <p className="mt-1 text-sm leading-relaxed text-ink-500">{a.registeredOrgsNote}</p>
+                <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                  {(result.suggestedOrganizations ?? []).map((org) => (
+                    <OrgCard key={org.id} org={org} locale={locale} compact />
+                  ))}
+                </div>
+              </section>
             )}
 
             {/* ⑤ 도움받을 수 있는 곳 (근거 자료와 연결된 기관이 있을 때만) */}
@@ -542,6 +562,7 @@ export function AskClient({
   generalHelp = [],
   categoryNames = {},
   contactEmail,
+  canSubmit = false,
 }: {
   locale: Locale;
   examples: string[];
@@ -555,6 +576,8 @@ export function AskClient({
   categoryNames?: Record<string, string>;
   /** 자료 추가 요청 메일을 받을 공식 이메일 (content/site.json 의 contactEmail) */
   contactEmail?: string;
+  /** 사이트에서 바로 보내는 칸을 쓸 수 있는지 (관리자 데이터베이스가 연결되어 있을 때) */
+  canSubmit?: boolean;
 }) {
   const t = getMessages(locale);
   const [question, setQuestion] = useState(initialQuestion);
@@ -866,6 +889,7 @@ export function AskClient({
               onSuggestion={index === turns.length - 1 && canFollowUp && !loading ? askSuggestion : undefined}
               onNewSuggestion={index === turns.length - 1 && !loading ? askNewSuggestion : undefined}
               contactEmail={contactEmail}
+              canSubmit={canSubmit}
             />
           </div>
         ))}

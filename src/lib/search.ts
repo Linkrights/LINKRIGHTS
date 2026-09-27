@@ -12,7 +12,10 @@
 //  4) 상황 사전 (content/search-intents.json: 구어체·짧은 표현 → 등록 글, direct / possible)
 //  5) 자료를 못 찾았을 때만: 제목·요약·상황·권리·할 일 제목에 비슷한 낱말이 있는 글을 "링크로만" 제안 (findSimilarArticles)
 
-import { getGroundingArticles, getSearchIntents, getSearchSynonyms, resolveArticle } from './content';
+import { cache } from 'react';
+import { getGroundingArticles, getOrganizations, getSearchIntents, getSearchSynonyms, resolveArticle } from './content';
+import { findOrgMatches, type OrgSearchItem } from './orgSearch';
+import { organizationArea } from './regions';
 // 글자를 비교하는 방법(조사·어미 정리, 낱말 경계)은 searchText.ts 에 모아 두고 브라우저 검색과 함께 씁니다.
 import {
   compact,
@@ -24,7 +27,14 @@ import {
   stem,
   termInQuery,
 } from './searchText';
-import { LOCALES, type EvidenceTier, type Locale, type RightsArticle, type SearchIntent } from './types';
+import {
+  LOCALES,
+  type EvidenceTier,
+  type Locale,
+  type Organization,
+  type RightsArticle,
+  type SearchIntent,
+} from './types';
 
 /** 어느 글에나 흔하게 나오는 말입니다. 제목·요약 점수 계산에서 뺍니다. */
 const COMMON_WORDS = new Set([
@@ -409,6 +419,41 @@ export function searchSuggestions(locale: Locale, limit = 24): string[] {
     }
   }
   return [...terms];
+}
+
+/**
+ * 등록된 기관을 낱말로 찾습니다. (권리정보에 맞는 글이 없어도, 기관 설명에 그 말이 있으면 찾아냅니다)
+ *
+ * 예) "울산 통번역" → 울산남구가족센터(결혼이민자 통번역서비스)
+ * 새 기관을 만들지 않고 content/organizations*.json 에 등록된 글자만 봅니다. 긴급 번호는 고르지 않습니다.
+ */
+const orgSearchItems = cache((): OrgSearchItem[] =>
+  getOrganizations().map((org) => {
+    const area = organizationArea(org);
+    return {
+      id: org.id,
+      // 어떤 언어로 물어도 찾을 수 있도록 등록된 모든 언어의 글을 이어 붙입니다.
+      text: [
+        ...LOCALES.map((code) => org.name[code] ?? ''),
+        ...LOCALES.map((code) => org.description[code] ?? ''),
+        ...LOCALES.map((code) => org.area?.[code] ?? ''),
+        ...(org.keywords ?? []),
+        ...(org.topics ?? []),
+      ]
+        .filter(Boolean)
+        .join(' '),
+      regions: area.regions,
+      nationwide: area.nationwide,
+      emergency: Boolean(org.emergency),
+    };
+  }),
+);
+
+export function findOrganizationsByKeyword(query: string, limit = 3): Organization[] {
+  const ids = findOrgMatches(orgSearchItems(), query, limit);
+  if (ids.length === 0) return [];
+  const byId = new Map(getOrganizations().map((org) => [org.id, org]));
+  return ids.map((id) => byId.get(id)).filter((org): org is Organization => Boolean(org));
 }
 
 /** 관련 글을 하나도 못 찾았을 때 보여줄 기본 목록 */

@@ -2,6 +2,7 @@
 
 import type { Metadata } from 'next';
 import { AskClient } from '@/components/AskClient';
+import { canSubmit } from '@/components/SubmitBox';
 import { PageHeader } from '@/components/Section';
 import { getGlossary, getNationwideOrganizations, getRightsCategories, getSite } from '@/lib/content';
 import { getMessages, pick, toLocale } from '@/lib/i18n';
@@ -50,6 +51,7 @@ export default async function AskPage({
         generalHelp={generalHelp}
         categoryNames={categoryNames}
         contactEmail={site.contactEmail}
+        canSubmit={canSubmit()}
       />
     </>
   );

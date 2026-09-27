@@ -233,7 +233,8 @@
     "subject": "[LINKRIGHTS yêu cầu bổ sung thông tin]",
     "subjectWithTitle": "[LINKRIGHTS yêu cầu bổ sung thông tin] {title}",
     "mailBody": "Tôi mong có thêm thông tin về nội dung sau.\n\n- Chủ đề tôi muốn tìm hiểu:\n- Nội dung tôi mong có:\n",
-    "mailBodyPage": "Tôi mong có thêm thông tin về nội dung sau.\n\n- Thông tin quyền tôi đang xem: {title}\n- Nội dung tôi mong có:\n"
+    "mailBodyPage": "Tôi mong có thêm thông tin về nội dung sau.\n\n- Thông tin quyền tôi đang xem: {title}\n- Nội dung tôi mong có:\n",
+    "formBody": "Hãy cho chúng tôi biết bạn mong có thêm nội dung nào. Viết vào ô bên dưới, nhóm vận hành sẽ xem. Bạn không cần ghi tên hay thông tin liên lạc."
   },
   "homeUpdates": {
     "title": "Mới thêm hoặc mới kiểm tra gần đây",
@@ -298,7 +299,7 @@
     "viewList": "Xem tất cả mục đã lưu"
   },
   "callScript": {
-    "title": "Trước khi gọi, hãy thử nói như thế này",
+    "title": "Khi đã kết nối, bạn có thể nói thế này",
     "intro": "Nếu bạn không biết bắt đầu cuộc gọi thế nào, hãy tham khảo các câu dưới đây. Đây chỉ là ví dụ tham khảo, không thay thế tư vấn của cơ quan.",
     "line1": "Xin chào. Tôi gọi vì có việc muốn được tư vấn.",
     "line1Topic": "Xin chào. Tôi gọi vì muốn được tư vấn về {topic}.",
@@ -347,6 +348,8 @@
     "rights": "Phân biệt đối xử & nhân quyền"
   },
   "answerUi": {
+    "registeredOrgsTitle": "Tìm thấy trong danh sách đã đăng ký",
+    "registeredOrgsNote": "Phần giới thiệu của những nơi này có chứa từ bạn đã viết. Hãy hỏi trực tiếp xem bạn có dùng được không và giờ mở cửa.",
     "situation": "Tình huống hiện tại",
     "checks": "Cần kiểm tra trước",
     "rights": "Quyền bạn cần biết",
@@ -626,7 +629,9 @@
       "gia hạn visa",
       "bệnh viện",
       "hợp đồng lao động",
-      "phân biệt đối xử"
+      "phân biệt đối xử",
+      "học tiếng Hàn",
+      "phiên dịch"
     ],
     "resultsFor": "Kết quả cho “{q}”",
     "resultCount": "{n} kết quả",
