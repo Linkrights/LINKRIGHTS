@@ -36,8 +36,9 @@
     },
     "status": "published",
     "owner": "운영팀",
-    "reviewed_at": "2026-09-06",
-    "source_url": "https://www.police.go.kr"
+    "reviewed_at": "2026-09-27",
+    "source_url": "https://www.police.go.kr",
+    "report_url": "https://www.112.go.kr"
   },
   {
     "id": "fire-119",
@@ -77,8 +78,9 @@
     },
     "status": "published",
     "owner": "운영팀",
-    "reviewed_at": "2026-09-06",
-    "source_url": "https://www.nfa.go.kr"
+    "reviewed_at": "2026-09-27",
+    "source_url": "https://www.nfa.go.kr",
+    "report_url": "https://www.119.go.kr"
   },
   {
     "id": "youth-1388",
@@ -262,8 +264,9 @@
     },
     "status": "published",
     "owner": "운영팀",
-    "reviewed_at": "2026-09-06",
-    "source_url": "https://www.safe182.go.kr"
+    "reviewed_at": "2026-09-27",
+    "source_url": "https://www.safe182.go.kr",
+    "report_url": "https://www.safe182.go.kr/cont/homeLogContents.do?contentsNm=report_info_117"
   },
   {
     "id": "moel-1350",
@@ -884,5 +887,117 @@
     "owner": "운영팀",
     "reviewed_at": "2026-09-21",
     "source_url": "https://www.chingune.or.kr"
+  },
+  {
+    "id": "seoul-youth-counseling",
+    "category": "youth",
+    "emergency": false,
+    "name": {
+      "ko": "서울시청소년상담복지센터",
+      "en": "Seoul Youth Counseling and Welfare Center",
+      "zh": "首尔市青少年咨询福利中心",
+      "vi": "Trung tâm Tư vấn và Phúc lợi Thanh thiếu niên Seoul"
+    },
+    "description": {
+      "ko": "서울에 사는 만 9~24세 청소년이 학교, 친구, 가족, 마음 문제를 상담할 수 있어요. 학교를 다니지 않는 청소년을 돕는 꿈드림을 서울 25개 자치구 센터와 함께 운영해요.",
+      "en": "Counselling for young people aged 9-24 in Seoul about school, friends, family and how they feel. It also runs Kkumdream, the support programme for out-of-school youth, with the centres in Seoul’s 25 districts.",
+      "zh": "居住在首尔的9~24岁青少年可就学校、朋友、家庭、心理等问题进行咨询。并与首尔25个自治区中心一起运营帮助校外青少年的“Kkumdream（꿈드림）”。",
+      "vi": "Tư vấn cho thanh thiếu niên 9-24 tuổi sống ở Seoul về trường học, bạn bè, gia đình và tâm trạng. Trung tâm cũng vận hành Kkumdream - chương trình hỗ trợ thanh thiếu niên ngoài nhà trường - cùng các trung tâm ở 25 quận của Seoul."
+    },
+    "phone": "02-2285-1318",
+    "website": "https://www.teen1318.or.kr",
+    "address": {
+      "ko": "서울 중구 을지로11길 23 (수표동, 청소년회관) 7층",
+      "en": "7F Youth Center, 23 Eulji-ro 11-gil, Jung-gu, Seoul",
+      "zh": "首尔中区乙支路11街23（水标洞，青少年会馆）7层",
+      "vi": "Tầng 7, Nhà Thanh thiếu niên, 23 Eulji-ro 11-gil, Jung-gu, Seoul"
+    },
+    "hours": {
+      "ko": "평일 09:00~21:00, 토 09:00~18:00 (사이버상담·1388 전화는 24시간)",
+      "en": "Weekdays 09:00-21:00, Sat 09:00-18:00 (online counselling and the 1388 line are open 24 hours)",
+      "zh": "工作日 09:00~21:00，周六 09:00~18:00（网络咨询和1388电话24小时）",
+      "vi": "Ngày thường 09:00-21:00, Thứ Bảy 09:00-18:00 (tư vấn trực tuyến và đường dây 1388 hoạt động 24 giờ)"
+    },
+    "languages": [],
+    "region": "서울",
+    "topics": [
+      "mental",
+      "education"
+    ],
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-27",
+    "source_url": "https://www.teen1318.or.kr/page/sub5_4"
+  },
+  {
+    "id": "seoul-global-center",
+    "category": "migrant",
+    "emergency": false,
+    "name": {
+      "ko": "서울글로벌센터 (서울외국인포털)",
+      "en": "Seoul Global Center (Seoul Foreign Residents Portal)",
+      "zh": "首尔全球中心（首尔外国人门户）",
+      "vi": "Trung tâm Toàn cầu Seoul (Cổng thông tin cư dân nước ngoài Seoul)"
+    },
+    "description": {
+      "ko": "서울시가 운영하는 외국인 주민 지원 센터예요. 서울외국인포털에서 출입국·체류, 주거, 취업, 의료, 교육 같은 분야별 안내와 이주배경청소년 맞춤 정보를 볼 수 있어요.",
+      "en": "A support centre for foreign residents run by the Seoul Metropolitan Government. Its portal has guidance by topic - immigration and residence, housing, work, health care, education - and a section for youth with a migration background.",
+      "zh": "首尔市运营的外国居民支援中心。可在首尔外国人门户查看出入境·居留、住房、就业、医疗、教育等分类指南，以及面向移民背景青少年的专属信息。",
+      "vi": "Trung tâm hỗ trợ cư dân nước ngoài do Chính quyền thành phố Seoul vận hành. Cổng thông tin có hướng dẫn theo lĩnh vực - xuất nhập cảnh và cư trú, nhà ở, việc làm, y tế, giáo dục - và mục dành cho thanh thiếu niên có nền tảng di trú."
+    },
+    "phone": "02-2075-4180",
+    "website": "https://global.seoul.go.kr",
+    "address": {
+      "ko": "서울 종로구 종로 38 서울글로벌센터빌딩 4·5층",
+      "en": "4-5F Seoul Global Center Building, 38 Jong-ro, Jongno-gu, Seoul",
+      "zh": "首尔钟路区钟路38 首尔全球中心大厦 4·5层",
+      "vi": "Tầng 4-5, Tòa nhà Seoul Global Center, 38 Jong-ro, Jongno-gu, Seoul"
+    },
+    "languages": [],
+    "region": "서울",
+    "topics": [
+      "visa",
+      "labor",
+      "education"
+    ],
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-27",
+    "source_url": "https://global.seoul.go.kr"
+  },
+  {
+    "id": "seoul-family-center",
+    "category": "migrant",
+    "emergency": false,
+    "name": {
+      "ko": "서울시가족센터",
+      "en": "Seoul Family Center",
+      "zh": "首尔市家庭中心",
+      "vi": "Trung tâm Gia đình Seoul"
+    },
+    "description": {
+      "ko": "서울 25개 자치구 가족센터를 잇는 광역 센터예요. 가족 상담과 가족 교육·문화 프로그램을 운영하고, 다문화가족 취업지원 같은 프로그램도 안내해요. 가까운 자치구 가족센터도 여기에서 찾을 수 있어요.",
+      "en": "The city-wide centre linking the family centres in Seoul’s 25 districts. It offers family counselling and family education and culture programmes, including employment support for multicultural families, and helps you find your nearest district family centre.",
+      "zh": "连接首尔25个自治区家庭中心的广域中心。提供家庭咨询与家庭教育·文化项目，并介绍多文化家庭就业支援等项目，也可在此查找就近的自治区家庭中心。",
+      "vi": "Trung tâm cấp thành phố kết nối các trung tâm gia đình ở 25 quận của Seoul. Nơi đây tư vấn gia đình, tổ chức chương trình giáo dục - văn hóa gia đình, giới thiệu chương trình hỗ trợ việc làm cho gia đình đa văn hóa và giúp bạn tìm trung tâm gia đình gần nhất."
+    },
+    "phone": "02-318-0227",
+    "website": "https://familyseoul.or.kr",
+    "address": {
+      "ko": "서울 중구 소파로4길 6",
+      "en": "6 Sopa-ro 4-gil, Jung-gu, Seoul",
+      "zh": "首尔中区小坡路4街6",
+      "vi": "6 Sopa-ro 4-gil, Jung-gu, Seoul"
+    },
+    "languages": [],
+    "region": "서울",
+    "topics": [
+      "family",
+      "education"
+    ],
+    "status": "published",
+    "owner": "운영팀",
+    "reviewed_at": "2026-09-27",
+    "source_url": "https://familyseoul.or.kr"
   }
 ]

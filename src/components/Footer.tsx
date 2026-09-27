@@ -247,7 +247,21 @@ export function Footer({ locale }: { locale: Locale }) {
             <p className="flex flex-wrap gap-x-2 gap-y-1">
               {partners.map((partner) => (
                 <span key={partner.id}>
-                  {pick(partner.relation, locale)}: {pick(partner.name, locale)}
+                  {pick(partner.relation, locale)}:{' '}
+                  {/* 등록된 공식 주소가 있으면 그 기관 누리집으로 바로 갑니다. */}
+                  {partner.url ? (
+                    <a
+                      href={partner.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${pick(partner.name, locale)} (${t.common.openInNew})`}
+                      className="font-semibold text-ink-700 hover:text-brand-700 hover:underline"
+                    >
+                      {pick(partner.name, locale)}
+                    </a>
+                  ) : (
+                    pick(partner.name, locale)
+                  )}
                 </span>
               ))}
             </p>

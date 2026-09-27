@@ -71,6 +71,13 @@ export function OrgCardView({
       : [];
   // 지도는 등록된 한국어 주소가 있을 때만 네이버 지도 검색으로 연결합니다. (지도 API·비용 없음)
   const mapHref = org.address?.ko ? `https://map.naver.com/p/search/${encodeURIComponent(org.address.ko)}` : '';
+  // 마우스를 쓰는 화면(PC)에서는 전화 버튼을 눌러도 전화가 걸리지 않고 빈 창만 뜹니다.
+  // 그래서 PC에서는 기관 누리집(없으면 등록된 공식 안내)을 먼저 보여주고, 번호는 글자로만 적습니다.
+  const pcLink = org.website
+    ? { href: org.website, label: org.finder ? t.orgInfo.findNearby : t.common.website }
+    : org.source_url
+      ? { href: org.source_url, label: t.orgInfo.officialInfo }
+      : null;
   // 홈페이지 버튼이 어디로 가는지 알 수 있게 주소(도메인)만 함께 적습니다.
   const siteHost = (() => {
     const url = org.website || org.source_url;
@@ -200,28 +207,53 @@ export function OrgCardView({
           </div>
         )}
         {(org.phone || org.website) && (
-          <div className="flex flex-wrap gap-2 border-t border-[var(--color-line)] pt-4">
-            {org.phone && (
-              <a
-                href={`tel:${org.phone.replace(/[^\d+]/g, '')}`}
-                aria-label={`${name} ${t.nav.emergencyCall} ${org.phone}`}
-                className="lr-btn lr-btn-primary flex-1 whitespace-nowrap"
-              >
-                <Icon name="phone" size={18} /> {org.phone}
-              </a>
-            )}
-            {org.website && (
-              <a
-                href={org.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${name} ${org.finder ? t.orgInfo.findNearby : t.common.website} (${t.common.openInNew})`}
-                className="lr-btn lr-btn-ghost flex-1 whitespace-nowrap"
-              >
-                <Icon name="external" size={18} /> {org.finder ? t.orgInfo.findNearby : t.common.website}
-              </a>
-            )}
-          </div>
+          <>
+            {/* 휴대폰(손으로 누르는 화면): 눌러서 바로 전화를 겁니다. */}
+            <div className="flex flex-wrap gap-2 border-t border-[var(--color-line)] pt-4 [@media(pointer:fine)]:hidden">
+              {org.phone && (
+                <a
+                  href={`tel:${org.phone.replace(/[^\d+]/g, '')}`}
+                  aria-label={`${name} ${t.nav.emergencyCall} ${org.phone}`}
+                  className="lr-btn lr-btn-primary flex-1 whitespace-nowrap"
+                >
+                  <Icon name="phone" size={18} /> {org.phone}
+                </a>
+              )}
+              {org.website && (
+                <a
+                  href={org.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${name} ${org.finder ? t.orgInfo.findNearby : t.common.website} (${t.common.openInNew})`}
+                  className="lr-btn lr-btn-ghost flex-1 whitespace-nowrap"
+                >
+                  <Icon name="external" size={18} /> {org.finder ? t.orgInfo.findNearby : t.common.website}
+                </a>
+              )}
+            </div>
+
+            {/* PC(마우스를 쓰는 화면): 눌러도 전화가 걸리지 않으므로 누리집을 먼저 두고,
+                전화번호는 보고 적을 수 있게 글자로만 보여줍니다. */}
+            <div className="hidden gap-2 border-t border-[var(--color-line)] pt-4 [@media(pointer:fine)]:flex [@media(pointer:fine)]:flex-wrap">
+              {pcLink && (
+                <a
+                  href={pcLink.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${name} ${pcLink.label} (${t.common.openInNew})`}
+                  className="lr-btn lr-btn-primary flex-1 whitespace-nowrap"
+                >
+                  <Icon name="external" size={18} /> {pcLink.label}
+                </a>
+              )}
+              {org.phone && (
+                <p className="lr-btn lr-btn-ghost flex-1 cursor-text select-text whitespace-nowrap">
+                  <Icon name="phone" size={18} /> <span className="sr-only">{t.common.phone} </span>
+                  {org.phone}
+                </p>
+              )}
+            </div>
+          </>
         )}
         {/* 어디로 이어지는 링크인지 주소를 함께 보여줍니다. (등록된 주소에서 그대로 가져옵니다) */}
         {siteHost && <p className="mt-2 text-[13px] text-ink-500">{siteHost}</p>}

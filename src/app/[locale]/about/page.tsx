@@ -83,6 +83,17 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
               (소개 메뉴에서 이 부분으로 바로 옵니다. 근거 자료는 content/about.json 의 youth_sources 에 등록된 것만 보여줍니다) */}
       <Section tone="soft" title={about.youth_title} id="why-youth">
         <p className="lr-lead max-w-3xl text-pretty">{about.youth_intro}</p>
+        {/* 공식 통계 수치: content/about.json 에 등록된 것만 보여주고, 출처는 아래 목록에 함께 적습니다. */}
+        {about.youth_stats && about.youth_stats.length > 0 && (
+          <dl className="mt-7 grid max-w-3xl gap-4 sm:grid-cols-2">
+            {about.youth_stats.map((stat) => (
+              <div key={stat.label} className="lr-card flex flex-col-reverse gap-1 p-5">
+                <dt className="text-sm font-semibold leading-relaxed text-ink-700">{stat.label}</dt>
+                <dd className="text-3xl font-extrabold tabular-nums tracking-tight text-brand-700">{stat.value}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
         <ol className="mt-8 grid gap-x-12 gap-y-8 sm:grid-cols-3">
           {about.youth_points.map((point, index) => (
             <li key={point.title} className="border-t-2 border-navy-900 pt-5">

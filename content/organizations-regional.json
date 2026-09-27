@@ -1324,12 +1324,6 @@
       "other"
     ],
     "region": "제주",
-    "area": {
-      "ko": "제주시",
-      "en": "Jeju-si",
-      "zh": "济州市",
-      "vi": "Jeju-si"
-    },
     "hours": {
       "ko": "평일 09:00~18:00, 전화상담 09:00~18:00",
       "en": "Weekdays 09:00-18:00; phone counselling 09:00-18:00",
@@ -1348,7 +1342,7 @@
     ],
     "status": "published",
     "owner": "운영팀",
-    "reviewed_at": "2026-09-18",
+    "reviewed_at": "2026-09-27",
     "source_url": "http://jejumwc.kr"
   },
   {

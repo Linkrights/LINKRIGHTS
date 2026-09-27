@@ -67,7 +67,7 @@
         "vi": "Chúng tôi thường nghe rằng không biết hỏi ai. Với những lo lắng có vẻ quá nhỏ để hỏi một cơ quan, kinh nghiệm của người từng trải sẽ giúp ích."
       },
       "helps": {
-        "ko": "혼자 정하기 어려운 일을 이야기하면서 선택지를 정리합니다. 필요하면 관련 권리정보나 도움받을 곳으로 이어 줍니다.",
+        "ko": "혼자 정하기 어려운 일을 이야기하면서 선택지를 정리합니다. 필요하면 관련 권리정보나 도움받을 수 있는 곳으로 이어 줍니다.",
         "en": "Talking it through helps you lay out your options. When it helps, we point to the related rights information or places to get help.",
         "zh": "把难以独自决定的事说出来，一起把选择整理清楚。需要时会连接到相关的权利信息或可以求助的机构。",
         "vi": "Nói ra điều khó tự quyết định giúp bạn sắp xếp các lựa chọn. Khi cần, chúng tôi chỉ tới thông tin quyền hoặc nơi có thể giúp."
@@ -137,7 +137,7 @@
         "vi": "Một câu hỏi chỉ được trả lời một lần trong buổi sinh hoạt sẽ không đến được người tiếp theo. Cần một nơi để lúc nào cũng tra lại được câu hỏi đó."
       },
       "helps": {
-        "ko": "검토한 권리정보와 등록된 도움받을 곳을 언제든 다시 볼 수 있습니다. 필요하면 AI에게 내 상황을 설명하고 관련 정보를 찾을 수 있습니다.",
+        "ko": "검토한 권리정보와 등록된 도움받을 수 있는 곳을 언제든 다시 볼 수 있습니다. 필요하면 AI에게 내 상황을 설명하고 관련 정보를 찾을 수 있습니다.",
         "en": "Reviewed rights information and registered places to get help are always available. You can also describe your situation to the AI and find related information.",
         "zh": "经过检查的权利信息和已登记的求助机构随时可以再看。也可以向 AI 说明自己的情况，找到相关信息。",
         "vi": "Thông tin quyền đã được kiểm tra và nơi có thể giúp đã đăng ký luôn xem lại được. Bạn cũng có thể mô tả tình huống cho AI để tìm thông tin liên quan."

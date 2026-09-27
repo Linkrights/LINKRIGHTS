@@ -1,5 +1,6 @@
 // 함께하기(Get involved) 페이지입니다.
-// 대학생 멘토·학교/기관 협력 문의는 메일(content/site.json 의 contactEmail)로 받습니다. 새 신청 양식이나 개인정보 수집 기능은 만들지 않습니다.
+// 멘티(이주배경청소년)·대학생 멘토·학교/기관 협력 문의는 모두 메일(content/site.json 의 contactEmail)로 받습니다.
+// 새 신청 양식이나 개인정보 수집 기능은 만들지 않습니다.
 // 협력기관은 content/partners.json, 커뮤니티 안내는 content/programs.json 의 community_notice 를 그대로 보여줍니다.
 
 import type { Metadata } from 'next';
@@ -38,6 +39,17 @@ export default async function GetInvolvedPage({ params }: { params: Promise<{ lo
     secondary: string;
     secondaryHref: string;
   }[] = [
+    // 멘토와 학교·기관뿐 아니라, 멘토링에 참여하고 싶은 청소년(멘티)도 여기에서 문의할 수 있습니다.
+    {
+      key: 'mentee',
+      icon: 'message',
+      title: t.involved.menteeTitle,
+      body: t.involved.menteeBody,
+      cta: t.involved.menteeCta,
+      href: contactMailto(site.contactEmail, t.involved.menteeSubject),
+      secondary: t.involved.mentorSecondary,
+      secondaryHref: `/${locale}/programs#mentoring`,
+    },
     {
       key: 'mentor',
       icon: 'book',
@@ -65,7 +77,7 @@ export default async function GetInvolvedPage({ params }: { params: Promise<{ lo
       <PageHeader title={t.involved.title} subtitle={t.involved.subtitle} />
 
       <Section>
-        <ul className="grid gap-4 md:grid-cols-2">
+        <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {ways.map((way) => (
             <li key={way.key} id={way.key} className="lr-card flex flex-col p-6 sm:p-7">
               <span className="lr-icon-badge h-11 w-11">

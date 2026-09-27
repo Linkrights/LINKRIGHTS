@@ -341,8 +341,25 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 {partners.length > 0 && (
                   <div>
                     <dt className="font-bold text-ink-900">{t.homeIntro.partnerLabel}</dt>
-                    <dd className="mt-0.5 text-ink-700">
-                      {partners.map((partner) => `${pick(partner.name, locale)} (${pick(partner.relation, locale)})`).join(' · ')}
+                    {/* 등록된 공식 주소가 있는 기관은 눌러서 그 기관 누리집으로 갈 수 있습니다. */}
+                    <dd className="mt-0.5 flex flex-wrap gap-x-2 gap-y-1 text-ink-700">
+                      {partners.map((partner) => {
+                        const label = `${pick(partner.name, locale)} (${pick(partner.relation, locale)})`;
+                        return partner.url ? (
+                          <a
+                            key={partner.id}
+                            href={partner.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${label} (${t.common.openInNew})`}
+                            className="lr-link inline-flex items-center gap-1 font-semibold"
+                          >
+                            {label} <Icon name="external" size={14} />
+                          </a>
+                        ) : (
+                          <span key={partner.id}>{label}</span>
+                        );
+                      })}
                     </dd>
                   </div>
                 )}

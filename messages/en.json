@@ -294,7 +294,8 @@
     "remove": "Remove",
     "clearAll": "Clear all",
     "count": "{count} saved",
-    "navLabel": "Saved rights information"
+    "navLabel": "Saved rights information",
+    "viewList": "See everything you saved"
   },
   "callScript": {
     "title": "Before you call, try saying this",
@@ -608,7 +609,11 @@
     "emailLabel": "Email",
     "communityTitle": "Community",
     "partnersTitle": "Organisations that support us",
-    "partnersSubtitle": "Organisations working with LINKRIGHTS."
+    "partnersSubtitle": "Organisations working with LINKRIGHTS.",
+    "menteeTitle": "Youth with a migrant background (mentee)",
+    "menteeBody": "If you would like to join the mentoring as a mentee, you can ask us by email. We talk about school and what comes next, and also everyday worries like presentations or friendships.",
+    "menteeCta": "Ask about joining as a mentee",
+    "menteeSubject": "[LINKRIGHTS] Mentee enquiry"
   },
   "search": {
     "title": "Search rights information",
@@ -750,11 +755,11 @@
       },
       {
         "title": "If you want to delete what is saved",
-        "body": "Saved rights information can be removed on the “Saved” screen, and a checklist with “Clear all ticks”. An AI conversation disappears when you press “New question” or close the tab. To clear everything at once, delete this site’s data in your browser settings. Because none of it is on our server, there is nothing for you to ask us to delete."
+        "body": "Saved rights information can be removed on the “Saved” screen, and a checklist with “Clear all ticks”. An AI conversation disappears when you press “New question” or close the tab. To clear everything at once, delete this site’s data in your browser settings. None of it is ever sent to our server, so there is nothing for you to ask us to delete."
       },
       {
         "title": "What the “Was this helpful?” button sends",
-        "body": "Pressing it sends four things only: helpful or not, the language of the page, which topic or which rights information it was, and whether the AI answer used registered material. The question and the answer are not sent, and we cannot tell who pressed it. It is written as a single line in the server log, not a database, and is used only to count which answers help. If you do not press it, nothing is sent."
+        "body": "Pressing it sends only these four: (1) helpful or not, (2) the language of the page, (3) which topic or which rights information it was, (4) whether the AI answer used registered material. The question and the answer are not sent, and we cannot tell who pressed it. It is written as a single line in the server log, not a database, and is used only to count which answers help. If you do not press it, nothing is sent."
       },
       {
         "title": "Emails sent to the Q&A board",
@@ -765,8 +770,8 @@
         "body": "Do not enter your name, contact details, address, passport number, alien registration number, visa number or medical records. Describing the situation is enough. We check for such details before sending and warn you, but we cannot catch every case."
       },
       {
-        "title": "No cookies: visits are counted anonymously",
-        "body": "This site carries no advertising and uses no tracking cookies. To see how many people use which pages, we use a visit-counting tool (Vercel Web Analytics). It sets no cookies and discards the temporary marker it builds from the incoming request after 24 hours. What remains is the page address, how you arrived, a rough country or city level location, and the device and browser type — it cannot tell who you are. Search words and the area you pick appear only in the address bar and are not stored on the server."
+        "title": "One cookie for language, visits counted anonymously",
+        "body": "This site carries no advertising and uses no tracking cookies. The only cookie is the one that remembers the language you chose (lr-locale); it is used only to show the site in that language next time and never identifies you. To see how many people use which pages, we use a visit-counting tool (Vercel Web Analytics). It sets no cookies and discards the temporary marker it builds from the incoming request after 24 hours. What remains is the page address, how you arrived, a rough country or city level location, and the device and browser type — it cannot tell who you are. Search words and the area you pick appear only in the address bar and are not stored on the server."
       },
       {
         "title": "External links",

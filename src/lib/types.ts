@@ -259,7 +259,12 @@ export interface AboutBody {
   youth_title: string;
   youth_intro: string;
   youth_points: RightsBlock[];
-  /** 이 설명이 어디에서 왔는지 (통계 수치를 담지 않는다는 안내) */
+  /**
+   * 공식 통계 수치 (선택). 출처 없이 숫자만 적지 않습니다.
+   * youth_stats 를 넣으면 content/about.json 의 youth_sources 에 그 출처를 반드시 함께 등록해야 합니다.
+   */
+  youth_stats?: { value: string; label: string }[];
+  /** 이 설명과 숫자가 어디에서 왔는지 알리는 안내 */
   youth_note?: string;
   problems_title: string;
   problems: RightsBlock[];

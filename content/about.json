@@ -1,7 +1,7 @@
 {
   "_readme": "소개 페이지의 글을 담는 파일입니다. 따옴표 안의 글자만 바꾸면 소개 페이지가 바뀝니다.",
   "owner": "운영팀",
-  "reviewed_at": "2026-09-06",
+  "reviewed_at": "2026-09-27",
   "i18n": {
     "ko": {
       "hero_title": "권리를 아는 것에서 시작합니다",
@@ -10,9 +10,19 @@
       "why_body": "한국에서 살아가는 이주배경청소년들의 이야기를 들으며, 우리는 서로 다른 경험 속에서도 반복해서 마주하는 어려움이 있다는 것을 알게 되었습니다. \"내가 어떤 권리를 가지고 있는지 모르겠어요.\" \"어디에 물어봐야 하는지 모르겠어요.\" 정보가 없는 것이 아니라, 정보가 너무 흩어져 있고 너무 어려웠습니다. LINKRIGHTS는 그 사이를 잇기 위해 시작했습니다.",
       "youth_title": "왜 이주배경청소년인가요?",
       "youth_intro": "이주배경청소년은 본인이나 부모님이 다른 나라에서 온 청소년을 말합니다. 한국에서 태어나 자란 다문화가정 청소년, 부모님을 따라 한국에 온 중도입국청소년, 외국인 가정의 청소년이 모두 포함됩니다.",
+      "youth_stats": [
+        {
+          "value": "202,208명",
+          "label": "초·중·고 다문화 학생 수 (2025년)"
+        },
+        {
+          "value": "4.0%",
+          "label": "전체 초·중·고 학생 가운데 다문화 학생 비율"
+        }
+      ],
       "youth_points": [
         {
-          "title": "제도는 있지만, 닿기까지가 멉니다",
+          "title": "제도는 있지만, 필요한 정보는 흩어져 있습니다",
           "body": "학교, 일, 병원, 체류처럼 생활에 꼭 필요한 제도는 이미 있습니다. 그런데 무엇을 어디에서 확인해야 하는지는 기관마다 흩어져 있습니다."
         },
         {
@@ -24,7 +34,7 @@
           "body": "내가 어떤 권리를 가지고 있는지 알면, 참고 넘길지 도움을 요청할지 스스로 정할 수 있습니다. LINKRIGHTS는 그 판단에 필요한 정보를 모아 둡니다."
         }
       ],
-      "youth_note": "이 내용은 LINKRIGHTS가 만난 청소년들의 이야기와 등록된 권리정보를 바탕으로 정리한 설명이며, 통계 수치는 담고 있지 않습니다.",
+      "youth_note": "위 숫자는 교육부·한국교육개발원이 해마다 내는 「교육기본통계」에서 가져왔습니다. 아래 설명은 LINKRIGHTS가 만난 청소년들의 이야기와 등록된 권리정보를 바탕으로 정리했습니다.",
       "problems_title": "우리가 주목한 문제",
       "problems": [
         {
@@ -101,7 +111,7 @@
             },
             {
               "title": "안전한 배움: 학교에서 차별이나 괴롭힘을 겪었을 때",
-              "body": "출신 나라, 피부색, 말투 때문에 놀림받거나 불이익을 받는 것은 차별입니다. 학교에서 이런 일을 겪었을 때 할 수 있는 일과 도움받을 곳을 함께 안내합니다."
+              "body": "출신 나라, 피부색, 말투 때문에 놀림받거나 불이익을 받는 것은 차별입니다. 학교에서 이런 일을 겪었을 때 할 수 있는 일과 도움받을 수 있는 곳을 함께 안내합니다."
             },
             {
               "title": "배움의 기회: 권리교육과 대학생 멘토링",
@@ -141,9 +151,19 @@
       "why_body": "Listening to migrant-background youth living in Korea, we found that very different lives kept running into the same difficulty. \"I do not know what rights I have.\" \"I do not know who to ask.\" The information exists, but it is scattered and hard to read. LINKRIGHTS exists to close that gap.",
       "youth_title": "Why migrant-background youth?",
       "youth_intro": "Migrant-background youth are young people who came from another country themselves, or whose parents did. This includes young people from multicultural families born in Korea, young people who moved here to join their parents, and young people in foreign-national families.",
+      "youth_stats": [
+        {
+          "value": "202,208",
+          "label": "Students with a multicultural background in Korean schools (2025)"
+        },
+        {
+          "value": "4.0%",
+          "label": "Share of all primary and secondary school students"
+        }
+      ],
       "youth_points": [
         {
-          "title": "The systems exist, but they are far away",
+          "title": "The systems exist, but the information is scattered",
           "body": "School, work, hospitals and visas already have rules and services. What to check, and where, is spread across many different organisations."
         },
         {
@@ -155,7 +175,7 @@
           "body": "When you know what rights you have, you can decide for yourself whether to let something go or ask for help. LINKRIGHTS gathers the information needed for that decision."
         }
       ],
-      "youth_note": "This section is based on what the young people we met told us and on the rights information registered here. It does not contain statistics.",
+      "youth_note": "The figures above come from the Education Basic Statistics published each year by the Ministry of Education and KEDI. The points below are based on what young people told us and on the rights information registered here.",
       "problems_title": "The problems we saw",
       "problems": [
         {
@@ -272,9 +292,19 @@
       "why_body": "在倾听生活在韩国的移民背景青少年的故事时，我们发现，尽管每个人的经历各不相同，却反复遇到同样的困难。“我不知道自己有哪些权利。”“我不知道该去问谁。”并不是没有信息，而是信息太分散、太难懂。LINKRIGHTS 就是为了连接这中间的距离而开始的。",
       "youth_title": "为什么关注移民背景青少年？",
       "youth_intro": "移民背景青少年是指本人或父母来自其他国家的青少年，包括在韩国出生的多文化家庭子女、随父母来到韩国的中途入境青少年，以及外国人家庭的青少年。",
+      "youth_stats": [
+        {
+          "value": "202,208人",
+          "label": "中小学多文化学生人数（2025年）"
+        },
+        {
+          "value": "4.0%",
+          "label": "占全体中小学学生的比例"
+        }
+      ],
       "youth_points": [
         {
-          "title": "制度是有的，但离生活很远",
+          "title": "制度是有的，但需要的信息分散在各处",
           "body": "上学、打工、看病、居留都已有相应的制度和服务。但要确认什么、去哪里确认，分散在不同机构的网站上。"
         },
         {
@@ -286,7 +316,7 @@
           "body": "知道自己有哪些权利，才能决定是先忍一忍还是寻求帮助。LINKRIGHTS 把做这个判断需要的信息整理在一起。"
         }
       ],
-      "youth_note": "本部分内容整理自我们见到的青少年的讲述和网站已登记的权利信息，不包含统计数据。",
+      "youth_note": "上面的数字来自教育部与韩国教育开发院每年发布的《教育基本统计》。下面的说明整理自 LINKRIGHTS 接触到的青少年的故事和已登记的权利信息。",
       "problems_title": "我们关注的问题",
       "problems": [
         {
@@ -403,9 +433,19 @@
       "why_body": "Khi lắng nghe câu chuyện của thanh thiếu niên có nền tảng di trú đang sống ở Hàn Quốc, chúng tôi nhận ra rằng dù mỗi người một hoàn cảnh, vẫn có những khó khăn lặp đi lặp lại. “Em không biết mình có những quyền gì.” “Em không biết phải hỏi ở đâu.” Không phải là không có thông tin, mà thông tin quá phân tán và quá khó. LINKRIGHTS ra đời để nối khoảng cách đó.",
       "youth_title": "Vì sao là thanh thiếu niên có nền tảng di trú?",
       "youth_intro": "Thanh thiếu niên có nền tảng di trú là các bạn trẻ đến từ nước khác, hoặc có cha mẹ đến từ nước khác. Bao gồm bạn trẻ trong gia đình đa văn hóa sinh ra ở Hàn Quốc, bạn trẻ theo cha mẹ sang Hàn Quốc và bạn trẻ trong gia đình người nước ngoài.",
+      "youth_stats": [
+        {
+          "value": "202.208",
+          "label": "Học sinh có nền tảng đa văn hóa tại trường phổ thông (2025)"
+        },
+        {
+          "value": "4,0%",
+          "label": "Tỷ lệ trong toàn bộ học sinh tiểu học và trung học"
+        }
+      ],
       "youth_points": [
         {
-          "title": "Chế độ thì có, nhưng ở rất xa",
+          "title": "Chế độ thì có, nhưng thông tin lại nằm rải rác",
           "body": "Trường học, việc làm, bệnh viện và cư trú đều đã có quy định và dịch vụ. Nhưng cần kiểm tra gì và ở đâu lại nằm rải rác trên trang web của nhiều cơ quan khác nhau."
         },
         {
@@ -417,7 +457,7 @@
           "body": "Khi biết mình có những quyền gì, bạn có thể tự quyết định nên bỏ qua hay nhờ giúp đỡ. LINKRIGHTS tập hợp thông tin cần cho quyết định đó."
         }
       ],
-      "youth_note": "Phần này được viết dựa trên những gì các bạn trẻ kể với chúng tôi và thông tin quyền đã đăng ký trên trang, không chứa số liệu thống kê.",
+      "youth_note": "Các con số ở trên lấy từ 「Thống kê giáo dục cơ bản」 do Bộ Giáo dục và KEDI công bố hằng năm. Phần giải thích bên dưới được tổng hợp từ câu chuyện của các bạn trẻ mà LINKRIGHTS đã gặp và từ thông tin quyền đã đăng ký.",
       "problems_title": "Những vấn đề chúng tôi nhìn thấy",
       "problems": [
         {
@@ -528,5 +568,21 @@
       "future_body": "Mục tiêu của chúng tôi là vẫn còn lại như một nền tảng thông tin về quyền có thể tiếp tục sử dụng ngay cả sau khi chương trình kết thúc. Chúng tôi sẽ dần bổ sung thêm ngôn ngữ và thông tin về quyền, đồng thời định kỳ kiểm tra lại thông tin của các cơ quan để luôn cập nhật."
     }
   },
-  "youth_sources": []
+  "youth_sources": [
+    {
+      "title": {
+        "ko": "2025년 교육기본통계 조사 결과 발표",
+        "en": "2025 Education Basic Statistics",
+        "zh": "2025年教育基本统计调查结果",
+        "vi": "Kết quả Thống kê giáo dục cơ bản 2025"
+      },
+      "publisher": {
+        "ko": "교육부·한국교육개발원 (2025년 8월 28일)",
+        "en": "Ministry of Education & KEDI (28 Aug 2025)",
+        "zh": "教育部·韩国教育开发院（2025年8月28日）",
+        "vi": "Bộ Giáo dục & KEDI (28/8/2025)"
+      },
+      "url": "https://www.kedi.re.kr/khome/main/announce/selectBroadAnnounceForm.do?selectTp=0&board_sq_no=3&article_sq_no=36108"
+    }
+  ]
 }

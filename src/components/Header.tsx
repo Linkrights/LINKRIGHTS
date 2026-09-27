@@ -55,6 +55,28 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
     return () => document.removeEventListener('keydown', onKey);
   }, [menu]);
 
+  // 휴대폰 메뉴를 열면 메뉴 안에서만 스크롤되게 하고, 뒤에 있는 페이지는 그 자리에 멈춰 둡니다.
+  // (메뉴가 헤더 안에서 길어지면 스크롤 막대와 화면 내용이 맞지 않아, 다 내려야 아래 내용이 보였습니다)
+  useEffect(() => {
+    if (!open) return;
+    const body = document.body;
+    const gap = window.innerWidth - document.documentElement.clientWidth;
+    const previous = { overflow: body.style.overflow, paddingRight: body.style.paddingRight };
+    body.style.overflow = 'hidden';
+    // 스크롤 막대가 사라지면서 화면이 옆으로 밀리지 않게 그만큼 여백을 둡니다.
+    if (gap > 0) body.style.paddingRight = `${gap}px`;
+    // 창이 넓어져 넓은 화면 메뉴로 바뀌면(1024px 이상) 휴대폰 메뉴를 닫습니다.
+    const onResize = () => {
+      if (window.innerWidth >= 1024) setOpen(false);
+    };
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('resize', onResize);
+      body.style.overflow = previous.overflow;
+      body.style.paddingRight = previous.paddingRight;
+    };
+  }, [open]);
+
   // 홈에서 조금이라도 스크롤하면 헤더 배경을 채웁니다.
   useEffect(() => {
     if (!dark) return;
@@ -205,6 +227,7 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
   if (welcome) return null;
 
   return (
+    <>
     <header
       ref={headerRef}
       className={`sticky top-0 z-40 border-b transition-colors duration-300 ${
@@ -376,63 +399,70 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
           </div>
         )}
       </div>
+    </header>
 
-      {open && (
-        <nav id="mobile-menu" aria-label={t.nav.mainMenu} className="border-t border-[var(--color-line)] bg-white lg:hidden">
-          <div className="lr-container space-y-4 py-4">
-            <Link href={askHref} className="lr-btn lr-btn-primary lr-press w-full">
-              {t.nav.askShort}
-              <Icon name="arrow-right" size={18} />
-            </Link>
+    {/* 휴대폰 메뉴: 헤더 아래를 덮는 한 장으로 열리고, 메뉴가 길면 메뉴 안에서만 스크롤됩니다.
+        (헤더 안에 이어 붙이면 페이지가 그만큼 길어져 스크롤 막대와 화면이 맞지 않았습니다) */}
+    {open && (
+      <nav
+        id="mobile-menu"
+        aria-label={t.nav.mainMenu}
+        className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto overscroll-contain border-t border-[var(--color-line)] bg-white sm:top-[72px] lg:hidden"
+      >
+        <div className="lr-container space-y-4 py-4">
+          <Link href={askHref} className="lr-btn lr-btn-primary lr-press w-full">
+            {t.nav.askShort}
+            <Icon name="arrow-right" size={18} />
+          </Link>
 
-            {/* 휴대폰 메뉴: 넓은 화면과 같은 묶음으로 보여줍니다. (묶음 이름 → 그 안의 화면들) */}
-            <div className="divide-y divide-[var(--color-line)]">
-              {menuGroups.map((group) => (
-                <section key={group.key} className="py-3">
-                  <p className="px-1 text-[13px] font-bold tracking-[0.02em] text-ink-500">{group.label}</p>
-                  <ul className="mt-1">
-                    {group.items.map((item) => (
-                      <li key={item.href}>
-                        <Link
-                          href={item.href}
-                          aria-current={isActive(item.href) ? 'page' : undefined}
-                          className={`flex items-center justify-between px-1 py-3 text-base font-semibold ${
-                            isActive(item.href) ? 'text-brand-700' : 'text-ink-900'
-                          }`}
-                        >
-                          {item.label}
-                          <Icon name="arrow-right" size={18} className="text-ink-300" />
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              ))}
-              <div className="py-1">
-                <Link
-                  href={emergencyHref}
-                  className="flex items-center gap-2 px-1 py-3.5 text-base font-bold text-[var(--color-danger-700)]"
-                >
-                  <Icon name="alert" size={18} />
-                  {t.nav.emergency}
-                </Link>
-              </div>
-            </div>
-
-            <div className="space-y-2 border-t border-[var(--color-line)] pt-4">
-              <label htmlFor="mobile-language" className="block text-sm font-semibold text-ink-700">
-                {t.nav.language}
-              </label>
-              {languageSelect('mobile-language', false)}
-            </div>
-
-            {/* 보기 설정: 휴대폰에서는 메뉴 안에서 바로 고를 수 있게 펼쳐 둡니다. */}
-            <div className="border-t border-[var(--color-line)] pt-4">
-              <Preferences locale={locale} variant="inline" />
+          {/* 휴대폰 메뉴: 넓은 화면과 같은 묶음으로 보여줍니다. (묶음 이름 → 그 안의 화면들) */}
+          <div className="divide-y divide-[var(--color-line)]">
+            {menuGroups.map((group) => (
+              <section key={group.key} className="py-3">
+                <p className="px-1 text-[13px] font-bold tracking-[0.02em] text-ink-500">{group.label}</p>
+                <ul className="mt-1">
+                  {group.items.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        aria-current={isActive(item.href) ? 'page' : undefined}
+                        className={`flex items-center justify-between px-1 py-3 text-base font-semibold ${
+                          isActive(item.href) ? 'text-brand-700' : 'text-ink-900'
+                        }`}
+                      >
+                        {item.label}
+                        <Icon name="arrow-right" size={18} className="text-ink-300" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+            <div className="py-1">
+              <Link
+                href={emergencyHref}
+                className="flex items-center gap-2 px-1 py-3.5 text-base font-bold text-[var(--color-danger-700)]"
+              >
+                <Icon name="alert" size={18} />
+                {t.nav.emergency}
+              </Link>
             </div>
           </div>
-        </nav>
-      )}
-    </header>
+
+          <div className="space-y-2 border-t border-[var(--color-line)] pt-4">
+            <label htmlFor="mobile-language" className="block text-sm font-semibold text-ink-700">
+              {t.nav.language}
+            </label>
+            {languageSelect('mobile-language', false)}
+          </div>
+
+          {/* 보기 설정: 휴대폰에서는 메뉴 안에서 바로 고를 수 있게 펼쳐 둡니다. */}
+          <div className="border-t border-[var(--color-line)] pt-4">
+            <Preferences locale={locale} variant="inline" />
+          </div>
+        </div>
+      </nav>
+    )}
+    </>
   );
 }

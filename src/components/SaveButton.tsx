@@ -5,6 +5,7 @@
 // - 서버로 보내지 않습니다. 브라우저 기록(사이트 데이터)을 지우면 함께 사라집니다.
 // - 같은 화면의 다른 저장 버튼·저장 목록과 바로 맞춰지도록 이벤트로 알립니다.
 
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Icon } from './Icon';
 
@@ -57,6 +58,8 @@ export function SaveButton({
   savedText,
   saveText,
   compact = false,
+  viewHref,
+  viewText,
 }: {
   id: string;
   /** 화면낭독기용 이름 (예: "임금체불 저장하기") */
@@ -65,6 +68,9 @@ export function SaveButton({
   savedText: string;
   /** 카드 위의 작은 별 버튼 */
   compact?: boolean;
+  /** 저장한 뒤 "모아보기" 링크를 함께 보여줄 주소 (저장 목록 화면) */
+  viewHref?: string;
+  viewText?: string;
 }) {
   const [ids, update] = useSavedIds();
   const saved = Boolean(ids?.includes(id));
@@ -92,14 +98,22 @@ export function SaveButton({
   }
 
   return (
-    <button
-      type="button"
-      onClick={toggle}
-      aria-pressed={saved}
-      className={`lr-btn lr-btn-sm lr-press ${saved ? 'border-brand-600 bg-brand-50 text-brand-700' : 'lr-btn-ghost'}`}
-    >
-      <Icon name="star" size={18} fill={saved ? 'currentColor' : 'none'} />
-      {saved ? savedText : saveText}
-    </button>
+    <>
+      <button
+        type="button"
+        onClick={toggle}
+        aria-pressed={saved}
+        className={`lr-btn lr-btn-sm lr-press ${saved ? 'border-brand-600 bg-brand-50 text-brand-700' : 'lr-btn-ghost'}`}
+      >
+        <Icon name="star" size={18} fill={saved ? 'currentColor' : 'none'} />
+        {saved ? savedText : saveText}
+      </button>
+      {/* 저장하면 모아 보는 화면이 있다는 것을 바로 알려 줍니다. (로그인 없이 이 브라우저에서 볼 수 있습니다) */}
+      {saved && viewHref && viewText && (
+        <Link href={viewHref} className="lr-link inline-flex items-center gap-1 self-center text-[15px] font-semibold">
+          {viewText} <Icon name="arrow-right" size={16} />
+        </Link>
+      )}
+    </>
   );
 }

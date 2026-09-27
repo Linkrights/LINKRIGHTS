@@ -207,6 +207,8 @@ export default async function ArticlePage({
               label={t.saved.saveLabel.replace('{title}', body.title)}
               saveText={t.saved.save}
               savedText={t.saved.savedText}
+              viewHref={`/${locale}/saved`}
+              viewText={t.saved.viewList}
             />
           </div>
 

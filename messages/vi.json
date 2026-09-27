@@ -294,7 +294,8 @@
     "remove": "Xóa",
     "clearAll": "Xóa tất cả",
     "count": "Đã lưu {count} mục",
-    "navLabel": "Thông tin quyền đã lưu"
+    "navLabel": "Thông tin quyền đã lưu",
+    "viewList": "Xem tất cả mục đã lưu"
   },
   "callScript": {
     "title": "Trước khi gọi, hãy thử nói như thế này",
@@ -608,7 +609,11 @@
     "emailLabel": "Email liên hệ",
     "communityTitle": "Cộng đồng",
     "partnersTitle": "Những nơi hỗ trợ chúng tôi",
-    "partnersSubtitle": "Các tổ chức đang hợp tác với LINKRIGHTS."
+    "partnersSubtitle": "Các tổ chức đang hợp tác với LINKRIGHTS.",
+    "menteeTitle": "Thanh thiếu niên có nền tảng di trú (mentee)",
+    "menteeBody": "Nếu bạn muốn tham gia chương trình cố vấn với tư cách mentee, hãy hỏi chúng tôi qua email. Chúng ta cùng trò chuyện về trường học, hướng đi phía trước và cả những lo lắng thường ngày như thuyết trình hay quan hệ bạn bè.",
+    "menteeCta": "Hỏi về việc tham gia làm mentee",
+    "menteeSubject": "[LINKRIGHTS] Hỏi tham gia mentee"
   },
   "search": {
     "title": "Tìm thông tin quyền",
@@ -750,11 +755,11 @@
       },
       {
         "title": "Khi bạn muốn xóa những gì đã lưu",
-        "body": "Thông tin quyền đã lưu có thể xóa ở màn hình “Đã lưu”, danh sách kiểm tra có thể dùng “Bỏ tất cả dấu tích”. Cuộc trò chuyện AI biến mất khi bạn bấm “Câu hỏi mới” hoặc đóng thẻ. Muốn xóa tất cả cùng lúc, hãy xóa dữ liệu trang này trong cài đặt trình duyệt. Vì máy chủ không có những thông tin này nên cũng không có gì để bạn yêu cầu chúng tôi xóa."
+        "body": "Thông tin quyền đã lưu có thể xóa ở màn hình “Đã lưu”, danh sách kiểm tra có thể dùng “Bỏ tất cả dấu tích”. Cuộc trò chuyện AI biến mất khi bạn bấm “Câu hỏi mới” hoặc đóng thẻ. Muốn xóa tất cả cùng lúc, hãy xóa dữ liệu trang này trong cài đặt trình duyệt. Những thông tin này không bao giờ được gửi tới máy chủ của ban vận hành, nên cũng không có gì để bạn yêu cầu chúng tôi xóa."
       },
       {
         "title": "Nút “Có hữu ích không?” gửi đi những gì",
-        "body": "Khi bấm, chỉ bốn điều được gửi đi: hữu ích hay chưa đủ, ngôn ngữ của trang, thuộc lĩnh vực nào hoặc thông tin quyền nào, và câu trả lời AI có dựa trên tài liệu đã đăng ký hay không. Nội dung câu hỏi và câu trả lời không được gửi, và chúng tôi không biết ai đã bấm. Ghi chép này chỉ là một dòng trong nhật ký máy chủ (không phải cơ sở dữ liệu) và chỉ dùng để đếm xem nội dung nào hữu ích. Không bấm thì không có gì được gửi đi."
+        "body": "Khi bấm, chỉ bốn điều sau được gửi đi: (1) hữu ích hay chưa đủ, (2) ngôn ngữ của trang, (3) thuộc lĩnh vực nào hoặc thông tin quyền nào, (4) câu trả lời AI có dựa trên tài liệu đã đăng ký hay không. Nội dung câu hỏi và câu trả lời không được gửi, và chúng tôi không biết ai đã bấm. Ghi chép này chỉ là một dòng trong nhật ký máy chủ (không phải cơ sở dữ liệu) và chỉ dùng để đếm xem nội dung nào hữu ích. Không bấm thì không có gì được gửi đi."
       },
       {
         "title": "Email gửi tới bảng hỏi đáp",
@@ -765,8 +770,8 @@
         "body": "Đừng nhập tên, thông tin liên lạc, địa chỉ, số hộ chiếu, số đăng ký người nước ngoài, số visa hay hồ sơ bệnh án. Chỉ cần kể tình huống là đủ để được hướng dẫn. Trước khi gửi, nếu thấy những nội dung như vậy chúng tôi sẽ nhắc bạn một lần nữa, nhưng không thể phát hiện mọi trường hợp."
       },
       {
-        "title": "Không dùng cookie, chỉ đếm lượt truy cập ẩn danh",
-        "body": "Trang này không đăng quảng cáo và không dùng cookie theo dõi. Để biết có bao nhiêu người xem những trang nào, chúng tôi dùng công cụ đếm lượt truy cập (Vercel Web Analytics). Công cụ này không tạo cookie và sẽ hủy dấu tạm thời tạo từ yêu cầu truy cập sau 24 giờ. Chỉ còn lại địa chỉ trang đã xem, đường dẫn đến trang, khu vực ở mức quốc gia hoặc thành phố, loại thiết bị và trình duyệt; không thể biết ai đã xem. Từ khóa tìm kiếm và khu vực bạn chọn chỉ xuất hiện trên thanh địa chỉ và không được lưu trên máy chủ."
+        "title": "Chỉ một cookie ngôn ngữ, lượt truy cập đếm ẩn danh",
+        "body": "Trang này không đăng quảng cáo và không dùng cookie theo dõi. Cookie duy nhất là cookie ghi nhớ ngôn ngữ bạn đã chọn (lr-locale), chỉ dùng để hiển thị trang bằng ngôn ngữ đó vào lần sau và không dùng để nhận diện bạn. Để biết có bao nhiêu người xem những trang nào, chúng tôi dùng công cụ đếm lượt truy cập (Vercel Web Analytics). Công cụ này không tạo cookie và sẽ hủy dấu tạm thời tạo từ yêu cầu truy cập sau 24 giờ. Chỉ còn lại địa chỉ trang đã xem, đường dẫn đến trang, khu vực ở mức quốc gia hoặc thành phố, loại thiết bị và trình duyệt; không thể biết ai đã xem. Từ khóa tìm kiếm và khu vực bạn chọn chỉ xuất hiện trên thanh địa chỉ và không được lưu trên máy chủ."
       },
       {
         "title": "Liên kết bên ngoài",

@@ -534,6 +534,13 @@ for (const name of ['site.json', 'about.json', 'programs.json', 'faq.json']) {
       for (const point of body?.youth_points ?? []) {
         if (!point?.title || !point?.body) fail('content/about.json', `${lang}.youth_points 의 각 항목에 title 과 body 가 필요합니다.`);
       }
+      // 통계 수치(선택): 숫자와 설명이 모두 있어야 하고, 출처 없이 숫자만 보여주지 않습니다.
+      for (const stat of body?.youth_stats ?? []) {
+        if (!stat?.value || !stat?.label) fail('content/about.json', `${lang}.youth_stats 의 각 항목에 value 와 label 이 필요합니다.`);
+      }
+      if ((body?.youth_stats ?? []).length > 0 && (data.youth_sources ?? []).length === 0) {
+        fail('content/about.json', `${lang}.youth_stats 를 쓰려면 youth_sources 에 그 숫자의 출처를 등록해야 합니다.`);
+      }
     }
     // 근거 자료(선택): 등록하면 실제 공식 주소여야 합니다.
     for (const source of data.youth_sources ?? []) {
