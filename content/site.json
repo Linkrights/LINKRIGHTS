@@ -4,30 +4,25 @@
   "siteNameKo": "링크라이츠",
   "contactEmail": "linkrights2026@gmail.com",
   "social": {
-    "instagram": { "url": "https://www.instagram.com/link_rights/", "label": "@link_rights" },
-    "blog": { "url": "https://blog.naver.com/linkrights", "label": "blog.naver.com/linkrights" },
-    "youtube": { "url": "", "label": "" },
-    "kakaoChannel": { "url": "", "label": "" }
-  },
-  "_locations_readme": "하단 '위치'에 보여줄 주소입니다. 순서대로 표시합니다. (각 학교 공식 홈페이지의 '찾아오시는 길'에서 확인한 캠퍼스 주소)",
-  "locations": [
-    {
-      "address": {
-        "ko": "서울특별시 동대문구 경희대로 26",
-        "en": "26 Kyungheedae-ro, Dongdaemun-gu, Seoul",
-        "zh": "首尔特别市 东大门区 庆熙大路 26",
-        "vi": "26 Kyungheedae-ro, Dongdaemun-gu, Seoul"
-      }
+    "instagram": {
+      "url": "https://www.instagram.com/link_rights/",
+      "label": "@link_rights"
     },
-    {
-      "address": {
-        "ko": "서울특별시 마포구 백범로 35",
-        "en": "35 Baekbeom-ro, Mapo-gu, Seoul",
-        "zh": "首尔特别市 麻浦区 白凡路 35",
-        "vi": "35 Baekbeom-ro, Mapo-gu, Seoul"
-      }
+    "blog": {
+      "url": "https://blog.naver.com/linkrights",
+      "label": "blog.naver.com/linkrights"
+    },
+    "youtube": {
+      "url": "",
+      "label": ""
+    },
+    "kakaoChannel": {
+      "url": "",
+      "label": ""
     }
-  ],
+  },
+  "_locations_readme": "하단 '위치'에 보여줄 주소입니다. 지금은 비워 두어 하단에 주소를 보여주지 않습니다. 다시 보여주려면 { \"address\": { \"ko\": \"...\", \"en\": \"...\", \"zh\": \"...\", \"vi\": \"...\" } } 모양으로 넣으세요. (주소는 공식 홈페이지에서 확인한 것만 적습니다)",
+  "locations": [],
   "operator": {
     "ko": "LINKRIGHTS 프로젝트팀",
     "en": "LINKRIGHTS Project Team",
