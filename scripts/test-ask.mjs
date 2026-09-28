@@ -1267,7 +1267,7 @@ async function checkSuggestedOrganizations(ask) {
 // ---------------------------------------------------------------------------
 function checkCommunityRules() {
   process.env.COMMUNITY_SECRET = 'test-community-secret-0123456789';
-  process.env.GOOGLE_CLIENT_ID = 'test-client-id';
+  process.env.GOOGLE_CLIENT_ID = '123456789012-abcdefghijklmnopqrstuvwxyz012345.apps.googleusercontent.com';
   process.env.GOOGLE_CLIENT_SECRET = 'test-client-secret';
   const runtime = createRuntime(async () => {
     throw new Error('이 검사에서는 바깥으로 연결하지 않습니다.');
@@ -1311,6 +1311,27 @@ function checkCommunityRules() {
   check('10-20 같은 계정은 같은 값으로 바뀐다', auth.hashSub('google-sub-1') === auth.hashSub('google-sub-1'));
   check('10-21 다른 계정은 다른 값으로 바뀐다', auth.hashSub('google-sub-1') !== auth.hashSub('google-sub-2'));
   check('10-22 바뀐 값에서 계정 번호를 알 수 없다', !auth.hashSub('google-sub-1').includes('google-sub-1'));
+
+  // 준비물 확인: 잘못된 값이면 커뮤니티를 열지 않습니다.
+  // (2026-09-29 GOOGLE_CLIENT_ID 에 프로젝트 이름 "linkrights" 를 넣어 구글이 401 을 돌려준 일이 있었습니다)
+  const GOOD_ID = '123456789012-abcdefghijklmnopqrstuvwxyz012345.apps.googleusercontent.com';
+  const withKeys = (id, secretValue, community) => {
+    process.env.GOOGLE_CLIENT_ID = id;
+    process.env.GOOGLE_CLIENT_SECRET = secretValue;
+    process.env.COMMUNITY_SECRET = community;
+    const fresh = createRuntime(async () => {
+      throw new Error('연결하지 않습니다.');
+    }).load('src/lib/googleAuth.ts');
+    return { ready: fresh.hasCommunityAuth(), problems: fresh.communityAuthProblems() };
+  };
+  check('10-23 제대로 된 키 세 개면 열린다', withKeys(GOOD_ID, 'GOCSPX-abcdefghijklmnop', 'test-community-secret-0123456789').ready === true);
+  const wrongId = withKeys('linkrights', 'GOCSPX-abcdefghijklmnop', 'test-community-secret-0123456789');
+  check('10-24 클라이언트 ID 대신 이름을 넣으면 열리지 않는다', wrongId.ready === false);
+  check('10-25 무엇이 잘못됐는지 알려 준다', wrongId.problems.some((p) => p.includes('GOOGLE_CLIENT_ID')), wrongId.problems.join(' / '));
+  check('10-26 보안 비밀이 없으면 열리지 않는다', withKeys(GOOD_ID, '', 'test-community-secret-0123456789').ready === false);
+  check('10-27 COMMUNITY_SECRET 이 짧으면 열리지 않는다', withKeys(GOOD_ID, 'GOCSPX-abcdefghijklmnop', 'short').ready === false);
+  check('10-28 앞뒤 빈칸이 있어도 알아본다', withKeys(`  ${GOOD_ID}  `, 'GOCSPX-abcdefghijklmnop', 'test-community-secret-0123456789').ready === true);
+  check('10-29 비슷하지만 다른 주소로 끝나면 거절', withKeys('123456789012-abcdefghijklmnop.apps.googleusercontent.com.evil.example', 'GOCSPX-abcdefghijklmnop', 'test-community-secret-0123456789').ready === false);
 
   delete process.env.COMMUNITY_SECRET;
   delete process.env.GOOGLE_CLIENT_ID;

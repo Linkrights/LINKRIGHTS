@@ -92,6 +92,7 @@ export function AdminClient({ ready }: { ready: { admin: boolean; db: boolean } 
   const [rows, setRows] = useState<Row[]>([]);
   const [helpful, setHelpful] = useState<HelpfulRow[]>([]);
   const [community, setCommunity] = useState<{ posts: CommunityPost[]; comments: CommunityComment[] }>({ posts: [], comments: [] });
+  const [communitySetup, setCommunitySetup] = useState<string[]>([]);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -109,12 +110,14 @@ export function AdminClient({ ready }: { ready: { admin: boolean; db: boolean } 
         rows?: Row[];
         helpful?: HelpfulRow[];
         community?: { posts: CommunityPost[]; comments: CommunityComment[] };
+        communitySetup?: string[];
         error?: string;
       };
       if (data.error) setMessage(data.error === 'db' ? '데이터베이스가 연결되어 있지 않습니다.' : '불러오지 못했습니다.');
       setRows(data.rows ?? []);
       setHelpful(data.helpful ?? []);
       setCommunity(data.community ?? { posts: [], comments: [] });
+      setCommunitySetup(data.communitySetup ?? []);
       setAuthed(true);
     } catch {
       setMessage('불러오지 못했습니다.');
@@ -148,6 +151,7 @@ export function AdminClient({ ready }: { ready: { admin: boolean; db: boolean } 
     setRows([]);
     setHelpful([]);
     setCommunity({ posts: [], comments: [] });
+    setCommunitySetup([]);
   }
 
   async function save(id: number, patch: Record<string, unknown>) {
@@ -237,6 +241,21 @@ export function AdminClient({ ready }: { ready: { admin: boolean; db: boolean } 
 
       {tab === 'community' ? (
         <div className="mt-4 space-y-8">
+          {/* 준비물(구글 키 등)이 잘못 들어가 있으면 먼저 알려 줍니다. 이 상태에서는 커뮤니티가 열리지 않습니다. */}
+          {communitySetup.length > 0 && (
+            <div className="lr-card border-[var(--color-warm-500)] bg-warm-100 p-4">
+              <p className="text-[15px] font-bold text-ink-900">아직 열리지 않았습니다. 이것부터 고쳐 주세요.</p>
+              <ul className="mt-2 space-y-1.5 text-[15px] leading-relaxed text-ink-700">
+                {communitySetup.map((problem) => (
+                  <li key={problem}>· {problem}</li>
+                ))}
+              </ul>
+              <p className="mt-2 text-sm text-ink-500">
+                고친 뒤 Vercel 에서 다시 배포(Redeploy)해야 반영됩니다. 자세한 절차는 docs/커뮤니티-설정.md 를 보세요.
+              </p>
+            </div>
+          )}
+
           {/* 신고가 많은 글이 위로 옵니다. 숨기면 사이트에서 보이지 않고, 지우면 되돌릴 수 없습니다. */}
           <section>
             <h2 className="lr-h3">글 ({community.posts.length})</h2>

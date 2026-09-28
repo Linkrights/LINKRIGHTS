@@ -7,6 +7,7 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { ADMIN_COOKIE, hasAdmin, verifyToken } from '@/lib/adminAuth';
 import { listForAdmin, moderate } from '@/lib/communityDb';
+import { communityAuthProblems } from '@/lib/googleAuth';
 import { deleteSubmission, hasDb, listHelpful, listSubmissions, updateSubmission } from '@/lib/db';
 import { SUBMISSION_KINDS, SUBMISSION_STATUSES, type SubmissionStatus } from '@/lib/submissions';
 
@@ -31,7 +32,16 @@ export async function GET(request: Request) {
   try {
     if (tab === 'helpful') return NextResponse.json({ ok: true, helpful: await listHelpful() });
     // 이야기 나누기(커뮤니티): 신고가 많은 글·댓글이 위로 옵니다.
-    if (tab === 'community') return NextResponse.json({ ok: true, community: await listForAdmin() });
+    // 준비물(구글 키 등)이 잘못 들어가 있으면 운영팀에게 무엇이 문제인지 함께 알려 줍니다.
+    if (tab === 'community') {
+      const communitySetup = communityAuthProblems();
+      // 커뮤니티가 아직 열리지 않았다면 글이 하나도 없는 것이 정상이므로, 목록을 못 읽어도 이유는 보여 줍니다.
+      const community = await listForAdmin().catch((error) => {
+        console.error('[admin] 커뮤니티 목록을 불러오지 못했습니다:', error instanceof Error ? error.message : error);
+        return { posts: [], comments: [] };
+      });
+      return NextResponse.json({ ok: true, community, communitySetup });
+    }
     const kind = SUBMISSION_KINDS.find((value) => value === tab) ?? 'all';
     return NextResponse.json({ ok: true, rows: await listSubmissions(kind) });
   } catch (error) {
