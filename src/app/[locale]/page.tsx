@@ -8,7 +8,7 @@
 //   4. LINKRIGHTS 소개 (누구를 위한 곳 · 어떤 도움 · 어떻게 쓰나요 · 함께하는 곳)
 //   5. 어떤 상황에 있나요 (분야)
 //   6. 내 상황을 말해 보세요 (AI 입력창)
-//   7. 최근에 새로 만들거나 검토한 것 (등록 자료의 실제 날짜로 만듭니다)
+//   7. 지금 등록된 자료 (실제로 등록된 것만 센 숫자)
 //   8. 많이 찾는 권리정보 → 9. 체크리스트 → 10. 도움받을 곳 → 11. 자주 묻는 질문 · 질문 게시판
 //
 // 홈에 기능을 계속 더하지 않습니다. 프로그램·SDGs·협력기관 소개처럼 자세한 내용은
@@ -38,11 +38,9 @@ import {
   getOrganizations,
   getPartners,
   getPrograms,
-  getQnaPosts,
   getSite,
   getTestimonials,
   lastReviewedAt,
-  resolveArticle,
   resolveOrganizations,
 } from '@/lib/content';
 import { LOCALES, formatDate, getMessages, pick, toLocale } from '@/lib/i18n';
@@ -102,42 +100,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const nationwideCount = getNationwideOrganizations().length;
   const orgCounts = { nationwide: nationwideCount, local: getOrganizations().length - nationwideCount };
 
-  // 7. 최근에 새로 만들거나 검토한 것
-  // 이용자 수 같은 큰 숫자 대신, 등록된 자료에 실제로 적힌 날짜(최초 작성일·검토일)로만 만듭니다.
-  // 날짜를 지어내지 않으므로 자료에 날짜가 없으면 목록에 나오지 않습니다.
-  const updates = [
-    ...checklists.map((checklist) => ({
-      key: `checklist-${checklist.id}`,
-      type: t.homeUpdates.typeChecklist,
-      title: (checklist.i18n[locale] ?? checklist.i18n.ko).title,
-      href: `/${locale}/checklists/${checklist.id}`,
-      date: checklist.reviewed_at,
-      isNew: false,
-    })),
-    ...getArticles().map((article) => ({
-      key: `article-${article.id}`,
-      type: t.homeUpdates.typeArticle,
-      title: resolveArticle(article, locale).body.title,
-      href: `/${locale}/rights/${article.category}/${article.id}`,
-      // 최초 작성일이 적혀 있고 그날이 더 최근이면 "새로 추가"로 보여줍니다.
-      date: article.created_at && article.created_at > article.reviewed_at ? article.created_at : article.reviewed_at,
-      isNew: Boolean(article.created_at && article.created_at >= article.reviewed_at),
-    })),
-    ...getQnaPosts()
-      .filter((post) => post.kind === 'question' && post.answered_at)
-      .map((post) => ({
-        key: `qna-${post.id}`,
-        type: t.homeUpdates.typeQna,
-        title: pick(post.title, locale),
-        href: `/${locale}/qna/${post.id}`,
-        date: post.answered_at as string,
-        isNew: true,
-      })),
-  ]
-    .filter((item) => Boolean(item.date))
-    .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : a.key.localeCompare(b.key)))
-    .slice(0, 4);
-
   // 지금 등록된 자료 수: 모두 등록된 자료를 그대로 센 값입니다. (임의의 숫자를 넣지 않습니다)
   const stats: { key: string; label: string; value: number; unit: string; note?: string }[] = [
     { key: 'articles', label: t.home.impactArticles, value: getArticles().length, unit: t.home.impactArticlesUnit },
@@ -193,6 +155,19 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           pause: t.heroVideo.pause,
         }}
       />
+
+      {/* 1-1. 시범 운영 안내 ------------------------------------------
+          아직 고쳐 나가는 중이라는 것을 첫 화면에서 먼저 알립니다. (의견을 보내는 곳으로 이어 줍니다) */}
+      <div className="border-b border-[var(--color-line)] bg-warm-100">
+        <div className="lr-container flex flex-wrap items-center gap-x-3 gap-y-1.5 py-3">
+          <p className="text-[15px] leading-relaxed text-ink-900">
+            <span className="font-bold">{t.home.betaTitle}</span> <span className="text-ink-700">{t.home.betaBody}</span>
+          </p>
+          <Link href={`/${locale}/get-involved#feedback`} className="lr-link text-[15px] font-semibold">
+            {t.home.betaCta}
+          </Link>
+        </div>
+      </div>
 
       {/* 2. 무엇이 궁금한가요?: LINKRIGHTS 흐름 그대로 세 단계 ----------------
           ① 내 상황 알아보기(키워드 검색 / AI 질문) → ② 내 권리 확인하기(권리정보 / 체크리스트) → ③ 필요하면 도움받을 곳 찾기
@@ -398,41 +373,19 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </Section>
 
-      {/* 5. 최근에 새로 만들거나 검토한 것 ------------------------------
-          큰 숫자로 규모를 보여주는 대신, 등록 자료의 실제 날짜로 "지금도 손보고 있다"를 보여줍니다. */}
-      {updates.length > 0 && (
-        <section aria-labelledby="updates-title" className="bg-navy-900 text-white">
+      {/* 5. 지금 등록된 자료 ------------------------------------------
+          실제로 등록된 것만 세어 보여줍니다. (숫자는 자료가 늘면 함께 늘어납니다)
+          "최근에 새로 만들거나 검토한 것" 목록은 첫 방문자에게 큰 의미가 없어 뺐습니다. */}
+      {
+        <section aria-labelledby="stats-title" className="bg-navy-900 text-white">
           <div className="lr-container py-14 sm:py-16">
-            <h2 id="updates-title" className="text-2xl font-extrabold tracking-tight sm:text-3xl">
-              {t.homeUpdates.title}
-            </h2>
-            <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-white/75 sm:text-base">
-              {t.homeUpdates.subtitle}
-            </p>
-
-            <ul className="mt-9 grid gap-x-8 sm:grid-cols-2">
-              {updates.map((item) => (
-                <li key={item.key} className="border-t border-white/20 py-5">
-                  <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] font-semibold">
-                    <span className="border-l-2 border-sun-400 pl-2 text-white/85">{item.type}</span>
-                    <span className="text-white/60">
-                      {item.isNew ? t.homeUpdates.createdLabel : t.homeUpdates.reviewedLabel}{' '}
-                      {formatDate(item.date, locale)}
-                    </span>
-                  </p>
-                  <p className="mt-2">
-                    <Link href={item.href} className="text-lg font-bold leading-snug text-white hover:underline">
-                      {item.title}
-                    </Link>
-                  </p>
-                </li>
-              ))}
-            </ul>
-
-            {/* 지금 등록된 자료: 실제로 등록된 것만 세어 보여줍니다. (숫자는 자료가 늘면 함께 늘어납니다) */}
-            <div className="mt-10 border-t border-white/20 pt-8">
-              <h3 className="text-lg font-bold">{t.home.statsTitle}</h3>
-              <p className="mt-1 text-[15px] leading-relaxed text-white/70">{t.home.statsSubtitle}</p>
+            <div>
+              <h2 id="stats-title" className="text-2xl font-extrabold tracking-tight sm:text-3xl">
+                {t.home.statsTitle}
+              </h2>
+              <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-white/75 sm:text-base">
+                {t.home.statsSubtitle}
+              </p>
               <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3 lg:grid-cols-5">
                 {stats.map((stat) => (
                   <div key={stat.key}>
@@ -454,7 +407,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </div>
           </div>
         </section>
-      )}
+      }
 
       {/* 7-1. 실제 참여자 후기: content/testimonials.json 에 공개 동의를 받아 등록한 후기가 있을 때만 */}
       <Testimonials items={getTestimonials()} t={t} locale={locale} />

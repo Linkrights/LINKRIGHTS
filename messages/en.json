@@ -47,7 +47,7 @@
     "staleBody": "The last review was a while ago. Please confirm the current details with the official organisation."
   },
   "home": {
-    "heroTitle": "Know what your rights are —\nand who to ask about them.",
+    "heroTitle": "Know what your rights are,\nand where to ask about them.",
     "heroSubtitle": "School, work, health, staying in Korea: we put the things that are hard to work out alone into plain words, and connect you to places that can actually help.",
     "ctaAsk": "Tell the AI about my situation",
     "ctaRights": "Find rights information",
@@ -105,11 +105,14 @@
     "statsPrograms": "Programmes",
     "statsProgramsUnit": "",
     "statsUpdated": "Last updated",
-    "statsNote": "This date changes whenever information is added or revised."
+    "statsNote": "This date changes whenever information is added or revised.",
+    "betaTitle": "This site is still in trial operation.",
+    "betaBody": "We keep fixing the content and the features. Tell us anything that looks wrong and we will fix it.",
+    "betaCta": "Send us your thoughts"
   },
   "ask": {
     "title": "Ask the AI guide",
-    "subtitle": "Describe your situation in your own words. Write in any language and the answer comes back in that language.",
+    "subtitle": "Write about the situation you are in. We can answer in any language.",
     "placeholder": "e.g. I worked part-time but I still haven't been paid.",
     "questionHeading": "What would you like to ask about?",
     "questionHint": "School, part-time work, health, visas and more. Describe what you are going through in your own words.",
@@ -475,7 +478,7 @@
     "basedOnTitle": "Rights information this checklist is based on",
     "basedOnIntro": "The items in this checklist come from the rights information below. If you want to know why an item matters, open it.",
     "doneTitle": "You have checked everything",
-    "doneBody": "You are ready to start. If you get stuck along the way, ask one of the organisations below.",
+    "doneBody": "Ready for the next step? If you get stuck along the way, ask one of the places below.",
     "orgsTitle": "Where you can get help",
     "more": "Read more",
     "orgLink": "See where to get help",
@@ -614,7 +617,9 @@
     "menteeBody": "If you would like to join the mentoring as a mentee, you can ask us by email. We talk about school and what comes next, and also everyday worries like presentations or friendships.",
     "menteeCta": "Ask about joining as a mentee",
     "menteeSubject": "[LINKRIGHTS] Mentee enquiry",
-    "howToBodyForm": "Press a button and the form opens. You can send it without an email app."
+    "howToBodyForm": "Press a button and the form opens. You can send it without an email app.",
+    "feedbackTitle": "Send us your thoughts",
+    "feedbackBody": "LINKRIGHTS is still in trial operation. Odd wording, wrong information, a feature you wish existed — we would be grateful for anything you tell us."
   },
   "search": {
     "title": "Search rights information",
@@ -838,7 +843,9 @@
     "correctionTitle": "Did you find something wrong?",
     "correctionIntro": "Tell us if a phone number has changed or a website does not open. We will check and fix it.",
     "mailInstead": "If you prefer email, write to {email}.",
-    "disabled": "The form is not available right now. Please write to {email}."
+    "disabled": "The form is not available right now. Please write to {email}.",
+    "bodyPlaceholderMentor": "Tell us freely what kind of activity you would like to do with migrant-background teenagers.",
+    "bodyPlaceholderPartner": "Tell us about your organisation and the activity or partnership you have in mind."
   },
   "community": {
     "navLabel": "Community",

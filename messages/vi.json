@@ -47,7 +47,7 @@
     "staleBody": "Lần rà soát gần nhất đã khá lâu. Vui lòng xác nhận nội dung mới nhất với cơ quan chính thức."
   },
   "home": {
-    "heroTitle": "Biết mình có quyền gì,\nvà biết hỏi ở đâu.",
+    "heroTitle": "Biết mình có quyền gì,\nvà có thể hỏi ở đâu.",
     "heroSubtitle": "Trường học, việc làm, sức khỏe, cư trú — những điều khó tự tìm hiểu một mình được viết lại bằng lời dễ hiểu, và nối bạn tới nơi thật sự có thể giúp.",
     "ctaAsk": "Kể tình huống của tôi cho AI",
     "ctaRights": "Tìm thông tin quyền",
@@ -105,11 +105,14 @@
     "statsPrograms": "Chương trình",
     "statsProgramsUnit": "",
     "statsUpdated": "Cập nhật lần cuối",
-    "statsNote": "Ngày này thay đổi mỗi khi thông tin được thêm hoặc sửa."
+    "statsNote": "Ngày này thay đổi mỗi khi thông tin được thêm hoặc sửa.",
+    "betaTitle": "Trang đang trong giai đoạn chạy thử.",
+    "betaBody": "Chúng tôi vẫn đang sửa nội dung và tính năng. Bạn thấy chỗ nào lạ hay cần sửa, hãy cho chúng tôi biết.",
+    "betaCta": "Gửi ý kiến"
   },
   "ask": {
     "title": "Hỏi hướng dẫn AI",
-    "subtitle": "Hãy mô tả hoàn cảnh bằng lời của bạn. Viết bằng ngôn ngữ nào, câu trả lời sẽ bằng ngôn ngữ đó.",
+    "subtitle": "Hãy thoải mái viết về tình huống bạn đang gặp. Chúng tôi có thể trả lời bằng bất kỳ ngôn ngữ nào.",
     "placeholder": "Ví dụ: Tôi đã làm thêm nhưng vẫn chưa được trả lương.",
     "questionHeading": "Bạn muốn hỏi về tình huống nào?",
     "questionHint": "Trường học, làm thêm, sức khỏe, visa… Hãy thoải mái viết ra điều bạn đang gặp phải.",
@@ -475,7 +478,7 @@
     "basedOnTitle": "Thông tin quyền làm cơ sở cho danh sách này",
     "basedOnIntro": "Các mục trong danh sách này lấy từ thông tin quyền bên dưới. Nếu muốn biết vì sao một mục lại quan trọng, hãy mở ra xem.",
     "doneTitle": "Bạn đã kiểm tra hết các mục",
-    "doneBody": "Bây giờ bạn đã sẵn sàng bắt đầu. Nếu gặp khó khăn giữa chừng, hãy hỏi các nơi trợ giúp bên dưới.",
+    "doneBody": "Cùng sang bước tiếp theo nhé? Nếu bị vướng, hãy hỏi những nơi bên dưới.",
     "orgsTitle": "Nơi bạn có thể nhận trợ giúp",
     "more": "Xem chi tiết",
     "orgLink": "Xem nơi nhận trợ giúp",
@@ -614,7 +617,9 @@
     "menteeBody": "Nếu bạn muốn tham gia chương trình cố vấn với tư cách mentee, hãy hỏi chúng tôi qua email. Chúng ta cùng trò chuyện về trường học, hướng đi phía trước và cả những lo lắng thường ngày như thuyết trình hay quan hệ bạn bè.",
     "menteeCta": "Hỏi về việc tham gia làm mentee",
     "menteeSubject": "[LINKRIGHTS] Hỏi tham gia mentee",
-    "howToBodyForm": "Bấm nút là biểu mẫu mở ra. Bạn có thể gửi mà không cần ứng dụng email."
+    "howToBodyForm": "Bấm nút là biểu mẫu mở ra. Bạn có thể gửi mà không cần ứng dụng email.",
+    "feedbackTitle": "Gửi ý kiến",
+    "feedbackBody": "LINKRIGHTS vẫn đang chạy thử. Câu chữ khó hiểu, thông tin sai, hay tính năng bạn mong có — chúng tôi rất biết ơn mọi góp ý."
   },
   "search": {
     "title": "Tìm thông tin quyền",
@@ -838,7 +843,9 @@
     "correctionTitle": "Bạn thấy thông tin nào chưa đúng?",
     "correctionIntro": "Hãy báo cho chúng tôi nếu số điện thoại đã đổi hoặc trang web không mở được. Chúng tôi sẽ kiểm tra và sửa.",
     "mailInstead": "Nếu bạn quen dùng email, hãy gửi tới {email}.",
-    "disabled": "Hiện chưa dùng được biểu mẫu. Hãy gửi tới {email}."
+    "disabled": "Hiện chưa dùng được biểu mẫu. Hãy gửi tới {email}.",
+    "bodyPlaceholderMentor": "Hãy viết tự do về hoạt động bạn muốn cùng làm với thanh thiếu niên có nền tảng di cư.",
+    "bodyPlaceholderPartner": "Hãy cho biết cơ quan của bạn và hoạt động hoặc nội dung hợp tác mong muốn."
   },
   "community": {
     "navLabel": "Cùng trò chuyện",

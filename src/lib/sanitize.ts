@@ -88,11 +88,26 @@ export function scrub(text: string, allow: Allowlist): string {
   }
 
   // 번호·링크를 지운 자리에 남은 빈 괄호 "()"도 함께 지웁니다. (예: "국가인권위원회(1331)" → "국가인권위원회")
-  return result
-    .replace(/[(（]\s*[)）]/g, '')
-    .replace(/\s{2,}/g, ' ')
-    .replace(/\s+([.,!?])/g, '$1')
-    .trim();
+  return fixKoreanParticles(
+    result
+      .replace(/[(（]\s*[)）]/g, '')
+      .replace(/\s{2,}/g, ' ')
+      .replace(/\s+([.,!?])/g, '$1')
+      .trim(),
+  );
+}
+
+/**
+ * 한국어 조사를 자연스럽게 다듬습니다. (뜻은 바꾸지 않고 조사만 고칩니다)
+ *
+ * 무엇을 요청하는 상대는 "~에/~에게"입니다. "학교에서 보호를 요청할 수 있어요"처럼 쓰면 어색해서,
+ * 운영팀 피드백에 따라 "학교에 보호를 요청할 수 있어요"로 맞춥니다.
+ * 새로운 내용을 더하지 않고, 아래 적은 모양에만 손댑니다.
+ */
+export function fixKoreanParticles(text: string): string {
+  if (!text) return '';
+  // 낱말에 따라 붙는 조사가 달라서(보호를 / 도움을) 원래 조사를 그대로 둡니다.
+  return text.replace(/([\p{Script=Hangul}]{2,})에서 (보호|도움|지원)(를|을) (요청|요구)/gu, '$1에 $2$3 $4');
 }
 
 export function scrubBlocks<T extends { title: string; body: string }>(blocks: T[], allow: Allowlist): T[] {

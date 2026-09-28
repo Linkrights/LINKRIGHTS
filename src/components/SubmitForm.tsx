@@ -210,7 +210,10 @@ export function SubmitForm({
           placeholder={labels.contactPlaceholder}
           className="lr-input mt-1.5"
         />
-        <p className="mt-1.5 text-[13px] leading-relaxed text-ink-500">{labels.guardianNote}</p>
+        {/* 보호자 안내는 청소년이 보내는 칸에서만 보여 줍니다. (멘토·기관 문의에서는 빈 글자로 들어옵니다) */}
+        {labels.guardianNote && (
+          <p className="mt-1.5 text-[13px] leading-relaxed text-ink-500">{labels.guardianNote}</p>
+        )}
       </div>
 
       {/* 보이지 않는 칸: 자동 프로그램이 채우면 저장하지 않습니다. (화면낭독기에서도 읽지 않습니다) */}

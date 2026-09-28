@@ -22,6 +22,10 @@
       ],
       "youth_points": [
         {
+          "title": "지금 닿을 수 있는 때가 청소년기입니다",
+          "body": "학교에 다니는 동안에는 다문화 학생 수가 해마다 집계되어, 어디에 얼마나 있는지 알 수 있습니다. 하지만 학교를 떠난 뒤의 이주배경 청년은 전국 단위로 따로 집계되지 않아, 필요한 정보를 전할 방법을 찾기가 훨씬 어렵습니다. 학교 밖 청소년처럼 집계에 잡히지 않는 경우도 있지만, 그래도 가장 닿기 쉬운 때는 청소년기입니다. LINKRIGHTS가 청소년을 먼저 만나려는 이유입니다."
+        },
+        {
           "title": "제도는 있지만, 필요한 정보는 흩어져 있습니다",
           "body": "학교, 일, 병원, 체류처럼 생활에 꼭 필요한 제도는 이미 있습니다. 그런데 무엇을 어디에서 확인해야 하는지는 기관마다 흩어져 있습니다."
         },
@@ -94,7 +98,7 @@
         {
           "code": "SDG 10",
           "name": "불평등 감소",
-          "goal": "나라 안과 나라 사이의 불평등 줄이기",
+          "goal": "국적에 따른 불평등 줄이기",
           "body": "국적과 언어 때문에 정보에서 소외되지 않도록, 정보 접근의 격차를 줄이는 것을 목표로 합니다."
         }
       ],
@@ -162,6 +166,10 @@
         }
       ],
       "youth_points": [
+        {
+          "title": "The teenage years are when we can still reach them",
+          "body": "While they are at school, the number of multicultural students is counted every year, so we know roughly where they are. After they leave school, young adults with a migrant background are not counted separately at national level, which makes it far harder to get useful information to them. Some teenagers are missed too, such as those out of school, but these years are still the easiest time to reach them. That is why LINKRIGHTS starts here."
+        },
         {
           "title": "The systems exist, but the information is scattered",
           "body": "School, work, hospitals and visas already have rules and services. What to check, and where, is spread across many different organisations."
@@ -235,7 +243,7 @@
         {
           "code": "SDG 10",
           "name": "Reduced Inequalities",
-          "goal": "Reducing inequality within and between countries",
+          "goal": "Reducing inequality based on nationality",
           "body": "Narrowing the information gap so that nationality and language do not decide who gets help."
         }
       ],
@@ -303,6 +311,10 @@
         }
       ],
       "youth_points": [
+        {
+          "title": "青少年时期是还能触及的时候",
+          "body": "在校期间，多文化学生的人数每年都会统计，因此大致知道他们在哪里。但离开学校之后，有移民背景的青年并没有全国层面的单独统计，要把需要的信息送到他们手里就难得多。虽然也有像校外青少年这样未被统计的情况，但青少年时期仍是最容易接触到的阶段。这就是 LINKRIGHTS 先从青少年开始的原因。"
+        },
         {
           "title": "制度是有的，但需要的信息分散在各处",
           "body": "上学、打工、看病、居留都已有相应的制度和服务。但要确认什么、去哪里确认，分散在不同机构的网站上。"
@@ -376,7 +388,7 @@
         {
           "code": "SDG 10",
           "name": "减少不平等",
-          "goal": "减少国家内部和国家之间的不平等",
+          "goal": "减少因国籍造成的不平等",
           "body": "以缩小信息获取差距为目标，让任何人都不因国籍和语言而被排除在信息之外。"
         }
       ],
@@ -444,6 +456,10 @@
         }
       ],
       "youth_points": [
+        {
+          "title": "Tuổi thiếu niên là lúc còn có thể tiếp cận",
+          "body": "Khi còn đi học, số học sinh đa văn hóa được thống kê hằng năm nên có thể biết các em ở đâu. Nhưng sau khi rời trường, thanh niên có nền tảng di cư không được thống kê riêng ở cấp quốc gia, khiến việc đưa thông tin cần thiết đến họ khó hơn nhiều. Vẫn có những bạn không nằm trong thống kê, như thanh thiếu niên ngoài nhà trường, nhưng đây vẫn là giai đoạn dễ tiếp cận nhất. Đó là lý do LINKRIGHTS bắt đầu từ lứa tuổi này."
+        },
         {
           "title": "Chế độ thì có, nhưng thông tin lại nằm rải rác",
           "body": "Trường học, việc làm, bệnh viện và cư trú đều đã có quy định và dịch vụ. Nhưng cần kiểm tra gì và ở đâu lại nằm rải rác trên trang web của nhiều cơ quan khác nhau."
@@ -517,7 +533,7 @@
         {
           "code": "SDG 10",
           "name": "Giảm bất bình đẳng",
-          "goal": "Giảm bất bình đẳng trong mỗi quốc gia và giữa các quốc gia",
+          "goal": "Giảm bất bình đẳng do quốc tịch",
           "body": "Mục tiêu là thu hẹp khoảng cách tiếp cận thông tin để không ai bị bỏ lại vì quốc tịch hay ngôn ngữ."
         }
       ],

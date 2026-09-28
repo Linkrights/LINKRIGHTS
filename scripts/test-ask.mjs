@@ -1338,6 +1338,48 @@ function checkCommunityRules() {
   delete process.env.GOOGLE_CLIENT_SECRET;
 }
 
+
+// ---------------------------------------------------------------------------
+// 11. 말투·문구 피드백 반영 확인
+//     (2026-09-29 운영팀 피드백: 조사·문구가 어색한 곳들)
+// ---------------------------------------------------------------------------
+function checkWordingFeedback() {
+  const runtime = createRuntime(async () => {
+    throw new Error('연결하지 않습니다.');
+  });
+  const sanitize = runtime.load('src/lib/sanitize.ts');
+  const fix = sanitize.fixKoreanParticles;
+
+  check('11-1 "학교에서 보호를 요청" → "학교에 보호를 요청"', fix('학교에서 보호를 요청할 수 있어요') === '학교에 보호를 요청할 수 있어요', fix('학교에서 보호를 요청할 수 있어요'));
+  check('11-2 "센터에서 도움을 요청" 도 고친다', fix('센터에서 도움을 요청해 보세요') === '센터에 도움을 요청해 보세요');
+  check('11-3 장소를 뜻하는 다른 문장은 그대로 둔다', fix('학교에서 상담 선생님을 만날 수 있어요') === '학교에서 상담 선생님을 만날 수 있어요');
+  check('11-4 한국어가 아닌 답변은 건드리지 않는다', fix('You can ask the school for help') === 'You can ask the school for help');
+
+  // 화면 문구
+  const messages = {};
+  for (const locale of ['ko', 'en', 'zh', 'vi']) {
+    messages[locale] = JSON.parse(fs.readFileSync(path.join(ROOT, 'messages', locale + '.json'), 'utf8'));
+  }
+  check('11-5 첫 화면 제목을 고쳤다', messages.ko.home.heroTitle.includes('무엇인지,'), messages.ko.home.heroTitle.replace('\n', ' / '));
+  check('11-6 "어떤 언어로 써도 같은 언어로" 문구를 바꿨다', !messages.ko.ask.subtitle.includes('같은 언어로 답합니다'));
+  check('11-7 체크리스트 마무리가 다음 행동을 묻는다', messages.ko.checklist.doneBody.includes('다음 단계'));
+  for (const locale of ['ko', 'en', 'zh', 'vi']) {
+    check(`11-8 시범 운영 안내 문구가 있다 (${locale})`, Boolean(messages[locale].home.betaTitle && messages[locale].home.betaBody && messages[locale].home.betaCta));
+    check(`11-9 멘토·기관 안내 문구가 따로 있다 (${locale})`, Boolean(messages[locale].forms.bodyPlaceholderMentor && messages[locale].forms.bodyPlaceholderPartner));
+    check(`11-10 의견 보내기 문구가 있다 (${locale})`, Boolean(messages[locale].involved.feedbackTitle && messages[locale].involved.feedbackBody));
+  }
+
+  // 소개 페이지 내용
+  const about = JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'about.json'), 'utf8'));
+  for (const locale of ['ko', 'en', 'zh', 'vi']) {
+    const page = about.i18n[locale];
+    const sdg10 = page.sdgs.find((item) => item.code === 'SDG 10');
+    check(`11-11 SDG 10 문구를 바꿨다 (${locale})`, Boolean(sdg10) && !/나라 안과 나라 사이|within and between/.test(sdg10.goal), sdg10 && sdg10.goal);
+    check(`11-12 "왜 이주배경청소년인가요?"에 집계 이야기를 넣었다 (${locale})`, page.youth_points.length >= 4);
+  }
+  check('11-13 집계 이야기는 학교 밖 청소년도 짚는다', about.i18n.ko.youth_points[0].body.includes('학교 밖 청소년'));
+}
+
 if (LIVE) {
   await runLive();
 } else {
@@ -1345,6 +1387,7 @@ if (LIVE) {
   checkSubmitRules();
   checkOrgKeywordSearch();
   checkCommunityRules();
+  checkWordingFeedback();
   console.log('\n질문별로 AI에게 전달되는 자료');
   for (const row of table) {
     console.log(`  [${row.n}] ${row.q}`);

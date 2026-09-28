@@ -147,6 +147,13 @@ export default async function GetInvolvedPage({ params }: { params: Promise<{ lo
           <p className="lr-body max-w-3xl">{pick(community, locale)}</p>
         </Section>
       )}
+
+      {/* 의견 보내기: 아직 고쳐 나가는 중이라 첫 화면의 시범 운영 안내에서 이곳으로 옵니다. */}
+      <Section id="feedback" tone="soft" title={t.involved.feedbackTitle} subtitle={t.involved.feedbackBody}>
+        <div className="max-w-2xl">
+          <SubmitBox locale={locale} kind="correction" detail="feedback" withTitle={false} rows={5} />
+        </div>
+      </Section>
     </>
   );
 }

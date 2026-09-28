@@ -42,16 +42,26 @@ export function SubmitBox({
     );
   }
 
+  // 누가 보내는 칸인지에 따라 묻는 말이 달라집니다.
+  // (멘토·학교/기관 문의에는 청소년에게 하는 말투나 보호자 안내를 쓰지 않습니다)
+  const forAdults = detail === 'mentor' || detail === 'partner';
+  const bodyPlaceholder =
+    detail === 'mentor'
+      ? t.forms.bodyPlaceholderMentor
+      : detail === 'partner'
+        ? t.forms.bodyPlaceholderPartner
+        : t.forms.bodyPlaceholder;
+
   const labels: SubmitFormLabels = {
     titleLabel: t.forms.titleLabel,
     titlePlaceholder: t.forms.titlePlaceholder,
     bodyLabel: t.forms.bodyLabel,
-    bodyPlaceholder: t.forms.bodyPlaceholder,
+    bodyPlaceholder,
     contactLabel: t.forms.contactLabel,
     contactPlaceholder: t.forms.contactPlaceholder,
     contactOptional: t.forms.contactOptional,
     contactRequired: t.forms.contactRequired,
-    guardianNote: t.forms.guardianNote,
+    guardianNote: forAdults ? '' : t.forms.guardianNote,
     storeNote: t.forms.storeNote,
     privacyLink: t.forms.privacyLink,
     submit: t.forms.submit,

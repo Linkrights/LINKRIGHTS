@@ -47,7 +47,7 @@
     "staleBody": "距离上次审核已有一段时间，请向官方机构确认最新内容。"
   },
   "home": {
-    "heroTitle": "知道自己有什么权利，\n也知道该去问谁。",
+    "heroTitle": "了解我有哪些权利，\n以及可以向哪里询问。",
     "heroSubtitle": "学校、工作、健康、居留——把一个人很难弄明白的事用简单的话整理好，并为你连接到真正能提供帮助的地方。",
     "ctaAsk": "向 AI 说说我的情况",
     "ctaRights": "查找权利信息",
@@ -105,11 +105,14 @@
     "statsPrograms": "项目",
     "statsProgramsUnit": "个",
     "statsUpdated": "最后更新",
-    "statsNote": "每当资料新增或修改时，这个日期也会随之更新。"
+    "statsNote": "每当资料新增或修改时，这个日期也会随之更新。",
+    "betaTitle": "目前为试运行阶段。",
+    "betaBody": "我们还在不断修改内容和功能。发现奇怪或需要修改的地方，请告诉我们。",
+    "betaCta": "提出意见"
   },
   "ask": {
     "title": "向 AI 提问",
-    "subtitle": "用自己的话写下你的处境。用任何语言提问，都会用同样的语言回答。",
+    "subtitle": "请随意写下你现在遇到的情况。我们可以用任何语言回答。",
     "placeholder": "例如：我打工了，但还没拿到工资。",
     "questionHeading": "你想了解什么情况？",
     "questionHint": "学校、打工、健康、签证等，请把你正在经历的事情轻松地写下来。",
@@ -475,7 +478,7 @@
     "basedOnTitle": "这份清单依据的权利信息",
     "basedOnIntro": "这份清单的项目来自下面的权利信息。想知道某一项为什么重要，可以点开查看。",
     "doneTitle": "要确认的都已经勾选完了",
-    "doneBody": "现在可以开始了。中途遇到困难，可以向下面的求助机构询问。",
+    "doneBody": "要不要进入下一步？中途遇到困难，可以向下面这些地方咨询。",
     "orgsTitle": "可以求助的地方",
     "more": "查看详情",
     "orgLink": "查看求助机构",
@@ -614,7 +617,9 @@
     "menteeBody": "想以学员身份参加师友计划的移民背景青少年，可以用邮件咨询。可以聊学校和未来出路，也可以聊发表、朋友关系等日常烦恼。",
     "menteeCta": "咨询以学员身份参加",
     "menteeSubject": "[LINKRIGHTS] 学员参加咨询",
-    "howToBodyForm": "点击按钮就会展开咨询表单，没有邮件应用也能直接发送。"
+    "howToBodyForm": "点击按钮就会展开咨询表单，没有邮件应用也能直接发送。",
+    "feedbackTitle": "提出意见",
+    "feedbackBody": "LINKRIGHTS 仍在试运行。无论是别扭的句子、错误的信息，还是希望增加的功能，都非常感谢你告诉我们。"
   },
   "search": {
     "title": "搜索权利信息",
@@ -838,7 +843,9 @@
     "correctionTitle": "发现了错误信息吗？",
     "correctionIntro": "如果电话号码变了或网页打不开，请告诉我们。我们确认后会更正。",
     "mailInstead": "如果习惯用邮件，也可以发到 {email}。",
-    "disabled": "目前无法使用发送表单，请发邮件到 {email}。"
+    "disabled": "目前无法使用发送表单，请发邮件到 {email}。",
+    "bodyPlaceholderMentor": "请自由写下你希望以什么样的活动与移民背景青少年同行。",
+    "bodyPlaceholderPartner": "请写明贵机构的情况，以及希望开展的活动或合作内容。"
   },
   "community": {
     "navLabel": "交流区",
