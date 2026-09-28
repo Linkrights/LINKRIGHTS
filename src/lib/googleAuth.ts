@@ -123,33 +123,67 @@ export function verifyState(value: string | undefined, now = Date.now()): boolea
   return sameString(signature, sign(`${expires}.${nonce}`));
 }
 
-/** 구글에서 받은 code 를 계정 번호(sub)로 바꿉니다. 실패하면 빈 글자를 돌려줍니다. */
+/**
+ * 구글에서 받은 code 를 계정 번호(sub)로 바꿉니다.
+ * 실패하면 빈 글자를 돌려주고, 무엇이 잘못됐는지 로그에 남깁니다.
+ * (구글이 돌려주는 error 는 비밀값이 아니라 "왜 거절했는지"이며, 우리 보안 비밀은 로그에 남기지 않습니다)
+ */
 export async function exchangeCodeForSub(code: string, redirectUri: string): Promise<string> {
-  const response = await fetch('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: { 'content-type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({
-      code,
-      client_id: googleClientId(),
-      client_secret: googleClientSecret(),
-      redirect_uri: redirectUri,
-      grant_type: 'authorization_code',
-    }),
-  });
+  let response: Response;
+  try {
+    response = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        code,
+        client_id: googleClientId(),
+        client_secret: googleClientSecret(),
+        redirect_uri: redirectUri,
+        grant_type: 'authorization_code',
+      }),
+    });
+  } catch (error) {
+    console.error('[community] 구글에 연결하지 못했습니다:', error instanceof Error ? error.message : error);
+    return '';
+  }
   if (!response.ok) {
-    console.error('[community] 구글 토큰 교환 실패', response.status);
+    const body = await response.text().catch(() => '');
+    let detail = body.slice(0, 300);
+    try {
+      const parsed = JSON.parse(body) as { error?: string; error_description?: string };
+      detail = `${parsed.error ?? ''} ${parsed.error_description ?? ''}`.trim();
+      if (parsed.error === 'invalid_client') {
+        detail += ' — GOOGLE_CLIENT_SECRET 이 이 클라이언트 ID 의 보안 비밀이 맞는지 확인하세요.';
+      }
+      if (parsed.error === 'redirect_uri_mismatch') {
+        detail += ` — Google Cloud Console 의 승인된 리디렉션 URI 에 ${redirectUri} 가 있어야 합니다.`;
+      }
+      if (parsed.error === 'invalid_grant') {
+        detail += ' — 이미 쓴 code 이거나 시간이 지난 code 입니다. 다시 로그인해 보세요.';
+      }
+    } catch {
+      /* 그대로 둡니다 */
+    }
+    console.error(`[community] 구글 토큰 교환 실패 ${response.status}: ${detail}`);
     return '';
   }
   const data = (await response.json()) as { id_token?: string };
-  if (!data.id_token) return '';
+  if (!data.id_token) {
+    console.error('[community] 구글 응답에 id_token 이 없습니다.');
+    return '';
+  }
   // id_token 은 점 세 개로 나뉜 값이며, 가운데가 내용입니다. (구글과 직접 주고받았으므로 그대로 씁니다)
   const middle = data.id_token.split('.')[1];
   if (!middle) return '';
   try {
     const json = JSON.parse(Buffer.from(middle, 'base64url').toString('utf8')) as { sub?: string; aud?: string };
-    if (json.aud !== googleClientId()) return '';
+    if (json.aud !== googleClientId()) {
+      console.error('[community] id_token 의 aud 가 GOOGLE_CLIENT_ID 와 다릅니다.');
+      return '';
+    }
     return typeof json.sub === 'string' ? json.sub : '';
-  } catch {
+  } catch (error) {
+    console.error('[community] id_token 을 읽지 못했습니다:', error instanceof Error ? error.message : error);
     return '';
   }
 }

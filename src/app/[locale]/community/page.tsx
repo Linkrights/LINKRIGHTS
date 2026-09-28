@@ -30,10 +30,12 @@ export default async function CommunityPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ board?: string; login?: string }>;
+  searchParams: Promise<{ board?: string; login?: string; e?: string }>;
 }) {
   const { locale: rawLocale } = await params;
-  const { board: rawBoard, login } = await searchParams;
+  const { board: rawBoard, login, e } = await searchParams;
+  // 로그인이 실패한 단계 (정해 둔 값만 보여 줍니다)
+  const failReason = ['nocode', 'state', 'token', 'save'].find((value) => value === e) ?? '';
   const locale = toLocale(rawLocale);
   const t = getMessages(locale);
   const c = t.community;
@@ -63,7 +65,13 @@ export default async function CommunityPage({
             <Notice title={c.title} body={c.disabled} />
           ) : (
             <>
-              {login === 'failed' && <Notice title={c.loginFailed} body={c.loginNote} />}
+              {login === 'failed' && (
+                <div>
+                  <Notice title={c.loginFailed} body={c.loginNote} />
+                  {/* 어느 단계에서 멈췄는지 짧게 남깁니다. 운영팀이 원인을 찾을 때 씁니다. (api/community/callback 참고) */}
+                  {failReason && <p className="mt-2 text-[13px] text-ink-500">({failReason})</p>}
+                </div>
+              )}
 
               {/* 이야기 나눌 때 지키는 것 */}
               <section className="rounded-[var(--radius-control)] border border-[var(--color-line)] bg-surface-soft p-4 sm:p-5">
