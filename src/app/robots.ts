@@ -12,7 +12,7 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: '*',
         allow: '/',
         // AI 응답을 만드는 주소, 운영팀 관리자 화면, 이용자가 보낸 질문 글은 검색 결과에 나오지 않게 합니다.
-        disallow: ['/api/', '/admin', '/*/qna/s/'],
+        disallow: ['/api/', '/admin', '/*/qna/s/', '/*/community'],
       },
     ],
     sitemap: `${base()}/sitemap.xml`,

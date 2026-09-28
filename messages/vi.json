@@ -745,8 +745,8 @@
     "subtitle": "Cách LINKRIGHTS xử lý thông tin, nói bằng lời dễ hiểu.",
     "sections": [
       {
-        "title": "Không có đăng ký thành viên",
-        "body": "LINKRIGHTS không có chức năng đăng ký hay đăng nhập. Bạn không cần thông tin cá nhân nào để đọc thông tin quyền, hỏi AI hay dùng danh sách kiểm tra. Ô thông tin liên lạc chỉ xuất hiện khi bạn gửi câu hỏi hoặc yêu cầu, và với câu hỏi bạn có thể để trống."
+        "title": "Không có đăng ký, chỉ khu trò chuyện dùng đăng nhập Google",
+        "body": "LINKRIGHTS không có đăng ký thành viên. Bạn không cần thông tin cá nhân nào để đọc thông tin quyền, hỏi AI hay dùng danh sách kiểm tra. Ô liên lạc chỉ xuất hiện khi bạn gửi câu hỏi hoặc liên hệ, và với câu hỏi bạn có thể để trống. Chỉ một nơi là khu trò chuyện dùng đăng nhập Google, và chỉ khi viết bài hoặc bình luận. Ngay cả khi đó chúng tôi cũng không xin và không lưu tên, email hay ảnh đại diện của bạn. Nếu chỉ đọc thì không cần đăng nhập."
       },
       {
         "title": "Câu hỏi và câu trả lời AI không được lưu trên máy chủ",
@@ -769,12 +769,16 @@
         "body": "Bạn có thể gửi câu hỏi, yêu cầu tham gia hoặc báo thông tin cần sửa ngay từ trang web. Nội dung bạn gửi được lưu ở nơi chỉ nhóm vận hành LINKRIGHTS xem được, và chúng tôi giữ năm mục: (1) nội dung, (2) tiêu đề, (3) ngôn ngữ của trang, (4) ngày gửi, (5) thông tin liên lạc chỉ khi bạn có ghi. Địa chỉ mạng (IP) chỉ được dùng trong chốc lát để ngăn một người gửi quá nhiều và không lưu cùng nội dung. Yêu cầu tham gia cần thông tin liên lạc để chúng tôi trả lời; câu hỏi thì không bắt buộc. Sau khi trả lời câu hỏi, chỉ những gì nhóm vận hành quyết định đăng mới xuất hiện trên bảng hỏi đáp, sau khi đã xóa các chi tiết có thể nhận ra bạn. Nếu bạn dưới 14 tuổi, hãy gửi cùng người giám hộ hoặc thầy cô. Bạn vẫn có thể gửi qua email như trước."
       },
       {
+        "title": "Khu trò chuyện lưu những gì",
+        "body": "Khi bạn đăng nhập bằng Google, chúng tôi không lưu mã tài khoản mà Google cung cấp; mã đó được trộn với một giá trị bí mật và chỉ kết quả không thể đảo ngược mới được lưu. Chúng tôi không xin và không nhận tên, email hay ảnh đại diện của bạn. Ngoài ra chỉ lưu: (1) biệt danh mà trang tạo cho bạn lần đầu, bạn có thể đổi; (2) nội dung và thời gian bài viết, bình luận của bạn; (3) việc bạn đã bấm báo cáo. Trang chỉ hiển thị biệt danh, và cả người dùng khác lẫn nhóm vận hành đều không biết đó là ai. Bạn có thể xóa bài và bình luận của mình bất cứ lúc nào bằng nút xóa. Nếu muốn xóa cả tài khoản, hãy gửi email cho chúng tôi; chúng tôi sẽ xóa biệt danh và mọi nội dung bạn đã viết. Bài bị báo cáo nhiều sẽ tự ẩn để nhóm vận hành kiểm tra, và bài vi phạm quy tắc có thể bị xóa. Các trang khu trò chuyện được để ngoài kết quả tìm kiếm."
+      },
+      {
         "title": "Xin đừng nhập những thông tin này",
         "body": "Đừng nhập tên, thông tin liên lạc, địa chỉ, số hộ chiếu, số đăng ký người nước ngoài, số visa hay hồ sơ bệnh án. Chỉ cần kể tình huống là đủ để được hướng dẫn. Trước khi gửi, nếu thấy những nội dung như vậy chúng tôi sẽ nhắc bạn một lần nữa, nhưng không thể phát hiện mọi trường hợp."
       },
       {
         "title": "Chỉ một cookie ngôn ngữ, lượt truy cập đếm ẩn danh",
-        "body": "Trang này không đăng quảng cáo và không dùng cookie theo dõi. Cookie duy nhất là cookie ghi nhớ ngôn ngữ bạn đã chọn (lr-locale), chỉ dùng để hiển thị trang bằng ngôn ngữ đó vào lần sau và không dùng để nhận diện bạn. Ngoài ra có một cookie chỉ dành cho nhóm vận hành khi đăng nhập màn hình quản trị; nó không bao giờ được tạo trên các trang bạn xem. Để biết có bao nhiêu người xem những trang nào, chúng tôi dùng công cụ đếm lượt truy cập (Vercel Web Analytics). Công cụ này không tạo cookie và sẽ hủy dấu tạm thời tạo từ yêu cầu truy cập sau 24 giờ. Chỉ còn lại địa chỉ trang đã xem, đường dẫn đến trang, khu vực ở mức quốc gia hoặc thành phố, loại thiết bị và trình duyệt; không thể biết ai đã xem. Từ khóa tìm kiếm và khu vực bạn chọn chỉ xuất hiện trên thanh địa chỉ và không được lưu trên máy chủ."
+        "body": "Trang này không đăng quảng cáo và không dùng cookie theo dõi. Cookie duy nhất là cookie ghi nhớ ngôn ngữ bạn đã chọn (lr-locale), chỉ dùng để hiển thị trang bằng ngôn ngữ đó vào lần sau và không dùng để nhận diện bạn. Ngoài ra có một cookie chỉ dành cho nhóm vận hành khi đăng nhập màn hình quản trị; nó không bao giờ được tạo trên các trang bạn xem. Để biết có bao nhiêu người xem những trang nào, chúng tôi dùng công cụ đếm lượt truy cập (Vercel Web Analytics). Công cụ này không tạo cookie và sẽ hủy dấu tạm thời tạo từ yêu cầu truy cập sau 24 giờ. Chỉ còn lại địa chỉ trang đã xem, đường dẫn đến trang, khu vực ở mức quốc gia hoặc thành phố, loại thiết bị và trình duyệt; không thể biết ai đã xem. Từ khóa tìm kiếm và khu vực bạn chọn chỉ xuất hiện trên thanh địa chỉ và không được lưu trên máy chủ. Nếu bạn đăng nhập vào khu trò chuyện, một cookie (lr-community) sẽ giữ trạng thái đăng nhập và bị xóa khi bạn đăng xuất. Cookie đó chỉ chứa số thành viên nội bộ của chúng tôi, không chứa biệt danh hay tên."
       },
       {
         "title": "Liên kết bên ngoài",
@@ -835,5 +839,48 @@
     "correctionIntro": "Hãy báo cho chúng tôi nếu số điện thoại đã đổi hoặc trang web không mở được. Chúng tôi sẽ kiểm tra và sửa.",
     "mailInstead": "Nếu bạn quen dùng email, hãy gửi tới {email}.",
     "disabled": "Hiện chưa dùng được biểu mẫu. Hãy gửi tới {email}."
+  },
+  "community": {
+    "navLabel": "Cùng trò chuyện",
+    "title": "Cùng trò chuyện",
+    "subtitle": "Trò chuyện với những bạn có hoàn cảnh giống mình. Đăng nhập bằng Google là có thể viết bài với biệt danh.",
+    "boardFree": "Tự do",
+    "boardAsk": "Hỏi đáp",
+    "boardInfo": "Chia sẻ thông tin",
+    "boardAll": "Tất cả",
+    "loginCta": "Tiếp tục với Google",
+    "loginNote": "Chúng tôi không lưu tên hay email của bạn. Mã tài khoản Google chỉ được lưu dưới dạng không thể đọc lại, và trang chỉ hiển thị biệt danh.",
+    "loginFailed": "Đăng nhập chưa được. Hãy thử lại.",
+    "logout": "Đăng xuất",
+    "nicknameLabel": "Biệt danh của bạn",
+    "nicknameChange": "Đổi biệt danh",
+    "nicknameSave": "Lưu",
+    "nicknameNote": "Đừng dùng tên thật. Biệt danh có số điện thoại hoặc email sẽ không được lưu.",
+    "writeTitle": "Viết bài",
+    "postTitleLabel": "Tiêu đề",
+    "postTitlePlaceholder": "Ví dụ: Mình mới bắt đầu làm thêm và có thắc mắc",
+    "postBodyLabel": "Nội dung",
+    "postBodyPlaceholder": "Đừng viết tên, tên trường hay số điện thoại của bạn.",
+    "submit": "Đăng",
+    "sending": "Đang đăng",
+    "empty": "Chưa có bài nào. Hãy bắt đầu bài đầu tiên.",
+    "comments": "{n} bình luận",
+    "commentLabel": "Bình luận",
+    "commentPlaceholder": "Hãy trả lời một cách tử tế.",
+    "commentSubmit": "Gửi bình luận",
+    "commentEmpty": "Chưa có bình luận nào.",
+    "report": "Báo cáo",
+    "reportDone": "Đã báo cáo. Nhóm vận hành sẽ kiểm tra.",
+    "remove": "Xóa",
+    "removeConfirm": "Xóa nhé? Không thể hoàn tác.",
+    "backToList": "Về danh sách",
+    "rulesTitle": "Quy tắc chung",
+    "rules": "· Hãy tôn trọng nhau. Nội dung lăng mạ, phân biệt, bắt nạt sẽ bị xóa.\n· Đừng viết tên, trường học hay số điện thoại của bạn hoặc của người khác.\n· Không quảng cáo, không mời làm việc trả tiền, không đưa thông tin sai.\n· Nếu bạn dưới 14 tuổi, hãy viết cùng người giám hộ hoặc thầy cô.\n· Hãy báo cáo nội dung bất thường. Bài bị báo cáo nhiều sẽ tự ẩn và nhóm vận hành kiểm tra.",
+    "banned": "Hiện bạn chưa thể đăng bài. Hãy liên hệ chúng tôi qua email.",
+    "error": "Chưa đăng được. Vui lòng thử lại sau.",
+    "rateLimit": "Bạn vừa đăng nhiều lần. Hãy thử lại sau 5 phút.",
+    "disabled": "Khu trò chuyện đang được chuẩn bị và sẽ sớm mở.",
+    "privacyTitle": "Có nội dung trông như thông tin cá nhân",
+    "privacyRemove": "Xóa phần đó"
   }
 }

@@ -745,8 +745,8 @@
     "subtitle": "How LINKRIGHTS handles information, in plain language.",
     "sections": [
       {
-        "title": "There are no accounts",
-        "body": "LINKRIGHTS has no sign-up and no login. You need no personal details to read rights information, ask the AI or use a checklist. A field for contact details appears only when you send a question or an enquiry, and for questions you may leave it empty."
+        "title": "No accounts, except a Google sign-in for the community",
+        "body": "LINKRIGHTS has no sign-up. You need no personal details to read rights information, ask the AI or use a checklist. A field for contact details appears only when you send a question or an enquiry, and for questions you may leave it empty. Only one place, the community, uses a Google sign-in, and only to write a post or a comment. Even there we do not request or store your name, email or profile picture. You can read without signing in."
       },
       {
         "title": "AI questions and answers are not stored on our server",
@@ -769,12 +769,16 @@
         "body": "You can send a question, a join enquiry or a correction straight from the site. What you send is stored where only the LINKRIGHTS team can see it, and we keep five things: (1) your message, (2) the title, (3) the language of the page, (4) the date, and (5) contact details, only if you filled them in. Your internet address (IP) is used briefly to stop one person sending too many messages and is not stored with your message. Join enquiries need contact details so that we can reply; questions can be sent without them. After we answer a question, only what the team chooses to post appears on the question board, with anything that could identify you removed. If you are under 14, please send it together with a guardian or a teacher. You can still write to us by email instead."
       },
       {
+        "title": "What the community stores",
+        "body": "When you sign in with Google we do not store the account id Google gives us. We mix it with a secret and store only the resulting value, which cannot be turned back. We neither request nor receive your name, email or profile picture. Alongside it we store only: (1) the nickname the site gave you on your first visit, which you can change; (2) the text and time of your posts and comments; (3) a record that you pressed report. Only the nickname is shown, and neither other users nor the team can tell who is behind it. You can delete your own posts and comments at any time with the delete button. If you want the account itself removed, write to our contact email and we will delete the nickname and everything you wrote. Reported posts are hidden automatically for the team to check, and posts that break the rules may be deleted. Community pages are kept out of search results."
+      },
+      {
         "title": "Please do not enter these",
         "body": "Do not enter your name, contact details, address, passport number, alien registration number, visa number or medical records. Describing the situation is enough. We check for such details before sending and warn you, but we cannot catch every case."
       },
       {
         "title": "One cookie for language, visits counted anonymously",
-        "body": "This site carries no advertising and uses no tracking cookies. The only cookie is the one that remembers the language you chose (lr-locale); it is used only to show the site in that language next time and never identifies you. One more cookie exists for the team when they log in to the admin screen; it is never created on the pages you see. To see how many people use which pages, we use a visit-counting tool (Vercel Web Analytics). It sets no cookies and discards the temporary marker it builds from the incoming request after 24 hours. What remains is the page address, how you arrived, a rough country or city level location, and the device and browser type — it cannot tell who you are. Search words and the area you pick appear only in the address bar and are not stored on the server."
+        "body": "This site carries no advertising and uses no tracking cookies. The only cookie is the one that remembers the language you chose (lr-locale); it is used only to show the site in that language next time and never identifies you. One more cookie exists for the team when they log in to the admin screen; it is never created on the pages you see. To see how many people use which pages, we use a visit-counting tool (Vercel Web Analytics). It sets no cookies and discards the temporary marker it builds from the incoming request after 24 hours. What remains is the page address, how you arrived, a rough country or city level location, and the device and browser type — it cannot tell who you are. Search words and the area you pick appear only in the address bar and are not stored on the server. If you sign in to the community, one cookie (lr-community) keeps you signed in and is removed when you sign out. It holds only our own member number, not your nickname or name."
       },
       {
         "title": "External links",
@@ -835,5 +839,48 @@
     "correctionIntro": "Tell us if a phone number has changed or a website does not open. We will check and fix it.",
     "mailInstead": "If you prefer email, write to {email}.",
     "disabled": "The form is not available right now. Please write to {email}."
+  },
+  "community": {
+    "navLabel": "Community",
+    "title": "Community",
+    "subtitle": "Talk with people going through similar things. Sign in with Google and post under a nickname.",
+    "boardFree": "Anything",
+    "boardAsk": "Questions",
+    "boardInfo": "Tips",
+    "boardAll": "All",
+    "loginCta": "Continue with Google",
+    "loginNote": "We do not store your name or email. Your Google account id is stored only as an unreadable value, and only your nickname is shown.",
+    "loginFailed": "Sign-in did not work. Please try again.",
+    "logout": "Sign out",
+    "nicknameLabel": "Your nickname",
+    "nicknameChange": "Change nickname",
+    "nicknameSave": "Save",
+    "nicknameNote": "Do not use your real name. Nicknames with a phone number or email are not saved.",
+    "writeTitle": "Write a post",
+    "postTitleLabel": "Title",
+    "postTitlePlaceholder": "e.g. I just started my first part-time job",
+    "postBodyLabel": "Your post",
+    "postBodyPlaceholder": "Please do not write your name, your school or a phone number.",
+    "submit": "Post",
+    "sending": "Posting",
+    "empty": "No posts yet. Start the first one.",
+    "comments": "{n} comments",
+    "commentLabel": "Comment",
+    "commentPlaceholder": "Please reply kindly.",
+    "commentSubmit": "Add comment",
+    "commentEmpty": "No comments yet.",
+    "report": "Report",
+    "reportDone": "Reported. The team will check it.",
+    "remove": "Delete",
+    "removeConfirm": "Delete this? It cannot be undone.",
+    "backToList": "Back to the list",
+    "rulesTitle": "House rules",
+    "rules": "· Be kind. Abuse, discrimination and bullying are removed.\n· Do not write names, schools or phone numbers - yours or anyone else's.\n· No advertising, paid work offers or false information.\n· If you are under 14, write together with a guardian or a teacher.\n· Report anything wrong. Reported posts are hidden automatically and checked by the team.",
+    "banned": "You cannot post right now. Please contact us by email.",
+    "error": "Could not post. Please try again in a moment.",
+    "rateLimit": "That is a lot in a short time. Please try again in five minutes.",
+    "disabled": "The community is not open yet. We are getting it ready.",
+    "privacyTitle": "This looks like personal information",
+    "privacyRemove": "Remove it"
   }
 }

@@ -26,6 +26,30 @@ interface Row {
   created_at: string;
 }
 
+interface CommunityPost {
+  id: number;
+  board: string;
+  title: string;
+  body: string;
+  nickname: string;
+  member_id: number;
+  hidden: boolean;
+  reports: number;
+  comment_count: number;
+  created_at: string;
+}
+
+interface CommunityComment {
+  id: number;
+  post_id: number;
+  member_id: number;
+  nickname: string;
+  body: string;
+  hidden: boolean;
+  reports: number;
+  created_at: string;
+}
+
 interface HelpfulRow {
   day: string;
   kind: string;
@@ -41,6 +65,7 @@ const TABS = [
   { key: 'join', label: '참여 문의' },
   { key: 'correction', label: '정보 수정 제보' },
   { key: 'helpful', label: '도움이 됐나요' },
+  { key: 'community', label: '이야기 나누기' },
 ] as const;
 
 const STATUS_LABELS: Record<string, string> = {
@@ -66,6 +91,7 @@ export function AdminClient({ ready }: { ready: { admin: boolean; db: boolean } 
   const [tab, setTab] = useState<string>('question');
   const [rows, setRows] = useState<Row[]>([]);
   const [helpful, setHelpful] = useState<HelpfulRow[]>([]);
+  const [community, setCommunity] = useState<{ posts: CommunityPost[]; comments: CommunityComment[] }>({ posts: [], comments: [] });
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -79,10 +105,16 @@ export function AdminClient({ ready }: { ready: { admin: boolean; db: boolean } 
         setLoading(false);
         return;
       }
-      const data = (await response.json()) as { rows?: Row[]; helpful?: HelpfulRow[]; error?: string };
+      const data = (await response.json()) as {
+        rows?: Row[];
+        helpful?: HelpfulRow[];
+        community?: { posts: CommunityPost[]; comments: CommunityComment[] };
+        error?: string;
+      };
       if (data.error) setMessage(data.error === 'db' ? '데이터베이스가 연결되어 있지 않습니다.' : '불러오지 못했습니다.');
       setRows(data.rows ?? []);
       setHelpful(data.helpful ?? []);
+      setCommunity(data.community ?? { posts: [], comments: [] });
       setAuthed(true);
     } catch {
       setMessage('불러오지 못했습니다.');
@@ -115,6 +147,7 @@ export function AdminClient({ ready }: { ready: { admin: boolean; db: boolean } 
     setAuthed(false);
     setRows([]);
     setHelpful([]);
+    setCommunity({ posts: [], comments: [] });
   }
 
   async function save(id: number, patch: Record<string, unknown>) {
@@ -202,7 +235,85 @@ export function AdminClient({ ready }: { ready: { admin: boolean; db: boolean } 
         {loading ? '불러오는 중…' : message}
       </p>
 
-      {tab === 'helpful' ? (
+      {tab === 'community' ? (
+        <div className="mt-4 space-y-8">
+          {/* 신고가 많은 글이 위로 옵니다. 숨기면 사이트에서 보이지 않고, 지우면 되돌릴 수 없습니다. */}
+          <section>
+            <h2 className="lr-h3">글 ({community.posts.length})</h2>
+            <div className="mt-3 space-y-3">
+              {community.posts.map((post) => (
+                <article key={post.id} className="lr-card p-4">
+                  <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-ink-500">
+                    <span className="font-bold text-ink-900">#{post.id}</span>
+                    <span>{post.nickname}</span>
+                    <span>이용자 {post.member_id}</span>
+                    <span>{post.created_at.slice(0, 16).replace('T', ' ')}</span>
+                    {post.reports > 0 && <span className="font-bold text-[var(--color-danger-700)]">신고 {post.reports}</span>}
+                    {post.hidden && <span className="font-bold text-ink-900">숨김</span>}
+                  </p>
+                  <p className="mt-1.5 text-base font-bold text-ink-900">{post.title}</p>
+                  <p className="mt-1 whitespace-pre-line text-[15px] leading-relaxed text-ink-700">{post.body}</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <button type="button" onClick={() => save(post.id, { community: 'post', hidden: !post.hidden })} className="lr-btn lr-btn-ghost lr-btn-sm">
+                      {post.hidden ? '다시 보이기' : '숨기기'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { if (window.confirm('이 글을 지울까요? 되돌릴 수 없습니다.')) void save(post.id, { community: 'post', remove: true }); }}
+                      className="lr-btn lr-btn-ghost lr-btn-sm"
+                    >
+                      지우기
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { if (window.confirm(`이용자 ${post.member_id} 의 글쓰기를 막을까요?`)) void save(post.member_id, { community: 'member', banned: true }); }}
+                      className="lr-btn lr-btn-ghost lr-btn-sm"
+                    >
+                      글쓴이 차단
+                    </button>
+                    <button type="button" onClick={() => save(post.member_id, { community: 'member', banned: false })} className="lr-btn lr-btn-ghost lr-btn-sm">
+                      차단 풀기
+                    </button>
+                  </div>
+                </article>
+              ))}
+              {community.posts.length === 0 && <p className="text-[15px] text-ink-500">아직 글이 없습니다.</p>}
+            </div>
+          </section>
+
+          <section>
+            <h2 className="lr-h3">댓글 ({community.comments.length})</h2>
+            <div className="mt-3 space-y-3">
+              {community.comments.map((comment) => (
+                <article key={comment.id} className="lr-card p-4">
+                  <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-ink-500">
+                    <span className="font-bold text-ink-900">#{comment.id}</span>
+                    <span>{comment.nickname}</span>
+                    <span>글 #{comment.post_id}</span>
+                    <span>{comment.created_at.slice(0, 16).replace('T', ' ')}</span>
+                    {comment.reports > 0 && <span className="font-bold text-[var(--color-danger-700)]">신고 {comment.reports}</span>}
+                    {comment.hidden && <span className="font-bold text-ink-900">숨김</span>}
+                  </p>
+                  <p className="mt-1.5 whitespace-pre-line text-[15px] leading-relaxed text-ink-900">{comment.body}</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <button type="button" onClick={() => save(comment.id, { community: 'comment', hidden: !comment.hidden })} className="lr-btn lr-btn-ghost lr-btn-sm">
+                      {comment.hidden ? '다시 보이기' : '숨기기'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { if (window.confirm('이 댓글을 지울까요? 되돌릴 수 없습니다.')) void save(comment.id, { community: 'comment', remove: true }); }}
+                      className="lr-btn lr-btn-ghost lr-btn-sm"
+                    >
+                      지우기
+                    </button>
+                  </div>
+                </article>
+              ))}
+              {community.comments.length === 0 && <p className="text-[15px] text-ink-500">아직 댓글이 없습니다.</p>}
+            </div>
+          </section>
+        </div>
+      ) : tab === 'helpful' ? (
         <div className="lr-card mt-4 overflow-x-auto p-4">
           <table className="w-full min-w-[640px] text-left text-sm">
             <thead>

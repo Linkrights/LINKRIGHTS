@@ -1260,12 +1260,70 @@ async function checkSuggestedOrganizations(ask) {
   check('9-5 근거 자료가 있을 때는 등록 기관 칸을 쓰지 않는다', (paid.body.suggestedOrganizations ?? []).length === 0);
 }
 
+
+// ---------------------------------------------------------------------------
+// 10. 이야기 나누기(커뮤니티) 규칙
+//     글·댓글·별명을 받는 규칙과, 로그인 쪽지(쿠키)가 위조되지 않는지 확인합니다.
+// ---------------------------------------------------------------------------
+function checkCommunityRules() {
+  process.env.COMMUNITY_SECRET = 'test-community-secret-0123456789';
+  process.env.GOOGLE_CLIENT_ID = 'test-client-id';
+  process.env.GOOGLE_CLIENT_SECRET = 'test-client-secret';
+  const runtime = createRuntime(async () => {
+    throw new Error('이 검사에서는 바깥으로 연결하지 않습니다.');
+  });
+  const rules = runtime.load('src/lib/community.ts');
+  const auth = runtime.load('src/lib/googleAuth.ts');
+  const locales = ['ko', 'en', 'zh', 'vi'];
+
+  // 글
+  const good = rules.validatePost({ board: 'free', title: '처음 알바 시작했어요', body: '궁금한 게 많아요. 도와주세요.', locale: 'ko' }, locales);
+  check('10-1 제대로 적은 글은 받는다', good.ok === true && good.value.board === 'free');
+  check('10-2 제목이 너무 짧으면 거절', rules.validatePost({ board: 'free', title: 'ㅇ', body: '내용이 충분히 깁니다', locale: 'ko' }, locales).ok === false);
+  check('10-3 내용이 너무 짧으면 거절', rules.validatePost({ board: 'free', title: '제목입니다', body: '짧', locale: 'ko' }, locales).ok === false);
+  check('10-4 없는 게시판은 거절', rules.validatePost({ board: 'hack', title: '제목입니다', body: '내용이 충분히 깁니다', locale: 'ko' }, locales).ok === false);
+  const longBody = rules.validatePost({ board: 'ask', title: '제목입니다', body: 'ㄱ'.repeat(5000), locale: 'ko' }, locales);
+  check('10-5 너무 긴 글은 잘라서 받는다', longBody.ok === true && longBody.value.body.length === rules.COMMUNITY_LIMITS.body);
+  const badLocale = rules.validatePost({ board: 'info', title: '제목입니다', body: '내용이 충분히 깁니다', locale: 'xx' }, locales);
+  check('10-6 모르는 언어는 기본 언어로 바꾼다', badLocale.ok === true && badLocale.value.locale === 'ko');
+
+  // 댓글
+  check('10-7 댓글도 너무 짧으면 거절', rules.validateComment({ body: '음' }).ok === false);
+  check('10-8 제대로 쓴 댓글은 받는다', rules.validateComment({ body: '저도 같은 일이 있었어요.' }).ok === true);
+
+  // 별명
+  check('10-9 별명이 너무 짧으면 거절', rules.validateNickname('ㄱ').ok === false);
+  check('10-10 전화번호가 들어간 별명은 거절', rules.validateNickname('010-1234-5678').ok === false);
+  check('10-11 이메일이 들어간 별명은 거절', rules.validateNickname('me@example.com').ok === false);
+  check('10-12 보통 별명은 받는다', rules.validateNickname('파란고양이').ok === true);
+  const nickname = rules.makeNickname(12345);
+  check('10-13 지어 주는 별명에 개인정보가 없다', /^[가-힣]+\d{3}$/.test(nickname), nickname);
+
+  // 로그인 쪽지
+  const session = auth.createSession(42);
+  check('10-14 내 쪽지는 알아본다', auth.readSession(session.value) === 42);
+  check('10-15 글자를 바꾼 쪽지는 거절', auth.readSession(session.value.replace('42.', '43.')) === null);
+  check('10-16 서명이 없는 쪽지는 거절', auth.readSession('42.99999999999') === null);
+  check('10-17 시간이 지난 쪽지는 거절', auth.readSession(auth.createSession(42, Date.now() - 40 * 24 * 60 * 60 * 1000).value) === null);
+  const state = auth.createState();
+  check('10-18 로그인 상태값을 알아본다', auth.verifyState(state.value) === true);
+  check('10-19 남이 만든 상태값은 거절', auth.verifyState('9999999999.abc.deadbeef') === false);
+  check('10-20 같은 계정은 같은 값으로 바뀐다', auth.hashSub('google-sub-1') === auth.hashSub('google-sub-1'));
+  check('10-21 다른 계정은 다른 값으로 바뀐다', auth.hashSub('google-sub-1') !== auth.hashSub('google-sub-2'));
+  check('10-22 바뀐 값에서 계정 번호를 알 수 없다', !auth.hashSub('google-sub-1').includes('google-sub-1'));
+
+  delete process.env.COMMUNITY_SECRET;
+  delete process.env.GOOGLE_CLIENT_ID;
+  delete process.env.GOOGLE_CLIENT_SECRET;
+}
+
 if (LIVE) {
   await runLive();
 } else {
   const table = await runDeterministic();
   checkSubmitRules();
   checkOrgKeywordSearch();
+  checkCommunityRules();
   console.log('\n질문별로 AI에게 전달되는 자료');
   for (const row of table) {
     console.log(`  [${row.n}] ${row.q}`);

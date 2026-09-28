@@ -24,6 +24,11 @@ function db(): NeonQueryFunction<false, false> {
   return client;
 }
 
+/** 같은 데이터베이스 연결을 커뮤니티(communityDb.ts)에서도 함께 씁니다. */
+export function sql(): NeonQueryFunction<false, false> {
+  return db();
+}
+
 // 표를 만드는 일은 처음 한 번만 합니다. (서버가 다시 뜨면 다시 확인하지만, 이미 있으면 아무 일도 하지 않습니다)
 let ready: Promise<void> | null = null;
 export function ensureSchema(): Promise<void> {

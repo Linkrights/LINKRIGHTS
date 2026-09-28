@@ -6,6 +6,7 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { ADMIN_COOKIE, hasAdmin, verifyToken } from '@/lib/adminAuth';
+import { listForAdmin, moderate } from '@/lib/communityDb';
 import { deleteSubmission, hasDb, listHelpful, listSubmissions, updateSubmission } from '@/lib/db';
 import { SUBMISSION_KINDS, SUBMISSION_STATUSES, type SubmissionStatus } from '@/lib/submissions';
 
@@ -29,6 +30,8 @@ export async function GET(request: Request) {
   const tab = new URL(request.url).searchParams.get('tab') ?? 'question';
   try {
     if (tab === 'helpful') return NextResponse.json({ ok: true, helpful: await listHelpful() });
+    // 이야기 나누기(커뮤니티): 신고가 많은 글·댓글이 위로 옵니다.
+    if (tab === 'community') return NextResponse.json({ ok: true, community: await listForAdmin() });
     const kind = SUBMISSION_KINDS.find((value) => value === tab) ?? 'all';
     return NextResponse.json({ ok: true, rows: await listSubmissions(kind) });
   } catch (error) {
@@ -48,6 +51,10 @@ export async function POST(request: Request) {
     published?: unknown;
     title?: unknown;
     remove?: unknown;
+    /** 이야기 나누기 관리: 'post' | 'comment' | 'member' */
+    community?: unknown;
+    hidden?: unknown;
+    banned?: unknown;
   };
   try {
     payload = (await request.json()) as typeof payload;
@@ -57,6 +64,23 @@ export async function POST(request: Request) {
 
   const id = Number(payload.id);
   if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id' }, { status: 400 });
+
+  // 이야기 나누기(커뮤니티) 글·댓글 숨기기·지우기, 이용자 차단
+  if (payload.community === 'post' || payload.community === 'comment' || payload.community === 'member') {
+    try {
+      await moderate({
+        kind: payload.community,
+        id,
+        hidden: payload.hidden === true,
+        banned: payload.banned === true,
+        remove: payload.remove === true,
+      });
+      return NextResponse.json({ ok: true });
+    } catch (error) {
+      console.error('[admin] 커뮤니티 관리 실패:', error instanceof Error ? error.message : error);
+      return NextResponse.json({ error: 'server' }, { status: 500 });
+    }
+  }
 
   try {
     if (payload.remove === true) {

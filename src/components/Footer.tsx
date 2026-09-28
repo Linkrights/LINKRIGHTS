@@ -71,6 +71,7 @@ export function Footer({ locale }: { locale: Locale }) {
     { href: `/${locale}/organizations`, label: t.nav.organizations },
     { href: `/${locale}/checklists`, label: t.checklist.navLabel },
     { href: `/${locale}/qna`, label: t.qna.navLabel },
+    { href: `/${locale}/community`, label: t.community.navLabel },
     { href: `/${locale}/saved`, label: t.saved.navLabel },
   ];
 

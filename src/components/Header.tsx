@@ -134,6 +134,7 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
       items: [
         { href: askHref, label: t.nav.ask },
         { href: `/${locale}/qna`, label: t.qna.navLabel },
+        { href: `/${locale}/community`, label: t.community.navLabel },
         { href: `/${locale}/faq`, label: t.nav.faq },
       ],
     },
