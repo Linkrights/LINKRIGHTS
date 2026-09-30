@@ -12,7 +12,8 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { findOrCreateMember } from '@/lib/communityDb';
 import { hasDb } from '@/lib/db';
-import { SESSION_COOKIE, STATE_COOKIE, createSession, exchangeCodeForSub, hashSub, hasCommunityAuth, verifyState } from '@/lib/googleAuth';
+import { SESSION_COOKIE, STATE_COOKIE, createSession, exchangeCodeForSub, hasCommunityAuth, verifyState } from '@/lib/googleAuth';
+import { exchangeCode, subHashFor, toProvider } from '@/lib/socialAuth';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -24,7 +25,8 @@ export async function GET(request: Request) {
 
   const store = await cookies();
   const saved = store.get(STATE_COOKIE)?.value ?? '';
-  const [savedState, savedNext = '/'] = saved.split('|');
+  const [savedState, savedNext = '/', savedProvider = 'google'] = saved.split('|');
+  const provider = toProvider(savedProvider) ?? 'google';
   const state = url.searchParams.get('state') ?? '';
   const code = url.searchParams.get('code') ?? '';
 
@@ -44,15 +46,19 @@ export async function GET(request: Request) {
   if (!verifyState(savedState)) return fail('state', '서명이 맞지 않거나 10분이 지났습니다.');
 
   let sub = '';
+  const redirectUri = `${url.origin}/api/community/callback`;
   try {
-    sub = await exchangeCodeForSub(code, `${url.origin}/api/community/callback`);
+    sub =
+      provider === 'google'
+        ? await exchangeCodeForSub(code, redirectUri)
+        : await exchangeCode(provider, code, redirectUri);
   } catch (error) {
     return fail('token', error instanceof Error ? error.message : String(error));
   }
   if (!sub) return fail('token');
 
   try {
-    const member = await findOrCreateMember(hashSub(sub));
+    const member = await findOrCreateMember(subHashFor(provider, sub));
     const session = createSession(member.id);
     const response = back(savedNext);
     response.cookies.set(SESSION_COOKIE, session.value, {

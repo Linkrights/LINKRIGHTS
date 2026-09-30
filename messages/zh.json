@@ -853,13 +853,13 @@
   "community": {
     "navLabel": "交流区",
     "title": "交流区",
-    "subtitle": "和有相似烦恼的人聊聊。用谷歌账号登录后可以用昵称发帖。",
+    "subtitle": "和有相似烦恼的人聊聊。用你已有的账号登录后，可以用昵称发帖。",
     "boardFree": "自由话题",
     "boardAsk": "提问",
     "boardInfo": "信息分享",
     "boardAll": "全部",
     "loginCta": "使用谷歌账号开始",
-    "loginNote": "我们不保存你的姓名和邮箱。谷歌账号编号会转换成无法还原的值后保存，页面上只显示昵称。",
+    "loginNote": "我们不保存你的姓名和邮箱。账号编号会转换成无法还原的值后保存，页面上只显示昵称。",
     "loginFailed": "登录失败，请重试。",
     "logout": "退出登录",
     "nicknameLabel": "我的昵称",
@@ -898,6 +898,12 @@
     "reportAd": "广告或推广",
     "reportPrivacy": "泄露个人信息",
     "reportOther": "其他问题",
-    "reportCancel": "取消"
+    "reportCancel": "取消",
+    "loginWith": "使用{provider}账号开始",
+    "providers": {
+      "google": "谷歌",
+      "kakao": "Kakao",
+      "apple": "苹果"
+    }
   }
 }

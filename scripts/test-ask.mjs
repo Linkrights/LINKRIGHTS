@@ -1431,6 +1431,75 @@ async function checkReportAndEmergency(ask) {
   check('12-18 커뮤니티 규칙을 부드럽게 다듬었다', messages.ko.community.rules.includes('운영팀이 지워요') && !messages.ko.community.rules.includes('지워집니다'));
 }
 
+
+// ---------------------------------------------------------------------------
+// 13. 로그인 수단 세 가지 (구글·카카오·애플)
+//     하나만 준비돼 있어도 커뮤니티가 열리고, 계정 번호는 수단별로 다르게 바뀌어야 합니다.
+// ---------------------------------------------------------------------------
+function checkSocialLogin() {
+  const GOOD_ID = '123456789012-abcdefghijklmnopqrstuvwxyz012345.apps.googleusercontent.com';
+  const KEYS = [
+    'GOOGLE_CLIENT_ID', 'GOOGLE_CLIENT_SECRET', 'KAKAO_CLIENT_ID', 'KAKAO_CLIENT_SECRET',
+    'APPLE_CLIENT_ID', 'APPLE_TEAM_ID', 'APPLE_KEY_ID', 'APPLE_PRIVATE_KEY', 'COMMUNITY_SECRET',
+  ];
+  const withEnv = (values) => {
+    for (const key of KEYS) delete process.env[key];
+    process.env.COMMUNITY_SECRET = 'test-community-secret-0123456789';
+    Object.assign(process.env, values);
+    const runtime = createRuntime(async () => {
+      throw new Error('연결하지 않습니다.');
+    });
+    return {
+      social: runtime.load('src/lib/socialAuth.ts'),
+      auth: runtime.load('src/lib/googleAuth.ts'),
+    };
+  };
+
+  const google = withEnv({ GOOGLE_CLIENT_ID: GOOD_ID, GOOGLE_CLIENT_SECRET: 'GOCSPX-abcdefghijklmnop' });
+  check('13-1 구글만 있어도 열린다', google.auth.hasCommunityAuth() === true, google.auth.communityAuthProblems().join(' / '));
+  check('13-2 구글만 있으면 단추도 구글 하나', google.social.readyProviders().join(',') === 'google');
+
+  const kakao = withEnv({ KAKAO_CLIENT_ID: '0123456789abcdef0123456789abcdef' });
+  check('13-3 카카오만 있어도 열린다', kakao.auth.hasCommunityAuth() === true, kakao.auth.communityAuthProblems().join(' / '));
+  check('13-4 카카오만 있으면 단추도 카카오 하나', kakao.social.readyProviders().join(',') === 'kakao');
+
+  const apple = withEnv({
+    APPLE_CLIENT_ID: 'org.linkrights.web',
+    APPLE_TEAM_ID: 'ABCDE12345',
+    APPLE_KEY_ID: 'KEY1234567',
+    APPLE_PRIVATE_KEY: '-----BEGIN PRIVATE KEY-----\nfake\n-----END PRIVATE KEY-----',
+  });
+  check('13-5 애플만 있어도 열린다', apple.auth.hasCommunityAuth() === true, apple.auth.communityAuthProblems().join(' / '));
+  check('13-6 애플만 있으면 단추도 애플 하나', apple.social.readyProviders().join(',') === 'apple');
+
+  const all = withEnv({
+    GOOGLE_CLIENT_ID: GOOD_ID,
+    GOOGLE_CLIENT_SECRET: 'GOCSPX-abcdefghijklmnop',
+    KAKAO_CLIENT_ID: '0123456789abcdef0123456789abcdef',
+    APPLE_CLIENT_ID: 'org.linkrights.web',
+    APPLE_TEAM_ID: 'ABCDE12345',
+    APPLE_KEY_ID: 'KEY1234567',
+    APPLE_PRIVATE_KEY: '-----BEGIN PRIVATE KEY-----\nfake\n-----END PRIVATE KEY-----',
+  });
+  check('13-7 셋 다 있으면 단추도 셋', all.social.readyProviders().join(',') === 'google,kakao,apple');
+  check('13-8 구글 식별값은 예전 방식 그대로다 (기존 이용자 유지)', all.social.subHashFor('google', 'sub-1') === all.auth.hashSub('sub-1'));
+  check('13-9 수단이 다르면 같은 번호라도 다른 사람이다', all.social.subHashFor('kakao', '12345') !== all.social.subHashFor('apple', '12345'));
+  check('13-10 카카오 번호가 구글 번호와 섞이지 않는다', all.social.subHashFor('kakao', 'sub-1') !== all.social.subHashFor('google', 'sub-1'));
+  check('13-11 보내는 주소가 카카오 주소다', all.social.authorizeUrl('kakao', 'https://linkrights.org/api/community/callback', 'st').startsWith('https://kauth.kakao.com/oauth/authorize?'));
+  check('13-12 보내는 주소가 애플 주소다', all.social.authorizeUrl('apple', 'https://linkrights.org/api/community/callback', 'st').startsWith('https://appleid.apple.com/auth/authorize?'));
+  check('13-13 애플에 이름·이메일을 요청하지 않는다', !all.social.authorizeUrl('apple', 'https://x/cb', 'st').includes('scope='));
+  check('13-14 카카오에 동의항목을 요청하지 않는다', !all.social.authorizeUrl('kakao', 'https://x/cb', 'st').includes('scope='));
+  check('13-15 모르는 수단은 받지 않는다', all.social.toProvider('naver') === null);
+
+  const none = withEnv({});
+  check('13-16 아무것도 없으면 열리지 않는다', none.auth.hasCommunityAuth() === false);
+  check('13-17 무엇을 넣어야 하는지 알려 준다', none.auth.communityAuthProblems().some((p) => p.includes('로그인 수단')), none.auth.communityAuthProblems().join(' / '));
+  const halfApple = withEnv({ APPLE_CLIENT_ID: 'org.linkrights.web' });
+  check('13-18 애플 준비물이 모자라면 무엇이 빠졌는지 알려 준다', halfApple.auth.communityAuthProblems().some((p) => p.includes('APPLE_TEAM_ID')), halfApple.auth.communityAuthProblems().join(' / '));
+
+  for (const key of KEYS) delete process.env[key];
+}
+
 if (LIVE) {
   await runLive();
 } else {
@@ -1438,6 +1507,7 @@ if (LIVE) {
   checkSubmitRules();
   checkOrgKeywordSearch();
   checkCommunityRules();
+  checkSocialLogin();
   checkWordingFeedback();
   console.log('\n질문별로 AI에게 전달되는 자료');
   for (const row of table) {

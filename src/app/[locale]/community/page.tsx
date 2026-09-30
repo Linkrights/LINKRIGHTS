@@ -14,6 +14,7 @@ import { BOARDS, type Board } from '@/lib/community';
 import { getMember, listPosts } from '@/lib/communityDb';
 import { hasDb } from '@/lib/db';
 import { SESSION_COOKIE, hasCommunityAuth, readSession } from '@/lib/googleAuth';
+import { readyProviders } from '@/lib/socialAuth';
 import { formatDate, getMessages, toLocale } from '@/lib/i18n';
 
 export const dynamic = 'force-dynamic';
@@ -90,12 +91,18 @@ export default async function CommunityPage({
                 </>
               ) : (
                 <div className="lr-card p-5 sm:p-6">
-                  <a
-                    href={`/api/community/login?next=${encodeURIComponent(`/${locale}/community`)}`}
-                    className="lr-btn lr-btn-primary lr-press"
-                  >
-                    {c.loginCta} <Icon name="arrow-right" size={18} />
-                  </a>
+                  {/* 준비된 로그인 수단만 보여 줍니다. (구글·카카오·애플) */}
+                  <div className="flex flex-wrap gap-2">
+                    {readyProviders().map((provider) => (
+                      <a
+                        key={provider}
+                        href={`/api/community/login?provider=${provider}&next=${encodeURIComponent(`/${locale}/community`)}`}
+                        className={`lr-btn lr-press ${provider === 'google' ? 'lr-btn-primary' : 'lr-btn-ghost'}`}
+                      >
+                        {c.loginWith.replace('{provider}', c.providers[provider])} <Icon name="arrow-right" size={18} />
+                      </a>
+                    ))}
+                  </div>
                   <p className="mt-3 text-[13px] leading-relaxed text-ink-500">{c.loginNote}</p>
                 </div>
               )}

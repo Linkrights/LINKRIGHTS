@@ -853,13 +853,13 @@
   "community": {
     "navLabel": "커뮤니티",
     "title": "커뮤니티",
-    "subtitle": "비슷한 고민을 하는 사람들과 이야기해요. 구글 계정으로 들어오면 별명으로 글을 쓸 수 있어요.",
+    "subtitle": "비슷한 고민을 하는 사람들과 이야기해요. 쓰던 계정으로 들어오면 별명으로 글을 쓸 수 있어요.",
     "boardFree": "자유 이야기",
     "boardAsk": "물어보기",
     "boardInfo": "정보 나누기",
     "boardAll": "전체",
     "loginCta": "구글 계정으로 시작하기",
-    "loginNote": "이름·이메일은 저장하지 않아요. 구글 계정 번호를 알아볼 수 없는 값으로 바꿔 저장하고, 화면에는 별명만 보여요.",
+    "loginNote": "이름·이메일은 저장하지 않아요. 계정 번호를 알아볼 수 없는 값으로 바꿔 저장하고, 화면에는 별명만 보여요.",
     "loginFailed": "로그인하지 못했어요. 다시 해 주세요.",
     "logout": "로그아웃",
     "nicknameLabel": "내 별명",
@@ -898,6 +898,12 @@
     "reportAd": "광고 및 홍보",
     "reportPrivacy": "개인정보 노출",
     "reportOther": "그 밖의 문제",
-    "reportCancel": "그만두기"
+    "reportCancel": "그만두기",
+    "loginWith": "{provider} 계정으로 시작하기",
+    "providers": {
+      "google": "구글",
+      "kakao": "카카오",
+      "apple": "애플"
+    }
   }
 }

@@ -853,13 +853,13 @@
   "community": {
     "navLabel": "Community",
     "title": "Community",
-    "subtitle": "Talk with people going through similar things. Sign in with Google and post under a nickname.",
+    "subtitle": "Talk with people going through similar things. Sign in with an account you already use and post under a nickname.",
     "boardFree": "Anything",
     "boardAsk": "Questions",
     "boardInfo": "Tips",
     "boardAll": "All",
     "loginCta": "Continue with Google",
-    "loginNote": "We do not store your name or email. Your Google account id is stored only as an unreadable value, and only your nickname is shown.",
+    "loginNote": "We do not store your name or email. Your account id is stored only as an unreadable value, and only your nickname is shown.",
     "loginFailed": "Sign-in did not work. Please try again.",
     "logout": "Sign out",
     "nicknameLabel": "Your nickname",
@@ -898,6 +898,12 @@
     "reportAd": "Advertising or promotion",
     "reportPrivacy": "Personal information exposed",
     "reportOther": "Something else",
-    "reportCancel": "Cancel"
+    "reportCancel": "Cancel",
+    "loginWith": "Continue with {provider}",
+    "providers": {
+      "google": "Google",
+      "kakao": "Kakao",
+      "apple": "Apple"
+    }
   }
 }

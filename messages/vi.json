@@ -853,13 +853,13 @@
   "community": {
     "navLabel": "Cùng trò chuyện",
     "title": "Cùng trò chuyện",
-    "subtitle": "Trò chuyện với những bạn có hoàn cảnh giống mình. Đăng nhập bằng Google là có thể viết bài với biệt danh.",
+    "subtitle": "Trò chuyện với những bạn có hoàn cảnh giống mình. Đăng nhập bằng tài khoản bạn đang dùng là có thể viết bài với biệt danh.",
     "boardFree": "Tự do",
     "boardAsk": "Hỏi đáp",
     "boardInfo": "Chia sẻ thông tin",
     "boardAll": "Tất cả",
     "loginCta": "Tiếp tục với Google",
-    "loginNote": "Chúng tôi không lưu tên hay email của bạn. Mã tài khoản Google chỉ được lưu dưới dạng không thể đọc lại, và trang chỉ hiển thị biệt danh.",
+    "loginNote": "Chúng tôi không lưu tên hay email của bạn. Mã tài khoản chỉ được lưu dưới dạng không thể đọc lại, và trang chỉ hiển thị biệt danh.",
     "loginFailed": "Đăng nhập chưa được. Hãy thử lại.",
     "logout": "Đăng xuất",
     "nicknameLabel": "Biệt danh của bạn",
@@ -898,6 +898,12 @@
     "reportAd": "Quảng cáo hoặc tiếp thị",
     "reportPrivacy": "Lộ thông tin cá nhân",
     "reportOther": "Vấn đề khác",
-    "reportCancel": "Hủy"
+    "reportCancel": "Hủy",
+    "loginWith": "Tiếp tục với {provider}",
+    "providers": {
+      "google": "Google",
+      "kakao": "Kakao",
+      "apple": "Apple"
+    }
   }
 }

@@ -45,20 +45,52 @@ export function looksLikeClientId(value: string): boolean {
   return value.endsWith('.apps.googleusercontent.com') && value.length > 30 && !/\s/.test(value);
 }
 
-/** 무엇이 잘못됐는지 (Vercel 로그와 검사에서 씁니다). 준비가 끝났으면 빈 목록입니다. */
+/**
+ * 무엇이 잘못됐는지 (Vercel 로그와 관리자 화면에서 씁니다). 준비가 끝났으면 빈 목록입니다.
+ *
+ * 로그인 수단(구글·카카오·애플)은 하나만 있어도 커뮤니티가 열립니다.
+ * 넣다 만 값이 있으면 그 수단만 따로 알려 줍니다. (socialAuth.ts 와 같은 환경변수를 봅니다)
+ */
 export function communityAuthProblems(): string[] {
   const problems: string[] = [];
-  const id = googleClientId();
-  if (!id) problems.push('GOOGLE_CLIENT_ID 가 없습니다.');
-  else if (!looksLikeClientId(id)) {
+  const value = (name: string) => (process.env[name] ?? '').trim();
+
+  const googleId = googleClientId();
+  const googleSet = Boolean(googleId || googleClientSecret());
+  if (googleSet) {
+    if (!googleId) problems.push('GOOGLE_CLIENT_ID 가 없습니다.');
+    else if (!looksLikeClientId(googleId)) {
+      problems.push(
+        'GOOGLE_CLIENT_ID 가 구글 클라이언트 ID 모양이 아닙니다. ' +
+          'Google Cloud Console → API 및 서비스 → 사용자 인증 정보 → OAuth 2.0 클라이언트 ID 에서 ' +
+          '".apps.googleusercontent.com" 으로 끝나는 값을 복사해 넣으세요. (프로젝트·앱 이름이 아닙니다)',
+      );
+    }
+    if (!googleClientSecret()) problems.push('GOOGLE_CLIENT_SECRET 이 없습니다.');
+    else if (googleClientSecret().length < 10) {
+      problems.push('GOOGLE_CLIENT_SECRET 이 너무 짧습니다. (보통 GOCSPX- 로 시작합니다)');
+    }
+  }
+
+  const kakaoReady = value('KAKAO_CLIENT_ID').length >= 16;
+  if (value('KAKAO_CLIENT_ID') && !kakaoReady) {
+    problems.push('KAKAO_CLIENT_ID 가 너무 짧습니다. 카카오 개발자 → 앱 키 → REST API 키를 넣으세요.');
+  }
+
+  const appleKeys = ['APPLE_CLIENT_ID', 'APPLE_TEAM_ID', 'APPLE_KEY_ID', 'APPLE_PRIVATE_KEY'];
+  const appleFilled = appleKeys.filter((name) => value(name));
+  if (appleFilled.length > 0 && appleFilled.length < appleKeys.length) {
+    problems.push(`애플 로그인 준비물이 모자랍니다: ${appleKeys.filter((name) => !value(name)).join(', ')}`);
+  }
+
+  const googleReady = looksLikeClientId(googleId) && googleClientSecret().length >= 10;
+  const appleReady = appleFilled.length === appleKeys.length;
+  if (!googleReady && !kakaoReady && !appleReady) {
     problems.push(
-      'GOOGLE_CLIENT_ID 가 구글 클라이언트 ID 모양이 아닙니다. ' +
-        'Google Cloud Console → API 및 서비스 → 사용자 인증 정보 → OAuth 2.0 클라이언트 ID 에서 ' +
-        '".apps.googleusercontent.com" 으로 끝나는 값을 복사해 넣으세요. (프로젝트·앱 이름이 아닙니다)',
+      '쓸 수 있는 로그인 수단이 없습니다. 구글(GOOGLE_CLIENT_ID·GOOGLE_CLIENT_SECRET), ' +
+        '카카오(KAKAO_CLIENT_ID), 애플(APPLE_*) 중 하나는 넣어야 합니다.',
     );
   }
-  if (!googleClientSecret()) problems.push('GOOGLE_CLIENT_SECRET 이 없습니다.');
-  else if (googleClientSecret().length < 10) problems.push('GOOGLE_CLIENT_SECRET 이 너무 짧습니다. (보통 GOCSPX- 로 시작합니다)');
   if (secret().length < 16) problems.push('COMMUNITY_SECRET 이 없거나 너무 짧습니다. (16자 이상)');
   return problems;
 }

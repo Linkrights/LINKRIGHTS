@@ -11,6 +11,7 @@ import { PageHeader, Section } from '@/components/Section';
 import { getMember, getPost, listComments } from '@/lib/communityDb';
 import { hasDb } from '@/lib/db';
 import { SESSION_COOKIE, hasCommunityAuth, readSession } from '@/lib/googleAuth';
+import { readyProviders } from '@/lib/socialAuth';
 import { formatDate, getMessages, toLocale } from '@/lib/i18n';
 
 export const dynamic = 'force-dynamic';
@@ -93,12 +94,17 @@ export default async function CommunityPostPage({ params }: { params: Promise<{ 
                 <CommunityComment labels={c} postId={post.id} />
               )
             ) : (
-              <a
-                href={`/api/community/login?next=${encodeURIComponent(`/${locale}/community/${post.id}`)}`}
-                className="lr-btn lr-btn-primary lr-press mt-4"
-              >
-                {c.loginCta} <Icon name="arrow-right" size={18} />
-              </a>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {readyProviders().map((provider) => (
+                  <a
+                    key={provider}
+                    href={`/api/community/login?provider=${provider}&next=${encodeURIComponent(`/${locale}/community/${post.id}`)}`}
+                    className={`lr-btn lr-press ${provider === 'google' ? 'lr-btn-primary' : 'lr-btn-ghost'}`}
+                  >
+                    {c.loginWith.replace('{provider}', c.providers[provider])} <Icon name="arrow-right" size={18} />
+                  </a>
+                ))}
+              </div>
             )}
           </section>
 
