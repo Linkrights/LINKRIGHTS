@@ -1497,6 +1497,22 @@ function checkSocialLogin() {
   const halfApple = withEnv({ APPLE_CLIENT_ID: 'org.linkrights.web' });
   check('13-18 애플 준비물이 모자라면 무엇이 빠졌는지 알려 준다', halfApple.auth.communityAuthProblems().some((p) => p.includes('APPLE_TEAM_ID')), halfApple.auth.communityAuthProblems().join(' / '));
 
+  // 미리보기 주소(vercel.app)에서는 로그인 창이 열리지 않으므로 정식 주소로 옮겨야 합니다.
+  // (2026-10-01 카카오 KOE006: 등록하지 않은 리다이렉트 URI 를 썼다는 오류)
+  process.env.NEXT_PUBLIC_SITE_URL = 'https://linkrights.org';
+  const site = withEnv({ KAKAO_CLIENT_ID: '0123456789abcdef0123456789abcdef' }).social;
+  check('13-19 정식 주소는 그대로 쓴다', site.loginOrigin('https://linkrights.org') === 'https://linkrights.org');
+  check(
+    '13-20 미리보기 주소는 정식 주소로 옮긴다',
+    site.loginOrigin('https://linkrights-779n0vciz-linkrights.vercel.app') === 'https://linkrights.org',
+    site.loginOrigin('https://linkrights-779n0vciz-linkrights.vercel.app'),
+  );
+  check('13-21 내 컴퓨터에서는 그대로 쓴다', site.loginOrigin('http://localhost:3000') === 'http://localhost:3000');
+  check('13-22 127.0.0.1 도 그대로', site.loginOrigin('http://127.0.0.1:3100') === 'http://127.0.0.1:3100');
+  delete process.env.NEXT_PUBLIC_SITE_URL;
+  const noSite = withEnv({ KAKAO_CLIENT_ID: '0123456789abcdef0123456789abcdef' }).social;
+  check('13-23 정식 주소를 안 정했으면 지금 주소를 쓴다', noSite.loginOrigin('https://example.test') === 'https://example.test');
+
   for (const key of KEYS) delete process.env[key];
 }
 

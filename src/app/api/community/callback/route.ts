@@ -13,7 +13,7 @@ import { NextResponse } from 'next/server';
 import { findOrCreateMember } from '@/lib/communityDb';
 import { hasDb } from '@/lib/db';
 import { SESSION_COOKIE, STATE_COOKIE, createSession, exchangeCodeForSub, hasCommunityAuth, verifyState } from '@/lib/googleAuth';
-import { exchangeCode, subHashFor, toProvider } from '@/lib/socialAuth';
+import { exchangeCode, loginOrigin, subHashFor, toProvider } from '@/lib/socialAuth';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -46,7 +46,8 @@ export async function GET(request: Request) {
   if (!verifyState(savedState)) return fail('state', '서명이 맞지 않거나 10분이 지났습니다.');
 
   let sub = '';
-  const redirectUri = `${url.origin}/api/community/callback`;
+  // 로그인하러 갈 때 쓴 주소와 똑같아야 합니다. (로그인 화면은 정식 주소에서만 열리므로 여기도 같은 주소입니다)
+  const redirectUri = `${loginOrigin(url.origin)}/api/community/callback`;
   try {
     sub =
       provider === 'google'

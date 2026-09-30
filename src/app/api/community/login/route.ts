@@ -3,16 +3,10 @@
 
 import { NextResponse } from 'next/server';
 import { STATE_COOKIE, authorizeUrl as googleAuthorizeUrl, createState } from '@/lib/googleAuth';
-import { authorizeUrl as socialAuthorizeUrl, providerReady, toProvider } from '@/lib/socialAuth';
+import { authorizeUrl as socialAuthorizeUrl, loginOrigin, providerReady, toProvider } from '@/lib/socialAuth';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-
-/** 각 로그인 서비스에서 돌아올 주소. 개발자 화면의 "리디렉션 URI" 와 같아야 합니다. */
-function callbackUrl(request: Request): string {
-  const url = new URL(request.url);
-  return `${url.origin}/api/community/callback`;
-}
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -24,11 +18,23 @@ export async function GET(request: Request) {
   const next = url.searchParams.get('next') ?? '/';
   const safeNext = next.startsWith('/') && !next.startsWith('//') ? next : '/';
 
+  // 미리보기 주소(linkrights-xxxxx.vercel.app)는 각 로그인 서비스에 등록할 수 없습니다.
+  // 그런 주소에서 눌렀다면 정식 주소로 옮겨, 쪽지(쿠키)와 돌아올 주소가 같은 곳에 있게 합니다.
+  const origin = loginOrigin(url.origin);
+  if (origin !== url.origin) {
+    const moved = new URL('/api/community/login', origin);
+    moved.searchParams.set('provider', provider);
+    moved.searchParams.set('next', safeNext);
+    return NextResponse.redirect(moved);
+  }
+
+  /** 각 로그인 서비스에서 돌아올 주소. 개발자 화면의 "리디렉션 URI" 와 같아야 합니다. */
+  const callbackUrl = `${origin}/api/community/callback`;
   const state = createState();
   const target =
     provider === 'google'
-      ? googleAuthorizeUrl(callbackUrl(request), state.value)
-      : socialAuthorizeUrl(provider, callbackUrl(request), state.value);
+      ? googleAuthorizeUrl(callbackUrl, state.value)
+      : socialAuthorizeUrl(provider, callbackUrl, state.value);
 
   const response = NextResponse.redirect(target);
   // 돌아왔을 때 같은 브라우저인지 확인하는 값 + 돌아갈 곳 + 어디로 로그인했는지

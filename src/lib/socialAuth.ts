@@ -19,6 +19,34 @@ import { googleClientId, hashSub, looksLikeClientId } from './googleAuth';
 export const PROVIDERS = ['google', 'kakao', 'apple'] as const;
 export type Provider = (typeof PROVIDERS)[number];
 
+/**
+ * 사이트의 정식 주소입니다. (NEXT_PUBLIC_SITE_URL, 예: https://linkrights.org)
+ *
+ * 구글·카카오·애플에는 "돌아올 주소"를 미리 등록해 두는데, Vercel 미리보기 주소
+ * (linkrights-xxxxx.vercel.app)는 배포할 때마다 바뀌어서 등록할 수 없습니다.
+ * 그래서 미리보기 주소에서 로그인을 누르면 정식 주소로 옮겨 거기에서 로그인합니다.
+ */
+export function siteOrigin(): string {
+  const value = (process.env.NEXT_PUBLIC_SITE_URL ?? '').trim().replace(/\/+$/, '');
+  return /^https?:\/\/[^/]+$/.test(value) ? value : '';
+}
+
+/** 내 컴퓨터에서 돌려보는 중인지 (이때는 그 주소를 그대로 씁니다) */
+export function isLocalOrigin(origin: string): boolean {
+  return /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/.test(origin);
+}
+
+/**
+ * 로그인에 써야 하는 주소를 정합니다.
+ *   here 가 정식 주소이거나 내 컴퓨터면 그대로,
+ *   미리보기 주소라면 정식 주소를 돌려줍니다. (그 주소로 옮겨야 로그인 창이 열립니다)
+ */
+export function loginOrigin(here: string): string {
+  const canonical = siteOrigin();
+  if (!canonical || isLocalOrigin(here) || here === canonical) return here;
+  return canonical;
+}
+
 export function toProvider(value: unknown): Provider | null {
   return PROVIDERS.find((provider) => provider === value) ?? null;
 }
