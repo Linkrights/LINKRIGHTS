@@ -2,12 +2,12 @@
 //
 // 처음 온 사람이 "그래서 나는 뭘 먼저 봐야 하지?"라고 헤매지 않도록, 위에서부터 이렇게 이어집니다.
 //   1. 첫 화면(소개 영상 + 한 줄 메시지)
-//   2. 무엇이 필요한가요? — 권리정보 / AI에게 물어보기 / 체크리스트 / 도움받을 곳 네 가지 진입점
+//   2. 무엇이 궁금한가요? (AI 입력칸은 여기 1단계에 한 번만 둡니다)
+//      무엇이 필요한가요? — 권리정보 / AI에게 물어보기 / 체크리스트 / 도움받을 곳 네 가지 진입점
 //      (각각 "언제 쓰는 기능인지"를 한 줄로 적어, 무엇을 고를지 바로 알 수 있게 합니다)
 //   3. 나는 누구인가요? — 청소년 · 대학생 멘토 · 학교/기관
 //   4. LINKRIGHTS 소개 (누구를 위한 곳 · 어떤 도움 · 어떻게 쓰나요 · 함께하는 곳)
 //   5. 어떤 상황에 있나요 (분야)
-//   6. 내 상황을 말해 보세요 (AI 입력창)
 //   7. 지금 등록된 자료 (실제로 등록된 것만 센 숫자)
 //   8. 많이 찾는 권리정보 → 9. 체크리스트 → 10. 도움받을 곳 → 11. 자주 묻는 질문 · 질문 게시판
 //
@@ -193,17 +193,19 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                   showAskLink={false}
                 />
               </div>
+              {/* AI 입력칸은 이 한 곳에만 둡니다. 예전에는 아래에 같은 칸이 하나 더 있었는데,
+                  첫 화면에서 같은 것을 두 번 묻는 셈이라 여기 1단계로 합쳤습니다. */}
               <div className="lr-card flex flex-col p-5 sm:p-6">
                 <p className="flex items-center gap-2 text-lg font-extrabold tracking-tight text-ink-900">
                   <Icon name="sparkles" size={20} className="shrink-0 text-brand-600" /> {t.homeFind.askTitle}
                 </p>
-                <p className="mt-1 text-[15px] leading-relaxed text-ink-500">{t.homeFind.askBody}</p>
-                {/* 안내 문구는 아래 "내 상황을 말해 보세요" 구역에 한 번만 둡니다. (같은 말을 두 번 읽지 않게) */}
+                {/* 무엇을 적는 칸인지는 아래 입력칸의 안내에 한 번만 적습니다. (같은 말을 두 번 읽지 않게) */}
                 <div className="mt-4">
-                  <Link href={`/${locale}/ask`} className="lr-btn lr-btn-primary lr-press">
-                    {t.homeFind.askCta} <Icon name="arrow-right" size={18} />
-                  </Link>
+                  <AskBox locale={locale} examples={examples} />
                 </div>
+                <p className="mt-3 flex items-start gap-2 text-[13px] leading-relaxed text-ink-500">
+                  <Icon name="shield" size={15} className="mt-0.5 shrink-0 text-brand-600" /> <span>{t.homeAsk.trust}</span>
+                </p>
               </div>
             </div>
           </div>
@@ -348,30 +350,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
-      {/* 4. 내 상황을 말해 보세요: 무엇을 얻을 수 있는지 함께 보여줍니다 (AI는 권리를 알아가는 도구) */}
-      <Section tone="soft" title={t.homeBrand.askTitle} subtitle={t.homeAsk.subtitle}>
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-7">
-            <div className="rounded-[var(--radius-card)] border border-[var(--color-line)] bg-surface-soft p-5 sm:p-7">
-              <AskBox locale={locale} examples={examples} />
-            </div>
-          </div>
-          <div className="lg:col-span-5">
-            {/* 답변에 무엇이 들어 있는지: 제목만 한 줄씩 짧게 보여주고, 자세한 설명은 실제 답변에서 봅니다. */}
-            <h3 className="text-lg font-bold text-ink-900">{t.homeAsk.getsTitle}</h3>
-            <ul className="mt-4 space-y-2">
-              {t.homeAsk.gets.map((item) => (
-                <li key={item.title} className="flex items-start gap-2.5 text-[15px] leading-relaxed text-ink-700">
-                  <Icon name="check" size={18} className="mt-0.5 shrink-0 text-brand-600" /> <span>{item.title}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-5 flex items-start gap-2 text-sm leading-relaxed text-ink-500">
-              <Icon name="shield" size={16} className="mt-0.5 shrink-0 text-brand-600" /> <span>{t.homeAsk.trust}</span>
-            </p>
-          </div>
-        </div>
-      </Section>
 
       {/* 5. 지금 등록된 자료 ------------------------------------------
           실제로 등록된 것만 세어 보여줍니다. (숫자는 자료가 늘면 함께 늘어납니다)

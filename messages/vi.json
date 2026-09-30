@@ -317,7 +317,10 @@
     "cardKorean": "Tiếng Hàn của tôi chưa tốt lắm, tôi có thể được tư vấn không?",
     "cardLanguage": "Tôi có thể được tư vấn bằng {languages} không?",
     "cardYouth": "Thanh thiếu niên cũng có thể được tư vấn ở đây không?",
-    "cardNote": "Đây chỉ là ví dụ tham khảo. Hãy làm theo hướng dẫn của cơ quan."
+    "cardNote": "Đây chỉ là ví dụ tham khảo. Hãy làm theo hướng dẫn của cơ quan.",
+    "rescueLine1": "Xin hãy giúp tôi. Tôi đang gặp nguy hiểm.",
+    "rescueLine2": "Tôi đang ở ___. (Nếu không biết địa chỉ, hãy nói tên tòa nhà hay cửa hàng bạn nhìn thấy)",
+    "rescueLine3": "Tôi chưa giỏi tiếng Hàn. Tôi cần người phiên dịch."
   },
   "testimonials": {
     "title": "Tiếng nói của những người đã tham gia",
@@ -882,12 +885,19 @@
     "removeConfirm": "Xóa nhé? Không thể hoàn tác.",
     "backToList": "Về danh sách",
     "rulesTitle": "Quy tắc chung",
-    "rules": "· Hãy tôn trọng nhau. Nội dung lăng mạ, phân biệt, bắt nạt sẽ bị xóa.\n· Đừng viết tên, trường học hay số điện thoại của bạn hoặc của người khác.\n· Không quảng cáo, không mời làm việc trả tiền, không đưa thông tin sai.\n· Nếu bạn dưới 14 tuổi, hãy viết cùng người giám hộ hoặc thầy cô.\n· Hãy báo cáo nội dung bất thường. Bài bị báo cáo nhiều sẽ tự ẩn và nhóm vận hành kiểm tra.",
+    "rules": "· Hãy tôn trọng nhau. Bài có nội dung lăng mạ, phân biệt, bắt nạt sẽ được nhóm vận hành xóa.\n· Đừng viết tên, trường học hay số điện thoại của bạn hoặc của người khác.\n· Không quảng cáo, không mời làm việc trả tiền, không đưa thông tin sai.\n· Nếu bạn dưới 14 tuổi, hãy viết cùng người giám hộ hoặc thầy cô.\n· Hãy báo cáo nội dung bất thường. Bài bị báo cáo nhiều sẽ tự ẩn và nhóm vận hành kiểm tra.",
     "banned": "Hiện bạn chưa thể đăng bài. Hãy liên hệ chúng tôi qua email.",
     "error": "Chưa đăng được. Vui lòng thử lại sau.",
     "rateLimit": "Bạn vừa đăng nhiều lần. Hãy thử lại sau 5 phút.",
     "disabled": "Khu trò chuyện đang được chuẩn bị và sẽ sớm mở.",
     "privacyTitle": "Có nội dung trông như thông tin cá nhân",
-    "privacyRemove": "Xóa phần đó"
+    "privacyRemove": "Xóa phần đó",
+    "reportTitle": "Báo cáo bài này?",
+    "reportNote": "Hãy chọn vấn đề là gì. Chỉ nhóm vận hành xem được.",
+    "reportAbuse": "Lăng mạ hoặc phỉ báng",
+    "reportAd": "Quảng cáo hoặc tiếp thị",
+    "reportPrivacy": "Lộ thông tin cá nhân",
+    "reportOther": "Vấn đề khác",
+    "reportCancel": "Hủy"
   }
 }

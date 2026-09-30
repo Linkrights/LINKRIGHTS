@@ -309,8 +309,10 @@ export async function POST(request: Request) {
   const orgIds = [...new Set([...chosenDirectIds, ...mentionedDirectIds, ...chosenPossibleIds])].slice(0, MAX_ORGANIZATIONS);
 
   // AI가 위험 신호를 감지했다면 긴급 안내를 함께 보냅니다.
+  // 여기까지 왔다는 것은 폭력·위험 낱말이 걸리지 않았다는 뜻이므로("힘들어요" 같은 말),
+  // 안전한 곳으로 대피하고 증거를 남기라는 안내 대신 "마음이 힘들 때" 안내를 보여줍니다.
   const urgent = raw.urgency === 'urgent';
-  const emergency = urgent ? buildEmergencyCard(locale) : null;
+  const emergency = urgent ? buildEmergencyCard(locale, 'feelings') : null;
   const shownOrganizations = resolveOrganizations([...(emergency ? emergency.organizationIds : []), ...orgIds]);
 
   // 이 답변에서 허용하는 번호·링크: 화면에 보여주는 기관과, 사용한 근거 자료의 출처뿐입니다.

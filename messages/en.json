@@ -317,7 +317,10 @@
     "cardKorean": "My Korean isn't very good. Can I still get advice?",
     "cardLanguage": "Can I get advice in {languages}?",
     "cardYouth": "Can young people get advice here too?",
-    "cardNote": "These are examples only. Please follow the organisation's own instructions."
+    "cardNote": "These are examples only. Please follow the organisation's own instructions.",
+    "rescueLine1": "Please help me. I am in danger right now.",
+    "rescueLine2": "I am at ___. (If you do not know the address, name a building or shop you can see)",
+    "rescueLine3": "Korean is difficult for me. I need an interpreter."
   },
   "testimonials": {
     "title": "Voices of people who took part",
@@ -882,12 +885,19 @@
     "removeConfirm": "Delete this? It cannot be undone.",
     "backToList": "Back to the list",
     "rulesTitle": "House rules",
-    "rules": "· Be kind. Abuse, discrimination and bullying are removed.\n· Do not write names, schools or phone numbers - yours or anyone else's.\n· No advertising, paid work offers or false information.\n· If you are under 14, write together with a guardian or a teacher.\n· Report anything wrong. Reported posts are hidden automatically and checked by the team.",
+    "rules": "· Be kind. Posts with abuse, discrimination or bullying are removed by the team.\n· Do not write names, schools or phone numbers - yours or anyone else's.\n· No advertising, paid work offers or false information.\n· If you are under 14, write together with a guardian or a teacher.\n· Report anything wrong. Reported posts are hidden automatically and checked by the team.",
     "banned": "You cannot post right now. Please contact us by email.",
     "error": "Could not post. Please try again in a moment.",
     "rateLimit": "That is a lot in a short time. Please try again in five minutes.",
     "disabled": "The community is not open yet. We are getting it ready.",
     "privacyTitle": "This looks like personal information",
-    "privacyRemove": "Remove it"
+    "privacyRemove": "Remove it",
+    "reportTitle": "Report this post?",
+    "reportNote": "Please choose what the problem is. Only the team can see this.",
+    "reportAbuse": "Abuse or insults",
+    "reportAd": "Advertising or promotion",
+    "reportPrivacy": "Personal information exposed",
+    "reportOther": "Something else",
+    "reportCancel": "Cancel"
   }
 }

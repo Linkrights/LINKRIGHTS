@@ -5,7 +5,7 @@
 
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import { validateComment, validateNickname, validatePost } from '@/lib/community';
+import { toReportReason, validateComment, validateNickname, validatePost } from '@/lib/community';
 import { createComment, createPost, getMember, removeOwn, report, setNickname } from '@/lib/communityDb';
 import { hasDb } from '@/lib/db';
 import { SESSION_COOKIE, hasCommunityAuth, readSession } from '@/lib/googleAuth';
@@ -69,7 +69,10 @@ export async function POST(request: Request) {
         const id = Number(payload.id);
         const kind = payload.kind === 'comment' ? 'comment' : 'post';
         if (!Number.isInteger(id) || id <= 0) return NextResponse.json({ error: 'id' }, { status: 400 });
-        const count = await report(kind, id, memberId);
+        // 신고 이유를 고르지 않으면 받지 않습니다. (실수로 눌러 신고되는 것을 막습니다)
+        const reason = toReportReason(payload.reason);
+        if (!reason) return NextResponse.json({ error: 'reason' }, { status: 400 });
+        const count = await report(kind, id, memberId, reason);
         return NextResponse.json({ ok: true, reports: count });
       }
       case 'remove': {

@@ -26,6 +26,13 @@ interface Row {
   created_at: string;
 }
 
+interface ReportRow {
+  target_kind: string;
+  target_id: number;
+  reason: string;
+  count: number;
+}
+
 interface CommunityPost {
   id: number;
   board: string;
@@ -75,6 +82,14 @@ const STATUS_LABELS: Record<string, string> = {
   spam: '스팸',
 };
 
+/** 신고 이유 (커뮤니티) */
+const REPORT_LABELS: Record<string, string> = {
+  abuse: '욕설·비방',
+  ad: '광고·홍보',
+  privacy: '개인정보 노출',
+  other: '그 밖의 문제',
+};
+
 const JOIN_LABELS: Record<string, string> = {
   mentee: '멘티(청소년)',
   mentor: '대학생 멘토',
@@ -91,7 +106,7 @@ export function AdminClient({ ready }: { ready: { admin: boolean; db: boolean } 
   const [tab, setTab] = useState<string>('question');
   const [rows, setRows] = useState<Row[]>([]);
   const [helpful, setHelpful] = useState<HelpfulRow[]>([]);
-  const [community, setCommunity] = useState<{ posts: CommunityPost[]; comments: CommunityComment[] }>({ posts: [], comments: [] });
+  const [community, setCommunity] = useState<{ posts: CommunityPost[]; comments: CommunityComment[]; reasons: ReportRow[] }>({ posts: [], comments: [], reasons: [] });
   const [communitySetup, setCommunitySetup] = useState<string[]>([]);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -109,14 +124,14 @@ export function AdminClient({ ready }: { ready: { admin: boolean; db: boolean } 
       const data = (await response.json()) as {
         rows?: Row[];
         helpful?: HelpfulRow[];
-        community?: { posts: CommunityPost[]; comments: CommunityComment[] };
+        community?: { posts: CommunityPost[]; comments: CommunityComment[]; reasons?: ReportRow[] };
         communitySetup?: string[];
         error?: string;
       };
       if (data.error) setMessage(data.error === 'db' ? '데이터베이스가 연결되어 있지 않습니다.' : '불러오지 못했습니다.');
       setRows(data.rows ?? []);
       setHelpful(data.helpful ?? []);
-      setCommunity(data.community ?? { posts: [], comments: [] });
+      setCommunity({ posts: data.community?.posts ?? [], comments: data.community?.comments ?? [], reasons: data.community?.reasons ?? [] });
       setCommunitySetup(data.communitySetup ?? []);
       setAuthed(true);
     } catch {
@@ -150,7 +165,7 @@ export function AdminClient({ ready }: { ready: { admin: boolean; db: boolean } 
     setAuthed(false);
     setRows([]);
     setHelpful([]);
-    setCommunity({ posts: [], comments: [] });
+    setCommunity({ posts: [], comments: [], reasons: [] });
     setCommunitySetup([]);
   }
 
@@ -167,6 +182,13 @@ export function AdminClient({ ready }: { ready: { admin: boolean; db: boolean } 
     }
     setMessage(`#${id} 저장했습니다.`);
     await load(tab);
+  }
+
+  /** 이 글·댓글에 들어온 신고 이유를 " (욕설·비방 2 · 광고·홍보 1)" 모양으로 만듭니다. */
+  function reasonsOf(kind: 'post' | 'comment', id: number): string {
+    const rows = community.reasons.filter((row) => row.target_kind === kind && row.target_id === id);
+    if (rows.length === 0) return '';
+    return ' (' + rows.map((row) => `${REPORT_LABELS[row.reason] ?? row.reason} ${row.count}`).join(' · ') + ')';
   }
 
   if (!ready.admin || !ready.db) {
@@ -241,6 +263,7 @@ export function AdminClient({ ready }: { ready: { admin: boolean; db: boolean } 
 
       {tab === 'community' ? (
         <div className="mt-4 space-y-8">
+          {/* 신고 이유는 글·댓글마다 모아서 보여 줍니다. (예: 욕설·비방 2 · 광고·홍보 1) */}
           {/* 준비물(구글 키 등)이 잘못 들어가 있으면 먼저 알려 줍니다. 이 상태에서는 커뮤니티가 열리지 않습니다. */}
           {communitySetup.length > 0 && (
             <div className="lr-card border-[var(--color-warm-500)] bg-warm-100 p-4">
@@ -267,7 +290,9 @@ export function AdminClient({ ready }: { ready: { admin: boolean; db: boolean } 
                     <span>{post.nickname}</span>
                     <span>이용자 {post.member_id}</span>
                     <span>{post.created_at.slice(0, 16).replace('T', ' ')}</span>
-                    {post.reports > 0 && <span className="font-bold text-[var(--color-danger-700)]">신고 {post.reports}</span>}
+                    {post.reports > 0 && (
+                      <span className="font-bold text-[var(--color-danger-700)]">신고 {post.reports}{reasonsOf('post', post.id)}</span>
+                    )}
                     {post.hidden && <span className="font-bold text-ink-900">숨김</span>}
                   </p>
                   <p className="mt-1.5 text-base font-bold text-ink-900">{post.title}</p>
@@ -310,7 +335,9 @@ export function AdminClient({ ready }: { ready: { admin: boolean; db: boolean } 
                     <span>{comment.nickname}</span>
                     <span>글 #{comment.post_id}</span>
                     <span>{comment.created_at.slice(0, 16).replace('T', ' ')}</span>
-                    {comment.reports > 0 && <span className="font-bold text-[var(--color-danger-700)]">신고 {comment.reports}</span>}
+                    {comment.reports > 0 && (
+                      <span className="font-bold text-[var(--color-danger-700)]">신고 {comment.reports}{reasonsOf('comment', comment.id)}</span>
+                    )}
                     {comment.hidden && <span className="font-bold text-ink-900">숨김</span>}
                   </p>
                   <p className="mt-1.5 whitespace-pre-line text-[15px] leading-relaxed text-ink-900">{comment.body}</p>

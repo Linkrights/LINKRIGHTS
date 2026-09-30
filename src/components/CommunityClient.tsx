@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { Icon } from './Icon';
 import { findPersonalInfo, removePersonalInfo } from './privacy-detect';
-import { BOARDS, COMMUNITY_LIMITS, type Board } from '@/lib/community';
+import { BOARDS, COMMUNITY_LIMITS, REPORT_REASONS, type Board, type ReportReason } from '@/lib/community';
 import type { Messages } from '@/lib/i18n';
 
 type Labels = Messages['community'];
@@ -211,9 +211,31 @@ export function CommunityItemActions({
 }) {
   const router = useRouter();
   const [done, setDone] = useState('');
+  // 신고는 누르자마자 보내지 않고, 먼저 이유를 고르는 창을 엽니다.
+  const [asking, setAsking] = useState(false);
+  const [sending, setSending] = useState(false);
+
+  const reasonLabels: Record<ReportReason, string> = {
+    abuse: labels.reportAbuse,
+    ad: labels.reportAd,
+    privacy: labels.reportPrivacy,
+    other: labels.reportOther,
+  };
+
+  async function sendReport(reason: ReportReason) {
+    if (sending) return;
+    setSending(true);
+    const result = await send({ action: 'report', kind, id, reason });
+    setSending(false);
+    setAsking(false);
+    if (result.ok) {
+      setDone(labels.reportDone);
+      router.refresh();
+    }
+  }
 
   return (
-    <span className="inline-flex items-center gap-3 text-[13px] text-ink-500">
+    <span className="inline-flex flex-wrap items-center gap-3 text-[13px] text-ink-500">
       {mine ? (
         <button
           type="button"
@@ -230,21 +252,46 @@ export function CommunityItemActions({
           {labels.remove}
         </button>
       ) : (
-        <button
-          type="button"
-          onClick={async () => {
-            const result = await send({ action: 'report', kind, id });
-            if (result.ok) {
-              setDone(labels.reportDone);
-              router.refresh();
-            }
-          }}
-          className="hover:text-ink-900 hover:underline"
-        >
+        <button type="button" onClick={() => setAsking(true)} className="hover:text-ink-900 hover:underline">
           {labels.report}
         </button>
       )}
       {done && <span className="text-brand-700">{done}</span>}
+
+      {/* 신고 이유 고르기 */}
+      {asking && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={labels.reportTitle}
+          className="fixed inset-0 z-50 flex items-end justify-center bg-ink-900/40 p-4 sm:items-center"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) setAsking(false);
+          }}
+        >
+          <div className="w-full max-w-sm rounded-[var(--radius-card)] bg-white p-5 shadow-lg">
+            <p className="text-base font-extrabold text-ink-900">{labels.reportTitle}</p>
+            <p className="mt-1 text-[13px] leading-relaxed text-ink-500">{labels.reportNote}</p>
+            <ul className="mt-4 space-y-2">
+              {REPORT_REASONS.map((reason) => (
+                <li key={reason}>
+                  <button
+                    type="button"
+                    disabled={sending}
+                    onClick={() => sendReport(reason)}
+                    className="lr-btn lr-btn-ghost w-full justify-start text-left"
+                  >
+                    {reasonLabels[reason]}
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <button type="button" onClick={() => setAsking(false)} className="lr-btn lr-btn-ghost lr-btn-sm mt-3 w-full">
+              {labels.reportCancel}
+            </button>
+          </div>
+        </div>
+      )}
     </span>
   );
 }

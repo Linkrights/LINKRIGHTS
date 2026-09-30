@@ -3,7 +3,7 @@
 // 저장하는 것: 별명, 글·댓글 내용, 올린 시각, 숨김 여부, 신고 수.
 // 저장하지 않는 것: 이름, 이메일, 프로필 사진, 구글 계정 번호 원본. (sub_hash 만 저장합니다 — googleAuth.ts 참고)
 
-import { COMMUNITY_LIMITS, makeNickname, type Board, type PostInput } from './community';
+import { COMMUNITY_LIMITS, makeNickname, type Board, type PostInput, type ReportReason } from './community';
 import { ensureSchema, hasDb, sql } from './db';
 
 let ready: Promise<void> | null = null;
@@ -55,6 +55,8 @@ export function ensureCommunitySchema(): Promise<void> {
           created_at timestamptz not null default now(),
           unique (member_id, target_kind, target_id)
         )`;
+      // 신고 이유 (욕설·광고·개인정보·기타). 먼저 만든 표에는 없어서 나중에 더합니다.
+      await db`alter table lr_reports add column if not exists reason text`;
     })().catch((error) => {
       ready = null;
       throw error;
@@ -207,11 +209,16 @@ export async function removeOwn(kind: 'post' | 'comment', id: number, memberId: 
  * 신고하기. 같은 사람이 같은 글을 여러 번 신고해도 한 번만 셉니다.
  * 신고가 쌓이면 자동으로 숨기고, 운영팀이 관리자 페이지에서 확인합니다.
  */
-export async function report(kind: 'post' | 'comment', id: number, memberId: number): Promise<number> {
+export async function report(
+  kind: 'post' | 'comment',
+  id: number,
+  memberId: number,
+  reason: ReportReason,
+): Promise<number> {
   await ensureCommunitySchema();
   const db = sql();
   const inserted = (await db`
-    insert into lr_reports (member_id, target_kind, target_id) values (${memberId}, ${kind}, ${id})
+    insert into lr_reports (member_id, target_kind, target_id, reason) values (${memberId}, ${kind}, ${id}, ${reason})
     on conflict (member_id, target_kind, target_id) do nothing returning id`) as { id: number }[];
   if (inserted.length === 0) {
     const rows =
@@ -256,8 +263,12 @@ export async function moderate(action: {
   else await db`update lr_comments set hidden = ${hidden} where id = ${action.id}`;
 }
 
-/** 관리자 화면: 신고된 글·댓글과 최근 글 */
-export async function listForAdmin(): Promise<{ posts: PostRow[]; comments: CommentRow[] }> {
+/** 관리자 화면: 신고된 글·댓글과 최근 글 (신고 이유도 함께) */
+export async function listForAdmin(): Promise<{
+  posts: PostRow[];
+  comments: CommentRow[];
+  reasons: { target_kind: string; target_id: number; reason: string; count: number }[];
+}> {
   await ensureCommunitySchema();
   const db = sql();
   const posts = (await db`
@@ -269,7 +280,11 @@ export async function listForAdmin(): Promise<{ posts: PostRow[]; comments: Comm
     select c.id, c.post_id, c.member_id, c.body, c.hidden, c.reports, c.created_at::text as created_at, m.nickname
     from lr_comments c join lr_members m on m.id = c.member_id
     order by c.reports desc, c.created_at desc limit 100`) as CommentRow[];
-  return { posts, comments };
+  const reasons = (await db`
+    select target_kind, target_id, coalesce(reason, 'other') as reason, count(*)::int as count
+    from lr_reports group by target_kind, target_id, coalesce(reason, 'other')
+    order by count desc limit 200`) as { target_kind: string; target_id: number; reason: string; count: number }[];
+  return { posts, comments, reasons };
 }
 
 export type { Board };

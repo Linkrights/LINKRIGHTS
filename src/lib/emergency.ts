@@ -17,13 +17,20 @@ export function detectEmergency(question: string): boolean {
   return false;
 }
 
-export function buildEmergencyCard(locale: Locale) {
+/**
+ * 긴급 안내 카드입니다. 두 가지가 있습니다.
+ *   danger   폭력·위험 낱말이 걸렸을 때 (112·119 중심, 증거 남기기까지 안내)
+ *   feelings 마음이 힘들다고 했을 때 (AI가 긴급으로 판단했지만 위험 낱말은 없는 경우)
+ * 두 안내 모두 content/emergency.json 에 적어 둔 문장만 씁니다.
+ */
+export function buildEmergencyCard(locale: Locale, kind: 'danger' | 'feelings' = 'danger') {
   const config = getEmergencyConfig();
+  const variant = kind === 'feelings' && config.feelings ? config.feelings : config;
   return {
-    title: pick(config.title, locale),
-    message: pick(config.message, locale),
-    steps: config.steps[locale] ?? config.steps.ko,
-    note: pick(config.note, locale),
-    organizationIds: config.organizations,
+    title: pick(variant.title, locale),
+    message: pick(variant.message, locale),
+    steps: variant.steps[locale] ?? variant.steps.ko,
+    note: pick(variant.note ?? config.note, locale),
+    organizationIds: variant.organizations ?? config.organizations,
   };
 }

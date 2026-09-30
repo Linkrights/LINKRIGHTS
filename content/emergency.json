@@ -13,26 +13,113 @@
   ],
   "keywords": {
     "ko": [
-      "때렸", "때려", "때리", "맞았", "맞고 있", "폭행", "폭력", "학대", "감금", "가뒀",
-      "협박", "성폭력", "성폭행", "성추행", "강간", "몰래 찍", "불법촬영",
-      "죽고 싶", "자살", "자해", "살려주", "무서워", "위험해", "도망", "납치", "쫓아와",
-      "칼", "피가 나", "응급", "구급차", "괴롭힘", "학교폭력", "왕따", "갈 곳이 없"
+      "때렸",
+      "때려",
+      "때리",
+      "맞았",
+      "맞고 있",
+      "폭행",
+      "폭력",
+      "학대",
+      "감금",
+      "가뒀",
+      "협박",
+      "성폭력",
+      "성폭행",
+      "성추행",
+      "강간",
+      "몰래 찍",
+      "불법촬영",
+      "죽고 싶",
+      "자살",
+      "자해",
+      "살려주",
+      "무서워",
+      "위험해",
+      "도망",
+      "납치",
+      "쫓아와",
+      "칼",
+      "피가 나",
+      "응급",
+      "구급차",
+      "괴롭힘",
+      "학교폭력",
+      "왕따",
+      "갈 곳이 없"
     ],
     "en": [
-      "hit me", "beat me", "beating", "assault", "violence", "abuse", "abusing",
-      "locked me", "threaten", "threatening", "rape", "sexual assault", "molest",
-      "kill myself", "suicide", "self harm", "self-harm", "help me", "in danger",
-      "scared of him", "scared of her", "running away", "kidnap", "emergency",
-      "bleeding", "bullying", "bullied", "nowhere to go"
+      "hit me",
+      "beat me",
+      "beating",
+      "assault",
+      "violence",
+      "abuse",
+      "abusing",
+      "locked me",
+      "threaten",
+      "threatening",
+      "rape",
+      "sexual assault",
+      "molest",
+      "kill myself",
+      "suicide",
+      "self harm",
+      "self-harm",
+      "help me",
+      "in danger",
+      "scared of him",
+      "scared of her",
+      "running away",
+      "kidnap",
+      "emergency",
+      "bleeding",
+      "bullying",
+      "bullied",
+      "nowhere to go"
     ],
     "zh": [
-      "打我", "殴打", "暴力", "虐待", "关起来", "威胁", "强奸", "性侵", "猥亵",
-      "想死", "自杀", "自残", "救命", "危险", "逃跑", "绑架", "急救", "流血", "霸凌", "无处可去"
+      "打我",
+      "殴打",
+      "暴力",
+      "虐待",
+      "关起来",
+      "威胁",
+      "强奸",
+      "性侵",
+      "猥亵",
+      "想死",
+      "自杀",
+      "自残",
+      "救命",
+      "危险",
+      "逃跑",
+      "绑架",
+      "急救",
+      "流血",
+      "霸凌",
+      "无处可去"
     ],
     "vi": [
-      "đánh tôi", "bạo lực", "ngược đãi", "nhốt tôi", "đe dọa", "hiếp dâm",
-      "xâm hại", "quấy rối", "muốn chết", "tự tử", "tự làm hại", "cứu tôi",
-      "nguy hiểm", "bỏ trốn", "bắt cóc", "cấp cứu", "chảy máu", "bắt nạt", "không có chỗ nào để đi"
+      "đánh tôi",
+      "bạo lực",
+      "ngược đãi",
+      "nhốt tôi",
+      "đe dọa",
+      "hiếp dâm",
+      "xâm hại",
+      "quấy rối",
+      "muốn chết",
+      "tự tử",
+      "tự làm hại",
+      "cứu tôi",
+      "nguy hiểm",
+      "bỏ trốn",
+      "bắt cóc",
+      "cấp cứu",
+      "chảy máu",
+      "bắt nạt",
+      "không có chỗ nào để đi"
     ]
   },
   "title": {
@@ -78,5 +165,57 @@
     "en": "LINKRIGHTS is not a counselling service and cannot assess your situation. Please get real help from the official organisations above.",
     "zh": "LINKRIGHTS 不是咨询机构，无法判断你的具体情况。请向上述官方机构寻求实际帮助。",
     "vi": "LINKRIGHTS không phải là dịch vụ tư vấn và không thể đánh giá tình huống của bạn. Hãy nhận trợ giúp từ các cơ quan chính thức ở trên."
+  },
+  "feelings": {
+    "_readme": "마음이 힘들다고 말했을 때(AI가 긴급으로 판단했지만 폭력·위험 낱말은 걸리지 않은 경우) 보여주는 안내입니다. 위 keywords 가 걸린 경우에는 위의 안내를 씁니다.",
+    "organizations": [
+      "youth-1388",
+      "suicide-109",
+      "danuri-1577-1366"
+    ],
+    "title": {
+      "ko": "많이 힘들었겠어요",
+      "en": "That sounds really hard",
+      "zh": "你一定很辛苦吧",
+      "vi": "Chắc bạn đã rất mệt mỏi"
+    },
+    "message": {
+      "ko": "혼자 견디지 않아도 돼요. 아래 번호는 24시간 열려 있고, 무슨 말을 해도 비밀은 지켜집니다.",
+      "en": "You do not have to carry this alone. The lines below are open 24 hours and whatever you say stays confidential.",
+      "zh": "你不需要独自承受。下面的电话24小时开通，你说的话都会被保密。",
+      "vi": "Bạn không phải chịu đựng một mình. Các số bên dưới mở 24 giờ và mọi điều bạn nói đều được giữ kín."
+    },
+    "steps": {
+      "ko": [
+        "안전한 곳으로 이동하세요. 혼자 있기 힘들면 사람이 있는 곳으로 가도 좋아요.",
+        "아래 번호로 전화하거나 문자·채팅으로 이야기해 보세요. 한국어가 어렵다면 다누리콜센터에서 다른 언어로 상담할 수 있어요.",
+        "힘들다면 쉬어가도 괜찮아요. 오늘 다 해결하지 않아도 돼요.",
+        "믿을 수 있는 어른(선생님, 상담 선생님, 보호자)에게 지금 마음을 알려 주세요."
+      ],
+      "en": [
+        "Move somewhere safe. If being alone feels hard, go where other people are.",
+        "Call one of the numbers below, or use text or chat. If Korean is difficult, the Danuri Call Center can help in other languages.",
+        "It is okay to rest if this is too much. You do not have to solve everything today.",
+        "Tell a trusted adult - a teacher, a counsellor or your guardian - how you are feeling."
+      ],
+      "zh": [
+        "请先到安全的地方。如果一个人待着难受，也可以去有人的地方。",
+        "请拨打下面的电话，或用短信、聊天方式倾诉。韩语有困难时，多元文化家庭客服中心可以用其他语言咨询。",
+        "很难受的话，休息一下也没关系。不必今天就解决所有事。",
+        "请把现在的心情告诉可信赖的大人（老师、咨询老师、监护人）。"
+      ],
+      "vi": [
+        "Hãy đến nơi an toàn. Nếu ở một mình thấy khó chịu, bạn có thể đến nơi có người.",
+        "Hãy gọi số bên dưới, hoặc nhắn tin, trò chuyện. Nếu tiếng Hàn khó, Tổng đài Danuri có thể tư vấn bằng ngôn ngữ khác.",
+        "Nếu thấy quá sức, nghỉ một chút cũng không sao. Bạn không phải giải quyết mọi thứ hôm nay.",
+        "Hãy nói cảm giác hiện tại với người lớn đáng tin cậy (thầy cô, chuyên viên tư vấn, người giám hộ)."
+      ]
+    },
+    "note": {
+      "ko": "LINKRIGHTS는 상담기관이 아니며, 이 화면만으로 상황을 판단하지 않습니다. 실제 도움은 위 공식기관에서 받으세요.",
+      "en": "LINKRIGHTS is not a counselling service and cannot assess your situation. Please get real help from the official organisations above.",
+      "zh": "LINKRIGHTS 不是咨询机构，无法判断你的具体情况。请向上述官方机构寻求实际帮助。",
+      "vi": "LINKRIGHTS không phải là dịch vụ tư vấn và không thể đánh giá tình huống của bạn. Hãy nhận trợ giúp từ các cơ quan chính thức ở trên."
+    }
   }
 }

@@ -58,17 +58,21 @@ export function OrgCardView({
   const otherLanguages = (org.languages ?? [])
     .filter((code) => code !== 'ko' && code !== 'other')
     .map((code) => (t.languageNames as Record<string, string>)[code] ?? code);
-  const callLines =
-    org.phone && !org.emergency
-      ? [
+  // 전화번호가 있는 모든 기관에 "전화 연결 후 이렇게 말해보세요"를 보여줍니다.
+  // 112·119처럼 바로 출동하는 번호는 상담 문장 대신, 위치와 통역을 먼저 말하는 문장을 보여줍니다.
+  const rescueNumber = ['112', '119'].includes((org.phone ?? '').replace(/[^\d]/g, ''));
+  const callLines = !org.phone
+    ? []
+    : rescueNumber
+      ? [t.callScript.rescueLine1, t.callScript.rescueLine2, t.callScript.rescueLine3]
+      : [
           t.callScript.cardLine1,
           otherLanguages.length > 0
             ? t.callScript.cardLanguage.replace('{languages}', otherLanguages.join(', '))
             : t.callScript.cardKorean,
           ...(org.category !== 'youth' ? [t.callScript.cardYouth] : []),
           t.callScript.line3,
-        ]
-      : [];
+        ];
   // 지도는 등록된 한국어 주소가 있을 때만 네이버 지도 검색으로 연결합니다. (지도 API·비용 없음)
   const mapHref = org.address?.ko ? `https://map.naver.com/p/search/${encodeURIComponent(org.address.ko)}` : '';
   // 마우스를 쓰는 화면(PC)에서는 전화 버튼을 눌러도 전화가 걸리지 않고 빈 창만 뜹니다.

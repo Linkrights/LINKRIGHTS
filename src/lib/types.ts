@@ -140,6 +140,17 @@ export interface EmergencyConfig {
   message: LocalizedText;
   steps: { ko: string[] } & Partial<Record<Locale, string[]>>;
   note: LocalizedText;
+  /**
+   * 마음이 힘들다고 했을 때 보여주는 안내입니다. (폭력·위험 낱말이 걸리지 않은 경우)
+   * 없으면 위의 안내를 그대로 씁니다.
+   */
+  feelings?: {
+    organizations?: string[];
+    title: LocalizedText;
+    message: LocalizedText;
+    steps: { ko: string[] } & Partial<Record<Locale, string[]>>;
+    note?: LocalizedText;
+  };
 }
 
 export interface ProgramItem {

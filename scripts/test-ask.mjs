@@ -1091,6 +1091,7 @@ async function runDeterministic() {
   }
 
   await checkSuggestedOrganizations(makeApi(rulebreakingAnswer).ask);
+  await checkReportAndEmergency(makeApi(rulebreakingAnswer).ask);
 
   return table;
 }
@@ -1378,6 +1379,56 @@ function checkWordingFeedback() {
     check(`11-12 "왜 이주배경청소년인가요?"에 집계 이야기를 넣었다 (${locale})`, page.youth_points.length >= 4);
   }
   check('11-13 집계 이야기는 학교 밖 청소년도 짚는다', about.i18n.ko.youth_points[0].body.includes('학교 밖 청소년'));
+}
+
+
+// ---------------------------------------------------------------------------
+// 12. 신고 이유 고르기 · 긴급 안내 두 가지 · 통화 안내
+//     (2026-09-30 운영팀 피드백)
+// ---------------------------------------------------------------------------
+async function checkReportAndEmergency(ask) {
+  const runtime = createRuntime(async () => {
+    throw new Error('연결하지 않습니다.');
+  });
+  const community = runtime.load('src/lib/community.ts');
+  const emergency = runtime.load('src/lib/emergency.ts');
+
+  // 신고 이유
+  check('12-1 신고 이유 네 가지가 있다', community.REPORT_REASONS.length === 4, community.REPORT_REASONS.join(', '));
+  check('12-2 아는 이유만 받는다', community.toReportReason('abuse') === 'abuse');
+  check('12-3 모르는 이유는 받지 않는다', community.toReportReason('무엇이든') === null);
+  check('12-4 이유를 안 고르면 받지 않는다', community.toReportReason(undefined) === null);
+
+  // 긴급 안내 두 가지
+  const danger = emergency.buildEmergencyCard('ko', 'danger');
+  const feelings = emergency.buildEmergencyCard('ko', 'feelings');
+  check('12-5 위험 안내는 그대로다', danger.title.includes('위험'), danger.title);
+  check('12-6 마음이 힘들 때 안내가 따로 있다', feelings.title !== danger.title, feelings.title);
+  check('12-7 마음 안내 1번은 안전한 곳으로 이동', feelings.steps[0].startsWith('안전한 곳으로 이동'), feelings.steps[0]);
+  check('12-8 마음 안내 3번은 쉬어가도 괜찮다', feelings.steps[2].includes('쉬어가도 괜찮'), feelings.steps[2]);
+  check('12-9 마음 안내에는 증거를 남기라는 말이 없다', !feelings.steps.some((step) => step.includes('사진')));
+  check('12-10 마음 안내에도 상담 번호가 있다', feelings.organizationIds.includes('youth-1388'), feelings.organizationIds.join(', '));
+  for (const locale of ['en', 'zh', 'vi']) {
+    const card = emergency.buildEmergencyCard(locale, 'feelings');
+    check(`12-11 마음 안내가 ${locale} 로도 있다`, card.steps.length === 4 && card.title.length > 0);
+  }
+  check('12-12 폭력 낱말은 여전히 위험으로 걸린다', emergency.detectEmergency('친구가 때렸어요') === true);
+  check('12-13 "힘들어요" 는 낱말로는 걸리지 않는다 (AI 판단에 맡김)', emergency.detectEmergency('힘들어요') === false);
+
+  // AI가 긴급으로 판단하면 마음 안내를 보여준다
+  const urgentApi = makeApi((body) => ({ ...rulebreakingAnswer(body), urgency: 'urgent' }));
+  const urgent = await urgentApi.ask({ question: '요즘 너무 힘들어요', locale: 'ko' });
+  check('12-14 AI가 긴급이라고 하면 마음 안내를 보낸다', urgent.body.emergency?.steps?.[2]?.includes('쉬어가도 괜찮') === true, urgent.body.emergency?.title);
+
+  // 화면 문구
+  const messages = {};
+  for (const locale of ['ko', 'en', 'zh', 'vi']) {
+    messages[locale] = JSON.parse(fs.readFileSync(path.join(ROOT, 'messages', locale + '.json'), 'utf8'));
+    check(`12-15 신고 이유 문구가 있다 (${locale})`, ['reportTitle', 'reportAbuse', 'reportAd', 'reportPrivacy', 'reportOther', 'reportCancel'].every((key) => Boolean(messages[locale].community[key])));
+    check(`12-16 112·119 통화 안내 문구가 있다 (${locale})`, ['rescueLine1', 'rescueLine2', 'rescueLine3'].every((key) => Boolean(messages[locale].callScript[key])));
+  }
+  check('12-17 한국어 메뉴 이름을 "커뮤니티" 로 바꿨다', messages.ko.community.navLabel === '커뮤니티');
+  check('12-18 커뮤니티 규칙을 부드럽게 다듬었다', messages.ko.community.rules.includes('운영팀이 지워요') && !messages.ko.community.rules.includes('지워집니다'));
 }
 
 if (LIVE) {

@@ -11,6 +11,17 @@
 export const BOARDS = ['free', 'ask', 'info'] as const;
 export type Board = (typeof BOARDS)[number];
 
+/**
+ * 신고 이유입니다. 누르자마자 신고되지 않고, 이 중에서 하나를 고르게 합니다.
+ * (운영팀이 무엇을 먼저 봐야 하는지 알 수 있고, 실수로 누르는 것도 막아 줍니다)
+ */
+export const REPORT_REASONS = ['abuse', 'ad', 'privacy', 'other'] as const;
+export type ReportReason = (typeof REPORT_REASONS)[number];
+
+export function toReportReason(value: unknown): ReportReason | null {
+  return REPORT_REASONS.find((reason) => reason === value) ?? null;
+}
+
 export const COMMUNITY_LIMITS = {
   title: 100,
   body: 3000,
