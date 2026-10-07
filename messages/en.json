@@ -905,5 +905,14 @@
       "kakao": "Kakao",
       "apple": "Apple"
     }
+  },
+  "quickMenu": {
+    "title": "Quick links",
+    "organizations": "Where to get help",
+    "programs": "Programs",
+    "ask": "Ask the AI",
+    "community": "Community",
+    "hide": "Hide",
+    "show": "Show"
   }
 }

@@ -905,5 +905,14 @@
       "kakao": "Kakao",
       "apple": "Apple"
     }
+  },
+  "quickMenu": {
+    "title": "Đi nhanh",
+    "organizations": "Nơi được giúp đỡ",
+    "programs": "Chương trình",
+    "ask": "Hỏi AI",
+    "community": "Cộng đồng",
+    "hide": "Thu gọn",
+    "show": "Mở ra"
   }
 }

@@ -905,5 +905,14 @@
       "kakao": "Kakao",
       "apple": "苹果"
     }
+  },
+  "quickMenu": {
+    "title": "快速前往",
+    "organizations": "可求助的机构",
+    "programs": "机构项目",
+    "ask": "向AI提问",
+    "community": "交流区",
+    "hide": "收起",
+    "show": "展开"
   }
 }

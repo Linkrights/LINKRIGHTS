@@ -905,5 +905,14 @@
       "kakao": "카카오",
       "apple": "애플"
     }
+  },
+  "quickMenu": {
+    "title": "빠른 이동",
+    "organizations": "도움받을 곳",
+    "programs": "기관 프로그램",
+    "ask": "AI에게 질문",
+    "community": "커뮤니티",
+    "hide": "접기",
+    "show": "펼치기"
   }
 }

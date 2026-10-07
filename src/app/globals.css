@@ -358,21 +358,21 @@
     color: var(--color-ink-900);
   }
   .lr-h1 {
-    font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
-    line-height: 1.28;
+    font-size: clamp(1.875rem, 1.45rem + 1.9vw, 2.875rem);
+    line-height: 1.26;
     font-weight: 800;
     letter-spacing: -0.015em;
     color: var(--color-ink-900);
   }
   .lr-h2 {
-    font-size: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
-    line-height: 1.32;
+    font-size: clamp(1.5625rem, 1.33rem + 1vw, 2.25rem);
+    line-height: 1.3;
     font-weight: 800;
     letter-spacing: -0.01em;
     color: var(--color-ink-900);
   }
   .lr-h3 {
-    font-size: 1.125rem;
+    font-size: clamp(1.1875rem, 1.15rem + 0.2vw, 1.3125rem);
     line-height: 1.45;
     font-weight: 700;
     color: var(--color-ink-900);
@@ -388,8 +388,8 @@
     }
   }
   .lr-body {
-    font-size: 1rem;
-    line-height: 1.75;
+    font-size: clamp(1.0625rem, 1.04rem + 0.1vw, 1.125rem);
+    line-height: 1.7;
     color: var(--color-ink-700);
   }
 
@@ -598,6 +598,121 @@
   .lr-marquee-viewport:focus-within .lr-marquee-track {
     animation: none;
   }
+  /* ---------- 빠른 이동 메뉴 (QuickMenu.tsx) ----------
+     PC: 오른쪽에 세로로 떠 있고, 본문 폭(72rem) 바깥에 둡니다.
+     휴대폰: 아래쪽 띠. 본문 마지막 줄을 가리지 않도록 body 아래쪽에 자리를 비워 둡니다. */
+  .lr-quick-rail {
+    position: fixed;
+    right: max(1rem, calc((100vw - 72rem) / 2 - 4.5rem));
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 30;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.625rem;
+  }
+  .lr-quick-dot,
+  .lr-quick-toggle {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-line);
+    background: var(--color-surface);
+    color: var(--color-ink-700);
+    box-shadow: 0 6px 18px rgb(14 37 79 / 10%);
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+  .lr-quick-toggle {
+    width: 2.5rem;
+    height: 2.5rem;
+    color: var(--color-ink-500);
+  }
+  .lr-quick-dot:hover,
+  .lr-quick-dot:focus-visible,
+  .lr-quick-toggle:hover,
+  .lr-quick-toggle:focus-visible {
+    background: var(--color-brand-600);
+    border-color: var(--color-brand-600);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+  .lr-quick-dot.is-active {
+    background: var(--color-brand-50);
+    border-color: var(--color-brand-200);
+    color: var(--color-brand-700);
+  }
+  /* 설명 풍선: 가리키거나 키보드로 옮겨 왔을 때만 보입니다. */
+  .lr-quick-tip {
+    position: absolute;
+    right: calc(100% + 0.625rem);
+    top: 50%;
+    transform: translateY(-50%) translateX(0.25rem);
+    white-space: nowrap;
+    border-radius: var(--radius-control);
+    background: var(--color-navy-900);
+    color: #fff;
+    padding: 0.375rem 0.625rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+  .lr-quick-dot:hover .lr-quick-tip,
+  .lr-quick-dot:focus-visible .lr-quick-tip,
+  .lr-quick-toggle:hover .lr-quick-tip,
+  .lr-quick-toggle:focus-visible .lr-quick-tip {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  .lr-quick-bar {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 30;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--color-line);
+    background: color-mix(in srgb, var(--color-surface) 96%, transparent);
+    backdrop-filter: blur(8px);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .lr-quick-bar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.1875rem;
+    padding: 0.5rem 0.25rem 0.5625rem;
+    min-height: 3.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-ink-500);
+    text-align: center;
+  }
+  .lr-quick-bar-item[aria-current="page"] {
+    color: var(--color-brand-700);
+  }
+  /* 아래쪽 띠에 마지막 줄이 가리지 않도록 자리를 비웁니다. */
+  @media (max-width: 1023px) {
+    body:has(.lr-quick-bar) {
+      padding-bottom: 3.75rem;
+    }
+  }
+  /* 글자 크기를 아주 크게 쓰는 분에게는 띠가 화면을 너무 먹지 않도록 숨깁니다. (메뉴로 갈 수 있습니다) */
+  @media (max-width: 1023px) and (max-height: 26rem) {
+    .lr-quick-bar {
+      display: none;
+    }
+    body:has(.lr-quick-bar) {
+      padding-bottom: 0;
+    }
+  }
 }
 
 @keyframes lr-appear {
@@ -734,6 +849,7 @@
   :root:not([data-theme="light"]) img[src$="linkrights-logo.png"] {
     filter: saturate(0.92) brightness(0.96);
   }
+
 }
 :root[data-theme="dark"] .bg-white {
   background-color: var(--color-surface);

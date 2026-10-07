@@ -7,6 +7,7 @@ import '../globals.css';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { HideOnWelcome } from '@/components/HideOnWelcome';
+import { QuickMenu } from '@/components/QuickMenu';
 import { PREFERENCES_INIT_SCRIPT } from '@/components/view-preferences';
 import { getSite, resolveOrganizations } from '@/lib/content';
 import { LOCALES, getMessages, htmlLang, pick, toLocale } from '@/lib/i18n';
@@ -126,6 +127,8 @@ export default async function LocaleLayout({
         <HideOnWelcome>
           <Footer locale={locale} />
         </HideOnWelcome>
+        {/* 어느 화면에서나 도움받을 곳·프로그램·AI·커뮤니티로 바로 갈 수 있는 빠른 이동 메뉴 */}
+        <QuickMenu locale={locale} />
         <Analytics />
         <script
           type="application/ld+json"
