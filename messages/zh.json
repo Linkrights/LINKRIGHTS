@@ -232,7 +232,8 @@
     "emergencyBody": "不要等待，请立即拨打电话。",
     "emergencyMore": "查看全部紧急联系方式",
     "sectionTitle": "如果需要帮助",
-    "sectionSubtitle": "查找附近地区的机构。如果打电话有困难，我们也会告诉你先说什么。"
+    "sectionSubtitle": "查找附近地区的机构。如果打电话有困难，我们也会告诉你先说什么。",
+    "mapLabel": "按市·道显示的可求助机构。点击地区即可查看该地区的机构列表。"
   },
   "materialRequest": {
     "title": "没有需要的资料吗？",

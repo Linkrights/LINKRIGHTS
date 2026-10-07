@@ -232,7 +232,8 @@
     "emergencyBody": "Đừng chờ đợi. Hãy gọi ngay.",
     "emergencyMore": "Xem tất cả số khẩn cấp",
     "sectionTitle": "Nếu bạn cần giúp đỡ",
-    "sectionSubtitle": "Tìm nơi hỗ trợ gần bạn. Nếu ngại gọi điện, chúng tôi cũng gợi ý câu mở đầu."
+    "sectionSubtitle": "Tìm nơi hỗ trợ gần bạn. Nếu ngại gọi điện, chúng tôi cũng gợi ý câu mở đầu.",
+    "mapLabel": "Nơi hỗ trợ theo tỉnh/thành. Chọn một vùng để xem danh sách của vùng đó."
   },
   "materialRequest": {
     "title": "Không có thông tin bạn cần?",

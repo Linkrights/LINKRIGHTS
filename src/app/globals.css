@@ -771,6 +771,89 @@
     background: color-mix(in srgb, currentColor 18%, transparent);
   }
 
+
+  /* ---------- 구간별 바탕색 ----------
+     흰 바탕만 이어지면 어디서 이야기가 바뀌는지 알기 어려워, 구역마다 아주 연한 색을 깔아 구분합니다.
+     글자 대비는 그대로 두고 바탕만 바꿉니다. */
+  .lr-band-tint {
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--color-brand-50) 85%, transparent), transparent 60%),
+      color-mix(in srgb, var(--color-brand-50) 55%, var(--color-surface));
+  }
+  .lr-band-warm {
+    background: color-mix(in srgb, var(--color-warm-100) 55%, var(--color-surface));
+  }
+  .lr-band-mint {
+    background: color-mix(in srgb, #e6f6ef 55%, var(--color-surface));
+  }
+  :root:not([data-theme="light"]) .lr-band-warm,
+  :root[data-theme="dark"] .lr-band-warm,
+  :root:not([data-theme="light"]) .lr-band-mint,
+  :root[data-theme="dark"] .lr-band-mint {
+    background: color-mix(in srgb, var(--color-brand-50) 45%, var(--color-surface));
+  }
+
+  /* ---------- 지역 그림 (art/RegionMap.tsx) ---------- */
+  .lr-map-pin {
+    cursor: pointer;
+  }
+  .lr-map-halo {
+    fill: var(--color-brand-200);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+  .lr-map-dot {
+    fill: var(--color-brand-600);
+    transition: r 0.15s ease;
+  }
+  .lr-map-label {
+    font-size: 11px;
+    font-weight: 700;
+    fill: var(--color-ink-700);
+    paint-order: stroke;
+    stroke: var(--color-surface);
+    stroke-width: 3px;
+    stroke-linejoin: round;
+  }
+  .lr-map-pin:hover .lr-map-halo,
+  a:focus-visible .lr-map-halo {
+    opacity: 0.55;
+  }
+  .lr-map-pin:hover .lr-map-dot,
+  a:focus-visible .lr-map-dot {
+    fill: var(--color-brand-700);
+  }
+
+  /* ---------- 빠른 이동 메뉴: 칸마다 다른 색 ----------
+     네 가지가 서로 다른 일이라는 것을 색으로 먼저 알 수 있게 합니다. */
+  .lr-quick-dot[data-key="organizations"] { color: #16667a; background: #e3f4f7; border-color: #bfe3ea; }
+  .lr-quick-dot[data-key="programs"] { color: #9a5b12; background: #fff3e0; border-color: #f3dcb6; }
+  .lr-quick-dot[data-key="ask"] { color: #41479b; background: #eef0fb; border-color: #cdd3f2; }
+  .lr-quick-dot[data-key="community"] { color: #15704c; background: #e6f6ef; border-color: #c2e6d6; }
+  .lr-quick-dot[data-key]:hover,
+  .lr-quick-dot[data-key]:focus-visible,
+  .lr-quick-dot[data-key].is-active {
+    color: #fff;
+    border-color: transparent;
+  }
+  .lr-quick-dot[data-key="organizations"]:hover,
+  .lr-quick-dot[data-key="organizations"]:focus-visible,
+  .lr-quick-dot[data-key="organizations"].is-active { background: #16667a; }
+  .lr-quick-dot[data-key="programs"]:hover,
+  .lr-quick-dot[data-key="programs"]:focus-visible,
+  .lr-quick-dot[data-key="programs"].is-active { background: #9a5b12; }
+  .lr-quick-dot[data-key="ask"]:hover,
+  .lr-quick-dot[data-key="ask"]:focus-visible,
+  .lr-quick-dot[data-key="ask"].is-active { background: #41479b; }
+  .lr-quick-dot[data-key="community"]:hover,
+  .lr-quick-dot[data-key="community"]:focus-visible,
+  .lr-quick-dot[data-key="community"].is-active { background: #15704c; }
+  /* 휴대폰 아래쪽 띠도 같은 색으로 */
+  .lr-quick-bar-item[data-key="organizations"] { color: #16667a; }
+  .lr-quick-bar-item[data-key="programs"] { color: #9a5b12; }
+  .lr-quick-bar-item[data-key="ask"] { color: #41479b; }
+  .lr-quick-bar-item[data-key="community"] { color: #15704c; }
+
 }
 
 @keyframes lr-appear {

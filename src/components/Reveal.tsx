@@ -42,3 +42,27 @@ export function Reveal({
     </LazyMotion>
   );
 }
+
+/**
+ * 구역(section) 하나를 통째로 "스크롤해서 보일 때" 살짝 떠오르며 나타나게 합니다.
+ * Reveal 은 목록 칸(li)용이라, 제목·설명까지 함께 감싸야 할 때 이것을 씁니다.
+ * 한 번 나타난 뒤에는 다시 움직이지 않고, "동작 줄이기"를 켠 분께는 그대로 보여줍니다.
+ */
+export function RevealBlock({ children, className }: { children: ReactNode; className?: string }) {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <LazyMotion features={loadFeatures} strict>
+      <m.div
+        data-reveal=""
+        className={className}
+        initial={{ opacity: 0, y: 28 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.12, margin: '0px 0px -10% 0px' }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.55, ease: 'easeOut' }}
+      >
+        {children}
+      </m.div>
+    </LazyMotion>
+  );
+}

@@ -22,7 +22,8 @@ import { AskBox } from '@/components/AskBox';
 import { HomeHelpFinder } from '@/components/HomeHelpFinder';
 import { HomeTop } from '@/components/HomeTop';
 import { Icon, type IconName } from '@/components/Icon';
-import { Reveal } from '@/components/Reveal';
+import { RegionMap } from '@/components/art/RegionMap';
+import { Reveal, RevealBlock } from '@/components/Reveal';
 import { RightsSearchForm } from '@/components/RightsSearchForm';
 import { Section } from '@/components/Section';
 import { Testimonials } from '@/components/Testimonials';
@@ -45,7 +46,7 @@ import {
   resolveOrganizations,
 } from '@/lib/content';
 import { LOCALES, formatDate, getMessages, pick, toLocale } from '@/lib/i18n';
-import { REGIONS } from '@/lib/regions';
+import { REGIONS, organizationArea, servesRegion } from '@/lib/regions';
 import { searchSuggestions } from '@/lib/search';
 import impact from '../../../content/impact.json';
 
@@ -114,6 +115,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     askedQuestions.push({ question: situation, href: `/${locale}/rights/${article.category}/${article.id}` });
   }
 
+  // 시·도별로 등록된 기관이 몇 곳인지 (지역 그림에서 누를 수 있는 곳을 가리는 데 씁니다)
+  const regionCounts: Record<string, number> = {};
+  for (const region of REGIONS) {
+    regionCounts[region.key] = getOrganizations().filter(
+      (org) => !org.emergency && servesRegion(organizationArea(org), region.key) && !organizationArea(org).nationwide,
+    ).length;
+  }
+
   // 지금 등록된 자료 수: 모두 등록된 자료를 그대로 센 값입니다. (임의의 숫자를 넣지 않습니다)
   const stats: { key: string; label: string; value: number; unit: string; note?: string }[] = [
     { key: 'articles', label: t.home.impactArticles, value: getArticles().length, unit: t.home.impactArticlesUnit },
@@ -175,7 +184,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </div>
 
       {/* 2. 무엇이 궁금하세요?: 분야 6개를 색 타일 카드로 ---------------- */}
-      <Section id="home-start" title={t.homeFind.categoryTitle} subtitle={t.homeFind.categorySubtitle}>
+      <RevealBlock>
+      <Section id="home-start" tone="soft" title={t.homeFind.categoryTitle} subtitle={t.homeFind.categorySubtitle}>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {categories
             .filter((category) => category.kind !== 'directory')
@@ -206,11 +216,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             ))}
         </ul>
       </Section>
+      </RevealBlock>
 
       {/* 3. 이런 질문도 찾아볼 수 있어요 --------------------------------
           등록된 권리정보에 실제로 적힌 "이런 상황인가요?" 문장만 씁니다. 누르면 그 글로 갑니다. */}
+      <RevealBlock>
       <Section
-        tone="soft"
+        tone="tint"
         title={t.homeFind.askedTitle}
         subtitle={t.homeFind.askedSubtitle}
         action={viewAll(`/${locale}/rights`)}
@@ -234,10 +246,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           ))}
         </ul>
       </Section>
+      </RevealBlock>
 
       {/* 4. 내 상황을 체크해보기 --------------------------------------- */}
+      <RevealBlock>
       {homeChecklists.length > 0 && (
         <Section
+          tone="soft"
           title={t.checklist.homeTitle}
           subtitle={t.checklist.homeSubtitle}
           action={viewAll(`/${locale}/checklists`)}
@@ -268,10 +283,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </ul>
         </Section>
       )}
+      </RevealBlock>
 
       {/* 5. 도움이 필요하다면: 지역으로 찾기 · 내 주변 · 긴급 ------------- */}
-      <Section tone="soft" id="home-help" title={t.homeHelp.sectionTitle} subtitle={t.homeHelp.sectionSubtitle}>
-        <HomeHelpFinder
+      <RevealBlock>
+      <Section tone="mint" id="home-help" title={t.homeHelp.sectionTitle} subtitle={t.homeHelp.sectionSubtitle}>
+        <div className="grid items-start gap-8 lg:grid-cols-[1fr_auto] lg:gap-12">
+          <HomeHelpFinder
           locale={locale}
           regions={REGIONS.map((region) => ({ key: region.key, label: pick(region.name, locale) }))}
           counts={orgCounts}
@@ -290,12 +308,19 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             call: t.nav.emergencyCall,
           }}
           nearby={t.nearby}
-        />
+          />
+          {/* 지역 그림: 점 자리는 등록된 시·도 좌표를 그대로 옮긴 것이라 서로의 위치 관계가 실제와 같습니다. */}
+          <div className="justify-self-center lg:justify-self-end">
+            <RegionMap locale={locale} counts={regionCounts} label={t.homeHelp.mapLabel} />
+          </div>
+        </div>
       </Section>
+      </RevealBlock>
 
       {/* 6. 잘 모르겠다면, 직접 물어보세요 (AI) --------------------------
           첫 화면에 이미 질문 칸이 있으므로 여기에는 "무엇을 해주는지"와 버튼만 둡니다. */}
-      <Section>
+      <RevealBlock>
+      <Section tone="warm">
         <div className="grid gap-8 rounded-[var(--radius-card)] border border-[var(--color-line)] bg-white p-6 sm:p-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12">
           <div className="min-w-0">
             <p className="flex items-center gap-2 text-[15px] font-bold text-brand-700">
@@ -319,6 +344,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </ul>
         </div>
       </Section>
+      </RevealBlock>
 
       {/* 3. LINKRIGHTS 소개: 누가 만들고 운영하는 곳인지 한눈에. (자세한 이야기는 소개 페이지에서) ------ */}
       <section id="home-intro" className="scroll-mt-20 border-b border-[var(--color-line)] bg-white">

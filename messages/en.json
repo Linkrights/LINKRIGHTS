@@ -232,7 +232,8 @@
     "emergencyBody": "Don't wait. Call right away.",
     "emergencyMore": "See all emergency contacts",
     "sectionTitle": "If you need help",
-    "sectionSubtitle": "Find places near you. If calling feels hard, we also show what to say first."
+    "sectionSubtitle": "Find places near you. If calling feels hard, we also show what to say first.",
+    "mapLabel": "Places that help, by province. Choose a province to see its list."
   },
   "materialRequest": {
     "title": "Missing something?",

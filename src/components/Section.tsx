@@ -17,11 +17,25 @@ export function Section({
   eyebrow?: string;
   action?: ReactNode;
   children: ReactNode;
-  tone?: 'default' | 'soft';
+  /** 바탕색: default 회색빛 · soft 흰색 · tint 연한 파랑 · warm 연한 노랑 · mint 연한 초록 */
+  tone?: 'default' | 'soft' | 'tint' | 'warm' | 'mint';
   id?: string;
 }) {
+  // 구역마다 바탕색을 조금씩 달리해, 스크롤할 때 "여기부터 다른 이야기"가 눈에 보이게 합니다.
+  // (흰 바탕만 이어지면 어디서 끊기는지 알기 어렵습니다)
+  const toneClass =
+    tone === 'soft'
+      ? 'bg-white'
+      : tone === 'tint'
+        ? 'lr-band-tint'
+        : tone === 'warm'
+          ? 'lr-band-warm'
+          : tone === 'mint'
+            ? 'lr-band-mint'
+            : '';
+
   return (
-    <section id={id} className={tone === 'soft' ? 'bg-white' : ''}>
+    <section id={id} className={toneClass}>
       <div className="lr-container lr-section">
         {(title || action) && (
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4 sm:mb-10">

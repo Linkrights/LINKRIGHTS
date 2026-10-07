@@ -232,7 +232,8 @@
     "emergencyBody": "기다리지 말고 바로 전화하세요.",
     "emergencyMore": "긴급 연락처 모두 보기",
     "sectionTitle": "도움이 필요하다면",
-    "sectionSubtitle": "가까운 지역의 기관을 찾아보세요. 전화가 어렵다면 무슨 말부터 할지도 알려드려요."
+    "sectionSubtitle": "가까운 지역의 기관을 찾아보세요. 전화가 어렵다면 무슨 말부터 할지도 알려드려요.",
+    "mapLabel": "시·도별 도움받을 수 있는 곳. 지역을 누르면 그 지역 기관 목록으로 갑니다."
   },
   "materialRequest": {
     "title": "필요한 자료가 없나요?",

@@ -8,6 +8,7 @@
 
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { PeopleArt } from './art/PeopleArt';
 import { Icon } from './Icon';
 
 export function HomeTop({
@@ -71,17 +72,9 @@ export function HomeTop({
             </div>
           </div>
 
-          {/* 오른쪽 그림: 글을 읽지 않아도 "무엇을 하는 곳인지" 느낌이 오도록 (장식이라 화면낭독기에서는 읽지 않습니다) */}
-          <div aria-hidden="true" className="hidden lg:block">
-            <div className="relative mx-auto aspect-[4/3] w-full max-w-md">
-              <span className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-brand-100 via-white to-brand-50" />
-              <span className="absolute left-[8%] top-[12%] h-24 w-24 rounded-full bg-brand-200/70 blur-[2px]" />
-              <span className="absolute right-[12%] top-[22%] h-16 w-16 rounded-full bg-[var(--color-sun-400)]/50" />
-              <span className="absolute bottom-[14%] left-[22%] h-20 w-20 rounded-3xl bg-brand-300/40" />
-              <span className="absolute inset-0 grid place-items-center">
-                <Icon name="lifebuoy" size={88} className="text-brand-600/85" />
-              </span>
-            </div>
+          {/* 오른쪽 그림: 글을 읽지 않아도 "누구를 위한 곳인지" 느낌이 오도록 (장식이라 화면낭독기에서는 읽지 않습니다) */}
+          <div className="hidden lg:block">
+            <PeopleArt className="mx-auto h-auto w-full max-w-md" />
           </div>
         </div>
       </div>

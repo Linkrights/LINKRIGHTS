@@ -119,7 +119,12 @@ export function QuickMenu({ locale }: { locale: Locale }) {
           const active = pathname.startsWith(item.href);
           return (
             <li key={item.key}>
-              <Link href={item.href} aria-current={active ? 'page' : undefined} className="lr-quick-bar-item">
+              <Link
+                href={item.href}
+                data-key={item.key}
+                aria-current={active ? 'page' : undefined}
+                className="lr-quick-bar-item"
+              >
                 <Icon name={item.icon} size={22} />
                 <span>{item.label}</span>
               </Link>
@@ -142,6 +147,7 @@ export function QuickMenu({ locale }: { locale: Locale }) {
                 <li key={item.key}>
                   <Link
                     href={item.href}
+                    data-key={item.key}
                     aria-current={active ? 'page' : undefined}
                     className={`lr-quick-dot group ${active ? 'is-active' : ''}`}
                   >
