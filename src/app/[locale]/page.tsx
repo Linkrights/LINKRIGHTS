@@ -41,6 +41,7 @@ import {
   getSite,
   getTestimonials,
   lastReviewedAt,
+  resolveArticle,
   resolveOrganizations,
 } from '@/lib/content';
 import { LOCALES, formatDate, getMessages, pick, toLocale } from '@/lib/i18n';
@@ -100,6 +101,19 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const nationwideCount = getNationwideOrganizations().length;
   const orgCounts = { nationwide: nationwideCount, local: getOrganizations().length - nationwideCount };
 
+  // 많이 찾는 질문: 등록된 권리정보의 "이런 상황인가요?" 문장을 그대로 씁니다.
+  // 지어낸 질문이 아니라 각 글에 적힌 문장이라, 누르면 그 글로 바로 이어집니다.
+  // 분야가 겹치지 않게 한 분야에서 하나씩, featured 글을 먼저 고릅니다.
+  const askedQuestions: { question: string; href: string }[] = [];
+  const usedCategories = new Set<string>();
+  for (const article of [...getArticles()].sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)))) {
+    if (askedQuestions.length >= 5 || usedCategories.has(article.category)) continue;
+    const situation = resolveArticle(article, locale).body.situations[0];
+    if (!situation) continue;
+    usedCategories.add(article.category);
+    askedQuestions.push({ question: situation, href: `/${locale}/rights/${article.category}/${article.id}` });
+  }
+
   // 지금 등록된 자료 수: 모두 등록된 자료를 그대로 센 값입니다. (임의의 숫자를 넣지 않습니다)
   const stats: { key: string; label: string; value: number; unit: string; note?: string }[] = [
     { key: 'articles', label: t.home.impactArticles, value: getArticles().length, unit: t.home.impactArticlesUnit },
@@ -154,7 +168,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           play: t.heroVideo.play,
           pause: t.heroVideo.pause,
         }}
-      />
+      >
+        {/* 첫 화면에서 바로 물어볼 수 있게 질문 칸을 올렸습니다. (아래 "무엇이 궁금한가요?"에는 낱말 검색만 둡니다) */}
+        <AskBox locale={locale} examples={examples} />
+      </HomeHero>
 
       {/* 1-1. 시범 운영 안내 ------------------------------------------
           아직 고쳐 나가는 중이라는 것을 첫 화면에서 먼저 알립니다. (의견을 보내는 곳으로 이어 줍니다) */}
@@ -182,7 +199,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             <h3 className={stepTitle}>
               <span className={stepNumber}>1</span> {t.homeFind.flow[0]}
             </h3>
-            <div className="mt-4 grid gap-4 lg:grid-cols-2">
+            {/* AI 질문 칸은 첫 화면으로 올렸습니다. 여기에는 "이미 아는 낱말로 찾기"만 둡니다. */}
+            <div className="mt-4 grid gap-4 lg:grid-cols-[1.2fr_1fr]">
               <div className="lr-card p-5 sm:p-6">
                 <RightsSearchForm
                   locale={locale}
@@ -193,19 +211,30 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                   showAskLink={false}
                 />
               </div>
-              {/* AI 입력칸은 이 한 곳에만 둡니다. 예전에는 아래에 같은 칸이 하나 더 있었는데,
-                  첫 화면에서 같은 것을 두 번 묻는 셈이라 여기 1단계로 합쳤습니다. */}
+
+              {/* 많이 찾는 질문: 등록된 권리정보에 실제로 적힌 "이런 상황인가요?" 문장만 씁니다.
+                  누르면 그 문장이 적힌 권리정보로 바로 갑니다. (없는 주소를 만들지 않습니다) */}
               <div className="lr-card flex flex-col p-5 sm:p-6">
                 <p className="flex items-center gap-2 text-lg font-extrabold tracking-tight text-ink-900">
-                  <Icon name="sparkles" size={20} className="shrink-0 text-brand-600" /> {t.homeFind.askTitle}
+                  <Icon name="search" size={20} className="shrink-0 text-brand-600" /> {t.homeFind.askedTitle}
                 </p>
-                {/* 무엇을 적는 칸인지는 아래 입력칸의 안내에 한 번만 적습니다. (같은 말을 두 번 읽지 않게) */}
-                <div className="mt-4">
-                  <AskBox locale={locale} examples={examples} />
-                </div>
-                <p className="mt-3 flex items-start gap-2 text-[13px] leading-relaxed text-ink-500">
-                  <Icon name="shield" size={15} className="mt-0.5 shrink-0 text-brand-600" /> <span>{t.homeAsk.trust}</span>
-                </p>
+                <ul className="mt-3 space-y-1.5">
+                  {askedQuestions.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className="group flex items-start gap-2 rounded-[var(--radius-control)] px-2 py-2 text-[15px] leading-snug text-ink-900 transition-colors hover:bg-brand-50"
+                      >
+                        <Icon
+                          name="arrow-right"
+                          size={16}
+                          className="mt-1 shrink-0 text-ink-300 transition-transform group-hover:translate-x-0.5 group-hover:text-brand-600"
+                        />
+                        <span className="min-w-0">{item.question}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
@@ -278,6 +307,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                   emergencyMore: t.homeHelp.emergencyMore,
                   call: t.nav.emergencyCall,
                 }}
+                nearby={t.nearby}
               />
             </div>
           </div>

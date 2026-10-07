@@ -5,6 +5,7 @@
 
 import Link from 'next/link';
 import { Icon } from './Icon';
+import { NearbyRegion, type NearbyLabels } from './NearbyRegion';
 import { NATIONWIDE } from '@/lib/regions';
 
 export function HomeHelpFinder({
@@ -13,7 +14,10 @@ export function HomeHelpFinder({
   counts,
   contacts,
   labels,
+  nearby,
 }: {
+  /** "내 주변 기관 찾기" 문구 */
+  nearby: NearbyLabels;
   locale: string;
   regions: { key: string; label: string }[];
   counts: { nationwide: number; local: number };
@@ -76,6 +80,12 @@ export function HomeHelpFinder({
         <p className="mt-3 text-sm text-ink-500">
           {labels.count.replace('{nationwide}', String(counts.nationwide)).replace('{local}', String(counts.local))}
         </p>
+        {/* 눌렀을 때에만 위치를 묻습니다. 허락하지 않아도 위의 지역 고르기로 그대로 쓸 수 있습니다. */}
+        <NearbyRegion
+          locale={locale}
+          labels={nearby}
+          regionNames={Object.fromEntries(regions.map((region) => [region.key, region.label]))}
+        />
       </div>
 
       {/* 긴급: 일반 상담과 구분해 바로 전화 */}

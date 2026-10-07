@@ -10,7 +10,7 @@
 // - 5초 넘게 움직이는 화면은 멈출 수 있어야 하므로(접근성) 작은 멈춤 버튼만 둡니다. 화면에서 벗어나면 잠시 멈춥니다.
 
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Icon } from './Icon';
 
 export interface HomeHeroLabels {
@@ -61,11 +61,14 @@ export function HomeHero({
   contacts,
   sources,
   poster,
+  children,
 }: {
   labels: HomeHeroLabels;
   rightsHref: string;
   askHref: string;
   emergencyHref: string;
+  /** 첫 화면에서 바로 물어볼 수 있는 칸 (AskBox). 없으면 예전처럼 버튼 두 개만 보여줍니다. */
+  children?: ReactNode;
   /** 등록된 긴급 기관 (112·119) */
   contacts: { id: string; name: string; phone: string }[];
   /** 영상 파일이 없으면 비워 두며, 이때는 대표 이미지 또는 네이비 배경만 보여줍니다. */
@@ -196,16 +199,27 @@ export function HomeHero({
           {labels.title}
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/90 sm:text-xl">{labels.subtitle}</p>
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <Link href={rightsHref} className="lr-btn lr-btn-onmedia lr-btn-lg lr-press">
+
+        {/* 첫 화면에서 바로 물어볼 수 있는 칸입니다. (아래로 내려가지 않아도 시작할 수 있게)
+            설명을 더 읽고 싶은 사람을 위해 권리정보로 가는 링크를 옆에 둡니다. */}
+        {children && (
+          <div className="mt-7 w-full max-w-2xl rounded-[var(--radius-card)] bg-white p-4 shadow-[0_18px_40px_rgba(7,15,34,0.35)] sm:p-5">
+            {children}
+          </div>
+        )}
+
+        <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
+          <Link href={rightsHref} className={children ? 'lr-btn lr-btn-onmedia lr-press' : 'lr-btn lr-btn-onmedia lr-btn-lg lr-press'}>
             {labels.ctaRights} <Icon name="arrow-right" size={18} />
           </Link>
-          <Link
-            href={askHref}
-            className="lr-btn lr-btn-lg lr-press border border-white/70 bg-[rgba(7,15,34,0.25)] text-white hover:bg-white/10"
-          >
-            {labels.ctaAsk}
-          </Link>
+          {!children && (
+            <Link
+              href={askHref}
+              className="lr-btn lr-btn-lg lr-press border border-white/70 bg-[rgba(7,15,34,0.25)] text-white hover:bg-white/10"
+            >
+              {labels.ctaAsk}
+            </Link>
+          )}
         </div>
       </div>
 

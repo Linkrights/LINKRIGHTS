@@ -48,7 +48,7 @@
   },
   "home": {
     "heroTitle": "Know what your rights are,\nand where to ask about them.",
-    "heroSubtitle": "School, work, health, staying in Korea: we put the things that are hard to work out alone into plain words, and connect you to places that can actually help.",
+    "heroSubtitle": "Write what you are wondering about — school, work, health, visa or daily life. We will lay out your rights and what you can do now.",
     "ctaAsk": "Tell the AI about my situation",
     "ctaRights": "Find rights information",
     "askPlaceholder": "e.g. I worked part-time but I still haven't been paid.",
@@ -216,7 +216,8 @@
       "Understand your situation",
       "Check your rights",
       "Find help if you need it"
-    ]
+    ],
+    "askedTitle": "Questions people ask"
   },
   "homeHelp": {
     "title": "If it's hard to handle alone",
@@ -493,8 +494,8 @@
     "requestSubject": "[Checklist suggestion] {title}",
     "emergencyLink": "See emergency help",
     "relatedTitle": "Checklists to use with this information",
-    "homeTitle": "Check it off: checklists for your situation",
-    "homeSubtitle": "Before starting a part-time job or extending your visa, tick off what to check one by one."
+    "homeTitle": "Check your own situation",
+    "homeSubtitle": "Before you start a job or extend your visa, tick off what you need one by one."
   },
   "homeAsk": {
     "subtitle": "We'll help you find which rights may apply and what to check right now.",
@@ -785,6 +786,10 @@
         "body": "Do not enter your name, contact details, address, passport number, alien registration number, visa number or medical records. Describing the situation is enough. We check for such details before sending and warn you, but we cannot catch every case."
       },
       {
+        "title": "Finding help near you and location data",
+        "body": "Your browser asks for your location only when you press the \"Find help near me\" button. Simply opening the page never asks. The coordinates are used only inside the browser you are looking at, and only to work out which of Korea's 17 provinces is closest. They are never sent to the LINKRIGHTS server, never stored and never given to anyone else; they disappear when you close the page. We do not show distances such as \"1.2 km\" either. If you do not allow location, you can pick an area yourself and use the same feature, and you can withdraw the permission at any time in your browser settings."
+      },
+      {
         "title": "One cookie for language, visits counted anonymously",
         "body": "This site carries no advertising and uses no tracking cookies. The only cookie is the one that remembers the language you chose (lr-locale); it is used only to show the site in that language next time and never identifies you. One more cookie exists for the team when they log in to the admin screen; it is never created on the pages you see. To see how many people use which pages, we use a visit-counting tool (Vercel Web Analytics). It sets no cookies and discards the temporary marker it builds from the incoming request after 24 hours. What remains is the page address, how you arrived, a rough country or city level location, and the device and browser type — it cannot tell who you are. Search words and the area you pick appear only in the address bar and are not stored on the server. If you sign in to the community, one cookie (lr-community) keeps you signed in and is removed when you sign out. It holds only our own member number, not your nickname or name."
       },
@@ -914,5 +919,14 @@
     "community": "Community",
     "hide": "Hide",
     "show": "Show"
+  },
+  "nearby": {
+    "find": "Find help near me",
+    "finding": "Checking your location",
+    "confirm": "Are you in {region} right now?",
+    "go": "See places in {region}",
+    "pick": "No, let me choose",
+    "denied": "We cannot use your location. Please choose an area above.",
+    "note": "We check your location only when you press this, and only to tell which province you are in. It is never stored or sent."
   }
 }

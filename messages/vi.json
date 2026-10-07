@@ -48,7 +48,7 @@
   },
   "home": {
     "heroTitle": "Biết mình có quyền gì,\nvà có thể hỏi ở đâu.",
-    "heroSubtitle": "Trường học, việc làm, sức khỏe, cư trú — những điều khó tự tìm hiểu một mình được viết lại bằng lời dễ hiểu, và nối bạn tới nơi thật sự có thể giúp.",
+    "heroSubtitle": "Hãy viết điều bạn thắc mắc về trường học, việc làm, sức khỏe, cư trú hay cuộc sống. Chúng tôi sẽ sắp xếp quyền liên quan và việc bạn có thể làm ngay.",
     "ctaAsk": "Kể tình huống của tôi cho AI",
     "ctaRights": "Tìm thông tin quyền",
     "askPlaceholder": "Ví dụ: Tôi đã làm thêm nhưng vẫn chưa được trả lương.",
@@ -216,7 +216,8 @@
       "Tìm hiểu tình huống",
       "Kiểm tra quyền của mình",
       "Tìm nơi trợ giúp khi cần"
-    ]
+    ],
+    "askedTitle": "Câu hỏi thường gặp"
   },
   "homeHelp": {
     "title": "Nếu khó tự giải quyết",
@@ -493,8 +494,8 @@
     "requestSubject": "[Đề xuất danh sách] {title}",
     "emergencyLink": "Xem trợ giúp khẩn cấp",
     "relatedTitle": "Danh sách kiểm tra dùng cùng thông tin này",
-    "homeTitle": "Đánh dấu kiểm tra: danh sách theo tình huống",
-    "homeSubtitle": "Trước khi đi làm thêm hoặc gia hạn visa, hãy đánh dấu từng điều cần kiểm tra."
+    "homeTitle": "Kiểm tra tình huống của bạn",
+    "homeSubtitle": "Trước khi bắt đầu làm thêm hay gia hạn visa, hãy kiểm tra từng mục cần thiết."
   },
   "homeAsk": {
     "subtitle": "Chúng tôi sẽ cùng bạn tìm xem quyền nào có thể liên quan và bây giờ cần kiểm tra điều gì.",
@@ -785,6 +786,10 @@
         "body": "Đừng nhập tên, thông tin liên lạc, địa chỉ, số hộ chiếu, số đăng ký người nước ngoài, số visa hay hồ sơ bệnh án. Chỉ cần kể tình huống là đủ để được hướng dẫn. Trước khi gửi, nếu thấy những nội dung như vậy chúng tôi sẽ nhắc bạn một lần nữa, nhưng không thể phát hiện mọi trường hợp."
       },
       {
+        "title": "Tìm nơi giúp đỡ gần bạn và thông tin vị trí",
+        "body": "Trình duyệt chỉ hỏi vị trí khi bạn bấm nút “Tìm nơi giúp đỡ gần tôi”. Chỉ mở trang thì không bao giờ hỏi. Tọa độ nhận được chỉ dùng bên trong trình duyệt bạn đang xem, và chỉ để xác định bạn gần tỉnh/thành nào trong 17 tỉnh thành. Tọa độ không được gửi tới máy chủ LINKRIGHTS, không được lưu và không đưa cho bên nào khác; nó biến mất khi bạn đóng trang. Chúng tôi cũng không hiển thị khoảng cách kiểu “1,2 km”. Nếu bạn không cho phép vị trí, bạn vẫn tự chọn khu vực và dùng tính năng đó như thường, và có thể thu hồi quyền bất cứ lúc nào trong cài đặt trình duyệt."
+      },
+      {
         "title": "Chỉ một cookie ngôn ngữ, lượt truy cập đếm ẩn danh",
         "body": "Trang này không đăng quảng cáo và không dùng cookie theo dõi. Cookie duy nhất là cookie ghi nhớ ngôn ngữ bạn đã chọn (lr-locale), chỉ dùng để hiển thị trang bằng ngôn ngữ đó vào lần sau và không dùng để nhận diện bạn. Ngoài ra có một cookie chỉ dành cho nhóm vận hành khi đăng nhập màn hình quản trị; nó không bao giờ được tạo trên các trang bạn xem. Để biết có bao nhiêu người xem những trang nào, chúng tôi dùng công cụ đếm lượt truy cập (Vercel Web Analytics). Công cụ này không tạo cookie và sẽ hủy dấu tạm thời tạo từ yêu cầu truy cập sau 24 giờ. Chỉ còn lại địa chỉ trang đã xem, đường dẫn đến trang, khu vực ở mức quốc gia hoặc thành phố, loại thiết bị và trình duyệt; không thể biết ai đã xem. Từ khóa tìm kiếm và khu vực bạn chọn chỉ xuất hiện trên thanh địa chỉ và không được lưu trên máy chủ. Nếu bạn đăng nhập vào khu trò chuyện, một cookie (lr-community) sẽ giữ trạng thái đăng nhập và bị xóa khi bạn đăng xuất. Cookie đó chỉ chứa số thành viên nội bộ của chúng tôi, không chứa biệt danh hay tên."
       },
@@ -914,5 +919,14 @@
     "community": "Cộng đồng",
     "hide": "Thu gọn",
     "show": "Mở ra"
+  },
+  "nearby": {
+    "find": "Tìm nơi giúp đỡ gần tôi",
+    "finding": "Đang xác định vị trí",
+    "confirm": "Bạn đang ở {region} phải không?",
+    "go": "Xem các nơi ở {region}",
+    "pick": "Không, để tôi tự chọn",
+    "denied": "Không dùng được vị trí. Hãy chọn khu vực ở trên.",
+    "note": "Chỉ kiểm tra vị trí khi bạn bấm, và chỉ để biết bạn ở tỉnh/thành nào. Vị trí không được lưu hay gửi đi."
   }
 }

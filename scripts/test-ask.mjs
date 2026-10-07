@@ -1516,6 +1516,43 @@ function checkSocialLogin() {
   for (const key of KEYS) delete process.env[key];
 }
 
+
+// ---------------------------------------------------------------------------
+// 14. "내 주변 기관 찾기" — 위치로 시·도 고르기
+//     좌표는 브라우저 안에서만 쓰고, 가장 가까운 시·도 하나만 고릅니다. (거리는 보여주지 않습니다)
+// ---------------------------------------------------------------------------
+function checkNearestRegion() {
+  const runtime = createRuntime(async () => {
+    throw new Error('연결하지 않습니다.');
+  });
+  const regions = runtime.load('src/lib/regions.ts');
+  const near = (lat, lng) => {
+    const found = regions.nearestRegion(lat, lng);
+    return found ? found.key : '';
+  };
+
+  check('14-1 모든 시·도에 대표 좌표가 있다', regions.REGIONS.every((r) => r.center && typeof r.center.lat === 'number'), regions.REGIONS.filter((r) => !r.center).map((r) => r.key).join(', '));
+  check('14-2 서울 시청 → 서울', near(37.5665, 126.978) === '서울', near(37.5665, 126.978));
+  check('14-3 부산 → 부산', near(35.1796, 129.0756) === '부산', near(35.1796, 129.0756));
+  check('14-4 제주 → 제주', near(33.4996, 126.5312) === '제주', near(33.4996, 126.5312));
+  check('14-5 수원(경기) → 경기', near(37.2636, 127.0286) === '경기', near(37.2636, 127.0286));
+  check('14-6 광주 → 광주', near(35.1595, 126.8526) === '광주', near(35.1595, 126.8526));
+  check('14-7 대전 → 대전', near(36.3504, 127.3845) === '대전', near(36.3504, 127.3845));
+  check('14-8 강릉(강원) → 강원', near(37.7519, 128.8761) === '강원', near(37.7519, 128.8761));
+  check('14-9 바다 한가운데도 가장 가까운 시·도를 고른다', near(35.0, 125.0).length > 0, near(35.0, 125.0));
+
+  // 개인정보 처리방침에 위치 설명이 있는지 (기능과 방침이 어긋나지 않도록)
+  for (const locale of ['ko', 'en', 'zh', 'vi']) {
+    const messages = JSON.parse(fs.readFileSync(path.join(ROOT, 'messages', locale + '.json'), 'utf8'));
+    const text = messages.privacy.sections.map((s) => s.title + ' ' + s.body).join(' ');
+    check(`14-10 처리방침에 위치 설명이 있다 (${locale})`, /위치|location|位置|vị trí/i.test(text));
+  }
+  const ko = JSON.parse(fs.readFileSync(path.join(ROOT, 'messages', 'ko.json'), 'utf8'));
+  const locationSection = ko.privacy.sections.find((s) => s.title.includes('위치'));
+  check('14-11 눌렀을 때만 묻는다고 적혀 있다', Boolean(locationSection) && locationSection.body.includes('눌렀을 때에만'));
+  check('14-12 저장하지 않는다고 적혀 있다', Boolean(locationSection) && locationSection.body.includes('저장하지 않으며'));
+}
+
 if (LIVE) {
   await runLive();
 } else {
@@ -1524,6 +1561,7 @@ if (LIVE) {
   checkOrgKeywordSearch();
   checkCommunityRules();
   checkSocialLogin();
+  checkNearestRegion();
   checkWordingFeedback();
   console.log('\n질문별로 AI에게 전달되는 자료');
   for (const row of table) {

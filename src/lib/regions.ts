@@ -15,6 +15,37 @@ export interface RegionItem {
   /** organizations.json 의 region / regions 에 적는 값 (한국어 시·도 이름) */
   key: string;
   name: LocalizedText;
+  /**
+   * 시·도의 대표 좌표입니다. (시·도 청사 기준, 대략)
+   * "내 주변 기관 찾기"에서 브라우저가 알려준 위치와 비교해 가장 가까운 시·도를 고르는 데에만 씁니다.
+   * 좌표를 서버로 보내거나 저장하지 않고, 거리도 보여주지 않습니다.
+   */
+  center?: { lat: number; lng: number };
+}
+
+/**
+ * 어느 시·도에 가장 가까운지 고릅니다. (브라우저 안에서만 계산합니다)
+ *
+ * 시·도 청사 자리에서 가장 가까운 한 곳을 고르는 간단한 방법입니다.
+ * 서울을 둘러싼 경기 북부(고양·의정부 등)처럼 경계가 복잡한 곳은 옆 시·도가 나올 수 있습니다.
+ * 그래서 화면(NearbyRegion.tsx)에서 "여기 맞나요?" 하고 한 번 더 묻고, 직접 고를 수도 있게 합니다.
+ * 정확한 경계로 판단하려면 시·도 경계 자료가 필요한데, 그만한 정확도가 필요한 기능이 아닙니다.
+ */
+export function nearestRegion(lat: number, lng: number): RegionItem | null {
+  let best: RegionItem | null = null;
+  let bestScore = Number.POSITIVE_INFINITY;
+  for (const region of REGIONS) {
+    if (!region.center) continue;
+    // 위도 1도와 경도 1도의 실제 거리가 달라, 경도 쪽을 위도에 맞춰 줄입니다.
+    const dy = region.center.lat - lat;
+    const dx = (region.center.lng - lng) * Math.cos((lat * Math.PI) / 180);
+    const score = dy * dy + dx * dx;
+    if (score < bestScore) {
+      bestScore = score;
+      best = region;
+    }
+  }
+  return best;
 }
 
 export const REGIONS: RegionItem[] = (regionsFile as { regions: RegionItem[] }).regions;
