@@ -217,7 +217,10 @@
       "Kiểm tra quyền của mình",
       "Tìm nơi trợ giúp khi cần"
     ],
-    "askedTitle": "Câu hỏi thường gặp"
+    "askedTitle": "Câu hỏi thường gặp",
+    "categoryTitle": "Bạn đang thắc mắc điều gì?",
+    "categorySubtitle": "Hãy chọn lĩnh vực bạn cần ngay bây giờ.",
+    "askedSubtitle": "Những câu hỏi nhiều người tìm. Bấm vào để mở trang quyền liên quan."
   },
   "homeHelp": {
     "title": "Nếu khó tự giải quyết",
@@ -227,7 +230,9 @@
     "count": "Hiện đã đăng ký: {nationwide} toàn quốc · {local} địa phương",
     "emergencyTitle": "Nếu bạn đang gặp nguy hiểm",
     "emergencyBody": "Đừng chờ đợi. Hãy gọi ngay.",
-    "emergencyMore": "Xem tất cả số khẩn cấp"
+    "emergencyMore": "Xem tất cả số khẩn cấp",
+    "sectionTitle": "Nếu bạn cần giúp đỡ",
+    "sectionSubtitle": "Tìm nơi hỗ trợ gần bạn. Nếu ngại gọi điện, chúng tôi cũng gợi ý câu mở đầu."
   },
   "materialRequest": {
     "title": "Không có thông tin bạn cần?",
@@ -522,7 +527,8 @@
         "body": "Chỉ kết nối với cơ quan đã đăng ký."
       }
     ],
-    "trust": "Câu trả lời chỉ dựa trên tài liệu LINKRIGHTS đã kiểm tra và đăng ký, và không thay bạn đưa ra quyết định về pháp luật, visa hay y tế."
+    "trust": "Câu trả lời chỉ dựa trên tài liệu LINKRIGHTS đã kiểm tra và đăng ký, và không thay bạn đưa ra quyết định về pháp luật, visa hay y tế.",
+    "ctaTitle": "Chưa rõ? Cứ hỏi nhé"
   },
   "footerNav": {
     "aboutTitle": "Giới thiệu",
@@ -894,7 +900,7 @@
     "banned": "Hiện bạn chưa thể đăng bài. Hãy liên hệ chúng tôi qua email.",
     "error": "Chưa đăng được. Vui lòng thử lại sau.",
     "rateLimit": "Bạn vừa đăng nhiều lần. Hãy thử lại sau 5 phút.",
-    "disabled": "Khu trò chuyện đang được chuẩn bị và sẽ sớm mở.",
+    "disabled": "Khu cộng đồng chưa mở. Chúng tôi đang chuẩn bị.",
     "privacyTitle": "Có nội dung trông như thông tin cá nhân",
     "privacyRemove": "Xóa phần đó",
     "reportTitle": "Báo cáo bài này?",
@@ -918,7 +924,8 @@
     "ask": "Hỏi AI",
     "community": "Cộng đồng",
     "hide": "Thu gọn",
-    "show": "Mở ra"
+    "show": "Mở ra",
+    "move": "Kéo để di chuyển"
   },
   "nearby": {
     "find": "Tìm nơi giúp đỡ gần tôi",

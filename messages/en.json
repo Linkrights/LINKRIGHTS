@@ -217,7 +217,10 @@
       "Check your rights",
       "Find help if you need it"
     ],
-    "askedTitle": "Questions people ask"
+    "askedTitle": "Questions people ask",
+    "categoryTitle": "What do you need to know?",
+    "categorySubtitle": "Pick the area you need right now.",
+    "askedSubtitle": "Questions people look up often. Tap one to open the related rights page."
   },
   "homeHelp": {
     "title": "If it's hard to handle alone",
@@ -227,7 +230,9 @@
     "count": "Registered now: {nationwide} nationwide · {local} local",
     "emergencyTitle": "If you are in danger now",
     "emergencyBody": "Don't wait. Call right away.",
-    "emergencyMore": "See all emergency contacts"
+    "emergencyMore": "See all emergency contacts",
+    "sectionTitle": "If you need help",
+    "sectionSubtitle": "Find places near you. If calling feels hard, we also show what to say first."
   },
   "materialRequest": {
     "title": "Missing something?",
@@ -522,7 +527,8 @@
         "body": "Only registered organisations."
       }
     ],
-    "trust": "Answers are based only on information reviewed and registered by LINKRIGHTS, and never make legal, visa or medical decisions for you."
+    "trust": "Answers are based only on information reviewed and registered by LINKRIGHTS, and never make legal, visa or medical decisions for you.",
+    "ctaTitle": "Not sure? Just ask"
   },
   "footerNav": {
     "aboutTitle": "About",
@@ -918,7 +924,8 @@
     "ask": "Ask the AI",
     "community": "Community",
     "hide": "Hide",
-    "show": "Show"
+    "show": "Show",
+    "move": "Drag to move"
   },
   "nearby": {
     "find": "Find help near me",

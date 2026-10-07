@@ -217,7 +217,10 @@
       "确认我的权利",
       "需要时查找求助机构"
     ],
-    "askedTitle": "常见的提问"
+    "askedTitle": "常见的提问",
+    "categoryTitle": "你想了解什么？",
+    "categorySubtitle": "直接从分类中找到你现在需要的信息。",
+    "askedSubtitle": "大家常查的问题。点击即可打开相关的权利信息。"
   },
   "homeHelp": {
     "title": "如果难以独自解决",
@@ -227,7 +230,9 @@
     "count": "目前登记：全国 {nationwide} 处 · 地区 {local} 处",
     "emergencyTitle": "如果现在有危险",
     "emergencyBody": "不要等待，请立即拨打电话。",
-    "emergencyMore": "查看全部紧急联系方式"
+    "emergencyMore": "查看全部紧急联系方式",
+    "sectionTitle": "如果需要帮助",
+    "sectionSubtitle": "查找附近地区的机构。如果打电话有困难，我们也会告诉你先说什么。"
   },
   "materialRequest": {
     "title": "没有需要的资料吗？",
@@ -522,7 +527,8 @@
         "body": "只连接已登记的机构。"
       }
     ],
-    "trust": "只以 LINKRIGHTS 审核登记的资料为依据回答，不会代替你做出法律、签证或医疗方面的判断。"
+    "trust": "只以 LINKRIGHTS 审核登记的资料为依据回答，不会代替你做出法律、签证或医疗方面的判断。",
+    "ctaTitle": "不确定的话，直接提问吧"
   },
   "footerNav": {
     "aboutTitle": "关于",
@@ -894,7 +900,7 @@
     "banned": "目前无法发帖，请通过邮件联系我们。",
     "error": "没能发布，请稍后再试。",
     "rateLimit": "刚才发布多次，请5分钟后再试。",
-    "disabled": "交流区正在准备中，很快就会开放。",
+    "disabled": "交流区尚未开放，正在准备中。",
     "privacyTitle": "其中似乎有个人信息",
     "privacyRemove": "删除该部分",
     "reportTitle": "要举报这篇帖子吗？",
@@ -918,7 +924,8 @@
     "ask": "向AI提问",
     "community": "交流区",
     "hide": "收起",
-    "show": "展开"
+    "show": "展开",
+    "move": "拖动移动"
   },
   "nearby": {
     "find": "查找我附近的机构",

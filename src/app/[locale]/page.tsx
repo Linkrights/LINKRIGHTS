@@ -20,7 +20,7 @@ import Link from 'next/link';
 import { ArticleCard } from '@/components/ArticleCard';
 import { AskBox } from '@/components/AskBox';
 import { HomeHelpFinder } from '@/components/HomeHelpFinder';
-import { HomeHero } from '@/components/HomeHero';
+import { HomeTop } from '@/components/HomeTop';
 import { Icon, type IconName } from '@/components/Icon';
 import { Reveal } from '@/components/Reveal';
 import { RightsSearchForm } from '@/components/RightsSearchForm';
@@ -58,7 +58,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   // 홈에는 많이 찾는 권리정보 3개와 체크리스트 2개만 보여줍니다. (한 화면에 너무 많지 않게, 나머지는 각 목록에서)
   const featured = getFeaturedArticles(3);
   const checklists = getChecklists();
-  const homeChecklists = checklists.slice(0, 2);
+  const homeChecklists = checklists.slice(0, 4);
   const about = getAbout().i18n[locale] ?? getAbout().i18n.ko;
   const partners = getPartners();
   // 홈에는 content/faq.json 에서 featured 로 표시한 핵심 질문(최대 4개)만 보여주고, 나머지는 FAQ 페이지에서 봅니다.
@@ -144,34 +144,22 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <>
-      {/* 1. 첫 화면: 소개 영상 전체 + 핵심 메시지 -------------------- */}
-      <HomeHero
-        rightsHref={`/${locale}/rights`}
-        askHref={`/${locale}/ask`}
-        emergencyHref={`/${locale}/emergency`}
+      {/* 1. 첫 화면: 밝은 바탕 + 큰 질문 칸 --------------------------
+          소개 영상은 아래 "LINKRIGHTS가 만들어가는 더 나은 내일" 구역으로 옮겼습니다. */}
+      <HomeTop
+        locale={locale}
         contacts={heroContacts}
-        sources={
-          publicFile(heroVideo.desktop)
-            ? { desktop: heroVideo.desktop, mobile: publicFile(heroVideo.mobile) ? heroVideo.mobile : undefined }
-            : undefined
-        }
-        poster={publicFile(heroVideo.poster) ? heroVideo.poster : undefined}
         labels={{
           eyebrow: t.homeBrand.eyebrow,
           title: t.home.heroTitle,
           subtitle: t.home.heroSubtitle,
-          ctaRights: t.home.ctaRights,
-          ctaAsk: t.home.ctaAsk,
           emergency: t.home.emergencyBanner,
           call: t.nav.emergencyCall,
-          scrollDown: t.homeBrand.scrollDown,
-          play: t.heroVideo.play,
-          pause: t.heroVideo.pause,
+          rights: t.home.ctaRights,
         }}
       >
-        {/* 첫 화면에서 바로 물어볼 수 있게 질문 칸을 올렸습니다. (아래 "무엇이 궁금한가요?"에는 낱말 검색만 둡니다) */}
         <AskBox locale={locale} examples={examples} />
-      </HomeHero>
+      </HomeTop>
 
       {/* 1-1. 시범 운영 안내 ------------------------------------------
           아직 고쳐 나가는 중이라는 것을 첫 화면에서 먼저 알립니다. (의견을 보내는 곳으로 이어 줍니다) */}
@@ -186,133 +174,151 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </div>
 
-      {/* 2. 무엇이 궁금한가요?: LINKRIGHTS 흐름 그대로 세 단계 ----------------
-          ① 내 상황 알아보기(키워드 검색 / AI 질문) → ② 내 권리 확인하기(권리정보 / 체크리스트) → ③ 필요하면 도움받을 곳 찾기
-          검색과 AI 질문은 역할을 나눠 적습니다: 검색 = 이미 아는 낱말로 찾기, AI = 내 상황을 문장으로 설명하기 */}
-      <section id="home-start" className="scroll-mt-20 border-b border-[var(--color-line)] bg-white">
-        <div className="lr-container py-14 sm:py-20">
-          <h2 className="lr-h2">{t.homeFind.title}</h2>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-500 sm:text-[17px]">{t.homeFind.subtitle}</p>
-
-          {/* ① 내 상황 알아보기 */}
-          <div id="home-step-1" className="mt-8 scroll-mt-24">
-            <h3 className={stepTitle}>
-              <span className={stepNumber}>1</span> {t.homeFind.flow[0]}
-            </h3>
-            {/* AI 질문 칸은 첫 화면으로 올렸습니다. 여기에는 "이미 아는 낱말로 찾기"만 둡니다. */}
-            <div className="mt-4 grid gap-4 lg:grid-cols-[1.2fr_1fr]">
-              <div className="lr-card p-5 sm:p-6">
-                <RightsSearchForm
-                  locale={locale}
-                  suggestions={suggestions}
-                  bare
-                  title={t.homeFind.searchTitle}
-                  hint={t.homeFind.searchBody}
-                  showAskLink={false}
-                />
-              </div>
-
-              {/* 많이 찾는 질문: 등록된 권리정보에 실제로 적힌 "이런 상황인가요?" 문장만 씁니다.
-                  누르면 그 문장이 적힌 권리정보로 바로 갑니다. (없는 주소를 만들지 않습니다) */}
-              <div className="lr-card flex flex-col p-5 sm:p-6">
-                <p className="flex items-center gap-2 text-lg font-extrabold tracking-tight text-ink-900">
-                  <Icon name="search" size={20} className="shrink-0 text-brand-600" /> {t.homeFind.askedTitle}
-                </p>
-                <ul className="mt-3 space-y-1.5">
-                  {askedQuestions.map((item) => (
-                    <li key={item.href}>
-                      <Link
-                        href={item.href}
-                        className="group flex items-start gap-2 rounded-[var(--radius-control)] px-2 py-2 text-[15px] leading-snug text-ink-900 transition-colors hover:bg-brand-50"
-                      >
-                        <Icon
-                          name="arrow-right"
-                          size={16}
-                          className="mt-1 shrink-0 text-ink-300 transition-transform group-hover:translate-x-0.5 group-hover:text-brand-600"
-                        />
-                        <span className="min-w-0">{item.question}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* ② 내 권리 확인하기: 분야를 고르면 그 분야의 권리정보로 갑니다. (전체 목록·체크리스트는 아래 링크로) */}
-          <div id="home-step-2" className="mt-8 scroll-mt-24">
-            <h3 className={stepTitle}>
-              <span className={stepNumber}>2</span> {t.homeFind.flow[1]}
-            </h3>
-            {/* "도움받을 곳"은 아래 ③단계에서 지역으로 찾으므로 여기 목록에서는 뺍니다. */}
-            <ul className="mt-4 grid border-t border-[var(--color-line)] sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-3">
-              {categories
-                .filter((category) => category.kind !== 'directory')
-                .map((category) => (
-                <li key={category.id} className="border-b border-[var(--color-line)]">
-                  <Link
-                    href={`/${locale}/rights/${category.id}`}
-                    className="group flex items-center gap-4 py-4"
-                  >
-                    <Icon name={category.icon as IconName} size={22} className="shrink-0 text-brand-600" />
-                    <span className="min-w-0 flex-1">
-                      <span className="block font-bold text-ink-900 group-hover:text-brand-700">
-                        {pick(category.name, locale)}
-                      </span>{' '}
-                      <span className="mt-0.5 block text-sm leading-snug text-ink-500">{pick(category.tagline, locale)}</span>
-                    </span>
-                    <Icon
-                      name="arrow-right"
-                      size={18}
-                      className="shrink-0 text-ink-300 transition-transform group-hover:translate-x-1 group-hover:text-brand-600"
-                    />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
-              {checkPoints.map((item) => (
+      {/* 2. 무엇이 궁금하세요?: 분야 6개를 색 타일 카드로 ---------------- */}
+      <Section id="home-start" title={t.homeFind.categoryTitle} subtitle={t.homeFind.categorySubtitle}>
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {categories
+            .filter((category) => category.kind !== 'directory')
+            .map((category, index) => (
+              <Reveal key={category.id} index={index}>
                 <Link
-                  key={item.key}
-                  href={item.href}
-                  className="lr-link inline-flex items-center gap-1.5 text-[15px] font-semibold"
+                  href={`/${locale}/rights/${category.id}`}
+                  className="lr-card lr-card-hover group flex h-full items-start gap-4 p-5 sm:p-6"
                 >
-                  <Icon name={item.icon} size={16} /> {item.title}
+                  <span className={`lr-tile lr-tile-${category.id}`}>
+                    <Icon name={category.icon as IconName} size={24} />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[1.0625rem] font-extrabold leading-snug text-ink-900 group-hover:text-brand-700">
+                      {pick(category.name, locale)}
+                    </span>
+                    <span className="mt-1 block text-[15px] leading-snug text-ink-500">
+                      {pick(category.tagline, locale)}
+                    </span>
+                  </span>
+                  <Icon
+                    name="arrow-right"
+                    size={18}
+                    className="mt-1 shrink-0 text-ink-300 transition-transform group-hover:translate-x-1 group-hover:text-brand-600"
+                  />
                 </Link>
-              ))}
-            </div>
-          </div>
+              </Reveal>
+            ))}
+        </ul>
+      </Section>
 
-          {/* ③ 필요하면 도움받을 곳 찾기: 일반 상담(지역 선택)과 긴급 상황을 나눠서 */}
-          <div id="home-step-3" className="mt-8 scroll-mt-24">
-            <h3 className={stepTitle}>
-              <span className={stepNumber}>3</span> {t.homeFind.flow[2]}
-            </h3>
-            <div className="mt-4">
-              <HomeHelpFinder
-                locale={locale}
-                regions={REGIONS.map((region) => ({ key: region.key, label: pick(region.name, locale) }))}
-                counts={orgCounts}
-                contacts={heroContacts}
-                labels={{
-                  title: t.homeHelp.title,
-                  body: t.homeHelp.body,
-                  regionLabel: t.homeHelp.regionLabel,
-                  allRegions: t.orgFinder.allRegions,
-                  nationwideOnly: t.orgFinder.nationwideOnly,
-                  submit: t.homeHelp.submit,
-                  count: t.homeHelp.count,
-                  emergencyTitle: t.homeHelp.emergencyTitle,
-                  emergencyBody: t.homeHelp.emergencyBody,
-                  emergencyMore: t.homeHelp.emergencyMore,
-                  call: t.nav.emergencyCall,
-                }}
-                nearby={t.nearby}
-              />
-            </div>
+      {/* 3. 이런 질문도 찾아볼 수 있어요 --------------------------------
+          등록된 권리정보에 실제로 적힌 "이런 상황인가요?" 문장만 씁니다. 누르면 그 글로 갑니다. */}
+      <Section
+        tone="soft"
+        title={t.homeFind.askedTitle}
+        subtitle={t.homeFind.askedSubtitle}
+        action={viewAll(`/${locale}/rights`)}
+      >
+        <ul className="mx-auto grid max-w-4xl gap-2.5">
+          {askedQuestions.map((item) => (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                className="group flex items-center gap-3 rounded-[var(--radius-card)] border border-[var(--color-line)] bg-white px-4 py-4 transition-colors hover:border-brand-300 hover:bg-brand-50 sm:px-5"
+              >
+                <Icon name="search" size={18} className="shrink-0 text-brand-600" />
+                <span className="min-w-0 flex-1 text-[1.0625rem] leading-snug text-ink-900">{item.question}</span>
+                <Icon
+                  name="arrow-right"
+                  size={18}
+                  className="shrink-0 text-ink-300 transition-transform group-hover:translate-x-1 group-hover:text-brand-600"
+                />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* 4. 내 상황을 체크해보기 --------------------------------------- */}
+      {homeChecklists.length > 0 && (
+        <Section
+          title={t.checklist.homeTitle}
+          subtitle={t.checklist.homeSubtitle}
+          action={viewAll(`/${locale}/checklists`)}
+        >
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {homeChecklists.map((checklist, index) => {
+              const body = checklist.i18n[locale] ?? checklist.i18n.ko;
+              const category = getCategory(checklist.category);
+              return (
+                <Reveal key={checklist.id} index={index}>
+                  <Link
+                    href={`/${locale}/checklists/${checklist.id}`}
+                    className="lr-card lr-card-hover group flex h-full flex-col p-5 sm:p-6"
+                  >
+                    <span className={`lr-tile lr-tile-${checklist.category}`}>
+                      <Icon name={(category?.icon as IconName) ?? 'check'} size={24} />
+                    </span>
+                    <span className="mt-4 block text-[1.0625rem] font-extrabold leading-snug text-ink-900 group-hover:text-brand-700">
+                      {body.title}
+                    </span>
+                    {category && (
+                      <span className="mt-1 block text-[15px] text-ink-500">{pick(category.name, locale)}</span>
+                    )}
+                  </Link>
+                </Reveal>
+              );
+            })}
+          </ul>
+        </Section>
+      )}
+
+      {/* 5. 도움이 필요하다면: 지역으로 찾기 · 내 주변 · 긴급 ------------- */}
+      <Section tone="soft" id="home-help" title={t.homeHelp.sectionTitle} subtitle={t.homeHelp.sectionSubtitle}>
+        <HomeHelpFinder
+          locale={locale}
+          regions={REGIONS.map((region) => ({ key: region.key, label: pick(region.name, locale) }))}
+          counts={orgCounts}
+          contacts={heroContacts}
+          labels={{
+            title: t.homeHelp.title,
+            body: t.homeHelp.body,
+            regionLabel: t.homeHelp.regionLabel,
+            allRegions: t.orgFinder.allRegions,
+            nationwideOnly: t.orgFinder.nationwideOnly,
+            submit: t.homeHelp.submit,
+            count: t.homeHelp.count,
+            emergencyTitle: t.homeHelp.emergencyTitle,
+            emergencyBody: t.homeHelp.emergencyBody,
+            emergencyMore: t.homeHelp.emergencyMore,
+            call: t.nav.emergencyCall,
+          }}
+          nearby={t.nearby}
+        />
+      </Section>
+
+      {/* 6. 잘 모르겠다면, 직접 물어보세요 (AI) --------------------------
+          첫 화면에 이미 질문 칸이 있으므로 여기에는 "무엇을 해주는지"와 버튼만 둡니다. */}
+      <Section>
+        <div className="grid gap-8 rounded-[var(--radius-card)] border border-[var(--color-line)] bg-white p-6 sm:p-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12">
+          <div className="min-w-0">
+            <p className="flex items-center gap-2 text-[15px] font-bold text-brand-700">
+              <Icon name="sparkles" size={18} /> LINKRIGHTS AI
+            </p>
+            <h2 className="lr-h2 mt-2">{t.homeAsk.ctaTitle}</h2>
+            <p className="lr-body mt-3 max-w-xl">{t.homeAsk.subtitle}</p>
+            <Link href={`/${locale}/ask`} className="lr-btn lr-btn-primary lr-btn-lg lr-press mt-6">
+              {t.nav.ask} <Icon name="arrow-right" size={18} />
+            </Link>
           </div>
+          <ul className="space-y-2.5 border-t border-[var(--color-line)] pt-6 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
+            {t.homeAsk.gets.map((item) => (
+              <li key={item.title} className="flex items-start gap-2.5 text-[15px] leading-relaxed text-ink-700">
+                <Icon name="check" size={18} className="mt-0.5 shrink-0 text-brand-600" /> <span>{item.title}</span>
+              </li>
+            ))}
+            <li className="flex items-start gap-2.5 pt-1 text-sm leading-relaxed text-ink-500">
+              <Icon name="shield" size={16} className="mt-0.5 shrink-0 text-brand-600" /> <span>{t.homeAsk.trust}</span>
+            </li>
+          </ul>
         </div>
-      </section>
+      </Section>
 
       {/* 3. LINKRIGHTS 소개: 누가 만들고 운영하는 곳인지 한눈에. (자세한 이야기는 소개 페이지에서) ------ */}
       <section id="home-intro" className="scroll-mt-20 border-b border-[var(--color-line)] bg-white">
@@ -419,56 +425,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* 7-1. 실제 참여자 후기: content/testimonials.json 에 공개 동의를 받아 등록한 후기가 있을 때만 */}
       <Testimonials items={getTestimonials()} t={t} locale={locale} />
-
-      {/* 6. 많이 찾는 권리정보 -------------------------------------- */}
-      <Section title={t.home.featuredTitle} subtitle={t.home.featuredSubtitle} action={viewAll(`/${locale}/rights`)}>
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((article, index) => (
-            <Reveal key={article.id} index={index}>
-              <ArticleCard article={article} locale={locale} />
-            </Reveal>
-          ))}
-        </ul>
-      </Section>
-
-      {/* 7. 체크해보기: 상황별 체크리스트 (content/checklists) ---------- */}
-      {checklists.length > 0 && (
-        <Section
-          tone="soft"
-          title={t.checklist.homeTitle}
-          subtitle={t.checklist.homeSubtitle}
-          action={viewAll(`/${locale}/checklists`)}
-        >
-          <ul className="grid gap-4 md:grid-cols-2">
-            {homeChecklists.map((checklist, index) => {
-              const body = checklist.i18n[locale] ?? checklist.i18n.ko;
-              const category = getCategory(checklist.category);
-              return (
-                <Reveal key={checklist.id} index={index} className="lr-card lr-card-hover group relative flex flex-col p-6">
-                  {category && <span className="text-sm font-semibold text-brand-700">{pick(category.name, locale)}</span>}{' '}
-                  <h3 className="mt-1.5 text-lg font-extrabold leading-snug text-ink-900 group-hover:text-brand-800">
-                    <Link
-                      href={`/${locale}/checklists/${checklist.id}`}
-                      className="after:absolute after:inset-0 after:rounded-[var(--radius-card)] after:content-['']"
-                    >
-                      {body.title}
-                    </Link>
-                  </h3>{' '}
-                  <p className="mt-2 flex-1 text-[15px] leading-relaxed text-ink-500">{body.summary}</p>
-                  <p className="mt-4 flex items-center justify-between gap-3 text-sm font-semibold text-brand-700">
-                    <span className="inline-flex items-center gap-1.5">
-                      <Icon name="check" size={16} /> {t.checklist.itemCount.replace('{n}', String(checklist.items.length))}
-                    </span>
-                    <span className="inline-flex items-center gap-1">
-                      {t.checklist.open} <Icon name="arrow-right" size={16} />
-                    </span>
-                  </p>
-                </Reveal>
-              );
-            })}
-          </ul>
-        </Section>
-      )}
 
       {/* 8. 자주 묻는 질문 + 질문 게시판 ----------------------------- */}
       <Section tone="soft" title={t.home.faqTitle} action={viewAll(`/${locale}/faq`)}>

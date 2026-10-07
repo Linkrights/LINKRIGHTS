@@ -145,9 +145,9 @@
     }
   ],
   "community_notice": {
-    "ko": "커뮤니티 기능은 준비 중입니다. 지금은 프로그램 활동과 권리정보를 먼저 공개하고 있으며, 안전하게 운영할 수 있는 방법을 마련한 뒤 열 예정입니다.",
-    "en": "Community features are in preparation. For now we publish programme activities and rights information, and will open a community once we can run it safely.",
-    "zh": "社区功能正在筹备中。目前先公开项目活动与权利信息，待能够安全运营后再开放。",
-    "vi": "Tính năng cộng đồng đang được chuẩn bị. Hiện chúng tôi đăng hoạt động chương trình và thông tin quyền, và sẽ mở cộng đồng khi vận hành an toàn."
+    "ko": "커뮤니티에서 비슷한 고민을 하는 사람들과 이야기할 수 있어요. 쓰던 계정으로 들어와 별명으로 글을 쓰고 댓글을 달 수 있고, 이름과 이메일은 저장하지 않습니다. 이상한 글은 신고하면 운영팀이 확인해요.",
+    "en": "In the community you can talk with people going through similar things. Sign in with an account you already use, post and comment under a nickname; we do not store your name or email. Report anything wrong and the team will check it.",
+    "zh": "在交流区可以和有相似烦恼的人聊天。用你已有的账号登录后，可以用昵称发帖和评论，我们不保存姓名和邮箱。看到奇怪的内容举报后，运营团队会查看。",
+    "vi": "Ở khu cộng đồng, bạn có thể trò chuyện với những người có hoàn cảnh giống mình. Đăng nhập bằng tài khoản sẵn có, viết bài và bình luận bằng biệt danh; chúng tôi không lưu tên hay email. Báo cáo nội dung bất thường và nhóm vận hành sẽ kiểm tra."
   }
 }

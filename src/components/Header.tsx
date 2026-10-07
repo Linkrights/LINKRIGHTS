@@ -34,8 +34,9 @@ export function Header({ locale, emergencyContacts = [] }: { locale: Locale; eme
 
   // 처음 언어를 고르는 화면에서는 메뉴를 보여주지 않습니다. (고르는 일에만 집중할 수 있게)
   const welcome = pathname.endsWith('/welcome');
-  // 홈에서만 영상 위 어두운 헤더를 씁니다.
-  const dark = pathname === `/${locale}`;
+  // 예전에는 홈 첫 화면이 어두운 영상이라 그 위에 투명한 헤더를 썼습니다.
+  // 지금은 홈도 밝은 바탕이라 어느 화면에서나 같은 헤더를 씁니다. (글자가 흐려 보이지 않도록)
+  const dark = false;
   const transparent = dark && !scrolled && !open && !sosOpen;
 
   // 페이지를 이동하면 모바일 메뉴와 긴급 연락처 창을 닫습니다.
