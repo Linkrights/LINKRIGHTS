@@ -234,7 +234,7 @@
     "sectionTitle": "Nếu bạn cần giúp đỡ",
     "sectionSubtitle": "Tìm nơi hỗ trợ gần bạn. Nếu ngại gọi điện, chúng tôi cũng gợi ý câu mở đầu.",
     "mapLabel": "Nơi hỗ trợ theo tỉnh/thành. Chọn một vùng để xem danh sách của vùng đó.",
-    "mapNote": "Chỉ mở được những tỉnh/thành đã có nơi hỗ trợ. Bản đồ là hình vẽ đơn giản hoá, không phải ranh giới chính xác."
+    "mapNote": "Chỉ mở được những tỉnh/thành đã có nơi hỗ trợ. Bản đồ dùng ranh giới tỉnh/thành thật, đã đơn giản hoá nên lược bỏ các đảo nhỏ và đường bờ biển chi tiết."
   },
   "materialRequest": {
     "title": "Không có thông tin bạn cần?",

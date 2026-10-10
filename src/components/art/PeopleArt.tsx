@@ -13,6 +13,13 @@
 //   머리는 따로 떼어 (0,0)~(100,104) 안에 옆모습으로 그린 뒤, 통째로 14도 젖혀서 "올려다보는" 자세를 만듭니다.
 //   이마 → 눈썹뼈 → 콧대 → 코끝 → 인중 → 입술 → 턱 순서로 점을 찍어야 옆모습으로 보입니다.
 //   코끝(x=6)이 눈썹뼈(x=17)보다 11만큼 앞으로 나오는 것이 옆모습의 핵심입니다.
+//
+// 움직임
+//   구름이 천천히 지나가고, 묶은 머리에서 흘러나온 머리카락이 바람에 흔들립니다.
+//   움직임은 전부 CSS 로만 합니다(globals.css 의 lr-cloud / lr-strand). 자바스크립트를 쓰지 않으므로
+//   화면이 보이지 않을 때 브라우저가 알아서 쉬고, 움직임 줄이기를 켠 이용자에게는 멈춥니다.
+
+import type { CSSProperties } from 'react';
 
 const C = {
   skin: '#f1c7a5',
@@ -28,6 +35,41 @@ const C = {
   near: '#aecae9',
   window: '#dceaf8',
 };
+
+/** 구름 한 덩이 */
+function Cloud({ x, y, scale = 1 }: { x: number; y: number; scale?: number }) {
+  return (
+    <g transform={`translate(${x} ${y}) scale(${scale})`} fill="#ffffff" opacity="0.78">
+      <ellipse cx="0" cy="0" rx="30" ry="13" />
+      <ellipse cx="22" cy="-8" rx="20" ry="12" />
+      <ellipse cx="-20" cy="4" rx="17" ry="9" />
+    </g>
+  );
+}
+
+/**
+ * 구름 셋. 모두 화면 왼쪽 밖(x=-80)에서 시작합니다.
+ * 시작 시각(delay)을 음수로 주어 "이미 지나가던 중"으로 보이게 하고,
+ * 걸리는 시간(dur)은 서로 다르게 해 줄지어 가지 않게 합니다.
+ */
+const CLOUDS = [
+  { x: -80, y: 52, scale: 1, dur: '78s', delay: '-8s' },
+  { x: -80, y: 34, scale: 0.72, dur: '96s', delay: '-40s' },
+  { x: -80, y: 76, scale: 0.55, dur: '124s', delay: '-78s' },
+  // 넷째는 하늘이 비는 순간을 줄이려고 둡니다. 셋만 두면 가끔 셋이 동시에 화면 밖으로 나갑니다.
+  { x: -80, y: 62, scale: 0.8, dur: '108s', delay: '-54s' },
+];
+
+/**
+ * 묶은 머리에서 흘러나와 바람에 날리는 머리카락.
+ * 머리 묶음(기울인 묶음 바깥, 화면 좌표로 대략 (241,44))에서 시작해 뒤쪽(오른쪽)으로 흘러갑니다.
+ * 흔들리는 시간을 조금씩 어긋나게 해야 한 다발로 같이 움직이지 않습니다.
+ */
+const STRANDS = [
+  { d: 'M240 36C258 32 270 35 277 43', w: 3, dur: '3.4s', delay: '0s' },
+  { d: 'M245 46C263 44 276 49 283 58', w: 2.5, dur: '4.2s', delay: '-0.7s' },
+  { d: 'M243 55C260 57 271 62 277 70', w: 2, dur: '3.8s', delay: '-1.4s' },
+];
 
 function Head() {
   return (
@@ -80,13 +122,16 @@ export function PeopleArt({ className = '' }: { className?: string }) {
       <g clipPath="url(#lr-art-frame)">
         <rect x="0" y="0" width="380" height="320" fill="url(#lr-art-sky)" />
 
-        {/* 구름 */}
-        <g fill="#ffffff" opacity="0.75">
-          <ellipse cx="64" cy="52" rx="34" ry="15" />
-          <ellipse cx="92" cy="43" rx="22" ry="13" />
-          <ellipse cx="312" cy="36" rx="26" ry="11" />
-          <ellipse cx="334" cy="45" rx="17" ry="9" />
-        </g>
+        {/* 구름 — 왼쪽 밖에서 시작해 천천히 오른쪽으로 지나갑니다 (globals.css 의 lr-cloud) */}
+        {CLOUDS.map((cloud, i) => (
+          <g
+            key={i}
+            className="lr-cloud"
+            style={{ '--lr-dur': cloud.dur, '--lr-delay': cloud.delay } as CSSProperties}
+          >
+            <Cloud x={cloud.x} y={cloud.y} scale={cloud.scale} />
+          </g>
+        ))}
 
         {/* 먼 도시 */}
         <g fill={C.far}>
@@ -126,6 +171,20 @@ export function PeopleArt({ className = '' }: { className?: string }) {
         {/* 목 — 머리와 외투 사이 (외투가 아랫부분을 덮습니다).
             얼굴보다 한 톤 어둡게 해야 턱선이 목에 묻히지 않습니다. */}
         <path d="M192 126l38-7 6 83-42 4z" fill={C.skinShade} />
+
+        {/* 바람에 날리는 머리카락 — 머리를 그린 뒤 그 위에 얹습니다 (globals.css 의 lr-strand) */}
+        {STRANDS.map((strand, i) => (
+          <path
+            key={i}
+            className="lr-strand"
+            style={{ '--lr-dur': strand.dur, '--lr-delay': strand.delay } as CSSProperties}
+            d={strand.d}
+            stroke={C.hair}
+            strokeWidth={strand.w}
+            strokeLinecap="round"
+            fill="none"
+          />
+        ))}
 
         <Head />
 

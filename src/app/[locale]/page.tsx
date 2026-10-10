@@ -309,8 +309,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           }}
           nearby={t.nearby}
           />
-          {/* 지역 지도: 17개 시·도를 한 칸씩 그려, 누르면 그 지역 기관 목록으로 갑니다.
-              칸 모양은 알아보기 쉽게 단순하게 그린 그림이고 정확한 행정 경계가 아니라서, 아래에 그렇게 적어 둡니다. */}
+          {/* 지역 지도: 실제 시·도 경계(저작권 없는 자료)를 옮긴 것이고, 누르면 그 지역 기관 목록으로 갑니다.
+              작은 섬과 자세한 해안선은 덜어냈으므로, 아래에 그렇게 적어 둡니다. */}
           <div className="justify-self-center lg:justify-self-end">
             <RegionMap locale={locale} counts={regionCounts} label={t.homeHelp.mapLabel} />
             <p className="mt-2 max-w-[24rem] text-[13px] leading-relaxed text-ink-500">{t.homeHelp.mapNote}</p>
