@@ -4,10 +4,12 @@
 //
 // 어떻게 동작하나요?
 //   1) 단추를 눌렀을 때에만 브라우저에 위치를 물어봅니다. (화면에 들어온 것만으로는 묻지 않습니다)
-//   2) 받은 좌표는 이 브라우저 안에서만 쓰고, 가장 가까운 시·도 하나를 고릅니다.
+//   2) 받은 좌표를 곧바로 거칠게 깎아(소수점 첫째 자리, 약 10km) 시·도 하나만 고릅니다.
 //   3) "○○ 같아요. 맞나요?" 하고 한 번 더 확인한 뒤, 그 지역의 도움받을 곳 목록으로 갑니다.
 //
 // 지키는 것
+//   - 어느 시·도인지까지만 봅니다. 시·군·구나 동까지 좁히지 않습니다.
+//     정확한 좌표는 ask() 안에서 깎인 값으로 바뀌고 어디에도 남지 않습니다. (아래 ROUGH 참고)
 //   - 좌표를 서버로 보내지 않고, 저장하지 않으며, 거리(km)도 보여주지 않습니다.
 //     (기관 자료에 좌표가 없어 거리를 정확히 셀 수 없고, 정확하지 않은 거리는 더 헷갈리기 때문입니다)
 //   - 위치를 허락하지 않아도 바로 아래 지역 고르기로 쓸 수 있습니다.
@@ -17,6 +19,9 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Icon } from './Icon';
 import { nearestRegion } from '@/lib/regions';
+
+/** 좌표를 소수점 첫째 자리로 깎습니다. (위도 0.1도 ≈ 11km) */
+const ROUGH = (value: number) => Math.round(value * 10) / 10;
 
 export interface NearbyLabels {
   /** 내 주변 기관 찾기 */
@@ -60,7 +65,11 @@ export function NearbyRegion({
     setState('asking');
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        const found = nearestRegion(position.coords.latitude, position.coords.longitude);
+        // 좌표를 받자마자 소수점 첫째 자리까지만 남깁니다. (약 10km 칸으로 뭉개는 셈입니다)
+        // 시·도를 고르는 데에는 이 정도면 충분하고, 집·학교가 드러날 만큼 정확한 값은 아예 쓰지 않습니다.
+        const lat = ROUGH(position.coords.latitude);
+        const lng = ROUGH(position.coords.longitude);
+        const found = nearestRegion(lat, lng);
         if (!found) {
           setState('denied');
           return;

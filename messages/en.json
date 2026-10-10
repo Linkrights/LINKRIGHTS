@@ -233,7 +233,8 @@
     "emergencyMore": "See all emergency contacts",
     "sectionTitle": "If you need help",
     "sectionSubtitle": "Find places near you. If calling feels hard, we also show what to say first.",
-    "mapLabel": "Places that help, by province. Choose a province to see its list."
+    "mapLabel": "Places that help, by province. Choose a province to see its list.",
+    "mapNote": "Only provinces with registered places can be opened. The map is a simplified drawing, not exact borders."
   },
   "materialRequest": {
     "title": "Missing something?",
@@ -794,7 +795,7 @@
       },
       {
         "title": "Finding help near you and location data",
-        "body": "Your browser asks for your location only when you press the \"Find help near me\" button. Simply opening the page never asks. The coordinates are used only inside the browser you are looking at, and only to work out which of Korea's 17 provinces is closest. They are never sent to the LINKRIGHTS server, never stored and never given to anyone else; they disappear when you close the page. We do not show distances such as \"1.2 km\" either. If you do not allow location, you can pick an area yourself and use the same feature, and you can withdraw the permission at any time in your browser settings."
+        "body": "Your browser asks for your location only when you press the \"Find help near me\" button. Simply opening the page never asks. The coordinates are used only inside the browser you are looking at, and only to work out which of Korea's 17 provinces is closest. The coordinates are rounded to one decimal place (about a 10 km square) as soon as they arrive, so they cannot show which city, district or neighbourhood you are in. They are never sent to the LINKRIGHTS server, never stored and never given to anyone else; they disappear when you close the page. We do not show distances such as \"1.2 km\" either. If you do not allow location, you can pick an area yourself and use the same feature, and you can withdraw the permission at any time in your browser settings."
       },
       {
         "title": "One cookie for language, visits counted anonymously",

@@ -233,7 +233,8 @@
     "emergencyMore": "Xem tất cả số khẩn cấp",
     "sectionTitle": "Nếu bạn cần giúp đỡ",
     "sectionSubtitle": "Tìm nơi hỗ trợ gần bạn. Nếu ngại gọi điện, chúng tôi cũng gợi ý câu mở đầu.",
-    "mapLabel": "Nơi hỗ trợ theo tỉnh/thành. Chọn một vùng để xem danh sách của vùng đó."
+    "mapLabel": "Nơi hỗ trợ theo tỉnh/thành. Chọn một vùng để xem danh sách của vùng đó.",
+    "mapNote": "Chỉ mở được những tỉnh/thành đã có nơi hỗ trợ. Bản đồ là hình vẽ đơn giản hoá, không phải ranh giới chính xác."
   },
   "materialRequest": {
     "title": "Không có thông tin bạn cần?",
@@ -794,7 +795,7 @@
       },
       {
         "title": "Tìm nơi giúp đỡ gần bạn và thông tin vị trí",
-        "body": "Trình duyệt chỉ hỏi vị trí khi bạn bấm nút “Tìm nơi giúp đỡ gần tôi”. Chỉ mở trang thì không bao giờ hỏi. Tọa độ nhận được chỉ dùng bên trong trình duyệt bạn đang xem, và chỉ để xác định bạn gần tỉnh/thành nào trong 17 tỉnh thành. Tọa độ không được gửi tới máy chủ LINKRIGHTS, không được lưu và không đưa cho bên nào khác; nó biến mất khi bạn đóng trang. Chúng tôi cũng không hiển thị khoảng cách kiểu “1,2 km”. Nếu bạn không cho phép vị trí, bạn vẫn tự chọn khu vực và dùng tính năng đó như thường, và có thể thu hồi quyền bất cứ lúc nào trong cài đặt trình duyệt."
+        "body": "Trình duyệt chỉ hỏi vị trí khi bạn bấm nút “Tìm nơi giúp đỡ gần tôi”. Chỉ mở trang thì không bao giờ hỏi. Tọa độ nhận được chỉ dùng bên trong trình duyệt bạn đang xem, và chỉ để xác định bạn gần tỉnh/thành nào trong 17 tỉnh thành. Toạ độ được làm tròn tới một chữ số thập phân (khoảng ô 10 km) ngay khi nhận được, nên không thể biết bạn ở thành phố, quận/huyện hay phường nào. Tọa độ không được gửi tới máy chủ LINKRIGHTS, không được lưu và không đưa cho bên nào khác; nó biến mất khi bạn đóng trang. Chúng tôi cũng không hiển thị khoảng cách kiểu “1,2 km”. Nếu bạn không cho phép vị trí, bạn vẫn tự chọn khu vực và dùng tính năng đó như thường, và có thể thu hồi quyền bất cứ lúc nào trong cài đặt trình duyệt."
       },
       {
         "title": "Chỉ một cookie ngôn ngữ, lượt truy cập đếm ẩn danh",

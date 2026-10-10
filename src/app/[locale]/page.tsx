@@ -309,9 +309,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           }}
           nearby={t.nearby}
           />
-          {/* 지역 그림: 점 자리는 등록된 시·도 좌표를 그대로 옮긴 것이라 서로의 위치 관계가 실제와 같습니다. */}
+          {/* 지역 지도: 17개 시·도를 한 칸씩 그려, 누르면 그 지역 기관 목록으로 갑니다.
+              칸 모양은 알아보기 쉽게 단순하게 그린 그림이고 정확한 행정 경계가 아니라서, 아래에 그렇게 적어 둡니다. */}
           <div className="justify-self-center lg:justify-self-end">
             <RegionMap locale={locale} counts={regionCounts} label={t.homeHelp.mapLabel} />
+            <p className="mt-2 max-w-[24rem] text-[13px] leading-relaxed text-ink-500">{t.homeHelp.mapNote}</p>
           </div>
         </div>
       </Section>

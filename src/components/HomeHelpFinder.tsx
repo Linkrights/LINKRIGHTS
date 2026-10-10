@@ -40,7 +40,10 @@ export function HomeHelpFinder({
   return (
     <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
       {/* 일반 상담·도움: 지역을 골라 찾기 */}
-      <div className="lr-card p-5 sm:p-6">
+      {/* @container: 화면 너비가 아니라 "이 카드의 너비"를 보고 줄을 바꿉니다.
+          첫 화면에서는 지도와 나란히 놓여 카드가 좁아지는데, 화면 기준으로 가로 배치를 하면
+          지역 고르기 칸이 글자도 안 보일 만큼 눌립니다. */}
+      <div className="@container lr-card p-5 sm:p-6">
         <h3 className="flex items-center gap-2.5 text-lg font-extrabold text-ink-900">
           <span className="lr-icon-badge h-10 w-10">
             <Icon name="lifebuoy" size={20} />
@@ -48,7 +51,7 @@ export function HomeHelpFinder({
           {labels.title}
         </h3>
         <p className="mt-2 text-[15px] leading-relaxed text-ink-700">{labels.body}</p>
-        <form action={`/${locale}/organizations`} method="get" className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-end">
+        <form action={`/${locale}/organizations`} method="get" className="mt-4 flex flex-col gap-2 @md:flex-row @md:items-end">
           <div className="min-w-0 flex-1">
             <label htmlFor="home-help-region" className="mb-1 block text-sm font-semibold text-ink-700">
               {labels.regionLabel}
