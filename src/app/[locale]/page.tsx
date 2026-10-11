@@ -180,8 +180,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           문구(home.betaTitle/betaBody/betaCta)는 지우지 않고 두었습니다. 다시 알릴 일이 생기면 그대로 쓰면 됩니다. */}
 
       {/* 2. 무엇이 궁금하세요?: 분야 6개를 색 타일 카드로 ---------------- */}
-      <RevealBlock>
-      <Section id="home-start" tone="soft" title={t.homeFind.categoryTitle} subtitle={t.homeFind.categorySubtitle}>
+      <Section id="home-start" tone="soft" reveal title={t.homeFind.categoryTitle} subtitle={t.homeFind.categorySubtitle}>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {categories
             .filter((category) => category.kind !== 'directory')
@@ -212,13 +211,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             ))}
         </ul>
       </Section>
-      </RevealBlock>
 
       {/* 3. 이런 질문도 찾아볼 수 있어요 --------------------------------
           등록된 권리정보에 실제로 적힌 "이런 상황인가요?" 문장만 씁니다. 누르면 그 글로 갑니다. */}
-      <RevealBlock>
       <Section
         tone="tint"
+        reveal
         title={t.homeFind.askedTitle}
         subtitle={t.homeFind.askedSubtitle}
         action={viewAll(`/${locale}/rights`)}
@@ -242,13 +240,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           ))}
         </ul>
       </Section>
-      </RevealBlock>
 
       {/* 4. 내 상황을 체크해보기 --------------------------------------- */}
-      <RevealBlock>
       {homeChecklists.length > 0 && (
         <Section
           tone="soft"
+          reveal
           title={t.checklist.homeTitle}
           subtitle={t.checklist.homeSubtitle}
           action={viewAll(`/${locale}/checklists`)}
@@ -279,11 +276,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </ul>
         </Section>
       )}
-      </RevealBlock>
 
       {/* 5. 도움이 필요하다면: 지역으로 찾기 · 내 주변 · 긴급 ------------- */}
-      <RevealBlock>
-      <Section tone="mint" id="home-help" title={t.homeHelp.sectionTitle} subtitle={t.homeHelp.sectionSubtitle}>
+      <Section tone="mint" reveal id="home-help" title={t.homeHelp.sectionTitle} subtitle={t.homeHelp.sectionSubtitle}>
         <div className="grid items-start gap-8 lg:grid-cols-[1fr_auto] lg:gap-12">
           <HomeHelpFinder
           locale={locale}
@@ -313,12 +308,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </div>
         </div>
       </Section>
-      </RevealBlock>
 
       {/* 6. 잘 모르겠다면, 직접 물어보세요 (AI) --------------------------
           첫 화면에 이미 질문 칸이 있으므로 여기에는 "무엇을 해주는지"와 버튼만 둡니다. */}
-      <RevealBlock>
-      <Section tone="warm">
+      <Section tone="warm" reveal>
         <div className="grid gap-8 rounded-[var(--radius-card)] border border-[var(--color-line)] bg-white p-6 sm:p-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12">
           <div className="min-w-0">
             <p className="flex items-center gap-2 text-[15px] font-bold text-brand-700">
@@ -342,7 +335,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </ul>
         </div>
       </Section>
-      </RevealBlock>
 
       {/* 3. LINKRIGHTS 소개: 누가 만들고 운영하는 곳인지 한눈에. (자세한 이야기는 소개 페이지에서) ------ */}
       <section id="home-intro" className="scroll-mt-20 border-b border-[var(--color-line)] bg-white">

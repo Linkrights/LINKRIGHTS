@@ -1,6 +1,7 @@
 // 페이지를 구성하는 기본 뼈대(제목 + 내용)입니다.
 // 모든 페이지가 같은 여백·제목 크기를 쓰도록 이 부품을 사용합니다.
 import type { ReactNode } from 'react';
+import { RevealBlock } from './Reveal';
 
 export function Section({
   title,
@@ -10,6 +11,7 @@ export function Section({
   children,
   tone = 'default',
   id,
+  reveal = false,
 }: {
   title?: string;
   subtitle?: string;
@@ -20,6 +22,14 @@ export function Section({
   /** 바탕색: default 회색빛 · soft 흰색 · tint 연한 파랑 · warm 연한 노랑 · mint 연한 초록 */
   tone?: 'default' | 'soft' | 'tint' | 'warm' | 'mint';
   id?: string;
+  /**
+   * 스크롤해서 보일 때 **글과 카드만** 떠오르게 합니다.
+   *
+   * 바깥(section)을 통째로 움직이면 바탕색 띠까지 같이 움직여서,
+   * 색칠한 네모가 슬라이드하는 것처럼 보입니다. 바탕이 하늘색이 된 뒤로 특히 눈에 띕니다.
+   * 그래서 띠는 처음부터 그려 두고 안쪽 내용만 움직입니다.
+   */
+  reveal?: boolean;
 }) {
   // 구역마다 바탕색을 조금씩 달리해, 스크롤할 때 "여기부터 다른 이야기"가 눈에 보이게 합니다.
   // (흰 바탕만 이어지면 어디서 끊기는지 알기 어렵습니다)
@@ -34,21 +44,25 @@ export function Section({
             ? 'lr-band-mint'
             : '';
 
+  const inner = (
+    <>
+      {(title || action) && (
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-4 sm:mb-10">
+          <div className="max-w-2xl">
+            {eyebrow && <p className="lr-eyebrow mb-3">{eyebrow}</p>}
+            {title && <h2 className="lr-h2">{title}</h2>}
+            {subtitle && <p className="mt-3 text-base leading-relaxed text-ink-500 sm:text-[17px]">{subtitle}</p>}
+          </div>
+          {action}
+        </div>
+      )}
+      {children}
+    </>
+  );
+
   return (
     <section id={id} className={toneClass}>
-      <div className="lr-container lr-section">
-        {(title || action) && (
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-4 sm:mb-10">
-            <div className="max-w-2xl">
-              {eyebrow && <p className="lr-eyebrow mb-3">{eyebrow}</p>}
-              {title && <h2 className="lr-h2">{title}</h2>}
-              {subtitle && <p className="mt-3 text-base leading-relaxed text-ink-500 sm:text-[17px]">{subtitle}</p>}
-            </div>
-            {action}
-          </div>
-        )}
-        {children}
-      </div>
+      <div className="lr-container lr-section">{reveal ? <RevealBlock>{inner}</RevealBlock> : inner}</div>
     </section>
   );
 }

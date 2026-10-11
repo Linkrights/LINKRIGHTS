@@ -69,10 +69,11 @@ export function RevealBlock({
       <m.div
         data-reveal=""
         className={className}
-        initial={{ opacity: 0, y: 28 }}
+        // 많이 띄우면 "네모가 미끄러지는" 느낌이 납니다. 글과 카드만 움직이므로 조금만 띄웁니다.
+        initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.12, margin: '0px 0px -10% 0px' }}
-        transition={reduceMotion ? { duration: 0 } : { duration: 0.55, ease: 'easeOut', delay }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.5, ease: 'easeOut', delay }}
       >
         {children}
       </m.div>
