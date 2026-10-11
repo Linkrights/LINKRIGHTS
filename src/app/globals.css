@@ -806,30 +806,19 @@
       transform: translateX(var(--lr-travel, 470px));
     }
   }
-  @keyframes lr-hair-sway {
-    from {
-      transform: rotate(-2.5deg);
-    }
-    to {
-      transform: rotate(2.5deg);
-    }
-  }
   .lr-cloud {
     animation: lr-cloud-drift var(--lr-dur, 90s) linear infinite;
     animation-delay: var(--lr-delay, 0s);
   }
-  .lr-strand {
-    /* 머리카락이 붙은 쪽(왼쪽 끝)을 축으로 끝이 살랑이게 합니다 */
-    transform-box: fill-box;
-    transform-origin: 2% 50%;
-    animation: lr-hair-sway var(--lr-dur, 3.6s) ease-in-out infinite alternate;
-    animation-delay: var(--lr-delay, 0s);
-  }
-  /* 움직임을 줄여 달라고 한 이용자에게는 멈춰 둡니다 */
+  /* 움직임을 줄여 달라고 한 이용자에게는 멈춰 둡니다.
+     머리카락은 SVG 필터(SMIL)로 움직이므로 CSS 로 멈출 수 없습니다.
+     대신 일그러진 겹을 통째로 숨기면 원래 사진이 그대로 보입니다. */
   @media (prefers-reduced-motion: reduce) {
-    .lr-cloud,
-    .lr-strand {
+    .lr-cloud {
       animation: none;
+    }
+    .lr-hair-wind {
+      display: none;
     }
   }
 
