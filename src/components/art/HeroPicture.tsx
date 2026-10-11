@@ -32,27 +32,25 @@ const CLOUDS = [
 ];
 
 /**
- * 머리카락이 바람에 일렁이는 자리.
+ * 바람에 찰랑이는 잔머리 세 가닥.
  *
- * 선을 몇 가닥 그려 붙이면 수염처럼 보여서, 그렇게 하지 않습니다.
- * 대신 **사진의 머리카락 부분을 한 겹 더 깔고 그 겹만 일그러뜨립니다.**
- * (feTurbulence 로 만든 구름 무늬를 feDisplacementMap 에 넣어 픽셀을 밀어 줍니다)
- * 그려진 머리카락 자체가 흔들리고, 하늘과 맞닿은 머리 윤곽선이 함께 울렁입니다.
+ * 머리 전체를 일그러뜨려 봤더니 머리통이 울렁거려서 그만뒀습니다.
+ * 지금은 머리 테두리에서 **아주 얇은 잔머리 몇 가닥만** 살짝 빠져나와 흔들립니다.
  *
- * 자리는 사진의 픽셀을 20칸 간격으로 찍어서 "머리카락 / 살결 / 하늘"을 가려내 정했습니다.
- * 얼굴에 닿으면 이목구비가 일그러지므로, 살결이 나온 칸(x 1600~1640, y 260~400)은 반드시 피합니다.
+ * 수염처럼 보이지 않게 하려고 지킨 것
+ *   - 굵기가 일정한 선이 아니라, 뿌리가 굵고 끝이 뾰족한 모양(채워진 도형)으로 그립니다.
+ *   - 뿌리를 머리카락 안쪽에서 시작해 어디서 나왔는지 보이지 않게 합니다.
+ *   - 머리가 뒤로 넘어가는 흐름을 따라 눕히고, 길이는 짧게 둡니다.
+ *   - 세 가닥만. 많으면 바로 수염이 됩니다.
+ *
+ * 자리는 사진 픽셀을 20칸 간격으로 찍어 머리카락과 하늘의 경계를 확인해 정했습니다.
+ * (머리 오른쪽 끝: y240→x1680, y280→x1700, y320→x1760, y340→x1780)
  */
-const HAIR = {
-  /** 바람이 닿는 곳 — 머리 윗부분과 묶은 머리. 가장자리는 흐리게 해서 경계가 보이지 않게 합니다. */
-  blobs: [
-    { cx: 1700, cy: 290, rx: 75, ry: 75 },
-    { cx: 1760, cy: 350, rx: 60, ry: 55 },
-  ],
-  /** 일그러뜨릴 범위 (밀려날 만큼 넉넉히). 가리개보다 넉넉해야 가장자리가 끊기지 않습니다. */
-  area: { x: 1590, y: 190, w: 330, h: 260 },
-  /** 몇 픽셀이나 밀지 — 사진이 1989px 기준이라 18이면 화면에서 9px 남짓 움직입니다 */
-  scale: 18,
-};
+const WISPS = [
+  { d: 'M1672 256Q1706 244 1744 238Q1708 252 1672 261Z', dur: '3.6s', delay: '0s' },
+  { d: 'M1700 290Q1740 280 1782 278Q1742 288 1700 295Z', dur: '4.4s', delay: '-0.9s' },
+  { d: 'M1738 328Q1778 322 1818 326Q1780 330 1738 333Z', dur: '4s', delay: '-1.8s' },
+];
 
 /**
  * 잘라 쓸 때, 머리 왼쪽에 남는 손글씨 꼬리("…한 걸 / …요")를 하늘색으로 덮습니다.
@@ -85,58 +83,10 @@ function HeroArt({ uid, patch = false }: { uid: string; patch?: boolean }) {
         <filter id={id('soft')} x="-30%" y="-60%" width="160%" height="220%">
           <feGaussianBlur stdDeviation="9" />
         </filter>
-        {/* 바람: 구름 무늬를 천천히 바꿔 가며 그 무늬대로 픽셀을 밀어 줍니다.
-            무늬가 계속 변하므로 같은 모양이 되풀이되지 않고, 숨 쉬듯 일렁입니다. */}
-        <filter
-          id={id('wind')}
-          filterUnits="userSpaceOnUse"
-          x={HAIR.area.x}
-          y={HAIR.area.y}
-          width={HAIR.area.w}
-          height={HAIR.area.h}
-        >
-          <feTurbulence type="fractalNoise" baseFrequency="0.008 0.014" numOctaves="2" seed="5" result="wind">
-            <animate
-              attributeName="baseFrequency"
-              dur="7s"
-              repeatCount="indefinite"
-              calcMode="spline"
-              keyTimes="0;0.35;0.7;1"
-              keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"
-              values="0.008 0.014;0.012 0.021;0.0071 0.0124;0.008 0.014"
-            />
-          </feTurbulence>
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="wind"
-            scale={HAIR.scale}
-            xChannelSelector="R"
-            yChannelSelector="G"
-          />
+        {/* 잔머리는 흐릿하게 — 그린 그림 위에 올리는 것이라 날이 서 있으면 바로 붙여 놓은 티가 납니다 */}
+        <filter id={id('wisp')} x="-40%" y="-80%" width="180%" height="260%">
+          <feGaussianBlur stdDeviation="1.5" />
         </filter>
-        {/* 바람이 닿는 곳만 남기는 가리개. 가장자리를 흐리게 해야 경계선이 보이지 않습니다. */}
-        <filter id={id('maskblur')} x="-40%" y="-40%" width="180%" height="180%">
-          <feGaussianBlur stdDeviation="14" />
-        </filter>
-        {/* 사진 전체를 필터에 넣으면 매 장면마다 1989×791 을 다시 그려야 합니다.
-            머리 언저리만 잘라서 넣으면 그 작은 네모만 계산하면 됩니다. */}
-        <clipPath id={id('hairbox')}>
-          <rect x={HAIR.area.x} y={HAIR.area.y} width={HAIR.area.w} height={HAIR.area.h} />
-        </clipPath>
-        <mask
-          id={id('hair')}
-          maskUnits="userSpaceOnUse"
-          x={HAIR.area.x}
-          y={HAIR.area.y}
-          width={HAIR.area.w}
-          height={HAIR.area.h}
-        >
-          <g filter={`url(#${id('maskblur')})`} fill="#ffffff">
-            {HAIR.blobs.map((blob, i) => (
-              <ellipse key={i} cx={blob.cx} cy={blob.cy} rx={blob.rx} ry={blob.ry} />
-            ))}
-          </g>
-        </mask>
         <filter id={id('patch')} x="-40%" y="-40%" width="180%" height="180%">
           <feGaussianBlur stdDeviation="8" />
         </filter>
@@ -172,14 +122,16 @@ function HeroArt({ uid, patch = false }: { uid: string; patch?: boolean }) {
         ))}
       </g>
 
-      {/* 머리카락: 사진의 머리 부분만 한 겹 더 깔고, 그 겹만 바람 무늬대로 일그러뜨립니다.
-          밑에는 원래 사진이 그대로 있으므로, 가리개 바깥은 전혀 건드리지 않습니다. */}
-      <g className="lr-hair-wind" mask={`url(#${id('hair')})`}>
-        <g filter={`url(#${id('wind')})`}>
-          <g clipPath={`url(#${id('hairbox')})`}>
-            <image href={IMAGE.src} x="0" y="0" width={IMAGE.w} height={IMAGE.h} preserveAspectRatio="none" />
-          </g>
-        </g>
+      {/* 잔머리 — 뿌리를 축으로 아주 조금만 찰랑입니다 */}
+      <g filter={`url(#${id('wisp')})`} fill="#3c3842" opacity="0.6">
+        {WISPS.map((wisp, i) => (
+          <path
+            key={i}
+            className="lr-wisp"
+            style={{ '--lr-dur': wisp.dur, '--lr-delay': wisp.delay } as CSSProperties}
+            d={wisp.d}
+          />
+        ))}
       </g>
     </svg>
   );

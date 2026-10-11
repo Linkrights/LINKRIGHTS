@@ -47,9 +47,22 @@ export function Reveal({
  * 구역(section) 하나를 통째로 "스크롤해서 보일 때" 살짝 떠오르며 나타나게 합니다.
  * Reveal 은 목록 칸(li)용이라, 제목·설명까지 함께 감싸야 할 때 이것을 씁니다.
  * 한 번 나타난 뒤에는 다시 움직이지 않고, "동작 줄이기"를 켠 분께는 그대로 보여줍니다.
+ *
+ * index 를 주면 차례로 나타납니다. 통계 숫자처럼 li 가 아닌 곳(dl 안)에 쓸 때 Reveal 대신 씁니다.
+ * (dl 안에 li 를 넣으면 올바른 문서가 아닙니다)
  */
-export function RevealBlock({ children, className }: { children: ReactNode; className?: string }) {
+export function RevealBlock({
+  children,
+  className,
+  index,
+}: {
+  children: ReactNode;
+  className?: string;
+  /** 나란히 있는 칸을 조금씩 늦게 나타나게 할 순서 */
+  index?: number;
+}) {
   const reduceMotion = useReducedMotion();
+  const delay = index === undefined ? 0 : Math.min(index, 5) * 0.08;
 
   return (
     <LazyMotion features={loadFeatures} strict>
@@ -59,7 +72,7 @@ export function RevealBlock({ children, className }: { children: ReactNode; clas
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.12, margin: '0px 0px -10% 0px' }}
-        transition={reduceMotion ? { duration: 0 } : { duration: 0.55, ease: 'easeOut' }}
+        transition={reduceMotion ? { duration: 0 } : { duration: 0.55, ease: 'easeOut', delay }}
       >
         {children}
       </m.div>

@@ -57,10 +57,13 @@
   --color-ink-500: #5d6b82;
   --color-ink-300: #98a2b3;
 
-  /* 배경과 선 */
+  /* 배경과 선
+     바탕(surface-soft)은 첫 화면 그림의 하늘색을 그대로 가져와, 페이지 전체가 맑은 하늘 아래에 있게 합니다.
+     카드·칸은 흰색(surface)이라 하늘색 위에서 또렷하게 떠 보입니다.
+     선(line)은 하늘색 위에서도 보이도록 회색이 아니라 파랑이 도는 색으로 둡니다. */
   --color-surface: #ffffff;
-  --color-surface-soft: #f5f7fb;
-  --color-line: #e2e8f0;
+  --color-surface-soft: #dceefc;
+  --color-line: #b9d6ee;
 
   /* 긴급 안내용 */
   --color-danger-50: #fef3f2;
@@ -86,9 +89,9 @@
   --radius-control: 12px;
   --radius-card: 16px;
   --radius-panel: 20px;
-  /* 그림자: 거의 보이지 않을 만큼만 */
-  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04);
-  --shadow-raised: 0 6px 20px rgba(23, 53, 124, 0.08);
+  /* 그림자: 바탕이 하늘색이 되면서 흰 카드가 떠 보이도록 조금 더 또렷하게 */
+  --shadow-card: 0 2px 6px rgba(20, 56, 110, 0.07);
+  --shadow-raised: 0 10px 28px rgba(20, 56, 110, 0.14);
 
   /* 꽉 찬 버튼의 배경색.
      brand-700 / danger-700 은 어두운 화면에서 "밝은 글자색"이 되므로 버튼 배경으로 쓰지 않고 따로 둡니다. */
@@ -738,15 +741,24 @@
     }
   }
 
-  /* ---------- 밝은 첫 화면 (HomeTop.tsx) ---------- */
+  /* ---------- 밝은 첫 화면 (HomeTop.tsx) ----------
+     사진 속 하늘에서 그대로 이어지도록 위는 진한 하늘색, 아래로 갈수록 옅어지게 둡니다. */
   .lr-hero {
     position: relative;
     overflow: hidden;
     border-bottom: 1px solid var(--color-line);
     background:
-      radial-gradient(60rem 28rem at 78% -10%, color-mix(in srgb, var(--color-brand-100) 85%, transparent), transparent 70%),
-      radial-gradient(44rem 24rem at 4% 108%, color-mix(in srgb, var(--color-brand-50) 90%, transparent), transparent 72%),
-      var(--color-surface);
+      radial-gradient(70rem 34rem at 80% -16%, #a9dcfb, transparent 68%),
+      radial-gradient(52rem 30rem at 2% 104%, #c6e7fd, transparent 70%),
+      linear-gradient(180deg, #bfe4fd 0%, #ddf0fd 55%, var(--color-surface-soft) 100%);
+  }
+  /* 어두운 화면에서는 하늘색을 그대로 쓰면 눈이 부십니다. 같은 모양으로 어둡게만 깔아 줍니다.
+     (위의 하늘색은 고정값이라 색 이름만 바꾸는 방식으로는 어두워지지 않습니다) */
+  :root:not([data-theme="light"]) .lr-hero,
+  :root[data-theme="dark"] .lr-hero {
+    background:
+      radial-gradient(70rem 34rem at 80% -16%, color-mix(in srgb, var(--color-brand-600) 45%, transparent), transparent 68%),
+      linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-soft) 100%);
   }
 
   /* ---------- 분야·체크리스트 카드의 색 타일 ----------
@@ -773,19 +785,20 @@
 
 
   /* ---------- 구간별 바탕색 ----------
-     흰 바탕만 이어지면 어디서 이야기가 바뀌는지 알기 어려워, 구역마다 아주 연한 색을 깔아 구분합니다.
-     글자 대비는 그대로 두고 바탕만 바꿉니다. */
+     어디서 이야기가 바뀌는지 바탕색으로 알 수 있게 합니다.
+     바탕이 하늘색이 되면서 예전의 아주 연한 색은 구별이 되지 않아, 색을 또렷하게 올렸습니다.
+     글자색은 그대로 두므로 읽기 어려워지지는 않습니다. */
   .lr-band-tint {
-    background:
-      linear-gradient(180deg, color-mix(in srgb, var(--color-brand-50) 85%, transparent), transparent 60%),
-      color-mix(in srgb, var(--color-brand-50) 55%, var(--color-surface));
+    background: linear-gradient(180deg, #cde9fb 0%, #e4f3fd 100%);
   }
   .lr-band-warm {
-    background: color-mix(in srgb, var(--color-warm-100) 55%, var(--color-surface));
+    background: linear-gradient(180deg, #fdeccd 0%, #fef6e8 100%);
   }
   .lr-band-mint {
-    background: color-mix(in srgb, #e6f6ef 55%, var(--color-surface));
+    background: linear-gradient(180deg, #cdeede 0%, #e6f7ef 100%);
   }
+  :root:not([data-theme="light"]) .lr-band-tint,
+  :root[data-theme="dark"] .lr-band-tint,
   :root:not([data-theme="light"]) .lr-band-warm,
   :root[data-theme="dark"] .lr-band-warm,
   :root:not([data-theme="light"]) .lr-band-mint,
@@ -810,15 +823,27 @@
     animation: lr-cloud-drift var(--lr-dur, 90s) linear infinite;
     animation-delay: var(--lr-delay, 0s);
   }
-  /* 움직임을 줄여 달라고 한 이용자에게는 멈춰 둡니다.
-     머리카락은 SVG 필터(SMIL)로 움직이므로 CSS 로 멈출 수 없습니다.
-     대신 일그러진 겹을 통째로 숨기면 원래 사진이 그대로 보입니다. */
-  @media (prefers-reduced-motion: reduce) {
-    .lr-cloud {
-      animation: none;
+  /* 잔머리 — 뿌리(도형의 왼쪽 끝)를 축으로 끝만 살짝 찰랑입니다.
+     각도를 2도만 주는 것은 일부러입니다. 더 주면 머리카락이 아니라 더듬이처럼 움직입니다. */
+  @keyframes lr-wisp-sway {
+    from {
+      transform: rotate(-2deg);
     }
-    .lr-hair-wind {
-      display: none;
+    to {
+      transform: rotate(2deg);
+    }
+  }
+  .lr-wisp {
+    transform-box: fill-box;
+    transform-origin: 0% 50%;
+    animation: lr-wisp-sway var(--lr-dur, 4s) ease-in-out infinite alternate;
+    animation-delay: var(--lr-delay, 0s);
+  }
+  /* 움직임을 줄여 달라고 한 이용자에게는 멈춰 둡니다 */
+  @media (prefers-reduced-motion: reduce) {
+    .lr-cloud,
+    .lr-wisp {
+      animation: none;
     }
   }
 

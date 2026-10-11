@@ -20,6 +20,7 @@ import Link from 'next/link';
 import { ArticleCard } from '@/components/ArticleCard';
 import { AskBox } from '@/components/AskBox';
 import { HomeHelpFinder } from '@/components/HomeHelpFinder';
+import { CountUp } from '@/components/CountUp';
 import { HeroBannerSearch } from '@/components/HeroBannerSearch';
 import { HomeTop } from '@/components/HomeTop';
 import { Icon, type IconName } from '@/components/Icon';
@@ -434,15 +435,16 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                 {t.home.statsSubtitle}
               </p>
               <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-3 lg:grid-cols-5">
-                {stats.map((stat) => (
-                  <div key={stat.key}>
+                {stats.map((stat, index) => (
+                  <RevealBlock key={stat.key} index={index}>
                     <dt className="text-[13px] font-semibold leading-snug text-white/70">{stat.label}</dt>
                     <dd className="mt-1.5 text-3xl font-extrabold tabular-nums sm:text-4xl">
-                      {stat.value}
+                      {/* 숫자는 서버에서 완성된 값으로 그려 두고, 화면에 들어오면 0 부터 세어 올립니다 */}
+                      <CountUp value={stat.value} />
                       {stat.unit && <span className="ml-0.5 align-baseline text-base font-bold text-white/70">{stat.unit}</span>}
                     </dd>
                     {stat.note && <p className="mt-1 text-[13px] text-white/60">{stat.note}</p>}
-                  </div>
+                  </RevealBlock>
                 ))}
               </dl>
               <p className="mt-6 text-[13px] leading-relaxed text-white/60">
