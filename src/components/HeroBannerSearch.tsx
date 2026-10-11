@@ -15,6 +15,7 @@
 // 보내는 곳은 AI 질문 화면입니다. 거기에 개인정보를 적지 말라는 안내와 예시가 함께 있습니다.
 
 import Link from 'next/link';
+import { HeroPicture } from './art/HeroPicture';
 import { Icon } from './Icon';
 
 const BOX = { w: 1989, h: 791 };
@@ -36,9 +37,39 @@ export interface HeroBannerLabels {
   submit: string;
   /** 추천 검색어 세 개 */
   chips: string[];
+  /** 추천 검색어 앞에 붙는 말. 한국어는 사진에 그려져 있어 쓰지 않습니다. */
+  chipsLabel?: string;
 }
 
-export function HeroBannerSearch({ locale, labels }: { locale: string; labels: HeroBannerLabels }) {
+/**
+ * 한국어 배너: 사진을 통째로 깔고 그 위에 진짜 검색창을 포갭니다.
+ * (다른 언어 배너는 HeroBannerText 가 같은 부품을 같은 자리에 씁니다)
+ */
+export function HeroBannerKorean({ locale, labels }: { locale: string; labels: HeroBannerLabels }) {
+  return (
+    <div className="lr-hero-banner relative">
+      <HeroPicture variant="full" priority />
+      <HeroBannerSearch locale={locale} labels={labels} />
+    </div>
+  );
+}
+
+export function HeroBannerSearch({
+  locale,
+  labels,
+  flow = false,
+}: {
+  locale: string;
+  labels: HeroBannerLabels;
+  /**
+   * 추천 검색어를 줄지어 놓습니다. (한국어가 아닌 배너)
+   *
+   * 한국어는 사진에 그려진 알약 위에 정확히 포개야 해서 알약마다 자리를 못박아 둡니다.
+   * 다른 언어는 글자 길이가 달라 그 자리에 못박으면 서로 겹칩니다.
+   * (영어 "What if I cannot speak Korean?" 는 한국어 알약보다 훨씬 깁니다)
+   */
+  flow?: boolean;
+}) {
   return (
     <>
       <form
@@ -74,13 +105,17 @@ export function HeroBannerSearch({ locale, labels }: { locale: string; labels: H
         </button>
       </form>
 
-      <div className="lr-hero-chips" style={{ top: pct(CHIPS_Y.y, BOX.h), height: pct(CHIPS_Y.h, BOX.h) }}>
+      <div
+        className={`lr-hero-chips ${flow ? 'lr-hero-chips-flow' : ''}`}
+        style={{ top: pct(CHIPS_Y.y, BOX.h), height: pct(CHIPS_Y.h, BOX.h) }}
+      >
+        {flow && labels.chipsLabel && <span className="lr-hero-chips-label">{labels.chipsLabel}</span>}
         {labels.chips.slice(0, 3).map((chip, i) => (
           <Link
             key={chip}
             href={`/${locale}/ask?q=${encodeURIComponent(chip)}`}
             className="lr-hero-chip"
-            style={{ left: pct(CHIPS_X[i].x, BOX.w), minWidth: pct(CHIPS_X[i].w, BOX.w) }}
+            style={flow ? undefined : { left: pct(CHIPS_X[i].x, BOX.w), minWidth: pct(CHIPS_X[i].w, BOX.w) }}
           >
             {chip}
           </Link>

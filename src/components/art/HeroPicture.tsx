@@ -107,12 +107,27 @@ export function HeroPicture({
   variant,
   className = '',
   priority = false,
+  fill = false,
+  uid,
 }: {
-  /** full = 한국어 화면(그림 전체) · crop = 다른 언어 화면(사람과 도시만) */
+  /** full = 그림 전체 · crop = 사람과 도시만 (한국어 글자가 없는 쪽) */
   variant: 'full' | 'crop';
   className?: string;
   /** 첫 화면 맨 위에 보이는 사진이면 먼저 받아 오게 합니다 */
   priority?: boolean;
+  /**
+   * 스스로 비율을 정하지 않고 감싸는 칸을 꽉 채웁니다.
+   * 배너 오른쪽에 사람만 붙일 때 씁니다. (감싸는 칸이 잘라 쓸 범위와 같은 비율이어야 합니다)
+   */
+  fill?: boolean;
+  /**
+   * 한 화면에 이 그림이 여러 번 들어갈 때 **반드시 서로 다르게** 주세요.
+   *
+   * SVG 의 filter·mask 는 id 로 찾는데, id 가 같으면 브라우저는 문서에서 처음 만난 것 하나만 씁니다.
+   * 그 하나가 display:none 쪽에 있으면 참조가 풀려 손글씨 덮개가 통째로 안 그려집니다.
+   * (넓은 화면용 배너와 좁은 화면용 그림이 둘 다 'crop' 이라 좁은 화면에서 한국어가 비쳤던 적이 있습니다)
+   */
+  uid?: string;
 }) {
   const img = (
     // eslint-disable-next-line @next/next/no-img-element -- public/ 에 둔 고정 그림이라 최적화가 필요 없습니다
@@ -131,7 +146,7 @@ export function HeroPicture({
     return (
       <div className={`lr-hero-pic ${className}`} style={{ aspectRatio: `${IMAGE.w} / ${IMAGE.h}` }}>
         {img}
-        <HeroArt uid="full" />
+        <HeroArt uid={uid ?? 'full'} />
       </div>
     );
   }
@@ -142,11 +157,18 @@ export function HeroPicture({
   const stageLeft = -(CROP.x / CROP.w) * 100;
 
   return (
-    <div className={`lr-hero-pic ${className}`} style={{ aspectRatio: `${CROP.w} / ${IMAGE.h}` }}>
+    <div
+      // fill 일 때는 스스로 높이를 갖지 않습니다. 안쪽이 모두 absolute 라 h-full 을 주지 않으면 높이가 0 이 됩니다.
+      className={`lr-hero-pic ${fill ? 'h-full w-full' : ''} ${className}`}
+      style={fill ? undefined : { aspectRatio: `${CROP.w} / ${IMAGE.h}` }}
+    >
       <div className="absolute top-0 h-full" style={{ width: `${stageWidth}%`, left: `${stageLeft}%` }}>
         {img}
-        <HeroArt uid="crop" patch />
+        <HeroArt uid={uid ?? 'crop'} patch />
       </div>
     </div>
   );
 }
+
+/** 배너에서 사람 그림이 차지하는 가로 비율 (잘라 쓸 범위 ÷ 사진 전체) */
+export const HERO_CROP_RATIO = CROP.w / IMAGE.w;

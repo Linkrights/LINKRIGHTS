@@ -21,7 +21,8 @@ import { ArticleCard } from '@/components/ArticleCard';
 import { AskBox } from '@/components/AskBox';
 import { HomeHelpFinder } from '@/components/HomeHelpFinder';
 import { CountUp } from '@/components/CountUp';
-import { HeroBannerSearch } from '@/components/HeroBannerSearch';
+import { HeroBannerKorean } from '@/components/HeroBannerSearch';
+import { HeroBannerText } from '@/components/HeroBannerText';
 import { HomeTop } from '@/components/HomeTop';
 import { Icon, type IconName } from '@/components/Icon';
 import { RegionMap } from '@/components/art/RegionMap';
@@ -168,10 +169,17 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           call: t.nav.emergencyCall,
           rights: t.home.ctaRights,
         }}
-        // 사진 배너는 한국어 화면에서만 통째로 씁니다. 제목·검색창·추천 검색어가 그림 안에
-        // 한국어로 그려져 있어, 다른 언어 이용자에게는 읽을 수 없는 글이 되기 때문입니다.
-        // 다른 언어 화면은 같은 사진에서 사람과 도시 쪽만 잘라 쓰고 글자는 그 언어로 그립니다.
-        banner={locale === 'ko' ? <HeroBannerSearch locale={locale} labels={t.homeBanner} /> : undefined}
+        // 배너는 네 언어 모두 같은 모습입니다. 만드는 방법만 다릅니다.
+        //   한국어: 사진을 통째로 쓰고, 사진에 그려진 검색창 위에 진짜 입력칸을 포갭니다.
+        //   그 밖: 사진의 글자가 한국어라 쓸 수 없으므로, 사람과 도시만 오른쪽에 붙이고
+        //          제목·안내문·검색창은 그 언어 글자로 그립니다.
+        banner={
+          locale === 'ko' ? (
+            <HeroBannerKorean locale={locale} labels={t.homeBanner} />
+          ) : (
+            <HeroBannerText locale={locale} labels={t.homeBanner} />
+          )
+        }
       >
         <AskBox locale={locale} examples={examples} />
       </HomeTop>

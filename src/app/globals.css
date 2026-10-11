@@ -845,6 +845,39 @@
     border-radius: var(--radius-card);
     background: #cce8fe;
   }
+  /* 한국어가 아닌 화면의 배너 글자 (HeroBannerText.tsx).
+     글자 크기를 cqw(칸 너비의 %)로 두어, 배너가 커지든 작아지든 사진에 그려진 한국어 배너와 같은 비율을 지킵니다. */
+  .lr-hero-banner {
+    container-type: inline-size;
+  }
+  /* 사진의 하늘과 위에 깐 하늘색이 만나는 자리에 세로선이 보이지 않도록 왼쪽 끝을 서서히 지웁니다.
+     사람이 있는 쪽(오른쪽 70%)은 그대로 둡니다. */
+  .lr-hero-banner-pic {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 22%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 22%);
+  }
+  /* 크기는 사진에 그려진 한국어 글자를 재서 맞췄습니다.
+     제목 두 줄이 y 95~270 (175px / 791), 안내문 두 줄이 y 310~400 (90px) 입니다. */
+  .lr-hero-headline {
+    margin: 0;
+    color: #11306e;
+    font-size: 3.6cqw;
+    font-weight: 800;
+    line-height: 1.28;
+    letter-spacing: -0.01em;
+  }
+  .lr-hero-sub {
+    margin: 0;
+    color: #23416f;
+    font-size: 1.55cqw;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  .lr-hero-chips-label {
+    color: #16366b;
+    font-size: 1.45cqw;
+    font-weight: 700;
+  }
   .lr-hero-bar {
     position: absolute;
     display: flex;
@@ -866,7 +899,8 @@
     border: 0;
     background: transparent;
     color: var(--color-ink-900);
-    font-size: clamp(0.95rem, 1.35vw, 1.3rem);
+    /* 화면 너비(vw)가 아니라 배너 너비(cqw) 기준입니다. 사진에 그려진 글자와 같은 비율로 커지고 작아집니다. */
+    font-size: clamp(0.85rem, 1.75cqw, 1.4rem);
     font-weight: 500;
   }
   .lr-hero-bar-input::placeholder {
@@ -900,6 +934,28 @@
     left: 0;
     width: 100%;
   }
+  /* 한국어가 아닌 배너: 알약을 못박지 않고 줄지어 놓습니다.
+     사람 그림(오른쪽 24.6%)을 침범하지 않도록 72% 안에서만 늘어서고, 그래도 길면 끝을 … 으로 줄입니다. */
+  .lr-hero-chips-flow {
+    display: flex;
+    width: 72%;
+    align-items: center;
+    gap: 1.1cqw;
+    padding-left: 4.8%;
+  }
+  .lr-hero-chips-flow .lr-hero-chip {
+    position: static;
+    min-width: 0;
+    flex: 0 1 auto;
+    overflow: hidden;
+    padding: 0 1.1cqw;
+    font-size: clamp(0.62rem, 1.2cqw, 0.95rem);
+    text-overflow: ellipsis;
+  }
+  .lr-hero-chips-flow .lr-hero-chips-label {
+    position: static;
+    flex: none;
+  }
   .lr-hero-chip {
     position: absolute;
     top: 0;
@@ -911,7 +967,7 @@
     border-radius: 999px;
     background: #edf7ff;
     color: #16366b;
-    font-size: clamp(0.72rem, 1.05vw, 1rem);
+    font-size: clamp(0.68rem, 1.35cqw, 1.05rem);
     font-weight: 600;
     white-space: nowrap;
     transition:
