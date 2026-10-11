@@ -176,18 +176,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <AskBox locale={locale} examples={examples} />
       </HomeTop>
 
-      {/* 1-1. 시범 운영 안내 ------------------------------------------
-          아직 고쳐 나가는 중이라는 것을 첫 화면에서 먼저 알립니다. (의견을 보내는 곳으로 이어 줍니다) */}
-      <div className="border-b border-[var(--color-line)] bg-warm-100">
-        <div className="lr-container flex flex-wrap items-center gap-x-3 gap-y-1.5 py-3">
-          <p className="text-[15px] leading-relaxed text-ink-900">
-            <span className="font-bold">{t.home.betaTitle}</span> <span className="text-ink-700">{t.home.betaBody}</span>
-          </p>
-          <Link href={`/${locale}/get-involved#feedback`} className="lr-link text-[15px] font-semibold">
-            {t.home.betaCta}
-          </Link>
-        </div>
-      </div>
+      {/* 시범 운영 안내는 뺐습니다. (의견 보내기는 "함께하기" 화면에 그대로 있습니다)
+          문구(home.betaTitle/betaBody/betaCta)는 지우지 않고 두었습니다. 다시 알릴 일이 생기면 그대로 쓰면 됩니다. */}
 
       {/* 2. 무엇이 궁금하세요?: 분야 6개를 색 타일 카드로 ---------------- */}
       <RevealBlock>

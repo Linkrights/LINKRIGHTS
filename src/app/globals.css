@@ -57,12 +57,15 @@
   --color-ink-500: #5d6b82;
   --color-ink-300: #98a2b3;
 
-  /* 배경과 선
-     바탕(surface-soft)은 첫 화면 그림의 하늘색을 그대로 가져와, 페이지 전체가 맑은 하늘 아래에 있게 합니다.
-     카드·칸은 흰색(surface)이라 하늘색 위에서 또렷하게 떠 보입니다.
+  /* 배경과 선 — 셋이 하는 일이 다릅니다. 섞어 쓰면 글 목록이 바탕에 묻힙니다.
+       page         : 페이지 전체 바탕. 첫 화면 그림의 하늘색을 그대로 가져왔습니다.
+       surface      : 카드·칸. 흰색이라 하늘색 위에서 또렷하게 떠 보입니다.
+       surface-soft : 카드 **안쪽**에 한 겹 더 까는 옅은 칸 (안내문, 공지 줄, 예시 단추 등).
+                      여기에 하늘색을 쓰면 카드 안인지 바깥인지 구별이 안 되므로 흰색에 가깝게 둡니다.
      선(line)은 하늘색 위에서도 보이도록 회색이 아니라 파랑이 도는 색으로 둡니다. */
+  --color-page: #dceefc;
   --color-surface: #ffffff;
-  --color-surface-soft: #dceefc;
+  --color-surface-soft: #eff5fb;
   --color-line: #b9d6ee;
 
   /* 긴급 안내용 */
@@ -126,6 +129,8 @@
   :root:not([data-theme="light"]) {
     color-scheme: dark;
 
+    /* 어두운 화면에서는 카드 안쪽 칸을 카드보다 더 어둡게 두는 것이 자연스러워, page 와 같은 색을 씁니다 */
+    --color-page: #0d1423;
     --color-surface: #151e31;
     --color-surface-soft: #0d1423;
     --color-line: #29354a;
@@ -171,6 +176,7 @@
 :root[data-theme="dark"] {
   color-scheme: dark;
 
+  --color-page: #0d1423;
   --color-surface: #151e31;
   --color-surface-soft: #0d1423;
   --color-line: #29354a;
@@ -248,7 +254,7 @@
   }
 
   body {
-    background-color: var(--color-surface-soft);
+    background-color: var(--color-page);
     color: var(--color-ink-900);
     font-family: var(--font-sans);
     font-size: 1rem;
@@ -750,7 +756,7 @@
     background:
       radial-gradient(70rem 34rem at 80% -16%, #a9dcfb, transparent 68%),
       radial-gradient(52rem 30rem at 2% 104%, #c6e7fd, transparent 70%),
-      linear-gradient(180deg, #bfe4fd 0%, #ddf0fd 55%, var(--color-surface-soft) 100%);
+      linear-gradient(180deg, #bfe4fd 0%, #ddf0fd 55%, var(--color-page) 100%);
   }
   /* 어두운 화면에서는 하늘색을 그대로 쓰면 눈이 부십니다. 같은 모양으로 어둡게만 깔아 줍니다.
      (위의 하늘색은 고정값이라 색 이름만 바꾸는 방식으로는 어두워지지 않습니다) */
@@ -758,7 +764,7 @@
   :root[data-theme="dark"] .lr-hero {
     background:
       radial-gradient(70rem 34rem at 80% -16%, color-mix(in srgb, var(--color-brand-600) 45%, transparent), transparent 68%),
-      linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-soft) 100%);
+      linear-gradient(180deg, var(--color-surface) 0%, var(--color-page) 100%);
   }
 
   /* ---------- 분야·체크리스트 카드의 색 타일 ----------
@@ -823,26 +829,9 @@
     animation: lr-cloud-drift var(--lr-dur, 90s) linear infinite;
     animation-delay: var(--lr-delay, 0s);
   }
-  /* 잔머리 — 뿌리(도형의 왼쪽 끝)를 축으로 끝만 살짝 찰랑입니다.
-     각도를 2도만 주는 것은 일부러입니다. 더 주면 머리카락이 아니라 더듬이처럼 움직입니다. */
-  @keyframes lr-wisp-sway {
-    from {
-      transform: rotate(-2deg);
-    }
-    to {
-      transform: rotate(2deg);
-    }
-  }
-  .lr-wisp {
-    transform-box: fill-box;
-    transform-origin: 0% 50%;
-    animation: lr-wisp-sway var(--lr-dur, 4s) ease-in-out infinite alternate;
-    animation-delay: var(--lr-delay, 0s);
-  }
   /* 움직임을 줄여 달라고 한 이용자에게는 멈춰 둡니다 */
   @media (prefers-reduced-motion: reduce) {
-    .lr-cloud,
-    .lr-wisp {
+    .lr-cloud {
       animation: none;
     }
   }
