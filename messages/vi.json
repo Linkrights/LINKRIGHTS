@@ -47,7 +47,7 @@
     "staleBody": "Lần rà soát gần nhất đã khá lâu. Vui lòng xác nhận nội dung mới nhất với cơ quan chính thức."
   },
   "home": {
-    "heroTitle": "Biết mình có quyền gì,\nvà có thể hỏi ở đâu.",
+    "heroTitle": "Kết nối thông tin.\nKết nối quyền lợi.",
     "heroSubtitle": "Hãy viết điều bạn thắc mắc về trường học, việc làm, sức khỏe, cư trú hay cuộc sống. Chúng tôi sẽ sắp xếp quyền liên quan và việc bạn có thể làm ngay.",
     "ctaAsk": "Kể tình huống của tôi cho AI",
     "ctaRights": "Tìm thông tin quyền",
@@ -937,5 +937,14 @@
     "pick": "Không, để tôi tự chọn",
     "denied": "Không dùng được vị trí. Hãy chọn khu vực ở trên.",
     "note": "Chỉ kiểm tra vị trí khi bạn bấm, và chỉ để biết bạn ở tỉnh/thành nào. Vị trí không được lưu hay gửi đi."
+  },
+  "homeBanner": {
+    "placeholder": "Tìm điều bạn đang thắc mắc.",
+    "submit": "Tìm kiếm",
+    "chips": [
+      "Nếu tôi không nói được tiếng Hàn?",
+      "Bạn bè trêu chọc ở trường",
+      "Tôi muốn đi bệnh viện"
+    ]
   }
 }

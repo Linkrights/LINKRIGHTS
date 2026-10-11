@@ -802,7 +802,8 @@
       transform: translateX(0);
     }
     to {
-      transform: translateX(470px);
+      /* 그림마다 좌표 크기가 달라 지나갈 거리를 따로 줍니다 (PeopleArt 는 470, 사진 배너는 2320) */
+      transform: translateX(var(--lr-travel, 470px));
     }
   }
   @keyframes lr-hair-sway {
@@ -831,6 +832,95 @@
       animation: none;
     }
   }
+
+  /* ---------- 첫 화면 사진 배너 (art/HeroPicture.tsx · HeroBannerSearch.tsx) ----------
+     사진 안에 그려진 검색창·추천 검색어 위에 진짜 칸을 정확히 포개 놓습니다.
+     색은 사진에서 직접 읽은 값입니다. 알약 #edf7ff · 파란 단추 #1566ea · 글자 #16366b */
+  .lr-hero-pic {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    background: #cce8fe;
+  }
+  .lr-hero-bar {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0 1rem 0 1.5rem;
+    background: #ffffff;
+    border-radius: 999px;
+    box-shadow: 0 6px 18px rgba(21, 70, 150, 0.12);
+  }
+  .lr-hero-bar-icon {
+    flex: none;
+    color: #5b6b86;
+  }
+  .lr-hero-bar-input {
+    min-width: 0;
+    flex: 1;
+    height: 100%;
+    border: 0;
+    background: transparent;
+    color: var(--color-ink-900);
+    font-size: clamp(0.95rem, 1.35vw, 1.3rem);
+    font-weight: 500;
+  }
+  .lr-hero-bar-input::placeholder {
+    color: #8a97ab;
+  }
+  .lr-hero-bar-input:focus {
+    outline: none;
+  }
+  .lr-hero-bar:focus-within {
+    box-shadow:
+      0 6px 18px rgba(21, 70, 150, 0.12),
+      0 0 0 3px rgba(21, 102, 234, 0.35);
+  }
+  .lr-hero-bar-go {
+    position: absolute;
+    top: 50%;
+    translate: 0 -50%;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    border-radius: 999px;
+    background: #1566ea;
+    color: #ffffff;
+    transition: background-color 0.15s ease;
+  }
+  .lr-hero-bar-go:hover {
+    background: #0f52c0;
+  }
+  .lr-hero-chips {
+    position: absolute;
+    left: 0;
+    width: 100%;
+  }
+  .lr-hero-chip {
+    position: absolute;
+    top: 0;
+    display: inline-flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1.1rem;
+    border-radius: 999px;
+    background: #edf7ff;
+    color: #16366b;
+    font-size: clamp(0.72rem, 1.05vw, 1rem);
+    font-weight: 600;
+    white-space: nowrap;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+  }
+  .lr-hero-chip:hover {
+    background: #ffffff;
+    color: #0f52c0;
+  }
+  /* 사진이 작아지면 그려진 글자도 같이 작아져 읽을 수 없습니다.
+     그래서 좁은 화면에서는 배너를 통째로 감추고, 아래의 글자 화면만 씁니다. (page.tsx) */
 
   /* ---------- 지역 그림 (art/RegionMap.tsx) ----------
      시·도마다 한 칸씩 눌러 들어갈 수 있게 만든 지도입니다.

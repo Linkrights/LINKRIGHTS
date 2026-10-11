@@ -20,6 +20,7 @@ import Link from 'next/link';
 import { ArticleCard } from '@/components/ArticleCard';
 import { AskBox } from '@/components/AskBox';
 import { HomeHelpFinder } from '@/components/HomeHelpFinder';
+import { HeroBannerSearch } from '@/components/HeroBannerSearch';
 import { HomeTop } from '@/components/HomeTop';
 import { Icon, type IconName } from '@/components/Icon';
 import { RegionMap } from '@/components/art/RegionMap';
@@ -166,6 +167,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           call: t.nav.emergencyCall,
           rights: t.home.ctaRights,
         }}
+        // 사진 배너는 한국어 화면에서만 통째로 씁니다. 제목·검색창·추천 검색어가 그림 안에
+        // 한국어로 그려져 있어, 다른 언어 이용자에게는 읽을 수 없는 글이 되기 때문입니다.
+        // 다른 언어 화면은 같은 사진에서 사람과 도시 쪽만 잘라 쓰고 글자는 그 언어로 그립니다.
+        banner={locale === 'ko' ? <HeroBannerSearch locale={locale} labels={t.homeBanner} /> : undefined}
       >
         <AskBox locale={locale} examples={examples} />
       </HomeTop>

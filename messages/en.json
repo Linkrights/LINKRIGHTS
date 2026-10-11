@@ -47,7 +47,7 @@
     "staleBody": "The last review was a while ago. Please confirm the current details with the official organisation."
   },
   "home": {
-    "heroTitle": "Know what your rights are,\nand where to ask about them.",
+    "heroTitle": "Connecting information.\nConnecting rights.",
     "heroSubtitle": "Write what you are wondering about — school, work, health, visa or daily life. We will lay out your rights and what you can do now.",
     "ctaAsk": "Tell the AI about my situation",
     "ctaRights": "Find rights information",
@@ -937,5 +937,14 @@
     "pick": "No, let me choose",
     "denied": "We cannot use your location. Please choose an area above.",
     "note": "We check your location only when you press this, and only to tell which province you are in. It is never stored or sent."
+  },
+  "homeBanner": {
+    "placeholder": "Search what you are wondering about.",
+    "submit": "Search",
+    "chips": [
+      "What if I cannot speak Korean?",
+      "Friends tease me at school",
+      "I want to go to a hospital"
+    ]
   }
 }
