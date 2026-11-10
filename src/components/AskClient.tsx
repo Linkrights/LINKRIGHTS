@@ -120,6 +120,42 @@ function errorMessageOf(result: AskApiResponse, t: Messages): string | null {
  * 번호 동그라미. 화면에는 숫자만 보이고,
  * 화면낭독기와 글자 복사·추출에서는 "1. 상황을…"처럼 번호와 문장이 떨어져 읽힙니다.
  */
+/**
+ * 링라가 답을 만드는 동안 보여 주는 화면입니다.
+ *
+ * 10~45초가 걸릴 수 있어서, 도는 동그라미만 두면 멈춘 것처럼 느껴집니다.
+ * 그래서 서버가 실제로 하는 차례(등록된 자료 찾기 → 상황에 맞는지 보기 → 답 정리하기)를 차례로 보여 줍니다.
+ * 진짜 진행률을 재는 것이 아니라 "무엇을 하는 중인지" 알려 주는 안내라, 마지막 단계에서 멈춰 기다립니다.
+ */
+function ThinkingSteps({ steps, fallback }: { steps: string[]; fallback: string }) {
+  const [at, setAt] = useState(0);
+
+  useEffect(() => {
+    if (steps.length < 2) return;
+    const timer = window.setInterval(() => setAt((n) => (n + 1 < steps.length ? n + 1 : n)), 3500);
+    return () => window.clearInterval(timer);
+  }, [steps.length]);
+
+  const label = steps[at] ?? fallback;
+  return (
+    <div className="lr-card p-7 text-center text-[15px] text-ink-500">
+      <span className="mx-auto mb-3 block h-6 w-6 animate-spin rounded-full border-2 border-brand-200 border-t-brand-600" />
+      {/* 화면낭독기에도 바뀌는 단계를 알려 줍니다 */}
+      <p aria-live="polite">{label}</p>
+      {steps.length > 1 && (
+        <span aria-hidden="true" className="mt-3 flex items-center justify-center gap-1.5">
+          {steps.map((step, i) => (
+            <span
+              key={step}
+              className={`h-1.5 rounded-full transition-all ${i <= at ? 'w-5 bg-brand-500' : 'w-1.5 bg-brand-200'}`}
+            />
+          ))}
+        </span>
+      )}
+    </div>
+  );
+}
+
 function StepNumber({ index }: { index: number }) {
   return (
     <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand-600 text-[15px] font-bold text-white">
@@ -286,9 +322,18 @@ function ResultView({
 
       {result.ok && answer && (
         <article className="lr-card lr-appear overflow-hidden">
-          {/* 답변 전체를 소리로 듣기: 한 번 누르면 아래 내용을 이어서 읽습니다.
-              (번호마다 따로 읽어주는 것이 아니라 전체를 읽으므로 맨 위에 둡니다) */}
-          <div className="border-b border-[var(--color-line)] px-5 py-3 sm:px-7">
+          {/* 누가 답했는지 — 링라(AI 안내)임을 답변 맨 위에 밝힙니다.
+              사람이 검토해 준 답으로 오해하지 않도록, 이름 옆에 "AI 안내"를 함께 답니다. */}
+          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-[var(--color-line)] px-5 py-3 sm:px-7">
+            <p className="flex items-center gap-2 text-[15px] font-bold text-brand-700">
+              <span className="grid h-7 w-7 place-items-center rounded-full bg-brand-50 text-brand-600">
+                <Icon name="sparkles" size={16} />
+              </span>
+              {t.ai.answerBy}
+              <span className="rounded-full bg-surface-soft px-2 py-0.5 text-[12px] font-semibold text-ink-500">
+                {t.ai.kind}
+              </span>
+            </p>
             <ReadAloud blocks={readBlocks} locale={locale} labels={t.readAloud} />
           </div>
 
@@ -894,12 +939,7 @@ export function AskClient({
           </div>
         ))}
 
-        {loading && (
-          <div className="lr-card p-7 text-center text-[15px] text-ink-500">
-            <span className="mx-auto mb-3 block h-6 w-6 animate-spin rounded-full border-2 border-brand-200 border-t-brand-600" />
-            {t.ask.sending}
-          </div>
-        )}
+        {loading && <ThinkingSteps steps={t.ask.sendingSteps} fallback={t.ask.sending} />}
 
         {canFollowUp && (
           <form

@@ -16,6 +16,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { HeroPicture } from './art/HeroPicture';
+import { HeroVideoBackdrop, type HeroVideoLabels, type HeroVideoSources } from './art/HeroVideoBackdrop';
 import { Icon } from './Icon';
 
 interface HomeTopLabels {
@@ -69,6 +70,7 @@ export function HomeTop({
   labels,
   contacts,
   banner,
+  video,
   children,
 }: {
   locale: string;
@@ -77,24 +79,38 @@ export function HomeTop({
   contacts: { id: string; name: string; phone: string }[];
   /** 넓은 화면에 깔 배너. 언어에 따라 만드는 방법이 달라 page.tsx 에서 골라 넘깁니다. */
   banner: ReactNode;
+  /**
+   * 배너 **뒤**에 깔 배경 영상. public 에 파일이 있을 때만 넘어옵니다.
+   * 영상이 있으면 뒤가 어두워지므로 제목과 설명을 흰 글자로 바꿉니다.
+   */
+  video?: { sources: HeroVideoSources; poster?: string; labels: HeroVideoLabels };
   /** 질문 칸 (AskBox) */
   children: ReactNode;
 }) {
+  const onVideo = Boolean(video);
   return (
-    <section aria-labelledby="home-hero-title" className="lr-hero">
-      <div className="lr-container py-10 sm:py-12 lg:py-14">
-        <p className="lr-eyebrow text-brand-700">{labels.eyebrow}</p>
-        <h1 id="home-hero-title" className="lr-display mt-3 whitespace-pre-line text-ink-900">
+    <section aria-labelledby="home-hero-title" className={`lr-hero ${onVideo ? 'lr-hero-video' : ''}`}>
+      {video && <HeroVideoBackdrop sources={video.sources} poster={video.poster} labels={video.labels} />}
+      <div className="lr-container relative py-10 sm:py-12 lg:py-14">
+        <p className={`lr-eyebrow ${onVideo ? 'text-white/85' : 'text-brand-700'}`}>{labels.eyebrow}</p>
+        <h1
+          id="home-hero-title"
+          className={`lr-display mt-3 whitespace-pre-line ${onVideo ? 'text-white [text-shadow:0_2px_14px_rgba(8,26,56,0.5)]' : 'text-ink-900'}`}
+        >
           {labels.title}
         </h1>
 
         {/* 넓은 화면: 배너 */}
         <div className="mt-7 hidden lg:block">{banner}</div>
 
-        {/* 좁은 화면: 배너는 가로로 길어 글씨가 너무 작아지므로, 사람 그림만 보여 주고 설명은 글자로 */}
+        {/* 좁은 화면: 배너는 가로로 길어 글씨가 너무 작아지므로, 사람 그림만 보여 주고 설명은 글자로.
+            그림이 세로로 길어(가로:세로 ≈ 0.62) 그대로 두면 질문 칸이 첫 화면 밖으로 밀려납니다.
+            그래서 높이를 화면의 40%로 묶고 아래쪽을 잘라 냅니다. 얼굴은 위쪽에 있어 잘리지 않습니다. */}
         <div className="mt-6 lg:hidden">
-          <HeroPicture variant="crop" className="mx-auto w-full max-w-[18rem]" priority />
-          <p className="lr-lead mt-6">{labels.subtitle}</p>
+          <div className="mx-auto w-full max-w-[16rem] overflow-hidden rounded-[var(--radius-card)] [max-height:40svh]">
+            <HeroPicture variant="crop" priority />
+          </div>
+          <p className={`lr-lead mt-6 ${onVideo ? 'text-white/90' : ''}`}>{labels.subtitle}</p>
         </div>
 
         {/* 질문 칸: 첫 화면에서 바로 시작할 수 있게 */}

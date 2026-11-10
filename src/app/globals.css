@@ -753,15 +753,39 @@
     position: relative;
     overflow: hidden;
     border-bottom: 1px solid var(--color-line);
+  }
+  /* 하늘색은 영상이 없을 때만. (영상이 깔리면 이 그러데이션이 영상을 덮어 버립니다) */
+  .lr-hero:not(.lr-hero-video) {
     background:
       radial-gradient(70rem 34rem at 80% -16%, #a9dcfb, transparent 68%),
       radial-gradient(52rem 30rem at 2% 104%, #c6e7fd, transparent 70%),
       linear-gradient(180deg, #bfe4fd 0%, #ddf0fd 55%, var(--color-page) 100%);
   }
+  /* 배경 영상이 깔릴 때.
+     isolation 이 꼭 필요합니다. 영상 겹은 z-index: -10 로 글 뒤에 눕는데,
+     이 칸이 "쌓임 맥락"을 만들지 않으면 영상이 이 칸의 배경보다도 더 뒤로 빠져 아예 안 보입니다. */
+  .lr-hero-video {
+    isolation: isolate;
+    background: #0b1c3a;
+  }
+  /* 영상·대표그림을 어둡게 깔아 두는 겹.
+     이 영상에는 흰 벽과 흰 하늘이 있어(밝기 0.99) 덮개만 씌워서는 흰 글자가 1.5:1 까지 떨어집니다.
+     여기서 먼저 어둡게 만들어 두면, 가장 밝은 장면에서도 흰 글자가 5.5:1 이상으로 읽힙니다.
+     (움직임은 그대로 보이고, 색만 차분해집니다) */
+  .lr-hero-video-layer {
+    filter: brightness(0.48) saturate(1.05);
+  }
+
   /* 어두운 화면에서는 하늘색을 그대로 쓰면 눈이 부십니다. 같은 모양으로 어둡게만 깔아 줍니다.
      (위의 하늘색은 고정값이라 색 이름만 바꾸는 방식으로는 어두워지지 않습니다) */
-  :root:not([data-theme="light"]) .lr-hero,
-  :root[data-theme="dark"] .lr-hero {
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .lr-hero:not(.lr-hero-video) {
+      background:
+        radial-gradient(70rem 34rem at 80% -16%, color-mix(in srgb, var(--color-brand-600) 45%, transparent), transparent 68%),
+        linear-gradient(180deg, var(--color-surface) 0%, var(--color-page) 100%);
+    }
+  }
+  :root[data-theme="dark"] .lr-hero:not(.lr-hero-video) {
     background:
       radial-gradient(70rem 34rem at 80% -16%, color-mix(in srgb, var(--color-brand-600) 45%, transparent), transparent 68%),
       linear-gradient(180deg, var(--color-surface) 0%, var(--color-page) 100%);
@@ -784,7 +808,15 @@
   .lr-tile-life { background: #eef0fb; color: #41479b; }
   .lr-tile-human-rights { background: #f6eaff; color: #6b3597; }
   .lr-tile-organizations { background: #e3f4f7; color: #16667a; }
-  :root:not([data-theme="light"]) .lr-tile,
+  /* 아래 두 덩이는 같은 내용입니다.
+     위는 "기기가 어두운 화면일 때", 아래는 "이용자가 직접 어두운 화면을 고른 때".
+     @media 로 감싸지 않으면 data-theme 이 비어 있는 보통 상태에도 걸려,
+     밝은 화면에서 위에 적은 또렷한 색이 통째로 지워집니다. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .lr-tile {
+      background: color-mix(in srgb, currentColor 18%, transparent);
+    }
+  }
   :root[data-theme="dark"] .lr-tile {
     background: color-mix(in srgb, currentColor 18%, transparent);
   }
@@ -803,11 +835,19 @@
   .lr-band-mint {
     background: linear-gradient(180deg, #cdeede 0%, #e6f7ef 100%);
   }
-  :root:not([data-theme="light"]) .lr-band-tint,
+  /* 아래 두 덩이는 같은 내용입니다.
+     위는 "기기가 어두운 화면일 때", 아래는 "이용자가 직접 어두운 화면을 고른 때".
+     @media 로 감싸지 않으면 data-theme 이 비어 있는 보통 상태에도 걸려,
+     밝은 화면에서 위에 적은 또렷한 색이 통째로 지워집니다. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .lr-band-tint,
+    :root:not([data-theme="light"]) .lr-band-warm,
+    :root:not([data-theme="light"]) .lr-band-mint {
+      background: color-mix(in srgb, var(--color-brand-50) 45%, var(--color-surface));
+    }
+  }
   :root[data-theme="dark"] .lr-band-tint,
-  :root:not([data-theme="light"]) .lr-band-warm,
   :root[data-theme="dark"] .lr-band-warm,
-  :root:not([data-theme="light"]) .lr-band-mint,
   :root[data-theme="dark"] .lr-band-mint {
     background: color-mix(in srgb, var(--color-brand-50) 45%, var(--color-surface));
   }

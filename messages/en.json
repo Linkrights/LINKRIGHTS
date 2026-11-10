@@ -1,8 +1,8 @@
 {
   "nav": {
     "home": "Home",
-    "ask": "Ask AI",
-    "askShort": "Ask the AI",
+    "ask": "Ask Lingra",
+    "askShort": "Ask Lingra",
     "rights": "Rights info",
     "organizations": "Get help",
     "about": "About",
@@ -49,7 +49,7 @@
   "home": {
     "heroTitle": "Connecting information.\nConnecting rights.",
     "heroSubtitle": "Write what you are wondering about — school, work, health, visa or daily life. We will lay out your rights and what you can do now.",
-    "ctaAsk": "Tell the AI about my situation",
+    "ctaAsk": "Tell Lingra about my situation",
     "ctaRights": "Find rights information",
     "askPlaceholder": "e.g. I worked part-time but I still haven't been paid.",
     "askButton": "Find my rights",
@@ -58,8 +58,8 @@
     "browseSubtitle": "Pick the area you want to know about.",
     "problemTitle": "The problem LINKRIGHTS works on",
     "problemSubtitle": "The information exists. It is just scattered and hard to read.",
-    "aiTitle": "How the AI guide works",
-    "aiSubtitle": "Built so the AI does not make things up.",
+    "aiTitle": "How Lingra answers",
+    "aiSubtitle": "Built so Lingra does not make things up.",
     "aiPoints": [
       {
         "title": "Only registered material",
@@ -111,7 +111,7 @@
     "betaCta": "Send us your thoughts"
   },
   "ask": {
-    "title": "Ask the AI guide",
+    "title": "Ask Lingra",
     "subtitle": "Write about the situation you are in. We can answer in any language.",
     "placeholder": "e.g. I worked part-time but I still haven't been paid.",
     "questionHeading": "What would you like to ask about?",
@@ -119,7 +119,7 @@
     "submitFirst": "Find my rights",
     "privacyShort": "Do not enter personal details such as your name, phone number, address or passport number.",
     "submit": "Send question",
-    "sending": "Looking this up",
+    "sending": "Lingra is looking it up",
     "newQuestion": "Ask a new question",
     "newConversation": "New question",
     "followUpTitle": "Ask a follow-up question",
@@ -127,7 +127,7 @@
     "myQuestion": "Your question",
     "privacyTitle": "Please do not enter personal details",
     "privacyBody": "Do not type your name, phone number, address, passport number, alien registration number, visa number or medical records. Describing the situation is enough.",
-    "disclaimer": "The AI answer is here to help you get started. Before an important decision about law, health or your stay, please check once more with the relevant organisation.",
+    "disclaimer": "Lingra is an AI. Its answer is here to help you get started, so before an important decision about law, health or your stay, please check once more with the relevant organisation.",
     "sessionTitle": "This conversation stays in this tab only.",
     "sessionBody": "If you refresh or go back and return, you can still see the answer you just got. It disappears when you close the tab, and your question is not stored on our server.",
     "sessionRestored": "We brought back the conversation you were having.",
@@ -164,10 +164,15 @@
     },
     "errorGeneric": "We could not produce an answer right now. Please try again shortly, or browse the rights information below.",
     "errorRateLimit": "That was a lot of questions very quickly. Please wait a moment and try again.",
-    "errorDailyLimit": "Today's AI question limit has been reached. Please browse the rights pages or try again tomorrow.",
+    "errorDailyLimit": "You have used all of today's questions to Lingra. Please browse the rights pages or try again tomorrow.",
     "errorTooLong": "That question is too long. Please shorten it and send again.",
     "errorEmpty": "Please type a question.",
-    "fallbackTitle": "Try this information instead"
+    "fallbackTitle": "Try this information instead",
+    "sendingSteps": [
+      "Searching the registered rights information",
+      "Checking what fits your situation",
+      "Putting the answer together"
+    ]
   },
   "homeBrand": {
     "eyebrow": "Rights information platform for migrant-background youth",
@@ -194,7 +199,7 @@
     "subtitle": "Pick the one that fits your situation and start there.",
     "rightsTitle": "Rights information",
     "rightsBody": "When you want to know what your rights are",
-    "askTitle": "Ask the AI",
+    "askTitle": "Ask Lingra",
     "askBody": "When you want to describe your own situation",
     "checklistTitle": "Checklists",
     "checklistBody": "When you want to go through what to check, one by one",
@@ -208,7 +213,7 @@
     "subtitle": "Search with a word you already know, or describe your situation in a sentence.",
     "searchTitle": "Search by keyword",
     "searchBody": "Find rights information, checklists and Q&A posts with a word or topic you already know.",
-    "askTitle": "Ask the AI",
+    "askTitle": "Ask Lingra",
     "askBody": "Describe your situation in your own words and we will sum up the related rights and what you can do now.",
     "askCta": "Describe my situation",
     "flowLabel": "How LINKRIGHTS connects",
@@ -494,7 +499,7 @@
     "more": "Read more",
     "orgLink": "See where to get help",
     "articleLink": "Read the related rights information",
-    "askLink": "Ask AI about my situation",
+    "askLink": "Ask Lingra about my situation",
     "requestTitle": "Is something missing?",
     "requestBody": "Tell us what you think should be on this checklist and we will review it.",
     "requestCta": "Suggest something for this checklist",
@@ -563,14 +568,9 @@
     "other": "other languages"
   },
   "heroVideo": {
-    "label": "LINKRIGHTS introduction video",
-    "caption": "We're building a platform that shows related rights and where to get help when you describe your situation.",
-    "play": "Play introduction video",
-    "pause": "Pause introduction video",
-    "playFull": "Watch full video",
-    "duration": "2:32",
-    "close": "Close",
-    "note": "The text in the video is in English. The website screens in the video are example screens from our design process."
+    "play": "Play background video",
+    "pause": "Pause background video",
+    "note": "A silent background video. You can pause it."
   },
   "cycle": {
     "title": "The virtuous cycle LINKRIGHTS wants to build",
@@ -660,7 +660,7 @@
     "empty": "We couldn't find matching rights information. Try another word or browse by topic.",
     "emptyQuery": "Type a word you want to find.",
     "askNote": "Want to describe your situation in your own words?",
-    "askCta": "Explain it to the AI",
+    "askCta": "Explain it to Lingra",
     "emergencyTitle": "Are you in danger right now?",
     "browseAll": "Browse all topics",
     "typeArticle": "Rights info",
@@ -737,7 +737,7 @@
     "filterAll": "All",
     "categories": {
       "usage": "How to use",
-      "ai": "Asking the AI",
+      "ai": "Asking Lingra",
       "privacy": "Privacy & security",
       "rights": "Rights info",
       "programs": "Programmes & organisations",
@@ -745,7 +745,7 @@
     },
     "categoryTitles": {
       "usage": "How to use LINKRIGHTS",
-      "ai": "Asking the AI",
+      "ai": "Asking Lingra",
       "privacy": "Privacy and security",
       "rights": "Rights information",
       "programs": "Programmes and connecting to organisations",
@@ -755,7 +755,7 @@
     "noResultsTitle": "No matching questions",
     "noResultsBody": "Try another word. If you want to know about your own situation, you can ask the AI.",
     "clearSearch": "Clear search",
-    "askCta": "Ask the AI"
+    "askCta": "Ask Lingra"
   },
   "privacy": {
     "title": "Privacy notice",
@@ -923,7 +923,7 @@
     "title": "Quick links",
     "organizations": "Where to get help",
     "programs": "Programs",
-    "ask": "Ask the AI",
+    "ask": "Ask Lingra",
     "community": "Community",
     "hide": "Hide",
     "show": "Show",
@@ -949,5 +949,12 @@
     "headline": "Living in Korea\nand something comes up?",
     "sub": "School, work, hospital, visa, daily life —\nfind what you are wondering about on LINKRIGHTS.",
     "chipsLabel": "Popular searches"
+  },
+  "ai": {
+    "name": "Lingra",
+    "kind": "AI guide",
+    "intro": "Lingra is an AI guide that answers only from the rights information registered on LINKRIGHTS. If something is not in that material, Lingra says so.",
+    "answerBy": "From Lingra",
+    "thinking": "Lingra is looking it up"
   }
 }

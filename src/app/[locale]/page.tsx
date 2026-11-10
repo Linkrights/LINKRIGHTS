@@ -71,15 +71,18 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   // 검색창 자동완성: 등록된 권리정보의 키워드에서만 가져옵니다.
   const suggestions = searchSuggestions(locale);
 
-  // 소개 영상: 팀이 만든 LINKRIGHTS 소개 영상 전체(화질 개선본 "링크라이츠 화질", 자르지 않은 웹용 압축본, 소리 없음).
-  // 데스크톱·태블릿은 1920×1080, 휴대폰은 세로 화면에 맞춰 가운데를 자른 세로 영상입니다.
-  // public 폴더에 파일이 있을 때만 씁니다. (없으면 대표 이미지 또는 네이비 배경만)
+  // 첫 화면 배너 뒤에 깔 배경 영상. public 에 파일이 있을 때만 씁니다.
+  // (파일이 없으면 영상 없이 지금의 하늘색 배경 그대로 나옵니다)
   const publicFile = (file: string) => fs.existsSync(path.join(process.cwd(), 'public', file));
-  const heroVideo = {
-    desktop: '/videos/linkrights-hero-1080.mp4',
-    mobile: '/videos/linkrights-hero-mobile.mp4',
-    poster: '/images/hero-poster-hd.jpg',
-  };
+  const heroVideo = publicFile('videos/linkrights-theme.mp4')
+    ? {
+        desktop: '/videos/linkrights-theme.mp4',
+        mobile: publicFile('videos/linkrights-theme-mobile.mp4')
+          ? '/videos/linkrights-theme-mobile.mp4'
+          : undefined,
+        poster: publicFile('videos/linkrights-theme-poster.jpg') ? '/videos/linkrights-theme-poster.jpg' : undefined,
+      }
+    : undefined;
   // 첫 화면 긴급 연락처는 등록된 기관(content/organizations.json)의 번호만 씁니다.
   const heroContacts = resolveOrganizations(['police-112', 'fire-119']).map((org) => ({
     id: org.id,
@@ -173,6 +176,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         //   한국어: 사진을 통째로 쓰고, 사진에 그려진 검색창 위에 진짜 입력칸을 포갭니다.
         //   그 밖: 사진의 글자가 한국어라 쓸 수 없으므로, 사람과 도시만 오른쪽에 붙이고
         //          제목·안내문·검색창은 그 언어 글자로 그립니다.
+        video={
+          heroVideo
+            ? { sources: { desktop: heroVideo.desktop, mobile: heroVideo.mobile }, poster: heroVideo.poster, labels: t.heroVideo }
+            : undefined
+        }
         banner={
           locale === 'ko' ? (
             <HeroBannerKorean locale={locale} labels={t.homeBanner} />
@@ -322,11 +330,16 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <Section tone="warm" reveal>
         <div className="grid gap-8 rounded-[var(--radius-card)] border border-[var(--color-line)] bg-white p-6 sm:p-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12">
           <div className="min-w-0">
-            <p className="flex items-center gap-2 text-[15px] font-bold text-brand-700">
-              <Icon name="sparkles" size={18} /> LINKRIGHTS AI
+            {/* AI 에 이름을 붙여 둡니다. 이름 옆에 "AI 안내"를 같이 적어, 사람이 답하는 것으로 오해하지 않게 합니다. */}
+            <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[15px] font-bold text-brand-700">
+              <Icon name="sparkles" size={18} /> {t.ai.name}
+              <span className="rounded-full bg-brand-50 px-2 py-0.5 text-[13px] font-semibold text-brand-700">
+                {t.ai.kind}
+              </span>
             </p>
             <h2 className="lr-h2 mt-2">{t.homeAsk.ctaTitle}</h2>
             <p className="lr-body mt-3 max-w-xl">{t.homeAsk.subtitle}</p>
+            <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-ink-500">{t.ai.intro}</p>
             <Link href={`/${locale}/ask`} className="lr-btn lr-btn-primary lr-btn-lg lr-press mt-6">
               {t.nav.ask} <Icon name="arrow-right" size={18} />
             </Link>
