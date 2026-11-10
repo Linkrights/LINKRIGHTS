@@ -1,16 +1,13 @@
 // 홈 첫 화면입니다. 네 가지 언어 모두 같은 모습입니다.
 //
-//   제목(정보를 잇다. 권리를 잇다.) → 넓은 배너 → 질문 칸 → 긴급 연락처
+//   배경 영상 위에 → 제목(정보를 잇다. 권리를 잇다.) → 한 줄 설명 → 검색창 → 긴급 연락처
 //
-// 배너만 언어에 따라 만드는 방법이 다릅니다.
-//   한국어: 팀에서 만든 사진을 통째로 씁니다. 제목·검색창·추천 검색어가 사진에 **그려져** 있어서,
-//           그 위에 진짜 입력칸만 정확히 포갭니다.
-//   그 밖:  사진에 그려진 글자가 한국어라 쓸 수 없습니다. 그래서 사람과 도시만 오른쪽에 붙이고
-//           제목·안내문·검색창·추천 검색어는 그 언어 글자로 그립니다. (모습은 한국어와 같게 맞췄습니다)
+// 예전에는 팀에서 만든 사진 배너를 크게 깔았는데, 배경 영상이 들어오면서 그림이 두 겹이 되었습니다.
+// 그래서 사진 배너를 걷어 내고 영상만 남겼습니다.
+// 사진에 그려져 있던 제목·검색창·추천 검색어 가운데, 제목과 검색창은 이제 글자와 진짜 입력칸으로 둡니다.
+// (HeroBannerSearch·HeroBannerText·HeroPicture 는 지우지 않고 남겨 두었습니다. 다시 쓸 일이 생기면 그대로 씁니다)
 //
-// 좁은 화면에서는 배너를 숨기고 글자만 둡니다.
-// 배너는 가로로 긴 모양이라, 좁은 화면에서는 글씨가 읽을 수 없을 만큼 작아지기 때문입니다.
-//
+// 영상이 깔리면 뒤가 어두워지므로 글자는 흰색으로 바꿉니다.
 // 글과 칸은 서버에서 그리므로 자바스크립트가 늦거나 막혀도 그대로 보입니다.
 
 import Link from 'next/link';
@@ -27,25 +24,38 @@ interface HomeTopLabels {
   rights: string;
 }
 
-/** 긴급 연락처와 권리정보 바로가기 — 두 모습 모두 아래쪽에 같은 모양으로 둡니다 */
+/** 긴급 연락처와 권리정보 바로가기 — 두 모습 모두 아래쪽에 같은 모양으로 둡니다.
+ *
+ *  영상이 깔리면 뒤가 어두워지므로 글자를 흰색으로 바꿉니다.
+ *  원래 쓰던 파란색·빨간색은 어두운 영상 위에서 거의 읽히지 않았습니다.
+ *  (112·119 알약은 흰 바탕이라 그대로 두어도 또렷합니다) */
 function QuickLinks({
   locale,
   labels,
   contacts,
+  onVideo,
 }: {
   locale: string;
   labels: HomeTopLabels;
   contacts: { id: string; name: string; phone: string }[];
+  onVideo: boolean;
 }) {
   return (
     <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
-      <Link href={`/${locale}/rights`} className="lr-link inline-flex items-center gap-1.5 text-[15px] font-bold">
+      <Link
+        href={`/${locale}/rights`}
+        className={`inline-flex items-center gap-1.5 text-[15px] font-bold ${
+          onVideo ? 'text-white hover:underline' : 'lr-link'
+        }`}
+      >
         {labels.rights} <Icon name="arrow-right" size={16} />
       </Link>
       <span className="flex flex-wrap items-center gap-2 text-sm">
         <Link
           href={`/${locale}/emergency`}
-          className="inline-flex items-center gap-1.5 font-semibold text-[var(--color-danger-700)] hover:underline"
+          className={`inline-flex items-center gap-1.5 font-semibold hover:underline ${
+            onVideo ? 'text-white' : 'text-[var(--color-danger-700)]'
+          }`}
         >
           <Icon name="alert" size={15} className="shrink-0" /> {labels.emergency}
         </Link>
@@ -68,7 +78,6 @@ export function HomeTop({
   locale,
   labels,
   contacts,
-  banner,
   video,
   children,
 }: {
@@ -76,21 +85,19 @@ export function HomeTop({
   labels: HomeTopLabels;
   /** 등록된 긴급 기관 (112·119) */
   contacts: { id: string; name: string; phone: string }[];
-  /** 넓은 화면에 깔 배너. 언어에 따라 만드는 방법이 달라 page.tsx 에서 골라 넘깁니다. */
-  banner: ReactNode;
   /**
    * 배너 **뒤**에 깔 배경 영상. public 에 파일이 있을 때만 넘어옵니다.
    * 영상이 있으면 뒤가 어두워지므로 제목과 설명을 흰 글자로 바꿉니다.
    */
   video?: { sources: HeroVideoSources; poster?: string; labels: HeroVideoLabels };
-  /** 질문 칸 (AskBox) */
+  /** 검색창 (AskBox) */
   children: ReactNode;
 }) {
   const onVideo = Boolean(video);
   return (
     <section aria-labelledby="home-hero-title" className={`lr-hero ${onVideo ? 'lr-hero-video' : ''}`}>
       {video && <HeroVideoBackdrop sources={video.sources} poster={video.poster} labels={video.labels} />}
-      <div className="lr-container relative py-10 sm:py-12 lg:py-14">
+      <div className="lr-container relative py-12 sm:py-16 lg:py-24">
         <p className={`lr-eyebrow ${onVideo ? 'text-white/85' : 'text-brand-700'}`}>{labels.eyebrow}</p>
         <h1
           id="home-hero-title"
@@ -99,22 +106,11 @@ export function HomeTop({
           {labels.title}
         </h1>
 
-        {/* 넓은 화면: 배너 */}
-        <div className="mt-7 hidden lg:block">{banner}</div>
+        <p className={`lr-lead mt-6 max-w-2xl ${onVideo ? 'text-white/90' : ''}`}>{labels.subtitle}</p>
 
-        {/* 좁은 화면: 배너는 가로로 길어 글씨가 너무 작아지므로, 설명을 글자로 둡니다.
-            그림은 따로 두지 않습니다 — 뒤에 배경 영상(없으면 대표 그림)이 이미 깔립니다. */}
-        <div className="mt-6 lg:hidden">
-          <p className={`lr-lead ${onVideo ? 'text-white/90' : ''}`}>{labels.subtitle}</p>
-        </div>
-
-        {/* 질문 칸: 첫 화면에서 바로 시작할 수 있게 */}
-        <div className="mt-7">
-          <div className="rounded-[var(--radius-card)] border border-[var(--color-line)] bg-white p-4 shadow-[0_12px_32px_rgba(14,37,79,0.08)] sm:p-5">
-            {children}
-          </div>
-        </div>
-        <QuickLinks locale={locale} labels={labels} contacts={contacts} />
+        {/* 검색창 하나만 둡니다. 하얀 카드로 감싸지 않습니다 — 안에 검색창뿐이라 자리만 먹었습니다. */}
+        <div className="mt-7 max-w-2xl">{children}</div>
+        <QuickLinks locale={locale} labels={labels} contacts={contacts} onVideo={onVideo} />
       </div>
     </section>
   );

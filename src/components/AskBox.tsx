@@ -1,8 +1,16 @@
 'use client';
 
-// 홈 화면의 "내 상황을 말해보는 공간"입니다.
-// 여기서 질문을 쓰면 AI 질문 페이지(/ask)로 이동합니다.
-// 개인정보로 보이는 내용이 있으면 이동하기 전에 확인합니다. (PrivacyNotice 참고)
+// 첫 화면의 검색창입니다. 여기에 쓰면 AI 질문 페이지(/ask)로 넘어갑니다.
+//
+// 일부러 검색창 하나만 둡니다.
+// 제목·안내문·예시는 질문 페이지에 그대로 있고, 첫 화면에서는 배너가 이미 같은 말을 하고 있어서
+// 여기까지 글을 채우면 첫 화면이 길어져 정작 쓸 칸이 아래로 밀려났습니다.
+//
+// 개인정보 보호는 그대로입니다.
+//   - 쓰는 동안 개인정보로 보이는 것을 찾아내고(findPersonalInfo),
+//     있으면 넘어가기 전에 멈춰 세워 확인합니다. (PrivacyNotice)
+//   - "개인정보를 적지 마세요" 안내문은 실제로 길게 쓰는 곳인 질문 페이지에 있습니다.
+//   - 질문은 주소(URL)에 담지 않고 이 탭의 임시 저장소로만 넘깁니다.
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -14,12 +22,12 @@ import { getMessages, type Locale } from '@/lib/i18n';
 /** 홈에서 쓴 질문을 질문 페이지로 넘길 때 쓰는 이 탭의 임시 저장소 이름 (AskClient 가 읽고 바로 지웁니다) */
 export const PENDING_QUESTION_KEY = 'linkrights:pending-question';
 
-export function AskBox({ locale, examples }: { locale: Locale; examples: string[] }) {
+export function AskBox({ locale }: { locale: Locale }) {
   const t = getMessages(locale);
   const router = useRouter();
   const [value, setValue] = useState('');
   const [blocked, setBlocked] = useState(false);
-  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const noticeRef = useRef<HTMLDivElement>(null);
   const matches = useMemo(() => findPersonalInfo(value), [value]);
 
@@ -50,75 +58,61 @@ export function AskBox({ locale, examples }: { locale: Locale; examples: string[
   }
 
   return (
-    <div>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          if (matches.length > 0) setBlocked(true);
-          else go(value);
-        }}
-      >
-        <label htmlFor="hero-question" className="block">
-          <span className="block text-xl font-extrabold tracking-tight text-ink-900 sm:text-2xl">
-            {t.ask.questionHeading}
-          </span>{' '}
-          <span className="mt-1.5 block text-[15px] leading-relaxed text-ink-500">{t.ask.questionHint}</span>
-        </label>
-        {/* 개인정보 입력 금지 안내: 쓰기 전에 먼저 보이도록 입력창 위에 둡니다 */}
-        <p className="mt-3 flex items-start gap-2 rounded-[var(--radius-control)] bg-brand-50 px-3 py-2 text-sm font-medium leading-relaxed text-brand-800">
-          <Icon name="shield" size={16} className="mt-0.5 shrink-0" /> <span>{t.ask.privacyShort}</span>
-        </p>
-        <textarea
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        if (matches.length > 0) setBlocked(true);
+        else go(value);
+      }}
+    >
+      <label htmlFor="hero-question" className="sr-only">
+        {t.ask.questionHeading}
+      </label>
+      <div className="relative">
+        <Icon
+          name="search"
+          size={20}
+          aria-hidden
+          className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-300"
+        />
+        <input
           ref={inputRef}
           id="hero-question"
+          type="text"
           value={value}
-          rows={3}
           maxLength={500}
+          autoComplete="off"
           onChange={(event) => {
             setValue(event.target.value);
             setBlocked(false);
           }}
           placeholder={t.home.askPlaceholder}
-          className="lr-input mt-4 resize-none"
+          className="lr-input !rounded-full py-4 pl-12 pr-16 shadow-[0_10px_30px_rgba(14,37,79,0.14)]"
         />
-        <PrivacyNotice
-          t={t}
-          matches={matches}
-          blocked={blocked}
-          noticeRef={noticeRef}
-          onRemove={() => {
-            setValue(removePersonalInfo(value, matches));
-            inputRef.current?.focus();
-          }}
-          onRemoveAndSend={removeAndSend}
-          onEdit={() => {
-            setBlocked(false);
-            inputRef.current?.focus();
-          }}
-        />
-        <button type="submit" disabled={!value.trim()} className="lr-btn lr-btn-primary lr-btn-lg mt-4 w-full">
-          {t.home.askButton} <Icon name="arrow-right" size={18} />
+        <button
+          type="submit"
+          disabled={!value.trim()}
+          aria-label={t.home.askButton}
+          className="lr-btn-primary absolute right-2 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center !rounded-full !p-0 disabled:opacity-40"
+        >
+          <Icon name="arrow-right" size={20} />
         </button>
-      </form>
-
-      {examples.length > 0 && (
-        <div className="mt-6 border-t border-[var(--color-line)] pt-5">
-          <p className="text-sm font-semibold text-ink-500">{t.home.exampleLabel}</p>
-          <ul className="mt-2.5 flex flex-wrap gap-2">
-            {examples.map((example) => (
-              <li key={example}>
-                <button
-                  type="button"
-                  onClick={() => go(example)}
-                  className="rounded-full border border-[var(--color-line)] bg-surface-soft px-3.5 py-2 text-left text-[15px] text-ink-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
-                >
-                  {example}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
+      </div>
+      <PrivacyNotice
+        t={t}
+        matches={matches}
+        blocked={blocked}
+        noticeRef={noticeRef}
+        onRemove={() => {
+          setValue(removePersonalInfo(value, matches));
+          inputRef.current?.focus();
+        }}
+        onRemoveAndSend={removeAndSend}
+        onEdit={() => {
+          setBlocked(false);
+          inputRef.current?.focus();
+        }}
+      />
+    </form>
   );
 }

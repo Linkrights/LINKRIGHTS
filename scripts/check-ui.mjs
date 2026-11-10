@@ -46,15 +46,15 @@ ok('ko: 묻는 단추가 이름으로', page['/ko'].includes('링라에게 물�
 ok('ko: 이름 옆에 "AI 안내"', page['/ko'].includes('AI 안내'));
 ok('en: 묻는 단추가 이름으로', page['/en'].includes('Ask Lingra'));
 
-console.log('\n=== 첫 화면 배너 ===');
+console.log('\n=== 첫 화면 (영상 + 제목 + 검색창) ===');
 for (const l of LOCALES) {
   const h = page[`/${l}`];
-  ok(`${l}: 배너`, h.includes('lr-hero-banner') && h.includes('lr-hero-bar'));
-  ok(`${l}: 사진`, h.includes('/hero-main.webp'));
+  // 사진 배너는 걷어 냈습니다. 그림이 두 겹이 되어 영상과 겹쳤습니다.
+  ok(`${l}: 사진 배너가 없다`, !h.includes('lr-hero-banner') && !h.includes('/hero-main.webp'));
+  ok(`${l}: 검색창 하나만`, (h.match(/id="hero-question"/g) ?? []).length === 1);
+  ok(`${l}: 제목이 글자로 있다`, h.includes('home-hero-title'));
   const ids = [...h.matchAll(/id="(lr-hero-[^"]+)"/g)].map((m) => m[1]);
   ok(`${l}: 그림 id 안 겹침`, new Set(ids).size === ids.length);
-  if (l === 'ko') ok('ko: 사진의 글자를 그대로', !h.includes('lr-hero-headline'));
-  else ok(`${l}: 제목을 그 언어 글자로`, h.includes('lr-hero-headline') && h.includes('lr-hero-chips-flow'));
 }
 
 console.log('\n=== 스크롤 등장 (색 띠가 통째로 움직이면 안 됨) ===');

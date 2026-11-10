@@ -21,8 +21,6 @@ import { ArticleCard } from '@/components/ArticleCard';
 import { AskBox } from '@/components/AskBox';
 import { HomeHelpFinder } from '@/components/HomeHelpFinder';
 import { CountUp } from '@/components/CountUp';
-import { HeroBannerKorean } from '@/components/HeroBannerSearch';
-import { HeroBannerText } from '@/components/HeroBannerText';
 import { HomeTop } from '@/components/HomeTop';
 import { Icon, type IconName } from '@/components/Icon';
 import { RegionMap } from '@/components/art/RegionMap';
@@ -67,7 +65,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const partners = getPartners();
   // 홈에는 content/faq.json 에서 featured 로 표시한 핵심 질문(최대 4개)만 보여주고, 나머지는 FAQ 페이지에서 봅니다.
   const faq = getFaq().items.filter((item) => item.featured).slice(0, 4);
-  const examples = site.exampleQuestions[locale] ?? site.exampleQuestions.ko;
   // 검색창 자동완성: 등록된 권리정보의 키워드에서만 가져옵니다.
   const suggestions = searchSuggestions(locale);
 
@@ -172,24 +169,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           call: t.nav.emergencyCall,
           rights: t.home.ctaRights,
         }}
-        // 배너는 네 언어 모두 같은 모습입니다. 만드는 방법만 다릅니다.
-        //   한국어: 사진을 통째로 쓰고, 사진에 그려진 검색창 위에 진짜 입력칸을 포갭니다.
-        //   그 밖: 사진의 글자가 한국어라 쓸 수 없으므로, 사람과 도시만 오른쪽에 붙이고
-        //          제목·안내문·검색창은 그 언어 글자로 그립니다.
+        // 첫 화면은 배경 영상 + 제목 + 검색창만 둡니다. (사진 배너는 걷어 냈습니다)
         video={
           heroVideo
             ? { sources: { desktop: heroVideo.desktop, mobile: heroVideo.mobile }, poster: heroVideo.poster, labels: t.heroVideo }
             : undefined
         }
-        banner={
-          locale === 'ko' ? (
-            <HeroBannerKorean locale={locale} labels={t.homeBanner} />
-          ) : (
-            <HeroBannerText locale={locale} labels={t.homeBanner} />
-          )
-        }
       >
-        <AskBox locale={locale} examples={examples} />
+        <AskBox locale={locale} />
       </HomeTop>
 
       {/* 시범 운영 안내는 뺐습니다. (의견 보내기는 "함께하기" 화면에 그대로 있습니다)
