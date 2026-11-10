@@ -8,14 +8,13 @@
 //   그 밖:  사진에 그려진 글자가 한국어라 쓸 수 없습니다. 그래서 사람과 도시만 오른쪽에 붙이고
 //           제목·안내문·검색창·추천 검색어는 그 언어 글자로 그립니다. (모습은 한국어와 같게 맞췄습니다)
 //
-// 좁은 화면에서는 두 경우 모두 배너 대신 사람 그림만 보여 주고 글자는 아래에 둡니다.
+// 좁은 화면에서는 배너를 숨기고 글자만 둡니다.
 // 배너는 가로로 긴 모양이라, 좁은 화면에서는 글씨가 읽을 수 없을 만큼 작아지기 때문입니다.
 //
 // 글과 칸은 서버에서 그리므로 자바스크립트가 늦거나 막혀도 그대로 보입니다.
 
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { HeroPicture } from './art/HeroPicture';
 import { HeroVideoBackdrop, type HeroVideoLabels, type HeroVideoSources } from './art/HeroVideoBackdrop';
 import { Icon } from './Icon';
 
@@ -103,14 +102,10 @@ export function HomeTop({
         {/* 넓은 화면: 배너 */}
         <div className="mt-7 hidden lg:block">{banner}</div>
 
-        {/* 좁은 화면: 배너는 가로로 길어 글씨가 너무 작아지므로, 사람 그림만 보여 주고 설명은 글자로.
-            그림이 세로로 길어(가로:세로 ≈ 0.62) 그대로 두면 질문 칸이 첫 화면 밖으로 밀려납니다.
-            그래서 높이를 화면의 40%로 묶고 아래쪽을 잘라 냅니다. 얼굴은 위쪽에 있어 잘리지 않습니다. */}
+        {/* 좁은 화면: 배너는 가로로 길어 글씨가 너무 작아지므로, 설명을 글자로 둡니다.
+            그림은 따로 두지 않습니다 — 뒤에 배경 영상(없으면 대표 그림)이 이미 깔립니다. */}
         <div className="mt-6 lg:hidden">
-          <div className="mx-auto w-full max-w-[16rem] overflow-hidden rounded-[var(--radius-card)] [max-height:40svh]">
-            <HeroPicture variant="crop" priority />
-          </div>
-          <p className={`lr-lead mt-6 ${onVideo ? 'text-white/90' : ''}`}>{labels.subtitle}</p>
+          <p className={`lr-lead ${onVideo ? 'text-white/90' : ''}`}>{labels.subtitle}</p>
         </div>
 
         {/* 질문 칸: 첫 화면에서 바로 시작할 수 있게 */}
